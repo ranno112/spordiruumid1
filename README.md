@@ -4,10 +4,10 @@ Tere tulemast Annemarii Hunt lõputöö projekti GitHubi repositooriumile!
 
 Tegemist on kohaliku omavalitsuste spordiga seotud allasutuste spordiruumide kalendrisüsteemi rakendusega. 
 
-Oma serverisse laadimiseks on vaja muuta application/config kaustas kaks faili: config.php ning database.php.
+Oma serverisse laadimiseks on vaja muuta application/config kaustas kaks faili: config.php ning database.php:
 ```
-config.php tuleb muuta ära $config['base_url']
-database.php tuleb määrata 'hostname', 'username', ning 'password' => ''.
+config.php tuleb määrata URL $config['base_url']
+database.php tuleb määrata 'hostname', 'username', ning 'password'.
 ```
 
 Rakenduse tööle saamiseks tuleb luua SQL tabelid:
