@@ -1,3 +1,5 @@
+# Spordiruumide broneerimissüsteem
+
 Tere tulemast Annemarii Hunt lõputöö projekti GitHubi repositooriumile!
 
 Tegemist on kohaliku omavalitsuste spordiga seotud allasutuste spordiruumide kalendrisüsteemi rakendusega. 
