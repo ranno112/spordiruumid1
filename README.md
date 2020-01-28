@@ -7,7 +7,7 @@ config.php tuleb muuta ära $config['base_url']
 database.php tuleb määrata 'hostname', 'username', ning 'password' => ''.
 
 Rakenduse tööle saamiseks tuleb luua SQL tabelid:
-
+```sql
 CREATE TABLE `bookings` (
   `id` int(11) NOT NULL,
   `typeID` int(11) DEFAULT NULL,
@@ -100,3 +100,4 @@ INSERT INTO `userRoles` (`id`, `role`) VALUES
 (1, 'Admin'),
 (2, 'Juht'),
 (3, 'Haldur');
+```
