@@ -1,0 +1,194 @@
+.fc button {
+    box-sizing: border-box;
+    margin: 0;
+    height: 2.1em;
+    padding: 0 .6em;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.fc-ltr .fc-time-grid .fc-event-container{
+    margin: 0;
+    padding: 0;
+}
+
+.fc-event-container a {
+    margin-right: 2.5%;
+    
+}
+
+.fc {
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.fc h2 {
+    color: rgb(11, 57, 84);
+    font-weight: 600;
+    font-size: 18px;
+
+}
+
+.fc span, .fc-title {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+#calendar-container {
+    min-height: 85vh;
+}
+
+.fc-toolbar.fc-header-toolbar {
+    vertical-align: middle;
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    border-top: 1px solid rgba(11, 57, 84,0.3);
+    border-left: 1px solid rgba(11, 57, 84,0.3);
+    border-right: 1px solid rgba(11, 57, 84,0.3);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.fc-toolbar{
+    background: #FFF;
+}
+
+.fc-head {
+    background: rgba(11, 57, 84, 0.1);
+}
+
+.fc-day-header, .fc-day-header span {
+    padding-top: 0.2rem !important;
+    padding-bottom: 0.2rem !important;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(11, 57, 84);
+}
+
+.fc-highlight-container {
+    background-color: rgb(217, 234, 255);
+}
+
+.fc-divider {
+    display: none !important;
+}
+
+.fc-bg { /* kogu tabeli tausta värvus */
+    background-color: #FFF;
+}
+
+.fc-event { /* sündmuse kujundus */
+    border: none;
+    background-color: #FBFBFB;
+    padding: 0;
+    border-radius: 0;
+    border-left: 7px solid #E0E0E2;
+    padding-top: 2px;
+}
+
+.fc-today {
+    background-color: rgb(11, 57, 84);
+}
+
+.fc-today span {
+    color: #FBFBFB !important;
+}
+
+.fc-content {
+    display:flex;
+    flex-flow: column;
+    text-align: left;
+    margin-bottom: 8px;
+    margin-left: 5px;
+}
+
+.timequery {
+    font-size: 9px !important;
+    font-weight: 300 !important;
+    padding-top: 2px;
+    padding-bottom: 4px;
+}
+
+.fc-content div, .fc-time span {
+    font-size: 13px;
+    line-height: 15px;
+    font-weight: 400;
+}
+
+.fc-unthemed td.fc-today {
+    background: rgba(11, 57, 84, 0.1)
+}
+
+.fc-unthemed .fc-divider,
+.fc-unthemed .fc-popover .fc-header,
+.fc-unthemed .fc-list-heading td {
+	background: rgb(189, 82, 82);
+}
+
+.fc-bgevent { /* default look for background events */
+	background: rgb(143, 223, 130);
+	opacity: .3;
+}
+
+.fc-state-default { /* non-theme */
+    border: none;
+    background: none;
+    box-shadow: none;
+}
+
+.fc-icon-right-single-arrow:after {
+	content: "\0203A";
+	font-weight: bold;
+	font-size: 300%;
+	top: -7%;
+}
+
+.fc-icon-left-single-arrow:after {
+	content: "\02039";
+	font-weight: bold;
+	font-size: 300%;
+	top: -7%;
+}
+
+.fc-center h2 {
+    width: 310px;
+    margin: 0;
+    padding: 0;
+}
+
+.notice {
+    box-sizing: border-box;
+    margin-left: 5px;
+    padding: 3px 7px;
+    font-size: 2em;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.notice-error {
+    background-color: #9E3253;
+    color: #fff;
+  }
+/* .modal-backdrop {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1030;
+    background-color: rgb(128, 128, 128);
+    opacity:0.3;
+}
+#lefty {
+    width: 700px;
+    height: 100%;
+}
+
+.modal-full {
+    min-width: 100%;
+    margin: 0;
+}
+
+.modal-full .modal-content {
+    min-height: 100vh;
+} */
