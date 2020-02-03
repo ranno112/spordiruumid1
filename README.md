@@ -82,7 +82,9 @@ CREATE TABLE `buildings` (
 
 CREATE TABLE `regions` (
   `regionID` int(11) NOT NULL AUTO_INCREMENT,
-  `regionName` varchar(255) NOT NULL
+  `regionName` varchar(255) NOT NULL,
+   PRIMARY KEY (regionID)
+    
 );
 
 INSERT INTO `regions` (`regionID`, `regionName`) VALUES
