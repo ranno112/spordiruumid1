@@ -17,13 +17,36 @@
                         <option value="0" <?php if ($post['status']==0) echo ' selected'?>>Mitteaktiivne</option>
                     </select>
                 </div>
-                
+				<?php print_r($post);?>
+				
                 <div class="d-flex justify-content-between p-0 m-0">
                     <div class="form-label-group mt-3 pr-5">
                         <label for="building">Asutus</label>
                         <p id="building" class="txt-strong"><?php echo $post['name']; ?></p>
                         <input type="text" class="d-none" name="building" value="<?php echo $post['buildingID']; ?>">
-                    </div>
+
+						
+
+						<?php if($this->session->userdata('roleID')==='2' && $post['roleID']!=1):?>
+                                <select id="buildingID" name="buildingID" class="form-control arrow">
+                                    <option value="2" <?php if ($post['buildingID']==2) echo ' selected'?>>Juht</option>
+                                    <option value="3" <?php if ($post['buildingID']==3) echo ' selected'?>>Haldur</option>
+                                    <option value="4" <?php if ($post['buildingID']==0) echo ' selected'?>>Tavakasutaja</option>
+                                    </select>
+                             <?php endif;?>
+    
+                            <?php if($this->session->userdata('roleID')=='1'):?>
+                                <select id="buildingID" name="buildingID" class="form-control arrow">
+								   <option value="1" <?php if ($post['buildingID']==0) echo ' selected'?>>Pole asutust</option>
+								   <option value="2" <?php if ($post['buildingID']!=0) echo ' selected'?>><?php echo $post['name']; ?></option>
+                                </select>
+                            <?php endif;?>
+                            
+						
+
+
+					</div>
+					
                     <div class="form-label-group mt-3 pl-5">
                         <label for="role">Roll</label>
                       
@@ -39,7 +62,7 @@
                                     </select>
                              <?php endif;?>
     
-                            <?php if($post['roleID']==1 && $this->session->userdata('roleID')=='1'):?>
+                            <?php if($this->session->userdata('roleID')=='1'):?>
                                 <select id="roleID" name="roleID" class="form-control arrow">
                                 <option value="1" <?php if ($post['roleID']==1) echo ' selected'?>>Admin</option>
                                 <option value="2" <?php if ($post['roleID']==2) echo ' selected'?>>Juht</option>
@@ -50,21 +73,9 @@
                             
                      
                       
-                        <?php if($post['roleID']==1&&$this->session->userdata('roleID')!=='1'):?>
+                        <?php if($post['roleID']==1 && $this->session->userdata('roleID')!=='1'):?>
                         <p id="role" class="txt-strong"><?php echo $post['role']; ?></p>
                         <?php endif;?>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

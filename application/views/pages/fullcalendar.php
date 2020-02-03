@@ -368,50 +368,50 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
             },
             editable: true,
             eventResize: function(event) {
-                var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-                var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-
-                var title = event.title;
-
-                var id = event.id;
-                
-
-                $.ajax({
-                    url: "<?php echo base_url(); ?>fullcalendar/update",
-                    type: "POST",
-                    data: {
-                        title: title,
-                        start: start,
-                        end: end,
-                        id: id
-                    },
-                    success: function() {
-                        calendar.fullCalendar('refetchEvents');
-                        //alert("Event Update");
-                    }
-                })
+                // var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+                // var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+                // var title = event.title;
+                // var id = event.id;
+             
+                // $.ajax({
+                //     url: "<?php echo base_url(); ?>fullcalendar/update",
+                //     type: "POST",
+                //     data: {
+                //         title: title,
+                //         start: start,
+                //         end: end,
+                //         id: id
+                //     },
+                //     success: function() {
+                //         calendar.fullCalendar('refetchEvents');
+                //         //alert("Event Update");
+                //     }
+                // })
+				calendar.fullCalendar('refetchEvents');
+				alert("Muutsid hetkeks trenni aega, see läheb tagasi oma kohale peale OK nupule vajutamist");
             },
             eventDrop: function(event) {
-                var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-                //alert(start);
-                var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-                //alert(end);
-                var title = event.title;
-                var id = event.id;
-                $.ajax({
-                    url: "<?php echo base_url(); ?>fullcalendar/update",
-                    type: "POST",
-                    data: {
-                        title: title,
-                        start: start,
-                        end: end,
-                        id: id
-                    },
-                    success: function() {
-                        calendar.fullCalendar('refetchEvents');
-                        alert("Tõstsid korraks trenni eest ära, see läheb tagasi oma kohale peale OK nupule vajutamist");
-                    }
-                })
+                // var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+                // //alert(start);
+                // var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+                // //alert(end);
+                // var title = event.title;
+                // var id = event.id;
+                // $.ajax({
+                //     url: "<?php echo base_url(); ?>fullcalendar/update",
+                //     type: "POST",
+                //     data: {
+                //         title: title,
+                //         start: start,
+                //         end: end,
+                //         id: id
+                //     },
+                //     success: function() {
+                       
+                //     }
+                // })
+				calendar.fullCalendar('refetchEvents');
+				alert("Tõstsid korraks trenni eest ära, see läheb tagasi oma kohale peale OK nupule vajutamist");
             },
             // eventClick: function(event) {
             //     if (confirm("Are you sure you want to remove it?")) {

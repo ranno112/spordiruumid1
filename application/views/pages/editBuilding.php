@@ -5,7 +5,7 @@
 
             <div class="d-flex mb-5">
                 <ul class="nav nav-tabs nav-justified col-12 bg-grey p-0">
-                    <li class="nav-item p-0"><a class="nav-link link txt-lg single-tab active pl-5" data-toggle="tab">Asutuse sätted</a></li>
+                    <li class="nav-item p-0"><a class="nav-link link txt-lg single-tab active pl-5" data-toggle="tab"><?php foreach ($editBuildings as $value) {echo $value['name'];break;}?> sätted</a></li>
                     <li class="nav-item p-0"></li><li class="nav-item p-0"></li>
                 </ul>
             </div>
