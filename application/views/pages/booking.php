@@ -10,10 +10,10 @@
         <div id="nav-tabs" class="mt-5 pb-5 form-bg">
             <div class="d-flex mb-5">
                 <ul class="nav nav-tabs nav-justified col-12 bg-grey">
-                    <li class="nav-item"><a  class="nav-link link txt-lg  active" href="#mitmekordne" data-toggle="tab">Ühekordne borneering</a></li>
-                    <li class="nav-item"><a  class="nav-link link txt-lg" href="#hooajaline" data-toggle="tab">Hooajaline borneering</a></li>
+                    <li class="nav-item"><a  class="nav-link link txt-lg  active" href="#mitmekordne" data-toggle="tab">Ühekordne broneering</a></li>
+                    <li class="nav-item"><a  class="nav-link link txt-lg" href="#hooajaline" data-toggle="tab">Hooajaline broneering</a></li>
                     <?php if($this->session->userdata('roleID')==='2'||$this->session->userdata('roleID')==='3'):?>
-                    <li class="nav-item"><a  class="nav-link link txt-lg" href="#suletud" data-toggle="tab">Suletud borneering</a></li>
+                    <li class="nav-item"><a  class="nav-link link txt-lg" href="#suletud" data-toggle="tab">Suletud broneering</a></li>
                     <?php endif;?>
                 </ul>
             </div>
@@ -54,7 +54,7 @@
                             </div>
                            <?php echo $this->input->get('roomId');?>
                             <div class="form-label-group col-6 p-0 pl-5">
-                                <label for="room">Saal*</label>
+                                <label for="room">Ruum*</label>
                                 <select id="room" list="saal" name="sportrooms" class="form-control arrow" >
                                     <?php foreach ($rooms as $each) {
                                         echo $each->id;
@@ -150,7 +150,7 @@
                             </div>
 
                             <div class="form-label-group col-6 p-0 pl-5">
-                                <label for="room">Saal*</label>
+                                <label for="room">Ruum*</label>
                                 <select id="room" list="saal" name="sportrooms" class="form-control arrow" >
                                 <?php foreach ($rooms as $each) {
                                         echo $each->id;
@@ -244,10 +244,10 @@
                 <div id="suletud" class="tab-pane center">
                 <?php echo form_open('booking/createClosed'); ?>
 
-                        <h4 class="mt-5 txt-xl px-5 mx-5">Saal ja aeg</h4>
+                        <h4 class="mt-5 txt-xl px-5 mx-5">Ruum ja aeg</h4>
                         <div class="d-flex px-5 mx-5">
                             <div class="form-label-group col-6 pl-0">
-                                <label for="contact">Saal</label>
+                                <label for="contact">Ruum</label>
                                 <select name="sportrooms"  class="form-control arrow" id="room2" >
                                 <?php foreach ($rooms as $each) {
                                         echo $each->id;
@@ -292,11 +292,11 @@
                                         <a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
 
                                         <div class="col-2 p-0 ml-5">
-                                            <input type="text" class="clock form-control" name="timesStart[]" id="from1" value="<?php echo date('H:i'); ?>">
+                                            <input type="text" class="clock form-control" name="timesStart[]" id="from1" value="08:00">
                                         </div>
 
                                         <div class="col-2 p-0">
-                                            <input type="text" class="clock form-control" name="timeTo[]" id="until1" value="<?php echo date("H:i", strtotime('+90 minutes')); ?>">
+                                            <input type="text" class="clock form-control" name="timeTo[]" id="until1" value="22:00">
                                         </div>
                                     </div>
                                 </div>
@@ -384,7 +384,7 @@
             }
         });
 
-        var MaxInputs = 10; //maximum extra input boxes allowed
+        var MaxInputs = 100; //maximum extra input boxes allowed
         var InputsWrapper = $("#InputsWrapper"); //Input boxes wrapper ID
         var AddButton = $("#AddMoreFileBox"); //Add button ID
 
@@ -450,7 +450,7 @@
             return false;
         });
         
-        var maxPeriod = 8;
+        var maxPeriod = 100;
         var InputsWrapper1 = $("#InputsWrapper1"); //Input boxes wrapper ID
         var AddButton1 = $("#AddMoreFileBoxPeriod"); //Add button ID
 
@@ -502,7 +502,7 @@
         });
 
 
-        var maxClosed = 8;
+        var maxClosed = 100;
         var InputsWrapper2 = $("#InputsWrapper2"); //Input boxes wrapper ID
         var AddButton2 = $("#AddMoreFileBoxClosed"); //Add button ID
 
@@ -515,7 +515,7 @@
             if (z <= maxClosed) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#closeContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" id="from' + FieldCount + '" value="<?php echo date('H:i'); ?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" id="until' + FieldCount + '" value="<?php echo date("H:i", strtotime('+90 minutes'));?>"></div></div>');
+                $('#closeContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" id="from' + FieldCount + '" value="08:00"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" id="until' + FieldCount + '" value="22:00"></div></div>');
 
                 $('.clock').clockTimePicker({
                     duration: true,

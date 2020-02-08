@@ -32,7 +32,7 @@
 
 
             <div class="form-label-group col-md-3 col-lg-2 p-0 mr-2">
-                <label for="room">Saal</label>
+                <label for="room">Ruum</label>
                 <input id="room" list="saal" class="form-control arrow" value="<?php  echo $rooms['roomName']; ?>">
                 <datalist id="saal" >
                 <?php foreach ($sportPlacesToChoose as $each) {

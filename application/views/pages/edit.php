@@ -4,7 +4,7 @@
         <div id="nav-tabs" class="mt-5 pb-5 form-bg">
             <div class="d-flex mb-5">
                 <ul class="nav nav-tabs nav-justified col-12 bg-grey">
-                    <li class="nav-item"><a  class="nav-link link txt-lg single-tab active" href="#" data-toggle="tab">Ühekordne borneering</a></li>
+                    <li class="nav-item"><a  class="nav-link link txt-lg single-tab active" href="#" data-toggle="tab">Ühekordne broneering</a></li>
                     <li class="nav-item"></li>
                 </ul>
             </div>

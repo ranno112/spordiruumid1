@@ -42,7 +42,7 @@
                         </div>
                         <?php endif;?>
                         <div class="form-label-group">
-                            <label for="room">Saal</label>
+                            <label for="room">Ruum</label>
                             <input id="room" list="saal" class="form-control arrow" required> 
                             <datalist id="saal">
                                 <?php foreach ($rooms as $each) {
