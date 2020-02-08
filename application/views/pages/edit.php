@@ -34,7 +34,7 @@
                     </div>
                 </div>
 
-                <h4 class="mt-5 txt-xl px-5 mx-5">Asukoht ja treeningu tüüp</h4>
+                <h4 class="mt-5 txt-xl px-5 mx-5">Sündmus / Asukoht ja treeningu tüüp</h4>
                 <div class="d-flex mt-4 px-5 mx-5">
                     <div class="form-label-group col-6 py-0 pl-0 pr-5">
                         <label for="sport_facility">Asutus</label>
@@ -55,7 +55,7 @@
 
                 <div class="d-flex mt-2 px-5 mx-5">
                     <div class="form-label-group col-6 py-0 pl-0 pr-5">
-                        <label>Treeningu tüüp</label>
+                        <label>Sündmus / Treeningu tüüp</label>
                         <input type="text" class="form-control" name="workoutType" id="workoutType">
                     </div>
                     <div class="form-label-group col-6 p-0 pl-5"></div>

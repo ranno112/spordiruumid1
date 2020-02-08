@@ -147,7 +147,7 @@
                                     </div>
                                 </div></div>
 
-                                <p id="saal" class="pt-3 txt-regular">Asukoht ja treeningu tüüp</p><div class="remove">
+                                <p id="saal" class="pt-3 txt-regular">Asukoht ja sündmus / treeningu tüüp</p><div class="remove">
                                 <div class="d-flex justify-content-between remove2">
                                     <div class="col-6 p-0 m-0"><p>Asutus</p></div>
                                     <div class="col-6 p-0 m-0">
@@ -163,7 +163,7 @@
                                     </div>
                                 </div><div class="remove">
                                 <div class="d-flex">
-                                    <div class="col-6 p-0 m-0"><p>Treeningu tüüp</p></div>
+                                    <div class="col-6 p-0 m-0"><p>Sündmus / Treeningu tüüp</p></div>
                                     <div class="col-6 p-0 m-0">
                                         <p id="workout"></p>
                                         <input type="text" class="d-none" name="workout" id="workout">
@@ -194,9 +194,9 @@
 
                     <div class="accordion px-4">
                         <div class="accordion-item">
-                            <a id="countNr" class="txt-xl text-darkblue py-2">Kõik ajad</a>
-                            <div id="contact" class="content">
-                                
+                            <a id="countNr" class="txt-xl text-darkblue active py-2">Kõik ajad</a>
+                            <div id="contact" class="content active p-0 m-0">
+                                <br>
                                 <label><input type="checkbox" name="selectAll" id="selectAll" value="1"><span></span></label> VALI KÕIK<hr>
                                 <table id="myTable" >
                                     <tbody >
@@ -225,7 +225,7 @@
                 </form >
 
                 <form id="takesPlaceCheck" class="m-0 pt-2">
-                    <input type="submit"  class="btn btn-second text-white txt-strong btn-width-lg" value="Ei toimu">
+                    <input type="submit"  class="btn btn-second text-white txt-strong btn-width-lg" value="Ei toimunud">
                 </form >
             </div>
             <br>  <br>
@@ -242,6 +242,7 @@
 <script>
   var counter=0;
     $(document).ready(function() {
+		var days = ['P', 'E', 'T', 'K', 'N', 'R', 'L'];
         var displayOrNot='<?php echo $this->session->userdata('roleID')?>';
 
         var monthNamesForModal= ['Jaanuar', 'Veebruar', 'Märts', 'Aprill', 'Mai', 'Juuni', 'Juuli', 'August', 'September', 'Oktoober', 'November', 'Detsember'];
@@ -331,12 +332,12 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                     }
 
                     if (event.takesPlace == false) {
-                        element.find('.fc-content').after('<span class="notice notice-error">Ei toimu</span>')
+                        element.find('.fc-content').after('<span class="notice notice-error">Ei toimunud</span>')
                     }
 
                     if(event.typeID == 4) {
                         element.find('.fc-time').addClass('d-none');
-                        element.find('.fc-title').text('Asutus suletud');
+                        element.find('.fc-title').text('Ruum suletud');
                         element.css({ 'background': 'repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 55px, rgba(0, 0, 0, 0.07) 55px, rgba(0, 0, 0, 0.07) 110px)', 'border-left': 'none'});
                         element.find('.fc-content').css({'text-align': 'center'}); 
                 }
@@ -546,9 +547,12 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                         takesPlace="";
                     }
                     else if(takesPlace==0){
-                        takesPlace="Ei toimu";
+                        takesPlace="Ei toimunud";
                     };
                     var start_date = new Date(events[i].start._d);
+				
+					var weekday = days[start_date.getDay()];
+				
                     var end_date = '';
                     if (events[i].end != null) {
                         end_date = new Date(events[i].end._d);
@@ -608,14 +612,14 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                     
                     if(monthCheckbox!=st_monthIndex){
                         
-                        $('#myTable > tbody:last-child').append('<tr id="monthRow'+start_date.getUTCMonth()+'"><th><label><input type="checkbox"  id="selectMonth['+start_date.getUTCMonth()+']" value="1"><span></span></label> '+monthNamesForModal[start_date.getUTCMonth()]+' </th></tr>');
+                        $('#myTable > tbody:last-child').append('<tr id="monthRow'+start_date.getUTCMonth()+'"><th><label><input type="checkbox"  id="selectMonth['+start_date.getUTCMonth()+']" value="1"></label> '+monthNamesForModal[start_date.getUTCMonth()]+' </th></tr>');
                     }
                     monthCheckbox=st_monthIndex;
                   
                    
                     counter++;
                   
-                    $('#myTable > tbody:last-child').append(' <tr class="red'+i+'"><td><label><input type="checkbox" class="abc brdr" name="choices" id="'+BTimesid+'"><span></span></label> ' + st_day + '.' + st_monthIndex + '.' + st_year + ' <br></td>   <td>&nbsp;&nbsp;&nbsp; ' +st_hours +':' +st_minutes+'-'+ en_hours+':'+en_minutes+'</td>   <td>&nbsp;&nbsp;&nbsp;'+approved+' </td></td>   <td>&nbsp;&nbsp;&nbsp;'+takesPlace+' </td>   </tr>');
+                    $('#myTable > tbody:last-child').append(' <tr class="red'+i+'">  <td><label><input type="checkbox" class="abc brdr" name="choices" id="'+BTimesid+'"><span></span></label> '+weekday+', ' + st_day + '.' + st_monthIndex + '.' + st_year + ' <br></td>  <td>&nbsp;&nbsp; ' +st_hours +':' +st_minutes+'-'+ en_hours+':'+en_minutes+'</td>   <td>&nbsp;&nbsp;&nbsp;'+approved+' </td> <td>&nbsp;&nbsp;&nbsp;'+takesPlace+' </td>   </tr>');
                     if(event.timeID==BTimesid){  
                         //  console.log("klikk");
                         $("#"+BTimesid).prop('checked', true);}
@@ -629,7 +633,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                         //   console.log("konflikt:"+ startDateTime[t] +": "+endDateTime[t]);
                             $(".red"+i).css("color", "red");
                             if( $("table").find(".red"+i+":first td").length <5     ){
-                                (arrayOfTitles[t].length>15) ? arrayOfTitles[t]=arrayOfTitles[t].substring(0, 18)+"..." : arrayOfTitles[i]=arrayOfTitles[i];
+                                (arrayOfTitles[t].length>10) ? arrayOfTitles[t]=arrayOfTitles[t].substring(0, 10)+"..." : arrayOfTitles[i]=arrayOfTitles[i];
                                 console.log(arrayOfTitles[i]+" "+  arrayOfTitles[t]);
                                 $(".red"+i).append('<td> &nbsp;'+arrayOfTitles[t]+'</td>');
                             }
@@ -824,16 +828,16 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
         $("#takesPlaceCheck").submit(function( event ) {
             if ($('.abc:checked').length <= $('.abc').length && $('.abc:checked').length>0) 
                     {
-                        if (confirm("Valitud trennid ei toimu?")) {
+                        if (confirm("Valitud trennid ei toimunud?")) {
                             event.preventDefault();    }else{return false};
                         
                         $("input:checkbox").each(function(){
                         var $this = $(this);
 
                         var approvedOrNot=$this.parents("tr").children("td:nth-child(4)");
-                        console.log($.trim(approvedOrNot.text())=="Ei toimu");
+                        console.log($.trim(approvedOrNot.text())=="Ei toimunud");
                             var approvedOrNotToDB;
-                            if($.trim(approvedOrNot.text())=="Ei toimu"){
+                            if($.trim(approvedOrNot.text())=="Ei toimunud"){
                                 approvedOrNotToDB=1
                             }else{
                                 approvedOrNotToDB=0
@@ -852,12 +856,12 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                                 success: function() {
                                     calendar.fullCalendar('refetchEvents');
                                     if(approvedOrNotToDB==0){
-                                        jQuery('input:checkbox:checked').parents("tr").children("td:nth-child(4)").html("&nbsp;&nbsp;&nbsp;Ei toimu");
+                                        jQuery('input:checkbox:checked').parents("tr").children("td:nth-child(4)").html("&nbsp;&nbsp;&nbsp;Ei toimunud");
                                     }else{
                                         jQuery('input:checkbox:checked').parents("tr").children("td:nth-child(4)").html("&nbsp;&nbsp;&nbsp;");
                                     }
-                                //  $('input:checkbox:checked').parents("tr").children("td:contains('Ei toimu')").html("");
-                                    //alert('Ei toimu');
+                                //  $('input:checkbox:checked').parents("tr").children("td:contains('Ei toimunud')").html("");
+                                    //alert('Ei toimunud');
                                 }, 
                                 error: function(returnval) {
                                     alert('Midagi läks valesti');
@@ -919,10 +923,10 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                             //         //siia tule teha panna kinnitatud olekuks modalis  
                             //        // jQuery('input:checkbox:checked').parents("tr");
                             //     //    ​$('input:checkbox:checked').parents("tr").text(function () {
-                            //     //         return $(this).text().replace("Ei toimu", ""); 
+                            //     //         return $(this).text().replace("Ei toimunud", ""); 
                             //     //     });​​​​​
-                            //     $('input:checkbox:checked').parents("tr").children("td:contains('Ei toimu')").html("New");
-                            //         alert('Ei toimu');
+                            //     $('input:checkbox:checked').parents("tr").children("td:contains('Ei toimunud')").html("New");
+                            //         alert('Ei toimunud');
                             //     }, 
                             //     error: function(returnval) {
                             //         alert('Midagi läks valesti');

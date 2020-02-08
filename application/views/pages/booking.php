@@ -30,8 +30,8 @@
                             </div>
                             <input class="d-none" type="checkbox" id="type" name="type" value="1" checked>
                             <div class="form-label-group col-6 p-0 pl-5">
-                                <label>Kontaktisik</label>
-                                <input class="form-control" id="contact" name="contactPerson" value="<?php if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>">
+                                <label>Kontaktisik*</label>
+                                <input class="form-control" id="contact" name="contactPerson" value="<?php if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>" required>
                             </div>
                         </div>
                         <div class="d-flex mt-2 px-5 mx-5">
@@ -46,7 +46,7 @@
                             </div>
                         </div>
 
-                        <h4 class="mt-5 txt-xl px-5 mx-5">Asukoht ja treeningu tüüp</h4>
+                        <h4 class="mt-5 txt-xl px-5 mx-5">Asukoht ja sündmus / treeningu tüüp</h4>
                         <div class="d-flex mt-4 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
                                 <label for="sport_facility">Asutus</label>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="d-flex mt-2 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
-                                <label>Treeningu tüüp</label>
+                                <label>Sündmus / Treeningu tüüp (avalik info)</label>
                                 <input class="form-control" id="type" name="workoutType" placeholder="nt iluvõimlemine">
                             </div>
                             <div class="form-label-group col-6 p-0 pl-5"></div>
@@ -125,8 +125,8 @@
                             </div>
 
                             <div class="form-label-group col-6 p-0 pl-5">
-                                <label>Kontaktisik</label>
-                                <input class="form-control" id="contact" name="contactPerson" value="<?php if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>">
+                                <label>Kontaktisik*</label>
+                                <input class="form-control" id="contact" name="contactPerson" value="<?php if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>" required>
                             </div>
                         </div>
                         <div class="d-flex mt-2 px-5 mx-5">
@@ -142,7 +142,7 @@
                         </div>
 
 
-                        <h4 class="mt-5 txt-xl px-5 mx-5">Asukoht ja treeningu tüüp</h4>
+                        <h4 class="mt-5 txt-xl px-5 mx-5">Asukoht ja sündmus / treeningu tüüp</h4>
                         <div class="d-flex mt-4 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
                                 <label for="sport_facility">Asutus</label>
@@ -165,7 +165,7 @@
 
                         <div class="d-flex mt-2 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
-                                <label for="type">Treeningu tüüp</label>
+                                <label for="type">Sündmus / Treeningu tüüp (avalik info)</label>
                                 <input class="form-control" id="type" name="workoutType" placeholder="nt iluvõimlemine">
                             </div>
                             <div class="form-label-group col-6 p-0 pl-5">
