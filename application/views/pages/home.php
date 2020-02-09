@@ -2,6 +2,8 @@
 
 <!-- <a href="<?php echo site_url('login/logout');?>">Sign Out</a> -->
 
+						<p id="demo"></p>
+
 <div class="container-fluid">
     <div class="d-flex">
 
@@ -28,8 +30,10 @@
                                 }
                                 ?>
                             </datalist>
-                        </div>
+						</div>
+					
 
+					
                         <div class="form-label-group">
                             <label for="sport_facility">Asutus</label>
                             <input id="sport_facility" list="asutus" class="form-control arrow">
@@ -83,7 +87,36 @@
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/datepicker.js"></script>
 <script>
+
+	var isIE = !!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g);
+
+		if(isIE){
+		alert("Spordiruumi kalender ei toeta Internet Explorerit. Tänapäeval on palju paremaid veebilehitsejaid mida kasutada. Parima kogemuse saamiseks palume kasutada näiteks Chrome, Edge või Firefoxi."); 
+       
+		document.getElementById("demo").innerHTML = "INTERNET EXPLORER POLE TOETATUD! PALUN VALI TEINE BRAUSER";
+ 
+		}
+	
+		if (ieVersion) 
+				{
+					document.getElementById("demo").innerHTML = "INTERNET EXPLORER POLE TOETATUD! PALUN VALI TEINE BRAUSER";
+					alert('IEEdge ' + detectIEEdge());
+				};
+			
+			if (window.document.documentMode) {
+				document.getElementById("demo").innerHTML = "INTERNET EXPLORER POLE TOETATUD! PALUN VALI TEINE BRAUSER";
+				alert('IEEdge ' + detectIEEdge());
+				};
+				if (navigator.appName == 'Microsoft Internet Explorer' ||  !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/)) || (typeof $.browser !== "undefined" && $.browser.msie == 1))
+					{
+					alert("Please dont use IE.");
+					};
+
     $(document).ready(function() {
+	
+	
+
+
         $(".datePicker").datepicker({
                 language: "et-EE",
                 autoHide: true,
