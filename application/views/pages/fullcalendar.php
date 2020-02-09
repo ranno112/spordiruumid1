@@ -52,7 +52,7 @@
 
             <div class="form-label-group col-2 p-0">
                 <label for="datepicker">Kuupäev</label>
-                <input id="datepicker" class="datePicker form-control" data-toggle="datepicker" name="date"/>
+                <input id="datepicker" class="datePicker form-control" data-toggle="datepicker" name="date" autocomplete="off"/>
             </div>
         </form>
 

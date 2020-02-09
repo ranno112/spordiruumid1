@@ -86,7 +86,7 @@
 
                                         <div class="col-2 p-0 ml-5">
 									
-                                            <input type="text" class="clock form-control" name="begin[]" id="timestartfield_1" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); ?>">
+                                            <input type="text" class="clock form-control" name="begin[]" id="timestartfield_1" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i');?>">
                                         </div>
 
                                         <div class="col-2 p-0">
@@ -201,11 +201,11 @@
                                         <a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
 
                                         <div class="col-2 p-0 ml-5">
-                                            <input type="text" class="clock form-control" name="timesStart[]" id="from1" value="<?php echo date('H:i'); ?>">
+                                            <input type="text" class="clock form-control" name="timesStart[]" id="from1" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); ?>">
                                         </div>
 
                                         <div class="col-2 p-0">
-                                            <input type="text" class="clock form-control" name="timeTo[]" id="until1" value="<?php echo date("H:i", strtotime('+90 minutes')); ?>">
+                                            <input type="text" class="clock form-control" name="timeTo[]" id="until1" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>">
                                         </div>                                    
                                     </div>
                                 </div>
@@ -346,10 +346,19 @@
 
 
     $(document).ready(function() {
-
+		var days=['Pühapäev', 'Esmaspäev', 'Teisipäev', 'Kolmapäev', 'Neljapäev', 'Reede', 'Laupäev'];
         var today=new Date();
-        var endOfPeriond=new Date('05/31/'+ new Date().getFullYear()); 
-       
+		var endOfPeriond=new Date('05/31/'+ new Date().getFullYear()); 
+		var dateFormat = moment('<?php echo ($this->input->get('startDate')); ?>', "DD-MM-YYYY");
+		var selectedWeekDay = new Date(dateFormat);
+		
+		console.log(days[selectedWeekDay.getDay()]);
+		if(days.includes(days[selectedWeekDay.getDay()])){
+		var list = document.getElementsByClassName("form-control col-5 arrow");
+			for (var i = 0; i < list.length; i++) {
+			list[i].setAttribute("value", days[selectedWeekDay.getDay()]);
+			}
+	};
         var dateToShow='';
         if (today<endOfPeriond){
             dateToShow=endOfPeriond;
@@ -398,7 +407,7 @@
             if (x <= MaxInputs) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#InputsWrapper').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="datePicker col-5 form-control" id="datefield_' + FieldCount + '" data-toggle="datepicker" name="workoutDate[]"><a class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="begin[]" id="timestartfield_' + FieldCount + '" value="<?php echo date('H:i'); ?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="end[]" min="08:00" max="22:00" id="timeendfield_' + FieldCount + '" value="<?php echo date("H:i", strtotime('+90 minutes'));?>"></div></div>');
+                $('#InputsWrapper').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="datePicker col-5 form-control" id="datefield_' + FieldCount + '" data-toggle="datepicker" name="workoutDate[]"><a class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="begin[]" id="timestartfield_' + FieldCount + '" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i');?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="end[]" min="08:00" max="22:00" id="timeendfield_' + FieldCount + '" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>"></div></div>');
 
                 $(".datePicker").datepicker({
                     language: "et-EE", 
@@ -463,7 +472,7 @@
             if (y <= maxPeriod) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#dateContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" id="from' + FieldCount + '" value="<?php echo date('H:i'); ?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" id="until' + FieldCount + '" value="<?php echo date("H:i", strtotime('+90 minutes'));?>"></div></div>');
+                $('#dateContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" id="from' + FieldCount + '" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); ?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" id="until' + FieldCount + '" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>"></div></div>');
 
                 $('.clock').clockTimePicker({
                     duration: true,
