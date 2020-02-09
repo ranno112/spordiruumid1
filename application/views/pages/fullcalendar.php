@@ -347,27 +347,29 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
             },
             
             select: function(start, end, allDay) {
-                var public_info = prompt("Enter Event Title");
-                var roomID = <?php echo ($this->input->get('roomId')); ?>;
-                if (public_info) {
-                    var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-                    var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-                    $.ajax({
-                        url: "<?php echo base_url(); ?>fullcalendar/createfromcalendar",
-                        type: "POST",
-                        data: {
-                            roomID: roomID,
-                            typeID: 1,
-                            public_info: public_info,
-                            start: start,
-                            end: end
-                        },
-                        success: function() {
-                            calendar.fullCalendar('refetchEvents');
-                           // alert("Added Successfully");
-                        }
-                    })
-                }
+       
+                    var startDate = $.fullCalendar.formatDate(start, "DD.MM.YYYY");
+					var start = $.fullCalendar.formatDate(start, "HH:mm");
+                    var end = $.fullCalendar.formatDate(end, "HH:mm");
+
+					window.location.href = '<?php echo base_url(); ?>booking/create/<?php echo ($this->input->get('roomId'))."?startDate=";?>'+startDate+'&start='+start+'&end='+end;
+      
+                    // $.ajax({
+                    //     url: "<?php // echo base_url(); ?>fullcalendar/createfromcalendar",
+                    //     type: "POST",
+                    //     data: {
+                    //         roomID: roomID,
+                    //         typeID: 1,
+                    //         public_info: public_info,
+                    //         start: start,
+                    //         end: end
+                    //     },
+                    //     success: function() {
+                    //         calendar.fullCalendar('refetchEvents');
+                    //        // alert("Added Successfully");
+                    //     }
+                    // })
+              
             },
             editable: true,
             eventResize: function(event) {

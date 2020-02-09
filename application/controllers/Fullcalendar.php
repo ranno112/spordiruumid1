@@ -86,36 +86,36 @@ class Fullcalendar extends CI_Controller {
 	
 	}
 
-
-	public function createfromcalendar()
-	{
-		if($this->session->userdata('roleID')==='2'||$this->session->userdata('roleID')==='3'){
-		if($this->input->post('public_info'))
-		{
-				$data1 = array(
-					'typeID'		=>	$this->input->post('typeID'),
-					'public_info'		=>	$this->input->post('public_info')					
-				);
+//seda enam ei ole vaja, kuna selekteerides kalendrist tuleb lahti broneerimisvorm
+	// public function createfromcalendar()
+	// {
+	// 	if($this->session->userdata('roleID')==='2'||$this->session->userdata('roleID')==='3'){
+	// 	if($this->input->post('public_info'))
+	// 	{
+	// 			$data1 = array(
+	// 				'typeID'		=>	$this->input->post('typeID'),
+	// 				'public_info'		=>	$this->input->post('public_info')					
+	// 			);
 		
-				$id= $this->fullcalendar_model->create_booking($data1);
+	// 			$id= $this->fullcalendar_model->create_booking($data1);
 
 
-				$insert_data = array();
+	// 			$insert_data = array();
 				
-				$insert_data[] = array(
-				'roomID'	=> 	$this->input->post('roomID'),
-				'startTime'=>	$this->input->post('start'),
-				'endTime'	=>	$this->input->post('end'),
-				'bookingID' => $id
-				);
+	// 			$insert_data[] = array(
+	// 			'roomID'	=> 	$this->input->post('roomID'),
+	// 			'startTime'=>	$this->input->post('start'),
+	// 			'endTime'	=>	$this->input->post('end'),
+	// 			'bookingID' => $id
+	// 			);
 				
 
-					$this->fullcalendar_model->create_bookingTimes($insert_data);
+	// 				$this->fullcalendar_model->create_bookingTimes($insert_data);
 				
-				}
+	// 			}
 	
-	}
-	}
+	// }
+	// }
 
 
 

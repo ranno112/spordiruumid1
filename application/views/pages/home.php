@@ -97,20 +97,15 @@
  
 		}
 	
-		if (ieVersion) 
-				{
-					document.getElementById("demo").innerHTML = "INTERNET EXPLORER POLE TOETATUD! PALUN VALI TEINE BRAUSER";
-					alert('IEEdge ' + detectIEEdge());
-				};
-			
-			if (window.document.documentMode) {
-				document.getElementById("demo").innerHTML = "INTERNET EXPLORER POLE TOETATUD! PALUN VALI TEINE BRAUSER";
-				alert('IEEdge ' + detectIEEdge());
-				};
-				if (navigator.appName == 'Microsoft Internet Explorer' ||  !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/)) || (typeof $.browser !== "undefined" && $.browser.msie == 1))
-					{
-					alert("Please dont use IE.");
-					};
+	
+			// if (window.document.documentMode) {
+			// 	document.getElementById("demo").innerHTML = "INTERNET EXPLORER POLE TOETATUD! PALUN VALI TEINE BRAUSER";
+			// 	alert('IEEdge ' + detectIEEdge());
+			// 	};
+            // if (navigator.appName == 'Microsoft Internet Explorer' ||  !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/)) || (typeof $.browser !== "undefined" && $.browser.msie == 1))
+            //     {
+            //     alert("Please dont use IE.");
+            //     };
 
     $(document).ready(function() {
 	

@@ -85,11 +85,12 @@
                                         <a href="#" class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
 
                                         <div class="col-2 p-0 ml-5">
-                                            <input type="text" class="clock form-control" name="begin[]" id="timestartfield_1" value="<?php echo date('H:i'); ?>">
+									
+                                            <input type="text" class="clock form-control" name="begin[]" id="timestartfield_1" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); ?>">
                                         </div>
 
                                         <div class="col-2 p-0">
-                                            <input type="text" class="clock form-control" name="end[]" min="08:00" max="22:00" id="timeendfield_1" value="<?php echo date("H:i", strtotime('+90 minutes')); ?>">
+                                            <input type="text" class="clock form-control" name="end[]" min="08:00" max="22:00" id="timeendfield_1" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -368,7 +369,7 @@
         $(".datePicker").datepicker({
             language: "et-EE",
             autoHide: true,
-            date: new Date(),
+            date: '<?php echo $this->input->get('startDate') ? $this->input->get('startDate'):"new Date()";?>',
             autoPick: true,
         });
 
