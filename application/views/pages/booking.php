@@ -174,7 +174,7 @@
                             </div>
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <input class="d-none" type="checkbox" name="type" value="2" checked>
-                                <input class="d-none" type="checkbox" name="approved" value="0" checked>
+                             
                             </div>
                         </div>                        
                            
@@ -267,7 +267,7 @@
                             <div class="d-flex mt-2 px-5 mx-5">
                                 <input class="d-none" type="checkbox" name="type" value="4" checked> <!-- Suletud (See tuleb ära peita ehk panna hidden)<br> -->
                                 <input class="d-none" type="checkbox" name="clubname" value="Suletud" checked> <!-- Suletud Title (See tuleb ära peita ehk panna hidden)<br> -->
-                                <input class="d-none" type="checkbox" name="approved" value="1" checked>
+                                <input class="d-none" type="checkbox" name="approveNow" value="1" checked>
                             </div>
                         </div>
 

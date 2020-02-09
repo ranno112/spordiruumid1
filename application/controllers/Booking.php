@@ -190,7 +190,6 @@ class Booking extends CI_Controller {
 
 					$insert_data2[] = array(
 						'roomID' => $this->input->post('sportrooms'),
-						'approved' => $this ->input->post('approved'),
 						'startTime' => $start_data,
 						'endTime' => $end_data,
 						'approved' => $takesPlace,
