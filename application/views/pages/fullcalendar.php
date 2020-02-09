@@ -647,7 +647,10 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                         
                
                         if (isBetween(startDateTime[t],checkDateTime, checkDateTime2 ) || isBetween(checkDateTime2, startDateTime[t],endDateTime[t]) || isBetween(checkDateTime, startDateTime[t], endDateTime[t] ) || isBetween(checkDateTime2, startDateTime[t], endDateTime[t] ) ){
-                             console.log(isBetween(startDateTime[t],checkDateTime, checkDateTime2 ) +" "+ isBetween(checkDateTime2, startDateTime[t],endDateTime[t]) +" "+   isBetween(checkDateTime, startDateTime[t], endDateTime[t] )   +" "+ isBetween(checkDateTime2, startDateTime[t], endDateTime[t] ));
+							console.log(isBetween(startDateTime[t],checkDateTime, checkDateTime2 ));
+							console.log(isBetween(checkDateTime2, startDateTime[t],endDateTime[t]) );
+							console.log( isBetween(checkDateTime, startDateTime[t], endDateTime[t] ) );
+                      	     console.log( isBetween(checkDateTime2, startDateTime[t], endDateTime[t] ));
                         //   console.log("konflikt:"+ startDateTime[t] +": "+endDateTime[t]);
                             $(".red"+i).css("color", "red");
                             if( $("table").find(".red"+i+":first td").length <5     ){

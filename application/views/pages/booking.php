@@ -77,7 +77,16 @@
                         <h4 class="mt-5 txt-xl px-5 mx-5">Kuupäev ja kellaaeg</h4>
                         <div class="mt-4 bg-grey py-2">
                             <div class="form-label-group px-5 mx-5" id="timestamp">
-                                <label for="InputsWrapper">Kuupäev</label>
+							
+								
+								<div class="d-flex justify-content-between m-0 px-0 pt-0 pb-1">
+                                    <label class="col-5 m-0 p-0" for="sport_facility2">Kuupäev</label>
+                                    <label class="d-hidden col-1 mr-1 p-0"></label>
+                                    <label class="col-2 m-0 pl-3" for="from1">Alates</label>
+                                    <label class="col-2 m-0 p-0" for="until1">Kuni</label>
+                                </div>
+
+
                                 <div id="InputsWrapper" class="mb-3 p-0">
                                     <div class="d-flex align-items-center mb-3 justify-content-between">
                                         <input class="datePicker col-5 form-control" id="datefield_1" data-toggle="datepicker" name="workoutDate[]">
@@ -86,11 +95,11 @@
 
                                         <div class="col-2 p-0 ml-5">
 									
-                                            <input type="time" class="clock form-control" name="begin[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_1" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i');?>">
+                                            <input type="input" class="clock form-control" name="begin[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_1" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i');?>">
                                         </div>
 
                                         <div class="col-2 p-0">
-                                            <input type="time" class="clock form-control" name="end[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_1" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>">
+                                            <input type="input" class="clock form-control" name="end[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_1" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>">
                                         </div>
                                     </div>
                                 </div>
