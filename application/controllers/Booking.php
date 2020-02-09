@@ -283,7 +283,7 @@ class Booking extends CI_Controller {
 		$id= $this->booking_model->create_booking($data1);
 				
 		$insert_data2 = array();
-
+		$takesPlace = $this ->input->post('approveNow')==1 ? 1 : 0;
 		for($t = 0; $t <= count($this->input->post('workoutDate')); $t++) {
 			if(isset($this->input->post('workoutDate')[$t])){
 			$formated_startTime = date("H:i:s", strtotime($this->input->post('begin')[$t]));
@@ -292,7 +292,7 @@ class Booking extends CI_Controller {
 
 			$start_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_startTime"));
 			$end_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_endTime"));
-			$takesPlace = $this ->input->post('approveNow')==1 ? 1 : 0;
+		
 
 			$insert_data2[] = array(
 				'roomID' => $this->input->post('sportrooms'),
