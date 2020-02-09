@@ -247,6 +247,7 @@
 
         var monthNamesForModal= ['Jaanuar', 'Veebruar', 'Märts', 'Aprill', 'Mai', 'Juuni', 'Juuli', 'August', 'September', 'Oktoober', 'November', 'Detsember'];
       
+	  //lehe üleval pisike input kalender
         $(".datePicker").datepicker({
             language: "et-EE",
             autoHide: true,
@@ -254,8 +255,8 @@
             autoPick: true,
         });
 
+
         $("#selectAll").click(function(){
-    
         var c = this.checked;
         $(':checkbox').prop('checked',c);
 
@@ -286,6 +287,7 @@
                     columnFormat: "dddd, D. MMM"
                     // other view-specific options here
                 },
+				
             },
 
             defaultView: 'agendaWeek',
@@ -1094,17 +1096,24 @@ dayClick: function (date, jsEvent, view) {
     
     
     $("#datepicker").val('<?php echo ($this->input->get('date')); ?>');
-   
+	if('<?php echo ($this->input->get('date')); ?>'){
+		console.log('<?php echo ($this->input->get('date')); ?>');
+		date = moment('<?php echo ($this->input->get('date')); ?>', "DD.MM.YYYY");
+        $("#calendar").fullCalendar( 'gotoDate', date );
+		$('.fc-slats tr').css('height', rowHeight+'px');
+        $(window).trigger('resize');
+        $(".fc-body").trigger('reload');
+	}
 
 
     $('#datepicker').datepicker()
         .on("input change", function (e) {
-            date = moment(e.target.value, "DD.MM-YYYY");
+            date = moment(e.target.value, "DD.MM.YYYY");
         $("#calendar").fullCalendar( 'gotoDate', date );
-        //   console.log("Date changed: ", e.target.value);
+           console.log("Date changed: ",  date);
         // $('#calendar').fullCalendar( 'gotoDate', e.target.value )
         //  window.location.href = '<?php echo site_url('');?>fullcalendar?roomId=<?php echo ($this->input->get('roomId'));?>&date='+ e.target.value;
-        // window.history.replaceState("", "", "fullcalendar?roomId=<?php echo ($this->input->get('roomId'));?>&date="+ e.target.value);
+         window.history.replaceState("", "", "fullcalendar?roomId=<?php echo ($this->input->get('roomId'));?>&date="+ e.target.value);
         $('.fc-slats tr').css('height', rowHeight+'px');
         $(window).trigger('resize');
         $(".fc-body").trigger('reload');
