@@ -86,11 +86,11 @@
 
                                         <div class="col-2 p-0 ml-5">
 									
-                                            <input type="text" class="clock form-control" name="begin[]" id="timestartfield_1" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i');?>">
+                                            <input type="time" class="clock form-control" name="begin[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_1" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i');?>">
                                         </div>
 
                                         <div class="col-2 p-0">
-                                            <input type="text" class="clock form-control" name="end[]" min="08:00" max="22:00" id="timeendfield_1" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>">
+                                            <input type="time" class="clock form-control" name="end[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_1" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -112,7 +112,7 @@
 					
 
                         <div class="d-flex justify-content-end mt-5 px-5 mx-5">
-                            <a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#">Katkesta</a>
+                          	<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#" onClick="history.go(-1); return false;">Katkesta</a>
                             <input class="btn btn-custom col-3 text-white txt-xl" type="submit" value="Broneeri">
                         </div>
                     </form>
@@ -204,11 +204,11 @@
                                         <a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
 
                                         <div class="col-2 p-0 ml-5">
-                                            <input type="text" class="clock form-control" name="timesStart[]" id="from1" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); ?>">
+                                            <input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from1" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); ?>">
                                         </div>
 
                                         <div class="col-2 p-0">
-                                            <input type="text" class="clock form-control" name="timeTo[]" id="until1" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>">
+                                            <input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until1" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>">
                                         </div>                                    
                                     </div>
                                 </div>
@@ -297,11 +297,11 @@
                                         <a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
 
                                         <div class="col-2 p-0 ml-5">
-                                            <input type="text" class="clock form-control" name="timesStart[]" id="from1" value="08:00">
+                                            <input type="text" class="clock form-control" data-minimum="08:00" data-maximum="22:00" name="timesStart[]" id="from1" value="08:00">
                                         </div>
 
                                         <div class="col-2 p-0">
-                                            <input type="text" class="clock form-control" name="timeTo[]" id="until1" value="22:00">
+                                            <input type="text" class="clock form-control" data-minimum="08:00" data-maximum="22:00" name="timeTo[]" id="until1" value="22:00">
                                         </div>
                                     </div>
                                 </div>
@@ -411,7 +411,7 @@
             if (x <= MaxInputs) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#InputsWrapper').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="datePicker col-5 form-control" id="datefield_' + FieldCount + '" data-toggle="datepicker" name="workoutDate[]"><a class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="begin[]" id="timestartfield_' + FieldCount + '" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i');?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="end[]" min="08:00" max="22:00" id="timeendfield_' + FieldCount + '" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>"></div></div>');
+                $('#InputsWrapper').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="datePicker col-5 form-control" id="datefield_' + FieldCount + '" data-toggle="datepicker" name="workoutDate[]"><a class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="begin[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_' + FieldCount + '" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i');?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="end[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + FieldCount + '" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>"></div></div>');
 
                 $(".datePicker").datepicker({
                     language: "et-EE", 
@@ -476,7 +476,7 @@
             if (y <= maxPeriod) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#dateContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" id="from' + FieldCount + '" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); ?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" id="until' + FieldCount + '" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>"></div></div>');
+                $('#dateContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from' + FieldCount + '" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); ?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>"></div></div>');
 
                 $('.clock').clockTimePicker({
                     duration: true,
@@ -529,7 +529,7 @@
             if (z <= maxClosed) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#closeContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" id="from' + FieldCount + '" value="08:00"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" id="until' + FieldCount + '" value="22:00"></div></div>');
+                $('#closeContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" id="from' + FieldCount + '" value="08:00"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="22:00"></div></div>');
 
                 $('.clock').clockTimePicker({
                     duration: true,

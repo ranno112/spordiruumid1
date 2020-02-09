@@ -104,7 +104,8 @@
                 <input class="d-none" type="hidden" name="roomID" id="roomID" value="">
 
                 <div class="d-flex justify-content-end mt-5 px-5 mx-5">
-                    <a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#">Katkesta</a>
+					<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#" onClick="history.go(-1); return false;">Katkesta</a>
+					<a href="##" onClick="history.go(-1); return false;">Go back</a> 
                     <input type="submit" id="changeTimes" class="btn btn-custom col-4 text-white txt-xl" value="Salvesta muudatused">
                 </div>
 
@@ -131,7 +132,7 @@
             //max input box allowed
                 FieldCount++;
                 //add input box
-                $('#myTable > tbody').append('<tr> <td class="td-width-l"></td><td class="td-width-m"><span class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></span></td><td class="td-width-s pl-3"><input class="datePicker form-control p" id="date_' + FieldCount + '" data-toggle="datepicker" name="additionalBookingDate[]"  value="<?php echo date("d.m.Y"); ?>"></td><td class="td-width-s pl-3"><input type="text" class="clock form-control" name="additionalBookingtimeStart[]" id="timestartfield_' + FieldCount + '"value="<?php echo date("H:i"); ?>"></td>  <td class="td-width-s pl-3"><input type="text" class="clock form-control" name="additionalBookingtimeEnd[]" id="timeendfield_' + FieldCount + '"value="<?php echo date("H:i", strtotime('+90 minutes')); ?>"></td></tr>');
+                $('#myTable > tbody').append('<tr> <td class="td-width-l"></td><td class="td-width-m"><span class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></span></td><td class="td-width-s pl-3"><input class="datePicker form-control p" id="date_' + FieldCount + '" data-toggle="datepicker" name="additionalBookingDate[]"  value="<?php echo date("d.m.Y"); ?>"></td><td class="td-width-s pl-3"><input type="text" class="clock form-control" name="additionalBookingtimeStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_' + FieldCount + '"value="<?php echo date("H:i"); ?>"></td>  <td class="td-width-s pl-3"><input type="text" class="clock form-control" name="additionalBookingtimeEnd[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + FieldCount + '"value="<?php echo date("H:i", strtotime('+90 minutes')); ?>"></td></tr>');
                 var once=false;
                 $('.datePicker, .clock').focusin(function () {
                     if (once==false){
@@ -277,7 +278,7 @@
                         //    console.log(BTimesid);
                         if(n){
                        //     console.log(i);
-                            $('#myTable > tbody').append(' <tr id="'+BTimesid+'"> <td class="td-width-l"><b>'+days[new Date(start).getDay()]+'</b>, '+moment(start).format("DD.MM.YYYY")+'</td><td class="td-width-m">'+moment(start).format("HH.mm")+'–'+moment(end).format("HH.mm")+'</td><td class="td-width-s pl-3"><input class="datePicker form-control p" id="time_'+BTimesid+'" data-toggle="datepicker" name="bookingtimesFrom['+counter+']"  value="'+moment(start).format("DD.MM.YYYY")+'"></td><td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeStart[]" id="timestartfield'+i+'" value="'+moment(start).format("HH.mm")+'"></td>  <td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeEnd[]" id="timeendfield_'+i+'" value="'+moment(end).format("HH.mm")+'"></td></tr>');
+                            $('#myTable > tbody').append(' <tr id="'+BTimesid+'"> <td class="td-width-l"><b>'+days[new Date(start).getDay()]+'</b>, '+moment(start).format("DD.MM.YYYY")+'</td><td class="td-width-m">'+moment(start).format("HH.mm")+'–'+moment(end).format("HH.mm")+'</td><td class="td-width-s pl-3"><input class="datePicker form-control p" id="time_'+BTimesid+'" data-toggle="datepicker" name="bookingtimesFrom['+counter+']"  value="'+moment(start).format("DD.MM.YYYY")+'"></td><td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield'+i+'" value="'+moment(start).format("HH.mm")+'"></td>  <td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeEnd[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_'+i+'" value="'+moment(end).format("HH.mm")+'"></td></tr>');
                             resConflicts.push(start.replace('T',' ').substring(0, 16));
                             res2Conflicts.push(end.replace('T',' ').substring(0, 16));
                             ConflictID.push(obj.timeID);

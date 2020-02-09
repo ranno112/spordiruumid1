@@ -64,7 +64,7 @@ class Booking extends CI_Controller {
 				'roomID' => $this->input->post('sportrooms'),
 				'startTime'=>isset($start_data[$i]) ? $start_data[$i] : '',
 				'endTime'=>isset($end_data[$i]) ? $end_data[$i] : '',
-				'takes_place' => $takesPlace,
+				'approved' => $takesPlace,
 				'bookingID' => $id
 				);}
 			
@@ -128,7 +128,6 @@ class Booking extends CI_Controller {
 			 		
 			$event_in = date('Y-m-d H:i:s', $event_in);
 			$event_out = date('Y-m-d H:i:s', $event_out);
-
 			$data1 = array(
 				'public_info'=>$this->input->post('clubname'),
 				'comment_inner' => $this ->input->post('comment2'),
@@ -165,7 +164,7 @@ class Booking extends CI_Controller {
 
 			// var_dump(date("H:i", strtotime($this->input->post('timesStart')[1])));
 			
-			
+			$takesPlace= $this ->input->post('approveNow')==1 ? 1 : 0;
 			for($t = 0; $t <= count($this->input->post('timesStart')); $t++)
 				{
 					if(isset($this->input->post('timesStart')[$t])){
@@ -194,6 +193,7 @@ class Booking extends CI_Controller {
 						'approved' => $this ->input->post('approved'),
 						'startTime' => $start_data,
 						'endTime' => $end_data,
+						'approved' => $takesPlace,
 						'bookingID' => $id
 						);
 
@@ -299,7 +299,7 @@ class Booking extends CI_Controller {
 				'roomID' => $this->input->post('sportrooms'),
 				'startTime' => $start_date,
 				'endTime' => $end_date,
-				'takes_place' => $takesPlace,
+				'approved' => $takesPlace,
 				'bookingID' => $id
 			);
 		}	}
