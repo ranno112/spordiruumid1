@@ -104,9 +104,12 @@
                         <div class="mt-4 px-5 mx-5">
                             <div class="form-label-group pb-2 px-0">
                                 <label>Lisainfo</label>
-                                <textarea class="form-control" id="additional" name="additionalComment" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"></textarea>
-                            </div>
-                        </div>
+								<textarea class="form-control" id="additional" name="additionalComment" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"></textarea>
+								
+							</div>
+							<label><input type="checkbox" checked name="approveNow" id="approveNow" value="1"><span></span></label> Kinnita kohe
+						</div>
+					
 
                         <div class="d-flex justify-content-end mt-5 px-5 mx-5">
                             <a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#">Katkesta</a>
@@ -232,7 +235,8 @@
                             <div class="form-label-group pb-2 px-0">
                                 <label>Lisainfo</label>
                                 <textarea class="form-control" id="comment2" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"></textarea>
-                            </div>
+							</div>
+							<label><input type="checkbox" checked name="approveNow" id="approveNow" value="1"><span></span></label> Kinnita kohe
                         </div>
 
                         <div class="d-flex justify-content-end mt-5 px-5 mx-5">

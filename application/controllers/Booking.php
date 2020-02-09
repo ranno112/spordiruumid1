@@ -21,6 +21,7 @@ class Booking extends CI_Controller {
 		$data['rooms'] = $this->booking_model->getAllRooms();
 		$data['buildings'] = $this->booking_model->getAllBuildings();
 		$data['allBookingInfo'] = $this->booking_model->getAllBookings();
+	
 
 		$data1 = array(
 			'public_info'=>$this->input->post('clubname'),
@@ -32,6 +33,8 @@ class Booking extends CI_Controller {
 			'comment_inner' => $this ->input->post('additionalComment'),
 			'workout' => $this ->input->post('workoutType'),
 			'typeID' => $this ->input->post('type'),
+			
+			
 			//'organizer' => $this ->input->post('phone'),
 			//'event_it' => $this ->input->post('phone'),
 			//'event_out' => $this ->input->post('phone')
@@ -47,6 +50,7 @@ class Booking extends CI_Controller {
 
 
 				$insert_data = array();
+				$takesPlace= $this ->input->post('approveNow')==1 ? 1 : 0;
 				$start_data = $this->input->post('end');
 				$end_data = $this->input->post('begin');
 
@@ -60,6 +64,7 @@ class Booking extends CI_Controller {
 				'roomID' => $this->input->post('sportrooms'),
 				'startTime'=>isset($start_data[$i]) ? $start_data[$i] : '',
 				'endTime'=>isset($end_data[$i]) ? $end_data[$i] : '',
+				'takes_place' => $takesPlace,
 				'bookingID' => $id
 				);}
 			
@@ -262,7 +267,8 @@ class Booking extends CI_Controller {
 
 		$data['rooms'] = $this->booking_model->getAllRooms();
 		$data['buildings'] = $this->booking_model->getAllBuildings();
-		
+	
+
 		$data1 = array(
 			'public_info'=>$this->input->post('clubname'),
 			'c_name' => $this ->input->post('contactPerson'),
@@ -271,8 +277,8 @@ class Booking extends CI_Controller {
 			'typeID' => $this ->input->post('type'),
 			'comment' => $this ->input->post('additionalComment'),
 			'comment_inner' => $this ->input->post('comment2'),
-			'workout' => $this ->input->post('workoutType')
-
+			'workout' => $this ->input->post('workoutType'),
+		
 		);
 	
 		$id= $this->booking_model->create_booking($data1);
@@ -287,11 +293,13 @@ class Booking extends CI_Controller {
 
 			$start_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_startTime"));
 			$end_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_endTime"));
+			$takesPlace = $this ->input->post('approveNow')==1 ? 1 : 0;
 
 			$insert_data2[] = array(
 				'roomID' => $this->input->post('sportrooms'),
 				'startTime' => $start_date,
 				'endTime' => $end_date,
+				'takes_place' => $takesPlace,
 				'bookingID' => $id
 			);
 		}	}
