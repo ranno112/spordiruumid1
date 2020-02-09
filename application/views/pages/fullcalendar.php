@@ -333,15 +333,19 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                     if((displayOrNot==2 || displayOrNot==3) && (event.typeID == 1 || event.typeID == 2)) {
                         element.find('.fc-time').before("<span class='timequery'>Päring: "+moment(event.created_at).format("DD.MM.YYYY HH:mm")+"</span>"); // Päringu kirje broneeringu lahtris
                     }
-					element.css('border', '1px solid #DDD');
+					element.css('border-top', '1px solid #DDD');
+					element.css('border-right', '1px solid #DDD');
+					element.css('border-bottom', '1px solid #DDD');
                     if (event.approved == true) {
-					
+						element.css('border', '1px solid #DDD');
                         element.css('border-left', '7px solid #1A7AB7');
 					
                     } else {
+						
                         element.find('.fc-content').after('<span class="notice notice-error">Kinnitamata</span>');
                         element.css({ 'background': 'repeating-linear-gradient(-45deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 1) 10px, rgba(245, 245, 245, 1) 10px, rgba(245, 245, 245, 1) 20px)'});
                     }
+					
 
                     if (event.takesPlace == false) {
                         element.find('.fc-content').after('<span class="notice notice-error">Ei toimunud</span>')
@@ -641,14 +645,14 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                     for(var t = 0; t < startDateTime.length; t++){
                         if(arrayOfIDs[t] != BTimesid){
                         
-                            
+               
                         if (isBetween(startDateTime[t],checkDateTime, checkDateTime2 ) || isBetween(checkDateTime2, startDateTime[t],endDateTime[t]) || isBetween(checkDateTime, startDateTime[t], endDateTime[t] ) || isBetween(checkDateTime2, startDateTime[t], endDateTime[t] ) ){
-                        //     console.log(isBetween(startDateTime[t],checkDateTime, checkDateTime2 ) || isBetween(endDateTime[t],checkDateTime, checkDateTime2));
+                             console.log(isBetween(startDateTime[t],checkDateTime, checkDateTime2 ) +" "+ isBetween(checkDateTime2, startDateTime[t],endDateTime[t]) +" "+   isBetween(checkDateTime, startDateTime[t], endDateTime[t] )   +" "+ isBetween(checkDateTime2, startDateTime[t], endDateTime[t] ));
                         //   console.log("konflikt:"+ startDateTime[t] +": "+endDateTime[t]);
                             $(".red"+i).css("color", "red");
                             if( $("table").find(".red"+i+":first td").length <5     ){
                                 (arrayOfTitles[t].length>10) ? arrayOfTitles[t]=arrayOfTitles[t].substring(0, 10)+"..." : arrayOfTitles[i]=arrayOfTitles[i];
-                                console.log(arrayOfTitles[i]+" "+  arrayOfTitles[t]);
+                            //    console.log(arrayOfTitles[i]+" "+  arrayOfTitles[t]);
                                 $(".red"+i).append('<td> &nbsp;'+arrayOfTitles[t]+'</td>');
                             }
                          
@@ -792,7 +796,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                             //  console.log($this);
                         //      console.log("going to kinnitama " +id);// $this.attr("id");
                         var approvedOrNot=$this.parents("tr").children("td:nth-child(3)");
-                        console.log($.trim(approvedOrNot.text()));
+                     //   console.log($.trim(approvedOrNot.text()));
                             var approvedOrNotToDB;
                             if($.trim(approvedOrNot.text())=="Kinnitatud"){
                                 approvedOrNotToDB=0
