@@ -61,7 +61,8 @@
         <div class="col-2 mr-auto p-0">
             <a class="btn btn-custom text-white text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss" href="<?php echo base_url(); ?>booking/create/<?php echo ($this->input->get('roomId'));?>"><p class="m-0 txt-lg txt-strong text-center">Uus broneering</p></a>
             <?php  }elseif(  $this->session->userdata('session_id')===TRUE){?>
-            <a class="btn btn-custom text-white text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss" href="<?php echo base_url(); ?>booking/create/<?php echo ($this->input->get('roomId'));?>"><p class="m-0 txt-lg txt-strong text-center">Esita päring</p></a>
+				<div class="col-2 mr-auto p-0">
+		    <a class="btn btn-custom text-white text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss" href="<?php echo base_url(); ?>booking/create/<?php echo ($this->input->get('roomId'));?>"><p class="m-0 txt-lg txt-strong text-center">Esita päring</p></a>
         <?php };?>
 
         <?php  if( !$this->session->userdata('session_id')){?>
@@ -321,13 +322,22 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
             selectable: true,
             selectHelper: true,
             eventRender: function (event, element) {
-            
+				if(event.description){
+					element.find('.fc-title').prepend('<span style="font-weight:550">'+event.description  + "<br/>"+'</span>'); 
+				}
+				else{
+				element.find('.fc-title').prepend(event.description); 
+				
+            };
+		
                     if((displayOrNot==2 || displayOrNot==3) && (event.typeID == 1 || event.typeID == 2)) {
                         element.find('.fc-time').before("<span class='timequery'>Päring: "+moment(event.created_at).format("DD.MM.YYYY HH:mm")+"</span>"); // Päringu kirje broneeringu lahtris
                     }
-
+					element.css('border', '1px solid #DDD');
                     if (event.approved == true) {
+					
                         element.css('border-left', '7px solid #1A7AB7');
+					
                     } else {
                         element.find('.fc-content').after('<span class="notice notice-error">Kinnitamata</span>');
                         element.css({ 'background': 'repeating-linear-gradient(-45deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 1) 10px, rgba(245, 245, 245, 1) 10px, rgba(245, 245, 245, 1) 20px)'});
@@ -336,7 +346,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                     if (event.takesPlace == false) {
                         element.find('.fc-content').after('<span class="notice notice-error">Ei toimunud</span>')
                     }
-
+					//kui on suletud
                     if(event.typeID == 4) {
                         element.find('.fc-time').addClass('d-none');
                         element.find('.fc-title').text('Ruum suletud');

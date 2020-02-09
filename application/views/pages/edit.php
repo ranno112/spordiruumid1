@@ -13,7 +13,7 @@
                 <h4 class="pt-2 txt-xl px-5 mx-5">Kontakt</h4>
                 <div class="d-flex p-0 mt-4 px-5 mx-5">
                     <div class="form-label-group col-6 py-0 pl-0 pr-5">
-                        <label for="contact">Klubi nimi*</label>
+                        <label for="contact">Klubi nimi (avalik info)*</label>
                         <input type="text" class="form-control" name="publicInfo" value="" id="publicInfo" required>
                     </div>
                     <input class="d-none" type="checkbox" id="type" name="type" value="1" checked>
@@ -55,7 +55,7 @@
 
                 <div class="d-flex mt-2 px-5 mx-5">
                     <div class="form-label-group col-6 py-0 pl-0 pr-5">
-                        <label>Sündmus / Treeningu tüüp</label>
+                        <label>Sündmus / Treeningu tüüp (avalik info)</label>
                         <input type="text" class="form-control" name="workoutType" id="workoutType">
                     </div>
                     <div class="form-label-group col-6 p-0 pl-5"></div>
@@ -105,8 +105,7 @@
 
                 <div class="d-flex justify-content-end mt-5 px-5 mx-5">
 					<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#" onClick="history.go(-1); return false;">Katkesta</a>
-					<a href="##" onClick="history.go(-1); return false;">Go back</a> 
-                    <input type="submit" id="changeTimes" class="btn btn-custom col-4 text-white txt-xl" value="Salvesta muudatused">
+					<input type="submit" id="changeTimes" class="btn btn-custom col-4 text-white txt-xl" value="Salvesta muudatused">
                 </div>
 
             </form>
