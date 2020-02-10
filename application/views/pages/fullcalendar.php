@@ -322,6 +322,8 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
             selectable: true,
             selectHelper: true,
             eventRender: function (event, element) {
+                console.log(isOverlapping( event ));
+               
 				if(event.description){
 					element.find('.fc-title').prepend('<span style="font-weight:550">'+event.description  + "<br/>"+'</span>'); 
 				}
@@ -344,16 +346,22 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
 						
                         element.find('.fc-content').after('<span class="notice notice-error">Kinnitamata</span>');
                         element.css({ 'background': 'repeating-linear-gradient(-45deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 1) 10px, rgba(245, 245, 245, 1) 10px, rgba(245, 245, 245, 1) 20px)'});
+                        if( isOverlapping( event ) ){
+                        element.css('border-left', '7px solid lightsalmon');
+                    //  element.find('.fc-content').after('<span class="notice notice-error">Konflikt</span>')
+                            
+                    }
+
                     }
 					
-
+                   
                     if (event.takesPlace == false) {
                         element.find('.fc-content').after('<span class="notice notice-error">Ei toimunud</span>')
                     }
 					//kui on suletud
                     if(event.typeID == 4) {
                         element.find('.fc-time').addClass('d-none');
-                        element.find('.fc-title').text('Ruum suletud');
+                        element.find('.fc-title').text('Suletud');
                         element.css({ 'background': 'repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 55px, rgba(0, 0, 0, 0.07) 55px, rgba(0, 0, 0, 0.07) 110px)', 'border-left': 'none'});
                         element.find('.fc-content').css({'text-align': 'center'}); 
                 }
@@ -1193,6 +1201,16 @@ dayClick: function (date, jsEvent, view) {
         }
     });
 
-
+    function isOverlapping(event) {
+    var array = $('#calendar').fullCalendar('clientEvents');
+    for(i in array){
+        if(array[i].id != event.id && array[i].start != null && array[i].end != null && event.start != null && event.end != null) {
+            if(array[i].start.isBefore(event.end) && array[i].end.isAfter(event.start)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
                             
 </script>
