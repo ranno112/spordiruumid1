@@ -25,7 +25,7 @@ class Fullcalendar extends CI_Controller {
 
 	function edit()
 	{
-		
+		print_r($_POST);
 		$this->load->view('templates/header');
 		$this->load->view('pages/edit' ,$_POST);
 		$this->load->view('templates/footer');

@@ -217,7 +217,8 @@
                     <input type="submit" class="btn btn-custom text-white txt-strong btn-width-lg example1" value="Kinnita">
                 </form >
 
-                <form id="change" method="post" action="<?php echo base_url(); ?>fullcalendar/edit" class="m-0 pt-2">
+				<form id="change" method="post" action="<?php echo base_url(); ?>fullcalendar/edit" class="m-0 pt-2">
+				<input type="hidden" id="BookingID" name="BookingID" value="3487">
                     <input type="submit" id="changeTimes" class="btn btn-second text-white txt-strong btn-width-lg" value="Muuda">
                 </form >  
 
@@ -932,39 +933,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
 
                             $("#change").children().not(':first').remove();
 
-                            //$.post("<?php //echo base_url(); ?>/edit", { bookingID: id });
-
-
-                            
-
-
-
-
-                            // $.ajax({
-                            //     url: "<?php //echo base_url(); ?>fullcalendar/takesPlace",
-                            //     type: "POST",
-                            //     data: {
-                            //         timeID: id, 
-                            //         takesPlace: 0
-
-                            //     },
-                            //     success: function() {
-                            //         calendar.fullCalendar('refetchEvents');
-                            //         //siia tule teha panna kinnitatud olekuks modalis  
-                            //        // jQuery('input:checkbox:checked').parents("tr");
-                            //     //    ​$('input:checkbox:checked').parents("tr").text(function () {
-                            //     //         return $(this).text().replace("Ei toimunud", ""); 
-                            //     //     });​​​​​
-                            //     $('input:checkbox:checked').parents("tr").children("td:contains('Ei toimunud')").html("New");
-                            //         alert('Ei toimunud');
-                            //     }, 
-                            //     error: function(returnval) {
-                            //         alert('Midagi läks valesti');
-                            //         $(".message").text(returnval + " failure");
-                            //         $(".message").fadeIn("slow");
-                            //         $(".message").delay(2000).fadeOut(1000);
-                            //     },
-                            //     })
+                           
                             }
 
                             
@@ -985,7 +954,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                                     };
                             
                                 });
-
+								document.getElementById("BookingID").value = id;
                                 $('#change').submit();
                             
                     }

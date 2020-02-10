@@ -54,6 +54,9 @@ class Edit extends CI_Controller {
 	function load($bookingID)
 	{
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+
+
+			$this->form_validation->set_rules('e-mail', 'Email', 'trim|required|valid_email');
 		
 	//	$this->input->get('saal', TRUE);
 		$event_data = $this->edit_model->fetch_all_event();
@@ -135,11 +138,30 @@ class Edit extends CI_Controller {
 
 	public function update()
 	{	
+		$data['title'] = 'Sign Up';
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
 
+			$this->form_validation->set_rules('publicInfo', 'Klubi nimi', 'required');
+			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'required');
 
-		// if($this->input->post('BookingID'))
-		// {
+			if($this->form_validation->run() === FALSE){
+
+				// $this->load->view('templates/header');
+				// $this->load->view('pages/edit', $data);
+                // $this->load->view('templates/footer');
+
+				// redirect(base_url('fullcalendar/edit'  ,$_POST));
+
+			
+
+				$this->load->view('templates/header');
+				$this->load->view('pages/edit');//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
+				print_r($_POST);
+				$this->load->view('templates/footer');
+
+			} 
+else{
+
 			$data1 = array(
 				'public_info'=>$this->input->post('publicInfo'),
 				'c_name' => $this ->input->post('contactPerson'),
@@ -155,8 +177,7 @@ class Edit extends CI_Controller {
 				// 'event_out' => $this ->input->post('phone')
 			);
 			
-			//$this->form_validation->set_rules('clubname', 'Klubi nimi', 'required');
-		//	$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'required');
+	
 	
 				$this->edit_model->update_booking($data1, $this->input->post('BookingID'));
 				
@@ -265,7 +286,7 @@ class Edit extends CI_Controller {
 				//redirect(base_url('fullcalendar?roomId='.$this->input->post('roomID')));
 			}
 
-
+		}
 
 	}else{
 		//Kui pole juht ega haldur, siis viib avalehele
