@@ -120,14 +120,14 @@
                             <div id="contact" class="content active p-0 m-0">                         <div class="remove">   
                                 <p class="pt-2 txt-regular">Kontakt</p>
                                 <div class="d-flex justify-content-between p-0 m-0  remove">
-                                    <div class="col-6 p-0 m-0"><p>Kontaktisik</p></div>
+                                    <div class="col-6 p-0 m-0"><p>Klubi nimi</p></div>
                                     <div class="col-6 p-0 m-0">
-                                        <p id="c_name"></p>
+                                        <p id="clubname"></p>
                                         <input type="text" class="d-none" name="clubname" id="clubname">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between p-0 m-0 remove">
-                                    <div class="col-6 p-0 m-0"><p>Klubi nimi</p></div>
+                                    <div class="col-6 p-0 m-0"><p>Kontaktisik</p></div>
                                     <div class="col-6 p-0 m-0">
                                         <p id="c_name"></p>
                                         <input type="text" class="d-none" name="c_name" id="c_name">
@@ -479,8 +479,9 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                     $('.remove').each(function() {
                         $(this).show();})};
                         
-                $('#clubname').val(event.clubname); 
-                $("#contact #c_name").text(event.clubname);
+                $('#clubname').val(event.title); 
+                $("#clubname").text(event.title);
+				$("#c_name").text(event.clubname);
                 $('#event_in').val(event.event_in);
                 if( !$('#event_in').val() ) {
                     $( "#ajad" ).addClass( "d-none" );

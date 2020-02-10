@@ -136,6 +136,8 @@ class Edit extends CI_Controller {
 	public function update()
 	{	
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+
+
 		// if($this->input->post('BookingID'))
 		// {
 			$data1 = array(
@@ -200,7 +202,7 @@ class Edit extends CI_Controller {
 		
 
 
-		if($this->form_validation->run()===FALSE){
+	
 			
 			$addtimes = array();
 			for($t = 0; $t <= count($this->input->post('additionalBookingDate')); $t++) {
@@ -265,11 +267,8 @@ class Edit extends CI_Controller {
 
 
 
-		}else{
-		//	$this->booking_model->create_booking();
-			$this->load->view('fullcalendar?roomId='.$this->input->post('roomID'));//redirectib sinna peale väljade korrektselt sisestamist
-		}
 	}else{
+		//Kui pole juht ega haldur, siis viib avalehele
 		redirect('');}
 	
 	}
