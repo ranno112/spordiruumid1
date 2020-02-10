@@ -37,13 +37,13 @@
                     </div>
                 </div>
 
-                <h4 class="mt-5 txt-xl px-5 mx-5 pb-3">Saalid</h4>
+                <h4 class="mt-5 txt-xl px-5 mx-5 pb-3">Ruumid</h4>
                 <div class="form-label-group col-5 py-0 pl-0 pl-5 ml-5">
-                    <label class="txt-regular txt-lg">Aktiivsed saalid</label>
+                    <label class="txt-regular txt-lg">Aktiivsed ruumid</label>
                     <?php foreach ($editBuildings as $value) { if ($value['roomActive'] == 1) { echo('<input class="form-control mb-3" id="phone" type="text" name="phone" value="' . $value['roomName'] .'" disabled>'); }}; ?>
                 </div>
                 <div class="form-label-group col-5 py-0 pl-0 pl-5 ml-5">
-                    <label class="txt-regular txt-lg">Mitteaktiivsed saalid</label>
+                    <label class="txt-regular txt-lg">Mitteaktiivsed ruumid</label>
                     <?php foreach ($editBuildings as $key => &$value) { if ($value['roomActive'] == 0) { echo('<input class="form-control mb-3" id="phone" type="text" name="phone" value="' . $value['roomName'] .'" disabled>'); }}; ?>
                 </div>
 
@@ -75,7 +75,7 @@
                 <th class="py-2 txt-strong text-darkblue" scope="col">Email</th>
                 <th class="py-2 txt-strong text-darkblue" scope="col">Teavituste e-mail</th>
                 <th class="py-2 txt-strong text-darkblue" scope="col">Telefon</th>
-                <th class="py-2 txt-strong text-darkblue" scope="col">Saalid</th>
+                <th class="py-2 txt-strong text-darkblue" scope="col">Ruumid</th>
                 <th class="py-2 txt-strong text-darkblue" scope="col"></th>
             </tr>
             </thead>

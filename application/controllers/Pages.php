@@ -27,7 +27,7 @@ class Pages extends CI_Controller
                              
                         //        echo  $this->input->get('roomId');
                         //         var_dump( $each->id);
-                        $this->session->set_flashdata('access_deniedToUrl', 'Kahjuks teil puuduvad õigused selle saali redigeerimiseks. Saali seisu vaatamiseks peate välja logima või avama teise veebilehitsejaga');
+                        $this->session->set_flashdata('access_deniedToUrl', 'Kahjuks teil puuduvad õigused selle ruumi redigeerimiseks. Ruumi seisu vaatamiseks peate välja logima või avama teise veebilehitsejaga');
                         redirect('');
                         };
                 };

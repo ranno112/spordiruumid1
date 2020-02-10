@@ -157,7 +157,7 @@
                                     </div>
                                 </div></div>
                                 <div class="d-flex justify-content-between">
-                                    <div class="col-6 p-0 m-0"><p>Saal</p></div>
+                                    <div class="col-6 p-0 m-0"><p>Ruum</p></div>
                                     <div class="col-6 p-0 m-0">
                                         <p id="selectedroom"></p>
                                         <input type="text" class="d-none" name="selectedroom" id="selectedroom">

@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="form-label-group col-6 p-0 pl-5">
-                        <label for="room">Saal</label>
+                        <label for="room">Ruum</label>
                         <input type="text" class="form-control" name="selectedroom" id="selectedroom" value="" disabled>
                     </div>
                 </div>

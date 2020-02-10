@@ -105,15 +105,12 @@ class Booking extends CI_Controller {
 			if ($event_in > $event_out)
 			{
 				
-			
 			  $this->form_validation->set_message('post_updated', 'Kuupäevad ei ole õigesti sisestatud.');
 			  $this->session->set_flashdata('post_updated', 'Periood on valesti sisestatud');
-
+			 			
 			  if($this->form_validation->run() === FALSE){
-				redirect('booking/create/'.$this->input->post('sportrooms'));
-				// $this->load->view('templates/header');
-				// $this->load->view('pages/booking', $data);
-				// $this->load->view('templates/footer');
+				redirect( $this ->input->post('current_url'));
+			
 			} 
 
 			   $this->load->view('templates/header');
@@ -160,8 +157,6 @@ class Booking extends CI_Controller {
 			$days=array('Esmaspäev'=>'Monday','Teisipäev' => 'Tuesday','Kolmapäev' => 'Wednesday','Neljapäev'=>'Thursday','Reede' =>'Friday','Laupäev' => 'Saturday','Pühapäev'=>'Sunday');
 			
 		
-			
-
 			// var_dump(date("H:i", strtotime($this->input->post('timesStart')[1])));
 			
 			$takesPlace= $this ->input->post('approveNow')==1 ? 1 : 0;
@@ -185,8 +180,26 @@ class Booking extends CI_Controller {
 					$start_data = date('Y-m-d H:i:s', strtotime("$dateToDb $formated_timeToDb"));
 					$end_data = date('Y-m-d H:i:s', strtotime("$dateToDb $formated_EndtimeToDb"));
 				
-					//  var_dump($end_data);
+					
 
+					if(strtotime("$dateToDb $formated_timeToDb")>strtotime("$dateToDb $formated_EndtimeToDb")){
+							
+						  $this->form_validation->set_message('validationErrorMessage', 'Kuupäevad ei ole õigesti sisestatud.');
+						  $this->session->set_flashdata('validationErrorMessage', 'Kellaaeg on valesti sisestatud');
+									 
+						  if($this->form_validation->run() === FALSE){
+							redirect( $this ->input->post('current_url'));
+						
+						} 
+			
+						   $this->load->view('templates/header');
+					
+						   $this->load->view('pages/booking', $data);
+						   $this->load->view('templates/footer');
+					  
+						}
+						else
+						{
 
 					$insert_data2[] = array(
 						'roomID' => $this->input->post('sportrooms'),
@@ -195,7 +208,7 @@ class Booking extends CI_Controller {
 						'approved' => $takesPlace,
 						'bookingID' => $id
 						);
-
+					}
 				}
 			}
 				}}
@@ -293,6 +306,24 @@ class Booking extends CI_Controller {
 			$start_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_startTime"));
 			$end_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_endTime"));
 		
+			if(strtotime("$formated_date $formated_startTime")>strtotime("$formated_date $formated_endTime")){
+							
+				$this->form_validation->set_message('validationErrorMessage', 'Kuupäevad ei ole õigesti sisestatud.');
+				$this->session->set_flashdata('validationErrorMessage', 'Kellaaeg on valesti sisestatud');
+						   
+				if($this->form_validation->run() === FALSE){
+				  redirect( $this ->input->post('current_url'));
+			  
+			  } 
+  
+				 $this->load->view('templates/header');
+		  
+				 $this->load->view('pages/booking', $data);
+				 $this->load->view('templates/footer');
+			
+			  }
+			  else
+			  {
 
 			$insert_data2[] = array(
 				'roomID' => $this->input->post('sportrooms'),
@@ -301,6 +332,8 @@ class Booking extends CI_Controller {
 				'approved' => $takesPlace,
 				'bookingID' => $id
 			);
+		}
+
 		}	}
 			
 		$this->booking_model->create_bookingTimes($insert_data2);

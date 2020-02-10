@@ -67,7 +67,7 @@
 			$deletequery=$this->building_model->delete_room($id);
 			// Set message
 			if($deletequery===FALSE){
-				$this->session->set_flashdata('building_deleted', 'Ei saa saali kustutada kuna selles on kehtivad broneeringud. Palun kustuta kõik broneeringud ära ja seejärel proovi uuesti.');	
+				$this->session->set_flashdata('building_deleted', 'Ei saa ruumi kustutada kuna selles on kehtivad broneeringud. Palun kustuta kõik broneeringud ära ja seejärel proovi uuesti.');	
 				redirect('building/view/'.$this->session->userdata['building']);
 			}
 			$this->session->set_flashdata('building_deleted', 'Your building has been deleted');

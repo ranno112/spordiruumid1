@@ -124,6 +124,7 @@
                           	<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#" onClick="history.go(-1); return false;">Katkesta</a>
                             <input class="btn btn-custom col-3 text-white txt-xl" type="submit" value="Broneeri">
                         </div>
+						<input type="hidden" name="current_url" value="<?php echo 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']; ?>" />
                     </form>
                 </div>
 
@@ -252,6 +253,7 @@
                             <a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="">Katkesta</a>
                             <input class="btn btn-custom col-3 text-white txt-xl" type="submit" value="Broneeri">
                         </div>
+						<input type="hidden" name="current_url" value="<?php echo 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']; ?>" />
                     </form>
                 </div>
 
@@ -345,6 +347,7 @@
                             <a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="">Katkesta</a>
                             <input class="btn btn-custom col-3 text-white txt-xl" type="submit" value="Broneeri">
                         </div>
+						<input type="hidden" name="current_url" value="<?php echo 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']; ?>" />
                     </form>
                 </div>
             </div>
