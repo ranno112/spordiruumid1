@@ -403,7 +403,7 @@
             durationNegative: true,
             precision: 15,
             i18n: {
-                cancelButton: 'Abbrechen'
+                cancelButton: 'Võta tagasi'
             },
             onAdjust: function(newVal, oldVal) {
                 //...
@@ -444,7 +444,7 @@
                     durationNegative: true,
                     precision: 15,
                     i18n: {
-                        cancelButton: 'Abbrechen'
+                        cancelButton: 'Võta tagasi'
                     },
                     onAdjust: function(newVal, oldVal) {
                         //...
@@ -495,7 +495,7 @@
                     durationNegative: true,
                     precision: 15,
                     i18n: {
-                        cancelButton: 'Abbrechen'
+                        cancelButton: 'Võta tagasi'
                     },
                     onAdjust: function(newVal, oldVal) {
                         //...
@@ -548,7 +548,7 @@
                     durationNegative: true,
                     precision: 15,
                     i18n: {
-                        cancelButton: 'Abbrechen'
+                        cancelButton: 'Võta tagasi'
                     },
                     onAdjust: function(newVal, oldVal) {
                         //...
