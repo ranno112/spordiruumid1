@@ -142,10 +142,16 @@ class Edit extends CI_Controller {
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
 
 			$this->form_validation->set_rules('publicInfo', 'Klubi nimi', 'required');
-			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'required');
+		//	$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'required');
 
-			if($this->form_validation->run() === FALSE){
+			if($this->form_validation->run() === FALSE ){
 
+				if($this->input->post('dontShow')!=1){
+				$this->form_validation->set_message('validationErrorMessage', 'Klubi nimi puudu');
+				$this->session->set_flashdata('validationErrorMessage', 'Klubi nimi puudu');
+
+				
+				}
 				// $this->load->view('templates/header');
 				// $this->load->view('pages/edit', $data);
                 // $this->load->view('templates/footer');
@@ -157,10 +163,11 @@ class Edit extends CI_Controller {
 				$this->load->view('templates/header');
 				$this->load->view('pages/edit');//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
 				print_r($_POST);
+
 				$this->load->view('templates/footer');
 
 			} 
-else{
+			else{
 
 			$data1 = array(
 				'public_info'=>$this->input->post('publicInfo'),
@@ -169,38 +176,45 @@ else{
 				'c_phone' => $this ->input->post('phone'),
 				'c_email' => $this ->input->post('email'),
 				'comment' => $this ->input->post('additionalComment'),
-				
 				//'building' => $this ->input->post('building'), //pole seda formis
-				
 				'workout' => $this ->input->post('workoutType'),
 				// 'event_in' => $this ->input->post('eventIn'),
 				// 'event_out' => $this ->input->post('phone')
 			);
 			
-	
-	
 				$this->edit_model->update_booking($data1, $this->input->post('BookingID'));
 				
-			
-	
 					$insert_data = array();
 					$start_data = $this->input->post('bookingtimesFrom');
 					$end_data = $this->input->post('bookingtimesTo');
 					
 					
-
-	
-			
+					$RedirectToCalendar='';
 					for($i = 0; $i < count($start_data); $i++)
 					{
 
-						$formated_startTime = date("H:i:s", strtotime($this->input->post('timeStart')[$i]));
-						$formated_endTime = date("H:i:s", strtotime($this->input->post('timeEnd')[$i]));
-						$formated_date = date("Y-m-d", strtotime($this->input->post('bookingtimesFrom')[$i]));
+						$formated_startTime = date("H:i:s", strtotime($this->input->post('timeStart')[$i])); //kell alates
+						$formated_endTime = date("H:i:s", strtotime($this->input->post('timeEnd')[$i])); //kell kuni
+						$formated_date = date("Y-m-d", strtotime($this->input->post('bookingtimesFrom')[$i])); //kuupäev
 				
 						$start_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_startTime"));
 						$end_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_endTime"));
 				
+						if(strtotime("$formated_date $formated_startTime")>strtotime("$formated_date $formated_endTime")){
+
+							$this->form_validation->set_message('validationErrorMessage', 'Kuupäevad ei ole õigesti sisestatud.');
+							$this->session->set_flashdata('validationErrorMessage', 'Kellaaeg on valesti sisestatud');
+
+							//	redirect('edit/update'  ,$_POST);
+							$this->load->view('templates/header');
+							$this->load->view('pages/edit');
+							$this->load->view('templates/footer');
+							$RedirectToCalendar=false;
+						break;
+
+						}
+						else{
+							$RedirectToCalendar=true;
 						$insert_data[] = array(
 							//'roomID' => $this->input->post('sportrooms'),
 							'startTime' => $start_date, 
@@ -208,7 +222,7 @@ else{
 							
 							);
 							$this->edit_model->update_bookingTimes($insert_data[$i], $this->input->post('timesIdArray')[$i]);
-						
+						}
 				
 				}
 				//var_dump($insert_data);
@@ -222,9 +236,8 @@ else{
 		// }
 		
 
-
-	
-			
+		if($this->input->post('additionalBookingDate')){
+		
 			$addtimes = array();
 			for($t = 0; $t <= count($this->input->post('additionalBookingDate')); $t++) {
 			
@@ -246,47 +259,38 @@ else{
 				print_r($addtimes);
 				$id=$this->edit_model->insert($addtimes[$t], $this->input->post('id'));
 			
-			
-				
-			
-				
 		
 			//	redirect(base_url('fullcalendar/edit'  ,$_POST));
-			
-			
-	//print_r($addtimes);
-		
-			
-		
 				// $timesIdArray=$this->input->post('');
 				// $this->session->set_flashdata('timesIdArray', $timesIdArray);
 		
 				// $this->session->set_userdata('referred_from', current_url());
 				// $referred_from = $this->session->userdata('referred_from');
 				
-				// $this->load->view('templates/header');
-				// $this->load->view('pages/edit' ,$_POST);//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
-				// echo "success!";
-				// $this->load->view('templates/footer');
-
-				//redirect($referred_from, 'refresh');
-
 			}else{
 
 
-
-
-					redirect(base_url('fullcalendar?roomId='.$this->input->post('roomID')));
-					$this->load->view('templates/header');
-					$this->load->view('pages/fullcalendar?roomId='.$this->input->post('roomID'));//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
-					echo "success!";
-					$this->load->view('templates/footer');
+					// redirect(base_url('fullcalendar?roomId='.$this->input->post('roomID')));
+					// $this->load->view('templates/header');
+					// $this->load->view('pages/fullcalendar?roomId='.$this->input->post('roomID'));//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
+					// echo "success!";
+					// $this->load->view('templates/footer');
 
 				}
 				//redirect(base_url('fullcalendar?roomId='.$this->input->post('roomID')));
 			}
 
+		}	
+		else{
+			if($RedirectToCalendar){
+				redirect(base_url('fullcalendar?roomId='.$this->input->post('roomID')));
+			// $this->load->view('templates/header');
+			// $this->load->view('pages/edit');
+			// $this->load->view('templates/footer');
+			}
+		
 		}
+	}
 
 	}else{
 		//Kui pole juht ega haldur, siis viib avalehele

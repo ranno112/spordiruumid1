@@ -99,8 +99,7 @@
                         <textarea class="form-control" id="additional" name="additionalComment" rows="3"></textarea>
                     </div>
 				</div>
-				<?php echo $_POST['BookingID']; ?>
-				<?php print_r($_POST['timesIdArray'][0])?>
+		
                 <input class="d-none" type="hidden" name="id" id="bookid" value="<?php echo $_POST['BookingID']; ?>">
                 <input class="d-none" type="hidden" name="roomID" id="roomID" value="">
 

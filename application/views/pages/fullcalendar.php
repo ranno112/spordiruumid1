@@ -217,7 +217,8 @@
                     <input type="submit" class="btn btn-custom text-white txt-strong btn-width-lg example1" value="Kinnita">
                 </form >
 
-				<form id="change" method="post" action="<?php echo base_url(); ?>fullcalendar/edit" class="m-0 pt-2">
+				<form id="change" method="post" action="<?php echo base_url(); ?>edit/update" class="m-0 pt-2">
+				<input type="hidden" id="dontShow" name="dontShow" value="1">
 				<input type="hidden" id="BookingID" name="BookingID" value="3487">
                     <input type="submit" id="changeTimes" class="btn btn-second text-white txt-strong btn-width-lg" value="Muuda">
                 </form >  
@@ -931,7 +932,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                             var timesId = $this.attr("id");
                             timesIdArray.push(timesId);
 
-                            $("#change").children().not(':first').remove();
+                            //$("#change").children().not(':first').remove();
 
                            
                             }
