@@ -98,9 +98,10 @@
                         <label>Lisainfo</label>
                         <textarea class="form-control" id="additional" name="additionalComment" rows="3"></textarea>
                     </div>
-                </div>
-
-                <input class="d-none" type="hidden" name="id" id="bookid" value="<?php print_r($_POST['timesIdArray'][0])?>">
+				</div>
+				<?php echo $_POST['BookingID']; ?>
+				<?php print_r($_POST['timesIdArray'][0])?>
+                <input class="d-none" type="hidden" name="id" id="bookid" value="<?php echo $_POST['BookingID']; ?>">
                 <input class="d-none" type="hidden" name="roomID" id="roomID" value="">
 
                 <div class="d-flex justify-content-end mt-5 px-5 mx-5">
@@ -114,7 +115,7 @@
 </div>
 
 
-<?php $arr2 = array(); foreach (array_slice($_POST['timesIdArray'], 1) as $key=>$value) {   $arr2[] = $value; }?>
+<?php $arr2 = array(); foreach ($_POST['timesIdArray'] as $key=>$value) {   $arr2[] = $value; }?>
    
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/datepicker.js"></script>
@@ -182,7 +183,7 @@
 
       
 
-         //   var eventToModificate = "<?php echo base_url(); ?>edit/load/<?php print_r($_POST['timesIdArray'][0])?>";
+         //   var eventToModificate = "<?php echo base_url(); ?>edit/load/<?php echo $_POST['BookingID']; ?>";
             var resConflicts =[];
             var res2Conflicts=[];
             var ConflictID=[];
@@ -194,7 +195,7 @@
             var datafrom = ['<?=implode("', '", $arr2)?>'];
           
                   
-            $.post("<?php echo base_url(); ?>edit/load/<?php print_r($_POST['timesIdArray'][0])?>",
+            $.post("<?php echo base_url(); ?>edit/load/<?php echo $_POST['BookingID']; ?>",
                 function(data)
                 {
                     var res =  $.parseJSON(data);
@@ -377,7 +378,7 @@
 
 
                 $("#changeTimes").on('click',function( event ) {
-                           var bookingID = '<?=$_POST['timesIdArray'][0]?>';
+                           var bookingID = '<?=$_POST['BookingID']?>';
                            console.log(bookingID);
                             var datafrom = ['<?=implode("', '", $arr2)?>'];
                             var myForm = document.getElementById('change');

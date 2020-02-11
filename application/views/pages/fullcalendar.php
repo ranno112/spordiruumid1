@@ -939,7 +939,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                             
                         });
                         //   console.log("kõik on ckeckitud, tuleb ka bookings ab-st ära kustutada "+id + ' ' +timesIdArray);
-                        timesIdArray.unshift(id);
+                      //  timesIdArray.unshift(id);
                                 var myForm = document.getElementById('change');
 
                                 timesIdArray.forEach(function (value) {
