@@ -403,7 +403,7 @@
             durationNegative: true,
             precision: 15,
             i18n: {
-                cancelButton: 'Võta tagasi'
+                cancelButton: 'Tühista'
             },
             onAdjust: function(newVal, oldVal) {
                 //...
