@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <title>Pärnu Spordikeskuste Andmebaas</title>
 
@@ -18,8 +19,7 @@
     <script src="https://kit.fontawesome.com/419da46f9e.js" crossorigin="anonymous"></script>
     
 
-    <script src="<?php echo base_url(); ?>assets/js/vue.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/vue-router.min.js"></script>
+
     <script src="<?php echo base_url(); ?>assets/js/axios.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -38,7 +38,7 @@
             <div class="container p-0">
       
                 <div class="navbar-header pr-lg-5 pr-md-3 pr-sm-1 pl-0">
-                <a class="navbar-brand mr-1 py-1" href="<?php echo base_url(); ?>"><img class="logo" src="<?php echo base_url(); ?>assets/img/plv_vapp_blue.svg" alt="logo" class="logo"></a>
+                <a class="navbar-brand mr-1 py-1" href="<?php echo base_url(); ?>"><img class="logo" src="<?php echo base_url(); ?>assets/img/plv_vapp_blue.svg" alt="logo"></a>
                     <a class="navbar-brand align-middle p-0 text-white" href="<?php echo base_url(); ?>">Pärnu Linnavalitsus</a>
                 </div>
                 <!-- <button >"Logi sisse"</button> -->

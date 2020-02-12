@@ -83,7 +83,7 @@
     <div id="calendar-container">
         <div id='calendar'></div>
     </div>
-    </br>
+    <br/>
 
     <!-- KALENDER CONTAINERIS END -->
     </div>
@@ -150,7 +150,8 @@
                                         <p id="email"></p>
                                         <input type="text" class="d-none" name="email" id="email">
                                     </div>
-                                </div></div>
+								</div>
+							</div>
 
                                 <p id="saal" class="pt-3 txt-regular">Asukoht ja sündmus / treeningu tüüp</p><div class="remove">
                                 <div class="d-flex justify-content-between remove2">
@@ -215,9 +216,11 @@
                 <?php echo form_close() ?>
                 <input type="hidden" name="eventid" id="event_id" value="0" /> 
             </div>
-
+		
             <div class="modal-footer d-block m-0 py-2 text-center">
+		
                 <form id="approveCheck"  class="m-0">
+			
                     <input type="submit" class="btn btn-custom text-white txt-strong btn-width-lg example1" value="Kinnita">
                 </form >
 
@@ -274,18 +277,19 @@
 
         </div>
 	</div>
+	  
 	
-
+    </div>
+</div><!-- container -->
 
 	
     <?php endif;?>
     <!-- ****************** MODAL END ****************** -->
 
-</div><!-- container -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/datepicker.js"></script>
 <script>
-  var counter=0;
+var counter=0;
     $(document).ready(function() {
 		var days = ['P', 'E', 'T', 'K', 'N', 'R', 'L'];
         var displayOrNot='<?php echo $this->session->userdata('roleID')?>';
@@ -297,7 +301,7 @@
             language: "et-EE",
             autoHide: true,
             date: new Date(),
-            autoPick: true,
+            autoPick: true
         });
 
 
@@ -331,7 +335,7 @@
                     titleFormat: 'D. MMMM YYYY',
                     columnFormat: "dddd, D. MMM"
                     // other view-specific options here
-                },
+                }
 				
             },
 
@@ -348,19 +352,19 @@
             rendering: 'background',
             eventSources: [
 
-// your event source
-{
-url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get('roomId')); ?>", // use the `url` property
+			// your event source
+			{
+			url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get('roomId')); ?>" // use the `url` property
 
-// rendering : 'background'
-},
-// {
-//   url:  "<?php //echo base_url(); ?>fullcalendar/load/<?php // echo ($this->input->get('roomId')); ?>", // use the `url` property
-//             //  color: 'yellow',    // an option!
-//             // textColor: 'black'  // an option!
-// }
+			// rendering : 'background'
+			}
+			// {
+			//   url:  "<?php //echo base_url(); ?>fullcalendar/load/<?php // echo ($this->input->get('roomId')); ?>", // use the `url` property
+			//             //  color: 'yellow',    // an option!
+			//             // textColor: 'black'  // an option!
+			// }
 
-// any other sources...
+			// any other sources...
 
             ],
             selectable: true,
@@ -374,7 +378,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
 				else{
 				element.find('.fc-title').prepend(event.description); 
 				
-            };
+            }
 		
                     if((displayOrNot==2 || displayOrNot==3) && (event.typeID == 1 || event.typeID == 2)) {
                         element.find('.fc-time').before("<span class='timequery'>Päring: "+moment(event.created_at).format("DD.MM.YYYY HH:mm")+"</span>"); // Päringu kirje broneeringu lahtris
@@ -400,7 +404,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
 					
                    
                     if (event.takesPlace == false) {
-                        element.find('.fc-content').after('<span class="notice notice-error">Ei toimunud</span>')
+                        element.find('.fc-content').after('<span class="notice notice-error">Ei toimunud</span>');
                     }
 					//kui on suletud
                     if(event.typeID == 4) {
@@ -518,10 +522,10 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                     $('p#saal').text("Asukoht");
                     $('.remove').each(function() {
                         $(this).hide();
-                    })
+                    });
                 } else {
                     $('.remove').each(function() {
-                        $(this).show();})};
+                        $(this).show();})}
                         
                 $('#clubname').val(event.title); 
                 $("#clubname").text(event.title);
@@ -578,7 +582,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
 
                     
                 
-                };
+                }
                 
                 // console.log(startDateTime);
                 // console.log(endDateTime);
@@ -611,7 +615,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                     }
                     else if(approved==0){
                         approved="Kinnitamata";
-                    };
+                    }
 
                     var takesPlace = events[i].takesPlace;
                     if(takesPlace==1){
@@ -619,7 +623,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                     }
                     else if(takesPlace==0){
                         takesPlace="XXX";
-                    };
+                    }
                     var start_date = new Date(events[i].start._d);
 				
 					var weekday = days[start_date.getDay()];
@@ -639,7 +643,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                     var st_monthIndex = start_date.getUTCMonth() + 1;
                     if(st_monthIndex<10){
                         st_monthIndex='0'+st_monthIndex;
-                        };
+                        }
                     var st_year = start_date.getUTCFullYear();
                     var st_hours = start_date.getUTCHours();
                     if(st_hours==0){
@@ -666,7 +670,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                         en_monthIndex = end_date.getUTCMonth()+1;
                         if(en_monthIndex<10){
                             en_monthIndex='0'+en_monthIndex;
-                        };
+                        }
                         en_year = end_date.getUTCFullYear();
                         var en_hours = end_date.getUTCHours();
                             if(en_hours<10){
@@ -718,7 +722,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                            
                         }
                     }
-                    };
+                    }
                   
                     //  console.log(startDateTime);
                 //console.log(endDateTime);
@@ -756,7 +760,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                 });
 
 
-            },
+            }
             
                             
 
@@ -767,7 +771,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                 if ($('.abc:checked').length == $('.abc').length) 
                     {
                         if (confirm("Oled kindel kustutada KÕIK ajad?")) {
-                event.preventDefault();    }else{return false};
+                event.preventDefault();    }else{return false;}
                         var id=  $('input:checkbox:checked').parents("tbody").attr('id');
                         // console.log("kõik on ckeckitud, tuleb ka bookings ab-st ära kustutada "+id);
                     $.ajax({
@@ -787,8 +791,8 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                             $(".message").text(returnval + " failure");
                             $(".message").fadeIn("slow");
                             $(".message").delay(2000).fadeOut(1000);
-                        },
-                    })
+                        }
+                    });
 
 
 
@@ -797,7 +801,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                     {
                         if (confirm("Oled kindel, et soovid kustutada?"+$('.abc:checked'))) {
                            // console.log($('.abc:checked'));
-                            event.preventDefault();    }else{return false};
+                            event.preventDefault();    }else{return false;}
                         
                         $("input:checkbox").each(function(){
                         var $this = $(this);
@@ -823,8 +827,8 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                                     $(".message").text(returnval + " failure");
                                     $(".message").fadeIn("slow");
                                     $(".message").delay(2000).fadeOut(1000);
-                                },
-                                })
+                                }
+                                });
                             }
                         });
                     }
@@ -842,7 +846,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                     if ($('.abc:checked').length <= $('.abc').length && $('.abc:checked').length>0) 
                     {
                         if (confirm("Kinnatan valitud?")) {
-                            event.preventDefault()    }else{return false};
+                            event.preventDefault();    }else{return false;}
                         
                         $("input:checkbox").each(function(){
                         var $this = $(this);
@@ -855,10 +859,10 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                      //   console.log($.trim(approvedOrNot.text()));
                             var approvedOrNotToDB;
                             if($.trim(approvedOrNot.text())=="Kinnitatud"){
-                                approvedOrNotToDB=0
+                                approvedOrNotToDB=0;
                             }else{
-                                approvedOrNotToDB=1
-                            };
+                                approvedOrNotToDB=1;
+                            }
 
 
 
@@ -885,8 +889,8 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                                     $(".message").text(returnval + " failure");
                                     $(".message").fadeIn("slow");
                                     $(".message").delay(2000).fadeOut(1000);
-                                },
-                                })
+                                }
+                                });
                             }
                         });
                     }
@@ -903,7 +907,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
             if ($('.abc:checked').length <= $('.abc').length && $('.abc:checked').length>0) 
                     {
                         if (confirm("Valitud trennid ei toimunud?")) {
-                            event.preventDefault();    }else{return false};
+                            event.preventDefault();    }else{return false;}
                         
                         $("input:checkbox").each(function(){
                         var $this = $(this);
@@ -912,9 +916,9 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                         console.log($.trim(approvedOrNot.text())=="XXX");
                             var approvedOrNotToDB;
                             if($.trim(approvedOrNot.text())=="XXX"){
-                                approvedOrNotToDB=1
+                                approvedOrNotToDB=1;
                             }else{
-                                approvedOrNotToDB=0
+                                approvedOrNotToDB=0;
                             };
 
                         if($this.is(":checked")){
@@ -942,7 +946,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                                     $(".message").text(returnval + " failure");
                                     $(".message").fadeIn("slow");
                                     $(".message").delay(2000).fadeOut(1000);
-                                },
+                                }
                                 })
                             }
                         });
@@ -1222,5 +1226,5 @@ dayClick: function (date, jsEvent, view) {
     }
     return false;
 }
-               
+              
 </script>

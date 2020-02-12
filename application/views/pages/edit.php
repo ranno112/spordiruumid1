@@ -81,7 +81,7 @@
                                     <td id="kp" class="text-white txt-regular td-width-s p-1 pl-3">Kuupäev</td>
                                     <td id="alates" class="text-white txt-regular td-width-s p-1 pl-3">Alates</td>
                                     <td id="kuni" class="text-white txt-regular td-width-s p-1 pl-3">Kuni</td>
-                                </tr></br>
+                                </tr><br/>
                                 <!-- Genereerib automaatselt -->
                             </tbody>
                         </table>

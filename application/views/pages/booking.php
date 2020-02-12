@@ -355,7 +355,7 @@
         </div>
     </div>
 </div>
-</br>
+<br/>
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/datepicker.js"></script>
 <script>
