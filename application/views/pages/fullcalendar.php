@@ -222,9 +222,35 @@
                 </form >
 
 				<form id="change" method="post" action="<?php echo base_url(); ?>edit/update" class="m-0 pt-2">
-				<input type="hidden" id="dontShow" name="dontShow" value="1">
-				<input type="hidden" id="BookingID" name="BookingID" value="3487">
-                    <input type="submit" id="changeTimes" class="btn btn-second text-white txt-strong btn-width-lg" value="Muuda">
+					<input type="hidden" id="dontShow" name="dontShow" value="1">
+					<input type="hidden" id="BookingID" name="BookingID" value="3487">
+					<input type="submit" id="changeTimes" class="btn btn-second text-white txt-strong btn-width-lg" value="Muuda">
+						
+
+						
+					
+						<!-- Trigger the modal with a button -->
+					<button type="button" class="btn btn-second text-white txt-strong btn-width-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+						<!-- Asking modal -->
+					<div class="modal-footer" id="myModal" role="dialog">
+						<!-- Modal content-->
+						<div class="modal-content">
+						<div class="modal-header">
+						
+						<h5 class="modal-title">Kas sa soovid muuta valitud üksust või hooajaliselt kõik teisipäevad 13:15-15:00 alates 15.02.2020</h5>
+						</div>
+						<div class="modal-body">
+						<p></p>
+						<button type="button" class="btn btn-info btn-lg"  >Valitud</button>
+						<button type="button" class="btn btn-info btn-lg"  >Hooajaliselt</button>
+					
+						</div>
+					
+						</div>
+						<!-- End of asking modal -->
+					</div>
+					
                 </form >  
 
                 <form id="delete" class="m-0 pt-2">
@@ -235,30 +261,11 @@
                     <input type="submit"  class="btn btn-second text-white txt-strong btn-width-lg" value="Ei toimunud">
                 </form >
 			</div>
-				
-			<!-- Trigger the modal with a button -->
-			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
 
-			<!-- Modal -->
-			<div class="modal" id="myModal" role="dialog">
-				<div class="modal-dialog">
-				
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Modal Header</h4>
-					</div>
-					<div class="modal-body">
-					<p>Some text in the modal.</p>
-					</div>
-					<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-				
-				</div>
-			</div>
+
+	
+			
+			
 
             <br>  <br>
 			<!-- </div> -->
@@ -611,7 +618,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                         takesPlace="";
                     }
                     else if(takesPlace==0){
-                        takesPlace="Ei toimunud";
+                        takesPlace="XXX";
                     };
                     var start_date = new Date(events[i].start._d);
 				
@@ -683,7 +690,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                    
                     counter++;
                   
-                    $('#myTable > tbody:last-child').append(' <tr class="red'+i+'">  <td><label><input type="checkbox" class="abc brdr" name="choices" id="'+BTimesid+'"><span></span></label> '+weekday+', ' + st_day + '.' + st_monthIndex + '.' + st_year + ' <br></td>  <td>&nbsp;&nbsp; ' +st_hours +':' +st_minutes+'-'+ en_hours+':'+en_minutes+'</td>   <td>&nbsp;&nbsp;&nbsp;'+approved+' </td> <td>&nbsp;&nbsp;&nbsp;'+takesPlace+' </td>   </tr>');
+                    $('#myTable > tbody:last-child').append(' <tr class="red'+i+'">  <td><label><input type="checkbox" class="abc brdr" name="choices" id="'+BTimesid+'"><span></span></label> '+weekday+', ' + st_day + '.' + st_monthIndex + '.' + st_year + ' <br></td>  <td>&nbsp;&nbsp; ' +st_hours +':' +st_minutes+'-'+ en_hours+':'+en_minutes+'</td>   <td>&nbsp;&nbsp;&nbsp;'+approved+' </td> <td>&nbsp;'+takesPlace+' </td>   </tr>');
                     if(event.timeID==BTimesid){  
                         //  console.log("klikk");
                         $("#"+BTimesid).prop('checked', true);}
@@ -902,9 +909,9 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                         var $this = $(this);
 
                         var approvedOrNot=$this.parents("tr").children("td:nth-child(4)");
-                        console.log($.trim(approvedOrNot.text())=="Ei toimunud");
+                        console.log($.trim(approvedOrNot.text())=="XXX");
                             var approvedOrNotToDB;
-                            if($.trim(approvedOrNot.text())=="Ei toimunud"){
+                            if($.trim(approvedOrNot.text())=="XXX"){
                                 approvedOrNotToDB=1
                             }else{
                                 approvedOrNotToDB=0
@@ -923,7 +930,7 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                                 success: function() {
                                     calendar.fullCalendar('refetchEvents');
                                     if(approvedOrNotToDB==0){
-                                        jQuery('input:checkbox:checked').parents("tr").children("td:nth-child(4)").html("&nbsp;&nbsp;&nbsp;Ei toimunud");
+                                        jQuery('input:checkbox:checked').parents("tr").children("td:nth-child(4)").html("&nbsp;XXX");
                                     }else{
                                         jQuery('input:checkbox:checked').parents("tr").children("td:nth-child(4)").html("&nbsp;&nbsp;&nbsp;");
                                     }
@@ -1188,7 +1195,13 @@ dayClick: function (date, jsEvent, view) {
     
 
 	//Kui modalit lahti tehakse, siis kalender läheb väiksemaks. Ja vastupidi
-    $(window).on('click', function() {
+    $(window).on('click', function(event) {
+		var modal1 = document.getElementById('lefty');
+		var modal2 = document.getElementById('myModal');
+
+		if (event.target == modal1)  { modal1.style.display = "none"; modal2.style.display = "none"; $('#myModal').modal('hide');} 
+		if (event.target == modal2) { modal2.style.display = "none"; } 
+
         if ($('body').hasClass('modal-open')) {
             $('#calendar-container').css({'margin-left': '350px'});
             $('#widthToggle').css({'margin-left': '350px'});
@@ -1209,5 +1222,5 @@ dayClick: function (date, jsEvent, view) {
     }
     return false;
 }
-                            
+               
 </script>
