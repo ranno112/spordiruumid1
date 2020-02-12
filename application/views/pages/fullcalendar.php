@@ -1,4 +1,8 @@
 <div class="container">
+
+
+
+  
     <div class="d-flex pt-4" id="widthToggle">
         <form class="d-flex flex-row col-md-11 col-lg-10 p-0" action="fullcalendar" method="get">
       
@@ -230,12 +234,43 @@
                 <form id="takesPlaceCheck" class="m-0 pt-2">
                     <input type="submit"  class="btn btn-second text-white txt-strong btn-width-lg" value="Ei toimunud">
                 </form >
-            </div>
+			</div>
+				
+			<!-- Trigger the modal with a button -->
+			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+			<!-- Modal -->
+			<div class="modal" id="myModal" role="dialog">
+				<div class="modal-dialog">
+				
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Modal Header</h4>
+					</div>
+					<div class="modal-body">
+					<p>Some text in the modal.</p>
+					</div>
+					<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+				
+				</div>
+			</div>
+
             <br>  <br>
-            <!-- </div> -->
+			<!-- </div> -->
+			
+			
 
         </div>
-    </div>
+	</div>
+	
+
+
+	
     <?php endif;?>
     <!-- ****************** MODAL END ****************** -->
 
@@ -915,38 +950,25 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
         });
 
         
-
-
         $("#changeTimes").on('click',function( event ) {
             if ($('.abc:checked').length <= $('.abc').length && $('.abc:checked').length>0) 
                     {   var timesIdArray = [];
                         var id= '';
-                        // if (confirm("Muudan valitud aegasid?")) {
-                        //  event.preventDefault();    };
-                        
-                        $("input:checkbox").each(function(){
+                        if (confirm("Muudan valitud aegasid?")) {
+                            $("input:checkbox").each(function(){
                         var $this = $(this);
 
                         if($this.is(":checked")){
                             id=  $('input:checkbox:checked').parents("tbody").attr('id');
                             var timesId = $this.attr("id");
                             timesIdArray.push(timesId);
-
-                            //$("#change").children().not(':first').remove();
-
-                           
                             }
-
                             
                         });
-                        //   console.log("kõik on ckeckitud, tuleb ka bookings ab-st ära kustutada "+id + ' ' +timesIdArray);
-                      //  timesIdArray.unshift(id);
                                 var myForm = document.getElementById('change');
-
                                 timesIdArray.forEach(function (value) {
                                     if(!isNaN(value)){
-                                        var hiddenInput = document.createElement('input');
-
+                                    var hiddenInput = document.createElement('input');
                                     hiddenInput.type = 'hidden';
                                     hiddenInput.name = 'timesIdArray[]';
                                     hiddenInput.value = value;
@@ -957,16 +979,18 @@ url:  "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get(
                                 });
 								document.getElementById("BookingID").value = id;
                                 $('#change').submit();
-                            
+                              
+                         }
+                        else{
+                            event.preventDefault();    
+                        }
                     }
             else{
                 alert("Sa ei märgistanud ühtegi ruutu");
                 event.preventDefault(); 
             };
-
-
-            
         });
+
 
         var calHeight = $( ".fc-body" ).height();
         var calRows = $( ".fc-slats tr" ).length;
@@ -1162,10 +1186,12 @@ dayClick: function (date, jsEvent, view) {
         $('#countNr').text('Kõik ajad ('+counter+')');
     });
     
+
+	//Kui modalit lahti tehakse, siis kalender läheb väiksemaks. Ja vastupidi
     $(window).on('click', function() {
         if ($('body').hasClass('modal-open')) {
-            $('#calendar-container').css({'margin-left': '320px'});
-            $('#widthToggle').css({'margin-left': '320px'});
+            $('#calendar-container').css({'margin-left': '350px'});
+            $('#widthToggle').css({'margin-left': '350px'});
         } else {
             $('#calendar-container').css({'margin-left': '0'});
             $('#widthToggle').css({'margin-left': '0'});
