@@ -915,10 +915,9 @@ var counter=0;
                                 success: function() {
                                     calendar.fullCalendar('refetchEvents');
                                     if(approvedOrNotToDB==0){
-                                        jQuery('input:checkbox:checked').parents("tr").children("td").css("text-decoration", "line-through");
-									
+                                        jQuery('input:checkbox:checked').parents("tr").children("td:nth-child(4)").html("&nbsp;Ei toimunud");
                                     }else{
-                                        jQuery('input:checkbox:checked').parents("tr").children("td").css("text-decoration", "none");
+                                        jQuery('input:checkbox:checked').parents("tr").children("td:nth-child(4)").html("&nbsp;&nbsp;&nbsp;");
                                     }
                                 //  $('input:checkbox:checked').parents("tr").children("td:contains('Ei toimunud')").html("");
                                     //alert('Ei toimunud');
