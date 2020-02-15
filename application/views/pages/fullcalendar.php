@@ -351,7 +351,7 @@ var counter=0;
             selectable: true,
             selectHelper: true,
             eventRender: function (event, element) {
-                console.log(isOverlapping( event ));
+              
                
 				if(event.description){
 					element.find('.fc-title').prepend('<span style="font-weight:550">'+event.description  + "<br/>"+'</span>'); 
@@ -946,7 +946,7 @@ var counter=0;
             if ($('.abc:checked').length <= $('.abc').length && $('.abc:checked').length>0) 
                     {   var timesIdArray = [];
                         var id= '';
-                        if (confirm("Muudan valitud aegasid?")) {
+                      
                             $("input:checkbox").each(function(){
                         var $this = $(this);
 
@@ -972,16 +972,52 @@ var counter=0;
 								document.getElementById("BookingID").value = id;
                                 $('#change').submit();
                               
-                         }
-                        else{
-                            event.preventDefault();    
-                        }
+                       
                     }
             else{
                 alert("Sa ei märgistanud ühtegi ruutu");
                 event.preventDefault(); 
             };
         });
+
+		$("#changePeriodTimes").on('click',function( event ) {
+            if ($('.abc:checked').length <= $('.abc').length && $('.abc:checked').length>0) 
+                    {   var timesIdArray = [];
+                        var id= '';
+                      
+                            $("input:checkbox").each(function(){
+                        var $this = $(this);
+
+                        if($this.is(":checked")){
+                            id=  $('input:checkbox:checked').parents("tbody").attr('id');
+                            var timesId = $this.attr("id");
+                            timesIdArray.push(timesId);
+                            }
+                            
+                        });
+                                var myForm = document.getElementById('change');
+                                timesIdArray.forEach(function (value) {
+                                    if(!isNaN(value)){
+                                    var hiddenInput = document.createElement('input');
+                                    hiddenInput.type = 'hidden';
+                                    hiddenInput.name = 'timesIdArray[]';
+                                    hiddenInput.value = value;
+
+                                    myForm.appendChild(hiddenInput);
+                                    };
+                            
+                                });
+								document.getElementById("BookingID").value = id;
+                                $('#change').submit();
+                              
+                       
+                    }
+            else{
+                alert("Sa ei märgistanud ühtegi ruutu");
+                event.preventDefault(); 
+            };
+        });
+
 
 
         var calHeight = $( ".fc-body" ).height();
@@ -1152,10 +1188,10 @@ dayClick: function (date, jsEvent, view) {
         
     });
 
-    $(window).load(function() {
+	$(window).on('load', function(){ 
         $('.fc-slats tr').css('height', rowHeight+'px');
         $(window).trigger('resize');
-    })
+    });
 
     date = moment('<?php echo ($this->input->get('date')); ?>', "DD-MM-YYYY");
     
@@ -1181,12 +1217,7 @@ dayClick: function (date, jsEvent, view) {
 
 	//Kui modalit lahti tehakse, siis kalender läheb väiksemaks. Ja vastupidi
     $(window).on('click', function(event) {
-		var modal1 = document.getElementById('lefty');
-		var modal2 = document.getElementById('myModal');
-
-		if (event.target == modal1)  { modal1.style.display = "none"; modal2.style.display = "none"; $('#myModal').modal('hide');} 
-		if (event.target == modal2) { modal2.style.display = "none"; } 
-
+	
         if ($('body').hasClass('modal-open')) {
             $('#calendar-container').css({'margin-left': '350px'});
             $('#widthToggle').css({'margin-left': '350px'});
