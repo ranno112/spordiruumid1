@@ -227,32 +227,13 @@
 				<form id="change" method="post" action="<?php echo base_url(); ?>edit/update" class="m-0 pt-2">
 					<input type="hidden" id="dontShow" name="dontShow" value="1">
 					<input type="hidden" id="BookingID" name="BookingID" value="3487">
-					<input type="submit" id="changeTimes" class="btn btn-second text-white txt-strong btn-width-lg" value="Muuda">
-						
+                    <input type="submit" id="changeTimes" class="btn btn-info text-white txt-strong btn-width-lg" value="Muuda valitud">
+                    <input type="submit" id="changePeriodTimes" class="btn btn-info text-white txt-strong btn-width-lg" value="Muuda hooaega">
+                
 
 						
 					
-						<!-- Trigger the modal with a button -->
-					<button type="button" class="btn btn-second text-white txt-strong btn-width-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-
-						<!-- Asking modal -->
-					<div class="modal-footer" id="myModal" role="dialog">
-						<!-- Modal content-->
-						<div class="modal-content">
-						<div class="modal-header">
-						
-						<h5 class="modal-title">Kas sa soovid muuta valitud üksust või hooajaliselt kõik teisipäevad 13:15-15:00 alates 15.02.2020</h5>
-						</div>
-						<div class="modal-body">
-						<p></p>
-						<button type="button" class="btn btn-info btn-lg"  >Valitud</button>
-						<button type="button" class="btn btn-info btn-lg"  >Hooajaliselt</button>
-					
-						</div>
-					
-						</div>
-						<!-- End of asking modal -->
-					</div>
+				
 					
                 </form >  
 
@@ -934,9 +915,10 @@ var counter=0;
                                 success: function() {
                                     calendar.fullCalendar('refetchEvents');
                                     if(approvedOrNotToDB==0){
-                                        jQuery('input:checkbox:checked').parents("tr").children("td:nth-child(4)").html("&nbsp;XXX");
+                                        jQuery('input:checkbox:checked').parents("tr").children("td").css("text-decoration", "line-through");
+									
                                     }else{
-                                        jQuery('input:checkbox:checked').parents("tr").children("td:nth-child(4)").html("&nbsp;&nbsp;&nbsp;");
+                                        jQuery('input:checkbox:checked').parents("tr").children("td").css("text-decoration", "none");
                                     }
                                 //  $('input:checkbox:checked').parents("tr").children("td:contains('Ei toimunud')").html("");
                                     //alert('Ei toimunud');
