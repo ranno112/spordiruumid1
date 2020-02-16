@@ -464,20 +464,35 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 					//    console.log(BTimesid);
 					if(isPeriodic==1){
 						if(n){
-							
 							var weekDayToChange=new Date(obj.start).getDay();
-							$('#sport_facility2').val(weekDays[new Date(start).getDay()]);
-							$('#from1').val(moment(start).format("HH.mm"));
-							$('#until1').val(moment(end).format("HH.mm"));
+							var startPeriodTime=moment(start).format("HH.mm");
+							var endPeriodTime=moment(end).format("HH.mm");
+							$('#sport_facility2').val(weekDays[weekDayToChange]);
+							$('#from1').val(startPeriodTime);
+							$('#until1').val(endPeriodTime);
 					
 						};
 						if(weekDayToChange==new Date(obj.start).getDay()){
+						
+							//kui ajad klapivad, siis pane muutmisvaatesse
+							if(startPeriodTime==moment(start).format("HH.mm")&&endPeriodTime==moment(end).format("HH.mm")){
+							console.log("aeg klapib");
+
 							$('#myTablePeriod > tbody').append(' <tr id="' + BTimesid + '"> <td class="td-width-l"><b>' + days[new Date(start).getDay()] + '</b>, ' + moment(start).format("DD.MM.YYYY") + '</td><td class="td-width-m">' + moment(start).format("HH.mm") + '–' + moment(end).format("HH.mm") + '</td><td class="td-width-s pl-3"></td><td class="td-width-s pl-3"></td>  <td class="td-width-s pl-3"></td></tr>');
-						resConflicts.push(start.replace('T', ' ').substring(0, 16));
-						res2Conflicts.push(end.replace('T', ' ').substring(0, 16));
-						ConflictID.push(obj.timeID);
-						publicInfo.push(obj.title);
-						counter++;
+								resConflicts.push(start.replace('T', ' ').substring(0, 16));
+								res2Conflicts.push(end.replace('T', ' ').substring(0, 16));
+								ConflictID.push(obj.timeID);
+								publicInfo.push(obj.title);
+								counter++;
+
+							}
+							//siia tuleb panna seda, millised päevade mustrid ei kattu
+							else{
+								
+						
+							}
+
+
 
 						}
 
