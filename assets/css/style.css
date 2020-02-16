@@ -224,7 +224,7 @@
   }
   /* TEXT AND LINK */
 
-  #myTable.table td.conflict {
+  #myTable.table td.conflict, #myTablePeriod.table td.conflict {
     position: relative;
     top: -3px;
     padding: 0;
@@ -232,24 +232,24 @@
     color: #9E3253;
   }
 
-  #myTable td img {
+  #myTable td img , #myTablePeriod td img {
     position: relative;
     top: -2px;
     width: 20px !important;
     /* height: 10px; */
   }
 
-  #myTable.table th {
+  #myTable.table th, #myTablePeriod.table th  {
     line-height: 12px;
   }
 
-  #myTable.table td,.table th{
+  #myTable.table td,.table th,#myTablePeriod.table td,.table th{
     padding:0;
     vertical-align: middle;
     border: none;
   }
 
-  #myTable.table {
+  #myTable.table,#myTablePeriod.table  {
     border-collapse: separate;
     border-spacing: 0 8px;
   }

@@ -252,15 +252,10 @@
 
 								<form id="change" method="post" action="<?php echo base_url(); ?>edit/update" class="m-0 pt-2">
 									<input type="hidden" id="dontShow" name="dontShow" value="1">
-									<input type="hidden" id="BookingID" name="BookingID" value="3487">
+									<input type="hidden" id="BookingID" name="BookingID" value="">
+									<input type="hidden" id="isPeriodic" name="isPeriodic" value="0">
 									<input type="submit" id="changeTimes" class="btn btn-info text-white txt-strong btn-width-lg" value="Muuda valitud">
-									<input type="submit" id="changePeriodTimes" class="btn btn-info text-white txt-strong btn-width-lg" value="Muuda hooaega">
-
-
-
-
-
-
+									<input type="submit" id="changePeriodTimes" class="btn btn-info text-white txt-strong btn-width-lg" value="Muuda hooajaliselt">
 								</form>
 
 								<form id="delete" class="m-0 pt-2">
@@ -984,6 +979,7 @@
 
 				});
 				document.getElementById("BookingID").value = id;
+			
 				$('#change').submit();
 
 
@@ -1044,6 +1040,7 @@
 					};
 
 				});
+				document.getElementById("isPeriodic").value = 1;
 				document.getElementById("BookingID").value = id;
 				$('#change').submit();
 
