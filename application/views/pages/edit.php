@@ -30,18 +30,18 @@
 							<input class="d-none" type="checkbox" id="type" name="type" value="1" checked>
 							<div class="form-label-group col-6 p-0 pl-5">
 								<label>Kontaktisik</label>
-								<input type="text" class="form-control" name="contactPersonPeriod" id="contactPersonPeriod">
+								<input type="text" class="form-control" name="contactPerson" id="contactPerson">
 							</div>
 						</div>
 						<div class="d-flex mt-2 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
 								<label>Telefoni number</label>
-								<input type="number" class="form-control" name="phonePeriod" id="phonePeriod">
+								<input type="number" class="form-control" name="phone" id="phone">
 							</div>
 
 							<div class="form-label-group col-6 p-0 pl-5">
 								<label>Email</label>
-								<input type="email" class="form-control" name="emailPeriod" id="emailPeriod">
+								<input type="email" class="form-control" name="email" id="email">
 							</div>
 						</div>
 
@@ -110,8 +110,8 @@
 								<textarea class="form-control" id="additional" name="additionalComment" rows="3"></textarea>
 							</div>
 						</div>
-
-						<input class="d-none" type="hidden" name="id" id="bookid" value="<?php echo $_POST['BookingID']; ?>">
+						<input class="d-none" type="hidden" name="BookingID" id="BookingID" value="<?php echo $_POST['BookingID']; ?>">
+						<input class="d-none" type="hidden" name="isPeriodic" id="isPeriodic" value="<?php echo $_POST['isPeriodic']; ?>">
 						<input class="d-none" type="hidden" name="roomID" id="roomID" value="">
 
 						<div class="d-flex justify-content-end mt-5 px-5 mx-5">
@@ -123,7 +123,7 @@
 				</div>
 
 				 <div id="hooajaline" class="tab-pane center  <?php if ($_POST['isPeriodic'] == 1) echo "active";?>">
-					<form id="change" method="post" action="<?php echo base_url(); ?>edit/update">
+					<form id="changePeriod" method="post" action="<?php echo base_url(); ?>edit/updatePeriod">
 						<h4 class="pt-2 txt-xl px-5 mx-5">Kontakt</h4>
 						<div class="d-flex p-0 mt-4 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
@@ -133,18 +133,18 @@
 							<input class="d-none" type="checkbox" id="type" name="type" value="1" checked>
 							<div class="form-label-group col-6 p-0 pl-5">
 								<label>Kontaktisik</label>
-								<input type="text" class="form-control" name="contactPerson" id="contactPerson">
+								<input type="text" class="form-control" name="contactPersonPeriod" id="contactPersonPeriod">
 							</div>
 						</div>
 						<div class="d-flex mt-2 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
 								<label>Telefoni number</label>
-								<input type="number" class="form-control" name="phone" id="phone">
+								<input type="number" class="form-control" name="phonePeriod" id="phonePeriod">
 							</div>
 
 							<div class="form-label-group col-6 p-0 pl-5">
 								<label>Email</label>
-								<input type="email" class="form-control" name="email" id="email">
+								<input type="email" class="form-control" name="emailPeriod" id="emailPeriod">
 							</div>
 						</div>
 
@@ -252,13 +252,14 @@
 								<textarea class="form-control" id="additionalPeriod" name="additionalCommentPeriod" rows="3"></textarea>
 							</div>
 						</div>
-
-						<input class="d-none" type="hidden" name="id" id="bookid" value="<?php echo $_POST['BookingID']; ?>">
+						<input class="d-none" type="hidden" name="weekendNumber" id="weekendNumber" value="">
+						<input class="d-none" type="hidden" name="BookingID" id="BookingID" value="<?php echo $_POST['BookingID']; ?>">
+						<input class="d-none" type="hidden" name="isPeriodic" id="isPeriodic" value="<?php echo $_POST['isPeriodic']; ?>">
 						<input class="d-none" type="hidden" name="roomID" id="roomID" value="">
 
 						<div class="d-flex justify-content-end mt-5 px-5 mx-5">
 							<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#" onClick="history.go(-1); return false;">Katkesta</a>
-							<input type="submit" id="changeTimes" class="btn btn-custom col-4 text-white txt-xl" value="Salvesta muudatused">
+							<input type="submit" id="changePeriodTimes" class="btn btn-custom col-4 text-white txt-xl" value="Salvesta muudatused">
 						</div>
 
 					</form>
@@ -468,6 +469,8 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 							var startPeriodTime=moment(start).format("HH.mm");
 							var endPeriodTime=moment(end).format("HH.mm");
 							$('#sport_facility2').val(weekDays[weekDayToChange]);
+							$('#weekendNumber').val(weekDayToChange);
+							
 							$('#from1').val(startPeriodTime);
 							$('#until1').val(endPeriodTime);
 					
@@ -478,7 +481,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 							if(startPeriodTime==moment(start).format("HH.mm")&&endPeriodTime==moment(end).format("HH.mm")){
 							console.log("aeg klapib");
 
-							$('#myTablePeriod > tbody').append(' <tr id="' + BTimesid + '"> <td class="td-width-l"><b>' + days[new Date(start).getDay()] + '</b>, ' + moment(start).format("DD.MM.YYYY") + '</td><td class="td-width-m">' + moment(start).format("HH.mm") + '–' + moment(end).format("HH.mm") + '</td><td class="td-width-s pl-3"></td><td class="td-width-s pl-3"></td>  <td class="td-width-s pl-3"></td></tr>');
+							$('#myTablePeriod > tbody').append(' <tr id="' + BTimesid + '"> <td class="td-width-l"><b>' + days[new Date(start).getDay()] + '</b>, ' + moment(start).format("DD.MM.YYYY") + '</td><td class="td-width-m">' + moment(start).format("HH.mm") + '–' + moment(end).format("HH.mm") + '</td><td class="td-width-s pl-3"></td><td class="td-width-s pl-3"><input class="d-none" type="hidden" name="timesIdArray[]"  value="' +BTimesid +'"></td>  <td class="td-width-s pl-3" >	<input class="d-none" type="hidden" name="bookingtimesFrom[' + counter + ']"  value="' + moment(start).format("DD.MM.YYYY") +'"></td></tr>');
 								resConflicts.push(start.replace('T', ' ').substring(0, 16));
 								res2Conflicts.push(end.replace('T', ' ').substring(0, 16));
 								ConflictID.push(obj.timeID);
@@ -643,6 +646,27 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 			});
 
 		});
+
+
+		$("#changePeriodTimes").on('click', function(event) {
+			var bookingID = '<?= $_POST['BookingID'] ?>';
+			console.log(bookingID);
+		
+			var myForm = document.getElementById('changePeriod');
+			var hiddenInput = document.createElement('input');
+			hiddenInput.type = 'hidden';
+			hiddenInput.name = 'BookingID';
+			hiddenInput.value = bookingID;
+			myForm.appendChild(hiddenInput);
+			$("#changeTimes").on('click', function(event) {
+
+			//	$('#change').submit();
+
+
+			});
+
+		});
+
 
 
 
