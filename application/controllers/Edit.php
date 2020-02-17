@@ -406,13 +406,13 @@ class Edit extends CI_Controller {
 		}	
 		else{
 			if($RedirectToCalendar){
-			//	redirect(base_url('fullcalendar?roomId='.$this->input->post('roomID')));
+				redirect(base_url('fullcalendar?roomId='.$this->input->post('roomID')));
 		
-				$this->load->view('templates/header');
-				$this->load->view('pages/edit');//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
+				// $this->load->view('templates/header');
+				// $this->load->view('pages/edit');//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
 			
 
-				$this->load->view('templates/footer');
+				// $this->load->view('templates/footer');
 		
 			}
 		
