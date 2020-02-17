@@ -590,88 +590,17 @@
     });
 
 
-//see on vaja konfliktide kontrollimiseks.
 
-// $.ajax({
-// 	url: "<?php //echo base_url(); ?>edit/loadAllRoomBookingTimes/<?php //echo $this->uri->segment(3); ?>",
-// 	dataType: 'json',
-// 	success: function(json) {
-// 		// Rates are in `json.rates`
-// 		// Base currency (USD) is `json.base`
-// 		// UNIX Timestamp when rates were collected is in `json.timestamp`   
-
-// 		conflicts = json;
-
-	
-
-// 		res.forEach(function(element){
-// 			if(isOverlapping(element, conflicts)){
-			
-		
-// 			}
-// 				//console.log(isOverlapping(element, conflicts))
-// 		});
-
-// 		for (var i = 0, l = conflicts.length; i < l; i++) {
-// 			var conflicts2 = conflicts[i];
-// 			// console.log(conflicts2.start+" - "+conflicts2.end + " "+ i);
-
-// 			var startDateTime = toDate(conflicts2.start.substring(0, 16)); //yyyy-mm-dd hh:tt
-// 			var endDateTime = toDate(conflicts2.end.substring(0, 16));
-// 			var timeIDofConflict = conflicts2.timeID;
-// 			var titleIDofConflict = conflicts2.title;
-
-		
-			
-// 		//	console.log(roomID);
-// 			//   console.log(timeIDofConflict); 
-
-// 			// iga selle aja kohta tuleb kontrollida ajaxi aega"
-// 			for (var t = 0; t < resConflicts.length; t++) {
-
-// 				var checkDateTime = toDate(resConflicts[t]); //magic date
-// 				var checkDateTime2 = toDate(res2Conflicts[t]); //magic date
-
-// 				if (ConflictID[t] !== timeIDofConflict) {
-// 					if (isBetween(startDateTime, checkDateTime, checkDateTime2) || isBetween(endDateTime, checkDateTime, checkDateTime2) || isBetween(checkDateTime, startDateTime, endDateTime) || isBetween(checkDateTime2, startDateTime, endDateTime)) {
-// 						//   console.log(checkDateTime +" - "+ checkDateTime2 + " nende vastu "+ startDateTime+ " " +endDateTime);// 
-// 						//   console.log("tingumus on täidetud " + resConflicts[t] + " või "+res2Conflicts[t]);
-// 						$('#myTable #' + ConflictID[t]).after("<tr class='m-0 p-0'><td colspan='5' class='conflict txt-regular'><img src='<?php echo base_url(); ?>assets/img/warning.svg'> Kattuv aeg: " + moment(conflicts2.start).format('HH:mm') /*conflicts2.start.substring(0, 16) */ + "–" + moment(conflicts2.end).format('HH:mm') + " " /*conflicts2.end.substring(0, 16)*/ + titleIDofConflict + "</td></tr>");
-// 						//   console.log( ConflictID[t] +" ning " +timeIDofConflict);
-// 						$('#myTable #' + ConflictID[t]).find('.clock.form-control, .datePicker.form-control').css('border', '2px solid #9E3253')
-
-// 					}
-// 				}
-
-// 				//Do something
-// 			};
-
-
-
-// 			//  console.log(isBetween(checkDateTime,startDateTime,endDateTime) + " esimene kord ");
-
-// 			//   $('#myTable #'+timeIDofConflict).append("siin on konflikt");
-// 			//  console.log(conflicts2.timeID + " id");
-// 		}
-
-
-// 	},
-// 	error: function(jqXHR, textStatus, errorThrown) {
-// 		//Error handling code
-// 		console.log(errorThrown);
-// 		alert('Oops there was an error');
-// 	}
-// });
 
 
 
 function isOverlapping(event, conflicts) {
 	for (i in conflicts) {
+	
 			if (conflicts[i].start != null && conflicts[i].end != null && event.start != null && event.end != null) {
 				if (moment(conflicts[i].start).isBefore(event.end) && moment(conflicts[i].end).isAfter(event.start)) {
+					console.log(event.start.substring(0, 16)+ "-"+ event.end.substring(11, 16) + " on konfliktis järgmise ajaga: "+ conflicts[i].start.substring(0, 16)+"-"+conflicts[i].end.substring(11, 16)+" "+conflicts[i].title);
 				
-						$('#myTablePeriod #' + event.timeID).after("<tr class='m-0 p-0'><td colspan='5' class='conflict txt-regular'><img src='<?php echo base_url(); ?>assets/img/warning.svg'> Kattuv aeg: " + moment(conflicts[i].start).format('HH:mm') /*conflicts2.start.substring(0, 16) */ + "–" + moment(conflicts[i].end).format('HH:mm') + " " /*conflicts2.end.substring(0, 16)*/ + conflicts[i].title + "</td></tr>");
-							
 					return true;
 				}
 			}
@@ -679,24 +608,35 @@ function isOverlapping(event, conflicts) {
 		return false;
 	}
 
-	
+	function toDate(str) {
 
+var [yyyy, MM, dd, hh, mm] = str.split(/[- :]/g);
+return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
+};
+
+    
 	function getDates(startDate, stopDate) {
     var dateArray = [];
     var currentDate = moment(startDate);
     var stopDate = moment(stopDate);
 	var val = $('#sport_facility2').val()
+    var startingDate = $('#from1').val();
+    var endingDate = $('#until1').val();
 	var weekDaySelected = $('#weekdays option').filter(function() {
 				return this.value == val;
 	}).data('value');
 
     while (currentDate <= stopDate) {
 		 if(weekDaySelected	== new Date(moment(currentDate).format('YYYY-MM-DD')).getDay() ){
-			dateArray.push( moment(currentDate).format('YYYY-MM-DD') )
+
+            var obj = {start : moment(currentDate).format('YYYY-MM-DD')+" "+startingDate+":00",
+			end : moment(currentDate).format('YYYY-MM-DD')+" "+endingDate+":00"};
+			dateArray.push( obj );
       	 }
 		 currentDate = moment(currentDate).add(1, 'days');
 	
     }
+ //   console.log(dateArray);
     return dateArray;
 	}
 	
@@ -709,7 +649,89 @@ function isOverlapping(event, conflicts) {
     	var endingDateConverted = moment(endingDate, "DD.MM.YYYY").format("YYYY-MM-DD");
 	
 	
-		console.log(getDates(startingDateConverted, endingDateConverted));
+	
+
+//see on vaja konfliktide kontrollimiseks.
+
+$.ajax({
+	url: "<?php echo base_url(); ?>edit/loadAllRoomBookingTimes/<?php echo $this->uri->segment(3); ?>",
+	dataType: 'json',
+	success: function(json) {
+		// Rates are in `json.rates`
+		// Base currency (USD) is `json.base`
+		// UNIX Timestamp when rates were collected is in `json.timestamp`   
+
+		conflicts = json;
+     
+     //   console.log(dateArray);
+
+	
+
+		(getDates(startingDateConverted, endingDateConverted)).forEach(function(element){
+			
+			if(isOverlapping(element, conflicts)){
+			
+		console.log("conflikst");
+			}
+		
+		});
+
+		for (var i = 0, l = conflicts.length; i < l; i++) {
+			var conflicts2 = conflicts[i];
+			// console.log(conflicts2.start+" - "+conflicts2.end + " "+ i);
+
+			var startDateTime = toDate(conflicts2.start.substring(0, 16)); //yyyy-mm-dd hh:tt
+			var endDateTime = toDate(conflicts2.end.substring(0, 16));
+			var timeIDofConflict = conflicts2.timeID;
+			var titleIDofConflict = conflicts2.title;
+
+		
+			
+		//	console.log(roomID);
+			//   console.log(timeIDofConflict); 
+
+			// iga selle aja kohta tuleb kontrollida ajaxi aega"
+			for (var t = 0; t < resConflicts.length; t++) {
+
+				var checkDateTime = toDate(resConflicts[t]); //magic date
+				var checkDateTime2 = toDate(res2Conflicts[t]); //magic date
+
+				if (ConflictID[t] !== timeIDofConflict) {
+					if (isBetween(startDateTime, checkDateTime, checkDateTime2) || isBetween(endDateTime, checkDateTime, checkDateTime2) || isBetween(checkDateTime, startDateTime, endDateTime) || isBetween(checkDateTime2, startDateTime, endDateTime)) {
+						//   console.log(checkDateTime +" - "+ checkDateTime2 + " nende vastu "+ startDateTime+ " " +endDateTime);// 
+						//   console.log("tingumus on täidetud " + resConflicts[t] + " või "+res2Conflicts[t]);
+						$('#myTable #' + ConflictID[t]).after("<tr class='m-0 p-0'><td colspan='5' class='conflict txt-regular'><img src='<?php echo base_url(); ?>assets/img/warning.svg'> Kattuv aeg: " + moment(conflicts2.start).format('HH:mm') /*conflicts2.start.substring(0, 16) */ + "–" + moment(conflicts2.end).format('HH:mm') + " " /*conflicts2.end.substring(0, 16)*/ + titleIDofConflict + "</td></tr>");
+						//   console.log( ConflictID[t] +" ning " +timeIDofConflict);
+						$('#myTable #' + ConflictID[t]).find('.clock.form-control, .datePicker.form-control').css('border', '2px solid #9E3253')
+
+					}
+				}
+
+				//Do something
+			};
+
+
+
+			//  console.log(isBetween(checkDateTime,startDateTime,endDateTime) + " esimene kord ");
+
+			//   $('#myTable #'+timeIDofConflict).append("siin on konflikt");
+			//  console.log(conflicts2.timeID + " id");
+		}
+
+
+	},
+	error: function(jqXHR, textStatus, errorThrown) {
+		//Error handling code
+		console.log(errorThrown);
+		alert('Oops there was an error');
+	}
+});
+
+
+
+
+
+
 	});
 
 	
