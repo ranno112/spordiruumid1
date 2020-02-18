@@ -140,7 +140,7 @@ class Booking extends CI_Controller {
 
 			);
 
-		//	$this->form_validation->set_rules('clubname', 'Klubi nimi', 'required');
+			$this->form_validation->set_rules('clubname', 'Klubi nimi', 'required');
 		//	$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'required');
 
 		

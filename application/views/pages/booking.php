@@ -3,7 +3,32 @@
 <?php $stack = array(); foreach ($allBookingInfo as $each) { 
     array_push($stack, $each['public_info'] );
  };?>
-                                  
+      
+<div class="modal" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Tuvastatud aegade kattuvus</h5>
+ 
+      </div>
+      <div class="modal-body">
+		<h6>Soovitud broneering kattub allolevate broneeringutega. Sellist broneeringut automaatselt ei kinnitata. </h6>
+	
+		<table id="myTable" class="table">
+		<thead>	<tr><th>Kuupäev</th><th>Kellaaeg</th><th>Treening</th><th>Klubi</th></tr>	
+		</thead>
+			<tbody>
+		
+			</tbody>
+		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="submitWithConflicts" class="btn btn-secondary">Salvesta sellegipoolest</button>
+        <button type="button" class="btn btn-custom text-white " data-dismiss="modal">Muudan broneeringu</button>
+      </div>
+    </div>
+  </div>
+</div>                     
 
 <div class="container">
     <div id="forms" class="container-md">
@@ -17,6 +42,8 @@
                     <?php endif;?>
                 </ul>
             </div>
+
+
 
             <div class="tab-content ">
                 <div id="mitmekordne" class="tab-pane center active">
@@ -129,7 +156,7 @@
                 </div>
 
                 <div id="hooajaline" class="tab-pane center">
-                    <?php echo form_open('booking/createClosed'); ?>
+                    <?php echo form_open('booking/createClosed', array('id' => 'myPeriodicForm')); ?>
 
                         <h4 class="pt-2 txt-xl px-5 mx-5">Kontakt</h4>
                         <div class="d-flex px-5 mx-5 mt-4">
@@ -246,7 +273,7 @@
                                 <label>Lisainfo</label>
                                 <textarea class="form-control" id="comment2" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"></textarea>
 							</div>
-							<label><input type="checkbox" checked name="approveNow" id="approveNow" value="1"><span></span></label> Kinnita kohe
+							<label><input type="checkbox" checked name="approveNow" id="approvePeriodNow" value="1"><span></span></label> Kinnita kohe
                         </div>
 
                         <div class="d-flex justify-content-end mt-5 px-5 mx-5">
@@ -362,6 +389,11 @@
 
 
     $(document).ready(function() {
+
+		$('#myModal').on('hidden.bs.modal', function (e) {
+			$('#approvePeriodNow').prop('checked', true);
+			$("#myTable").find("tr:gt(0)").remove();
+		});
 		var days=['Pühapäev', 'Esmaspäev', 'Teisipäev', 'Kolmapäev', 'Neljapäev', 'Reede', 'Laupäev'];
         var today=new Date();
 		var endOfPeriond=new Date('05/31/'+ new Date().getFullYear()); 
@@ -599,8 +631,9 @@ function isOverlapping(event, conflicts) {
 	
 			if (conflicts[i].start != null && conflicts[i].end != null && event.start != null && event.end != null) {
 				if (moment(conflicts[i].start).isBefore(event.end) && moment(conflicts[i].end).isAfter(event.start)) {
-					console.log(event.start.substring(0, 16)+ "-"+ event.end.substring(11, 16) + " on konfliktis järgmise ajaga: "+ conflicts[i].start.substring(0, 16)+"-"+conflicts[i].end.substring(11, 16)+" "+conflicts[i].title+" "+conflicts[i].description);
-			
+					//console.log(event.start.substring(0, 16)+ "-"+ event.end.substring(11, 16) + " on konfliktis järgmise ajaga: "+ conflicts[i].start.substring(0, 16)+"-"+conflicts[i].end.substring(11, 16)+" "+conflicts[i].title+" "+conflicts[i].description);
+						$('#myTable > tbody:last-child').append('<tr><td>'+conflicts[i].start.substring(0, 10)+'</td><td>'+ conflicts[i].start.substring(11, 16)+"-"+conflicts[i].end.substring(11, 16)+'</td><td>'+conflicts[i].description+'</td><td>'+conflicts[i].title+'</td></tr>');
+						$('#myModal').modal('show')
 					return true;
 				}
 			}
@@ -634,6 +667,8 @@ return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
 	}).data('value');
 
     while (currentDate <= stopDate) {
+	
+		if(weekDaySelected==7) weekDaySelected=0;
 		 if(weekDaySelected	== new Date(moment(currentDate).format('YYYY-MM-DD')).getDay() ){
 
             var obj = {
@@ -672,37 +707,36 @@ $.ajax({
 		conflicts = json;
      
      //   console.log(dateArray);
-
+	 var canSubmit=true;
 	
 
 		(getDates(startingDateConverted, endingDateConverted)).forEach(function(element){
-			
+		
 			if(isOverlapping(element, conflicts)){
-			
-		console.log("conflikst");
+			$('#approvePeriodNow').prop('checked', false);
+
+			canSubmit=false;
+			console.log($('#approvePeriodNow'));
 			}
 		
 		});
-
-		for (var i = 0, l = conflicts.length; i < l; i++) {
-			var conflicts2 = conflicts[i];
-			// console.log(conflicts2.start+" - "+conflicts2.end + " "+ i);
-
-			var startDateTime = toDate(conflicts2.start.substring(0, 16)); //yyyy-mm-dd hh:tt
-			var endDateTime = toDate(conflicts2.end.substring(0, 16));
-			var timeIDofConflict = conflicts2.timeID;
-			var titleIDofConflict = conflicts2.title;
-
+		//kui konflikte pole, siis salvesta
+		if(canSubmit==true){
+	
 		
-		}
-
-
+			$( "#myPeriodicForm" ).submit();
+		};
+		
 	},
 	error: function(jqXHR, textStatus, errorThrown) {
 		//Error handling code
 		console.log(errorThrown);
 		alert('Oops there was an error');
 	}
+});
+
+$( "#submitWithConflicts" ).click(function() {
+  $( "#myPeriodicForm" ).submit();
 });
 
 
