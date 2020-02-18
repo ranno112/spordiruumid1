@@ -108,6 +108,7 @@ class Edit extends CI_Controller {
 				//'building'=>	$row['building'],
 				'timeID'=>	$row['timeID'],
 				'title'	=>	$row['public_info'],
+				'description'	=>	$row['workout'],
 				'start'	=>	$row['startTime'],
 				'end'	=>	$row['endTime'],
 				);
