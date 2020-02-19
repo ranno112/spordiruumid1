@@ -40,8 +40,8 @@ class Booking extends CI_Controller {
 			//'event_out' => $this ->input->post('phone')
 		);
 		
-		$this->form_validation->set_rules('clubname', 'Klubi nimi', 'required');
-		$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'required');
+		$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|required');
+		$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|required');
 
 		if ($this->form_validation->run() != FALSE)
 				{
@@ -95,61 +95,56 @@ class Booking extends CI_Controller {
 	}
 
 
+	public function username_check($str= '')
+	{
+			if ($str == 'test')
+			{
+					$this->session->set_flashdata('validationErrorMessage', 'See ei saa olla test');
+					return FALSE;
+			}
+			else
+			{
+					return TRUE;
+			}
+	}
+
 	public function createClosed()
 	{
+		
+		$postData = $_POST;
+		$postData['error'] =  validation_errors() ;
 		if( $this->session->userdata('session_id')===TRUE){
 
-			$data['selectedRoom'] = $this->booking_model->getTheRoom($slug);
 			$data['rooms'] = $this->booking_model->getAllRooms();
 			$data['buildings'] = $this->booking_model->getAllBuildings();
 			$data['allBookingInfo'] = $this->booking_model->getAllBookings();
-
-			$this->form_validation->set_rules('startingFrom', 'Kuupäev alates', 'required');
-			$this->form_validation->set_rules('Ending', 'Kuupäev kuni', 'required');
-			$this->form_validation->set_rules('weekday', 'Klubi nimi', 'required');
-			$this->form_validation->set_rules('clubname', 'Klubi nimi', 'required');
+			
+				$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|required|callback_username_check');
+				$this->form_validation->set_rules('startingFrom', 'Kuupäev alates', 'trim|required');
+				$this->form_validation->set_rules('Ending', 'Kuupäev kuni', 'trim|required');
+				$this->form_validation->set_rules('weekday[]', 'Nädalapäev puudu', 'trim|required');
 
 			if($this->form_validation->run() === FALSE ){
 
 				if($this->input->post('dontShow')!=1){
-				$this->form_validation->set_message('validationErrorMessage', 'Klubi nimi puudu');
-				$this->session->set_flashdata('validationErrorMessage', 'Klubi nimi puudu');
-
-				
+				$this->session->set_flashdata('access_deniedToUrl', 'Midagi on selle vormiga valesti. Palun vaata kõik väljad üle');
+				$this->session->set_flashdata('errors', validation_errors());
 				}
 				
-				$data = $_POST;
-				$this->session->set_flashdata('key',$data);
+				$this->session->set_flashdata('key',$postData);
 				redirect( $this ->input->post('current_url'));
-
-				$this->load->view('templates/header');
-				$this->load->view('pages/booking', $_POST);
-				$this->load->view('templates/footer');
 
 			} 
 			else{
-
-
 			$event_in = strtotime($this ->input->post('startingFrom'));
 			$event_out = strtotime($this ->input->post('Ending'));
-			$this->form_validation->set_rules($event_in, 'Event In', $event_out);
+
+		//	$this->form_validation->set_rules($event_in, 'Event In', $event_out);
 			if ($event_in > $event_out)
 			{
-				
-			  $this->form_validation->set_message('post_updated', 'Kuupäevad ei ole õigesti sisestatud.');
 			  $this->session->set_flashdata('post_updated', 'Periood on valesti sisestatud');
-			 			
-			  if($this->form_validation->run() === FALSE){
-				redirect( $this ->input->post('current_url'));
-			
-			} 
-
-			   $this->load->view('templates/header');
-			//   //$this->load->view('pages/booking/create/'.$this->input->get('roomId'));
-			   $this->load->view('pages/booking', $data);
-			   $this->load->view('templates/footer');
-			//  redirect('booking/create/'.$this->input->post('sportrooms'));
-			//  return false;       
+			  $this->session->set_flashdata('key',$postData);
+			  redirect( $this ->input->post('current_url'));
 			}
 			else
 			{
@@ -172,10 +167,10 @@ class Booking extends CI_Controller {
 			);
 
 			
-		//	$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'required');
+		//	$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|required');
 
 		
-				$id= $this->booking_model->create_booking($data1);
+			$id= $this->booking_model->create_booking($data1);
 					
 			$insert_data2 = array();
 			$startDate=$this ->input->post('startingFrom');
@@ -212,19 +207,15 @@ class Booking extends CI_Controller {
 					$end_data = date('Y-m-d H:i:s', strtotime("$dateToDb $formated_EndtimeToDb"));
 				
 					
-
+					//Kuni kuni aeg on minevikus, siis näita veateadet ning tee redirect
 					if(strtotime("$dateToDb $formated_timeToDb")>strtotime("$dateToDb $formated_EndtimeToDb")){
 							
 						  $this->form_validation->set_message('validationErrorMessage', 'Kuupäevad ei ole õigesti sisestatud.');
 						  $this->session->set_flashdata('validationErrorMessage', 'Kellaaeg on valesti sisestatud');
 									 
-						  if($this->form_validation->run() === FALSE){
-							redirect( $this ->input->post('current_url'));
 						
-						} 
-			
+						
 						   $this->load->view('templates/header');
-					
 						   $this->load->view('pages/booking', $data);
 						   $this->load->view('templates/footer');
 					  
@@ -277,7 +268,7 @@ class Booking extends CI_Controller {
 
 			if($this->form_validation->run()===FALSE){
 			
-		
+						print_r($data);
 						$this->load->view('templates/header');
 						$this->load->view('pages/booking');//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
 						$this->load->view('templates/footer');

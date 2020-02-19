@@ -4,7 +4,7 @@
 <?php $stack = array(); foreach ($allBookingInfo as $each) { 
     array_push($stack, $each['public_info'] );
  };?>
-      
+      			
 <div class="modal" id="myModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -36,10 +36,10 @@
         <div id="nav-tabs" class="mt-5 pb-5 form-bg">
             <div class="d-flex mb-5">
                 <ul class="nav nav-tabs nav-justified col-12 bg-grey">
-                    <li class="nav-item"><a  class="nav-link link txt-lg  active" href="#mitmekordne" data-toggle="tab">Ühekordne broneering</a></li>
-                    <li class="nav-item"><a  class="nav-link link txt-lg" href="#hooajaline" data-toggle="tab">Hooajaline broneering</a></li>
+                    <li class="nav-item"><a  class="nav-link link txt-lg <?php if(!isset($data['type'])){ echo 'active';}else if($data['type']==1){echo 'active';}; ?>" href="#mitmekordne" data-toggle="tab">Ühekordne broneering</a></li>
+                    <li class="nav-item"><a  class="nav-link link txt-lg <?php if($data['type']==2){echo 'active';}; ?>" href="#hooajaline" data-toggle="tab">Hooajaline broneering</a></li>
                     <?php if($this->session->userdata('roleID')==='2'||$this->session->userdata('roleID')==='3'):?>
-                    <li class="nav-item"><a  class="nav-link link txt-lg" href="#suletud" data-toggle="tab">Suletud broneering</a></li>
+                    <li class="nav-item"><a  class="nav-link link txt-lg <?php if($data['type']==4){echo 'active';}; ?>" href="#suletud" data-toggle="tab">Suletud broneering</a></li>
                     <?php endif;?>
                 </ul>
             </div>
@@ -47,30 +47,30 @@
 
 
             <div class="tab-content ">
-                <div id="mitmekordne" class="tab-pane center active">
+                <div id="mitmekordne" class="tab-pane center  <?php if(!isset($data['type'])){ echo 'active';}else if($data['type']==1){echo 'active';}; ?>">
                     <?php echo form_open('booking/createOnce'); ?>
 
                         <h4 class="pt-2 txt-xl px-5 mx-5">Kontakt</h4>
                         <div class="d-flex p-0 mt-4 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
                                 <label for="contact">Klubi nimi (avalik info)*</label>
-                                <input class="form-control" id="clubname" type="text" name="clubname" required>
+                                <input class="form-control" id="clubname" type="text" name="clubname" required value="<?php if(isset($data['clubname'])): echo $data['clubname'];endif; ?>">
                             </div>
                             <input class="d-none" type="checkbox" id="type" name="type" value="1" checked>
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <label>Kontaktisik*</label>
-                                <input class="form-control" id="contact" name="contactPerson" value="<?php if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>" required>
+                                <input class="form-control" id="contact" name="contactPerson" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>" required>
                             </div>
                         </div>
                         <div class="d-flex mt-2 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
                                 <label>Telefoni number</label>
-                                <input class="form-control" id="phone" name="phone" value="<?php if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
+                                <input class="form-control" id="phone" name="phone" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
                             </div>
 
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <label>Email</label>
-                                <input class="form-control" id="email" name="email" value="<?php if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
+                                <input class="form-control" id="email" name="email" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
                             </div>
                         </div>
 
@@ -78,14 +78,18 @@
                         <div class="d-flex mt-4 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
                                 <label for="sport_facility">Asutus</label>
-                                <input id="sport_facility" class="form-control" list="asutus" id="building" disabled value="<?php $test = $this->session->userdata('building'); foreach ($buildings as $each) { $id = $each->id; $name = $each->name; if ($id == $test) {echo $each->name;}};?>">
+                                <input id="sport_facility" class="form-control" list="asutus" id="building" value="<?php $test = $this->session->userdata('building'); foreach ($buildings as $each) { $id = $each->id; $name = $each->name; if ($id == $test) {echo $each->name;}};?>" disabled>
                             </div>
                            <?php echo $this->input->get('roomId');?>
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <label for="room">Ruum*</label>
                                 <select id="room" list="saal" name="sportrooms" class="form-control arrow" >
                                     <?php foreach ($rooms as $each) {
-                                        echo $each->id;
+										echo $each->id;
+										if($data['sportrooms']== $each->id){ 
+											echo '<option selected value="' . $each->id . '">' . $each->roomName . '</option>';
+										}
+										   else 
                                                if( $this->uri->segment(3)== $each->id){
                                                     echo '<option selected value="' . $each->id . '">' . $each->roomName . '</option>';
                                                 }else{
@@ -97,7 +101,7 @@
                         <div class="d-flex mt-2 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
                                 <label>Sündmus / Treeningu tüüp (avalik info)</label>
-                                <input class="form-control" id="type" name="workoutType" placeholder="nt iluvõimlemine">
+                                <input class="form-control" id="type" name="workoutType" placeholder="nt iluvõimlemine"   value="<?php if(isset($data['workoutType'])): echo $data['workoutType'];endif; ?>">
                             </div>
                             <div class="form-label-group col-6 p-0 pl-5"></div>
                         </div>
@@ -141,7 +145,7 @@
                         <div class="mt-4 px-5 mx-5">
                             <div class="form-label-group pb-2 px-0">
                                 <label>Lisainfo</label>
-								<textarea class="form-control" id="additional" name="additionalComment" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"></textarea>
+								<textarea class="form-control" id="additional" name="additionalComment" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"><?php if(isset($data['comment2'])): echo $data['comment2'];endif; ?></textarea>
 								
 							</div>
 							<label><input type="checkbox" checked name="approveNow" id="approveNow" value="1"><span></span></label> Kinnita kohe
@@ -156,30 +160,31 @@
                     </form>
                 </div>
 
-                <div id="hooajaline" class="tab-pane center">
+                <div id="hooajaline" class="tab-pane center <?php if($data['type']==2){echo 'active';}; ?>">
                     <?php echo form_open('booking/createClosed', array('id' => 'myPeriodicForm')); ?>
 
-                        <h4 class="pt-2 txt-xl px-5 mx-5">Kontakt</h4>
+                        <h4 class="pt-2 txt-xl px-5 mx-5">Kontakt</h4>	<?php echo form_error('clubname'); ?>
                         <div class="d-flex px-5 mx-5 mt-4">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
-                                <label for="contact">Klubi nimi (avalik info)*</label>
-                                <input class="form-control" id="clubname" type="text" name="clubname" required value="<?php if($data): echo $data['clubname'];endif; ?>">
+								<label for="contact">Klubi nimi (avalik info)*</label>
+							
+                                <input class="form-control" id="clubname" type="text" name="clubname" required value="<?php if(isset($data['clubname'])): echo $data['clubname'];endif; ?>">
                             </div>
 
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <label>Kontaktisik*</label>
-                                <input class="form-control" id="contact" name="contactPerson" value="<?php if($data){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>" required>
+                                <input class="form-control" id="contact" name="contactPerson" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>" required>
                             </div>
                         </div>
                         <div class="d-flex mt-2 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
                                 <label>Telefoni number</label>
-                                <input class="form-control" id="phone" name="phone" value="<?php if($data){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
+                                <input class="form-control" id="phone" name="phone" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
                             </div>
 
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <label>Email</label>
-                                <input class="form-control" id="email" name="email" value="<?php if($data){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
+                                <input class="form-control" id="email" name="email" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
                             </div>
                         </div>
 
@@ -212,7 +217,7 @@
                         <div class="d-flex mt-2 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
                                 <label for="type">Sündmus / Treeningu tüüp (avalik info)</label>
-                                <input class="form-control" id="type" name="workoutType" placeholder="nt iluvõimlemine"  value="<?php if($data): echo $data['workoutType'];endif; ?>">
+                                <input class="form-control" id="type" name="workoutType" placeholder="nt iluvõimlemine"  value="<?php if(isset($data['workoutType'])): echo $data['workoutType'];endif; ?>">
                             </div>
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <input class="d-none" type="checkbox" name="type" value="2" checked>
@@ -275,7 +280,7 @@
                         <div class="mt-4 px-5 mx-5">
                             <div class="form-label-group pb-2 px-0">
                                 <label>Lisainfo</label>
-                                <textarea class="form-control" id="comment2" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"><?php if($data): echo $data['comment2'];endif; ?></textarea>
+                                <textarea class="form-control" id="comment2" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"><?php if(isset($data['comment2'])): echo $data['comment2'];endif; ?></textarea>
 							</div>
 							<label><input type="checkbox" checked name="approveNow" id="approvePeriodNow" value="1"><span></span></label> Kinnita kohe
                         </div>
@@ -288,7 +293,7 @@
                     </form>
                 </div>
 
-                <div id="suletud" class="tab-pane center">
+                <div id="suletud" class="tab-pane center <?php if($data['type']==4){echo 'active';}; ?>">
                 <?php echo form_open('booking/createClosed'); ?>
 
                         <h4 class="mt-5 txt-xl px-5 mx-5">Ruum ja aeg</h4>
@@ -297,7 +302,11 @@
                                 <label for="contact">Ruum</label>
                                 <select name="sportrooms"  class="form-control arrow" id="room2" >
                                 <?php foreach ($rooms as $each) {
-                                        echo $each->id;
+										echo $each->id;
+										if($data['sportrooms']== $each->id){ 
+											echo '<option selected value="' . $each->id . '">' . $each->roomName . '</option>';
+										}
+										   else 
                                                if( $this->uri->segment(3)== $each->id){
                                                     echo '<option selected value="' . $each->id . '">' . $each->roomName . '</option>';
                                                 }else{

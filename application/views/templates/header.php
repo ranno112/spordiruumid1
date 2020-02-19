@@ -107,8 +107,6 @@
         <?php echo '<p class="alert alert-success text-center">'.$this->session->flashdata('user_loggedout').'</p>'; ?>
       <?php endif; ?>
 
-
-
       <?php if($this->session->flashdata('category_deleted')): ?>
         <?php echo '<p class="alert alert-success text-center">'.$this->session->flashdata('category_deleted').'</p>'; ?>
       <?php endif; ?>
@@ -141,9 +139,12 @@
         <?php echo '<p class="alert alert-danger text-center">'.$this->session->flashdata('validationErrorMessage').'</p>'; ?>
       <?php endif; ?>
       
-			
       <?php if($this->session->flashdata('login_failed')): ?>
         <?php echo '<p class="alert alert-danger text-center">'.$this->session->flashdata('login_failed').'</p>'; ?>
+			<?php endif; ?>
+			
+			<?php if($this->session->flashdata('errors')): ?>
+        <?php echo '<p class="alert alert-danger text-center">'.$this->session->flashdata('errors').'</p>'; ?>
       <?php endif; ?>
 
  
