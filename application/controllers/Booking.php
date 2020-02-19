@@ -97,9 +97,21 @@ class Booking extends CI_Controller {
 
 	public function username_check($str= '')
 	{
-			if ($str == 'test')
+			if ($str == '')
 			{
-					$this->session->set_flashdata('validationErrorMessage', 'See ei saa olla test');
+					$this->session->set_flashdata('validationErrorMessage', "<small class='text-danger'>See väli on kohustuslik</small>");
+					return FALSE;
+			}
+			else
+			{
+					return TRUE;
+			}
+	}
+	public function weekDayMissing($str= '')
+	{
+			if ($str == '')
+			{
+					$this->session->set_flashdata('weekDayMissing', "<small class='text-danger'>See väli on kohustuslik</small>");
 					return FALSE;
 			}
 			else
@@ -122,12 +134,12 @@ class Booking extends CI_Controller {
 				$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|required|callback_username_check');
 				$this->form_validation->set_rules('startingFrom', 'Kuupäev alates', 'trim|required');
 				$this->form_validation->set_rules('Ending', 'Kuupäev kuni', 'trim|required');
-				$this->form_validation->set_rules('weekday[]', 'Nädalapäev puudu', 'trim|required');
+				$this->form_validation->set_rules('weekday[]', 'Nädalapäev puudu', 'trim|required|callback_weekDayMissing');
 
 			
 
 			if($this->form_validation->run() === FALSE ){
-				$this->session->set_flashdata("message","Ooopps... form validation failed".validation_errors());
+				$this->session->set_flashdata("message","eroor".form_error());
 				$this->session->set_flashdata('data', $this->input->post());
 
 				if($this->input->post('dontShow')!=1){

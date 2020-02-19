@@ -167,13 +167,9 @@
                         <div class="d-flex px-5 mx-5 mt-4">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
 							<?php echo form_error('clubname'); ?>
-								<label for="contact">Klubi nimi (avalik info)*</label>
-								<?php if($this->session->flashdata('message')){ ?>
-									<?php echo '<p class="alert alert-danger text-center">'.$this->session->flashdata('message').'</p>
-									  <small id="passwordHelp" class="text-danger">
-									  See väli on kohustuslik
-									 </small>    
-									 <input type="text" class="form-control is-invalid">';
+								<label for="contact">Klubi nimi (avalik info)*	<?php if($this->session->flashdata('validationErrorMessage')){  echo $this->session->flashdata('validationErrorMessage');} ?></label>
+								<?php if($this->session->flashdata('validationErrorMessage')){ ?>
+									<?php echo '<input class="form-control is-invalid" id="clubname" type="text" name="clubname" required value="'; if(isset($data['clubname'])): echo $data['clubname'];endif; echo '">';
 									 ?>
 								<?php } else{ ?>
 							
@@ -241,14 +237,26 @@
                         <div class="mt-4 bg-grey py-2">
                             <div class="form-label-group px-5 mx-5"  id="InputsWrapper1">
                                 <div class="d-flex justify-content-between m-0 px-0 pt-0 pb-1">
-                                    <label class="col-5 m-0 p-0" for="sport_facility2">Nädalapäev</label>
+									<label class="col-5 m-0 p-0" for="sport_facility2">Nädalapäev <?php if($this->session->flashdata('weekDayMissing')){  echo $this->session->flashdata('weekDayMissing');} ?></label>
+									
                                     <label class="d-hidden col-1 mr-1 p-0"></label>
                                     <label class="col-2 m-0 pl-3" for="from1">Alates</label>
                                     <label class="col-2 m-0 p-0" for="until1">Kuni</label>
                                 </div>
                                 <div id="dateContainer">
 						            <div class="d-flex align-items-center mb-3 justify-content-between">
-                                        <input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]" required>
+
+
+									<?php if($this->session->flashdata('weekDayMissing')){ ?>
+									<?php echo '<input class="form-control is-invalid col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]" required>';
+									 ?>
+								<?php } else{ ?>
+							
+									<input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]" required>
+								<?php } ?>
+
+
+                                     
 									        <datalist id="weekdays">
 									            <option data-value="1" <?php if($data['weekday'][0]=="Esmaspäev"): echo 'selected';endif; ?> value="Esmaspäev"></option>
                                                 <option data-value="2" <?php if($data['weekday'][0]=="Teisipäev"): echo 'selected';endif; ?> value="Teisipäev"></option>

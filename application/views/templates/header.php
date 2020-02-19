@@ -148,7 +148,7 @@
       <?php endif; ?>
 		
 			<?php if($this->session->flashdata('data')): ?>
-        <?php echo '<p class="alert alert-danger text-center">'.print_r($this->session->flashdata('data')).'hello</p>'; ?>
+        <?php echo '<p class="alert alert-danger text-center">hello'.print_r($this->session->flashdata('data')).'hello</p>'; ?>
 			<?php endif; ?>
 					
 			<?php if($this->session->flashdata('message')): ?>
