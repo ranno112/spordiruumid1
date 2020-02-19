@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php echo validation_errors(); ?>
+<?php $data=$this->session->flashdata('key');if($data): print_r($data); echo $data['current_url'];endif; ?>
 <?php $stack = array(); foreach ($allBookingInfo as $each) { 
     array_push($stack, $each['public_info'] );
  };?>
@@ -162,23 +163,23 @@
                         <div class="d-flex px-5 mx-5 mt-4">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
                                 <label for="contact">Klubi nimi (avalik info)*</label>
-                                <input class="form-control" id="clubname" type="text" name="clubname" required>
+                                <input class="form-control" id="clubname" type="text" name="clubname" required value="<?php if($data): echo $data['clubname'];endif; ?>">
                             </div>
 
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <label>Kontaktisik*</label>
-                                <input class="form-control" id="contact" name="contactPerson" value="<?php if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>" required>
+                                <input class="form-control" id="contact" name="contactPerson" value="<?php if($data){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>" required>
                             </div>
                         </div>
                         <div class="d-flex mt-2 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
                                 <label>Telefoni number</label>
-                                <input class="form-control" id="phone" name="phone" value="<?php if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
+                                <input class="form-control" id="phone" name="phone" value="<?php if($data){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
                             </div>
 
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <label>Email</label>
-                                <input class="form-control" id="email" name="email" value="<?php if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
+                                <input class="form-control" id="email" name="email" value="<?php if($data){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
                             </div>
                         </div>
 
@@ -193,9 +194,13 @@
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <label for="room">Ruum*</label>
                                 <select id="room" list="saal" name="sportrooms" class="form-control arrow" >
-                                <?php foreach ($rooms as $each) {
-                                        echo $each->id;
-                                               if( $this->uri->segment(3)== $each->id){
+								<?php 
+								foreach ($rooms as $each) {
+										echo $each->id;
+											if($data['sportrooms']== $each->id){ 
+											    echo '<option selected value="' . $each->id . '">' . $each->roomName . '</option>';
+											}
+                                               else if( $this->uri->segment(3)== $each->id){
                                                     echo '<option selected value="' . $each->id . '">' . $each->roomName . '</option>';
                                                 }else{
                                                 echo '<option value="' . $each->id . '">' . $each->roomName . '</option>';}
@@ -207,7 +212,7 @@
                         <div class="d-flex mt-2 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
                                 <label for="type">Sündmus / Treeningu tüüp (avalik info)</label>
-                                <input class="form-control" id="type" name="workoutType" placeholder="nt iluvõimlemine">
+                                <input class="form-control" id="type" name="workoutType" placeholder="nt iluvõimlemine"  value="<?php if($data): echo $data['workoutType'];endif; ?>">
                             </div>
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <input class="d-none" type="checkbox" name="type" value="2" checked>
@@ -225,17 +230,16 @@
                                     <label class="col-2 m-0 p-0" for="until1">Kuni</label>
                                 </div>
                                 <div id="dateContainer">
-                                    <div class="d-flex align-items-center mb-3 justify-content-between">
+						            <div class="d-flex align-items-center mb-3 justify-content-between">
                                         <input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]" required>
-
-                                            <datalist id="weekdays">
-                                                <option data-value="1" value="Esmaspäev"></option>
-                                                <option data-value="2" value="Teisipäev"></option>
-                                                <option data-value="3" value="Kolmapäev"></option>
-                                                <option data-value="4" value="Neljapäev"></option>
-                                                <option data-value="5" value="Reede"></option>
-                                                <option data-value="6" value="Laupäev"></option>
-                                                <option data-value="7" value="Pühapäev"></option>       
+									        <datalist id="weekdays">
+									            <option data-value="1" <?php if($data['weekday'][0]=="Esmaspäev"): echo 'selected';endif; ?> value="Esmaspäev"></option>
+                                                <option data-value="2" <?php if($data['weekday'][0]=="Teisipäev"): echo 'selected';endif; ?> value="Teisipäev"></option>
+                                                <option data-value="3" <?php if($data['weekday'][0]=="Kolmapäev"): echo 'selected';endif; ?> value="Kolmapäev"></option>
+                                                <option data-value="4" <?php if($data['weekday'][0]=="Neljapäev"): echo 'selected';endif; ?> value="Neljapäev"></option>
+                                                <option data-value="5" <?php if($data['weekday'][0]=="Reede"): echo 'selected';endif; ?> value="Reede"></option>
+                                                <option data-value="6" <?php if($data['weekday'][0]=="Laupäev"): echo 'selected';endif; ?> value="Laupäev"></option>
+                                                <option data-value="7" <?php if($data['weekday'][0]=="Pühapäev"): echo 'selected';endif; ?> value="Pühapäev"></option>       
                                             </datalist>
 
                                         <a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
@@ -271,7 +275,7 @@
                         <div class="mt-4 px-5 mx-5">
                             <div class="form-label-group pb-2 px-0">
                                 <label>Lisainfo</label>
-                                <textarea class="form-control" id="comment2" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"></textarea>
+                                <textarea class="form-control" id="comment2" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"><?php if($data): echo $data['comment2'];endif; ?></textarea>
 							</div>
 							<label><input type="checkbox" checked name="approveNow" id="approvePeriodNow" value="1"><span></span></label> Kinnita kohe
                         </div>
@@ -712,11 +716,12 @@ $.ajax({
 
 		(getDates(startingDateConverted, endingDateConverted)).forEach(function(element){
 		
+        console.log(element);
 			if(isOverlapping(element, conflicts)){
 			$('#approvePeriodNow').prop('checked', false);
 
 			canSubmit=false;
-			console.log($('#approvePeriodNow'));
+			//console.log($('#approvePeriodNow'));
 			}
 		
 		});

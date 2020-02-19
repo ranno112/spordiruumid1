@@ -13,7 +13,7 @@ class Booking extends CI_Controller {
 	}
 
 	public function create($slug)
-	{
+	{	
 		
 		if($this->session->userdata('session_id')===TRUE){
 		$data['title']='Tee uus broneering';
@@ -98,7 +98,38 @@ class Booking extends CI_Controller {
 	public function createClosed()
 	{
 		if( $this->session->userdata('session_id')===TRUE){
-			$data['title'] = 'Sign Up';
+
+			$data['selectedRoom'] = $this->booking_model->getTheRoom($slug);
+			$data['rooms'] = $this->booking_model->getAllRooms();
+			$data['buildings'] = $this->booking_model->getAllBuildings();
+			$data['allBookingInfo'] = $this->booking_model->getAllBookings();
+
+			$this->form_validation->set_rules('startingFrom', 'Kuupäev alates', 'required');
+			$this->form_validation->set_rules('Ending', 'Kuupäev kuni', 'required');
+			$this->form_validation->set_rules('weekday', 'Klubi nimi', 'required');
+			$this->form_validation->set_rules('clubname', 'Klubi nimi', 'required');
+
+			if($this->form_validation->run() === FALSE ){
+
+				if($this->input->post('dontShow')!=1){
+				$this->form_validation->set_message('validationErrorMessage', 'Klubi nimi puudu');
+				$this->session->set_flashdata('validationErrorMessage', 'Klubi nimi puudu');
+
+				
+				}
+				
+				$data = $_POST;
+				$this->session->set_flashdata('key',$data);
+				redirect( $this ->input->post('current_url'));
+
+				$this->load->view('templates/header');
+				$this->load->view('pages/booking', $_POST);
+				$this->load->view('templates/footer');
+
+			} 
+			else{
+
+
 			$event_in = strtotime($this ->input->post('startingFrom'));
 			$event_out = strtotime($this ->input->post('Ending'));
 			$this->form_validation->set_rules($event_in, 'Event In', $event_out);
@@ -140,7 +171,7 @@ class Booking extends CI_Controller {
 
 			);
 
-			$this->form_validation->set_rules('clubname', 'Klubi nimi', 'required');
+			
 		//	$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'required');
 
 		
@@ -261,7 +292,7 @@ class Booking extends CI_Controller {
 			}
 			}
 
-	
+		} 
 
 	}else{
 	
