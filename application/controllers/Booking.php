@@ -40,7 +40,7 @@ class Booking extends CI_Controller {
 			//'event_out' => $this ->input->post('phone')
 		);
 		
-		$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|required');
+	//	$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|required');
 		$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|required');
 
 		if ($this->form_validation->run() != FALSE)
@@ -112,7 +112,7 @@ class Booking extends CI_Controller {
 	{
 		
 		$postData = $_POST;
-		$postData['error'] =  validation_errors() ;
+		$postData['error'] = validation_errors() ;
 		if( $this->session->userdata('session_id')===TRUE){
 
 			$data['rooms'] = $this->booking_model->getAllRooms();
@@ -124,7 +124,11 @@ class Booking extends CI_Controller {
 				$this->form_validation->set_rules('Ending', 'Kuupäev kuni', 'trim|required');
 				$this->form_validation->set_rules('weekday[]', 'Nädalapäev puudu', 'trim|required');
 
+			
+
 			if($this->form_validation->run() === FALSE ){
+				$this->session->set_flashdata("message","Ooopps... form validation failed".validation_errors());
+				$this->session->set_flashdata('data', $this->input->post());
 
 				if($this->input->post('dontShow')!=1){
 				$this->session->set_flashdata('access_deniedToUrl', 'Midagi on selle vormiga valesti. Palun vaata kõik väljad üle');

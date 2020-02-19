@@ -90,7 +90,7 @@
                 $(".alert").fadeTo(500, 0).slideUp(500, function(){
                     $(this).remove(); 
                 });
-            }, 4000);});
+            }, 40000);});
  </script>
 
 
@@ -146,5 +146,12 @@
 			<?php if($this->session->flashdata('errors')): ?>
         <?php echo '<p class="alert alert-danger text-center">'.$this->session->flashdata('errors').'</p>'; ?>
       <?php endif; ?>
-
+		
+			<?php if($this->session->flashdata('data')): ?>
+        <?php echo '<p class="alert alert-danger text-center">'.print_r($this->session->flashdata('data')).'hello</p>'; ?>
+			<?php endif; ?>
+					
+			<?php if($this->session->flashdata('message')): ?>
+        <?php echo '<p class="alert alert-danger text-center">'.$this->session->flashdata('message').'</p>'; ?>
+      <?php endif; ?>
  

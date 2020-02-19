@@ -1,10 +1,10 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php echo validation_errors(); ?>
+
 <?php $data=$this->session->flashdata('key');if($data): print_r($data); echo $data['current_url'];endif; ?>
 <?php $stack = array(); foreach ($allBookingInfo as $each) { 
     array_push($stack, $each['public_info'] );
  };?>
-      			
+    		
 <div class="modal" id="myModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -45,7 +45,7 @@
             </div>
 
 
-
+			
             <div class="tab-content ">
                 <div id="mitmekordne" class="tab-pane center  <?php if(!isset($data['type'])){ echo 'active';}else if($data['type']==1){echo 'active';}; ?>">
                     <?php echo form_open('booking/createOnce'); ?>
@@ -162,13 +162,25 @@
 
                 <div id="hooajaline" class="tab-pane center <?php if($data['type']==2){echo 'active';}; ?>">
                     <?php echo form_open('booking/createClosed', array('id' => 'myPeriodicForm')); ?>
-
+			
                         <h4 class="pt-2 txt-xl px-5 mx-5">Kontakt</h4>	<?php echo form_error('clubname'); ?>
                         <div class="d-flex px-5 mx-5 mt-4">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
+							<?php echo form_error('clubname'); ?>
 								<label for="contact">Klubi nimi (avalik info)*</label>
+								<?php if($this->session->flashdata('message')){ ?>
+									<?php echo '<p class="alert alert-danger text-center">'.$this->session->flashdata('message').'</p>
+									  <small id="passwordHelp" class="text-danger">
+									  See väli on kohustuslik
+									 </small>    
+									 <input type="text" class="form-control is-invalid">';
+									 ?>
+								<?php } else{ ?>
 							
-                                <input class="form-control" id="clubname" type="text" name="clubname" required value="<?php if(isset($data['clubname'])): echo $data['clubname'];endif; ?>">
+		
+      
+								<input class="form-control" id="clubname" type="text" name="clubname" required value="<?php if(isset($data['clubname'])): echo $data['clubname'];endif; ?>">
+								<?php } ?>
                             </div>
 
                             <div class="form-label-group col-6 p-0 pl-5">
