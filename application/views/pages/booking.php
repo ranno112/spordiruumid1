@@ -1,6 +1,9 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-<?php $data=$this->session->flashdata('key');if($data): print_r($data); echo $data['current_url'];endif; ?>
+<?php $data=$this->session->flashdata('key');if($data): print_r($data); foreach ($data['weekday'] as $each) { 
+   echo $each;
+ };endif; ?>
+
 <?php $stack = array(); foreach ($allBookingInfo as $each) { 
     array_push($stack, $each['public_info'] );
  };?>
@@ -54,36 +57,36 @@
                         <div class="d-flex p-0 mt-4 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
                                 <label for="contact">Klubi nimi (avalik info)*</label>
-                                <input class="form-control" id="clubname" type="text" name="clubname" required value="<?php if(isset($data['clubname'])): echo $data['clubname'];endif; ?>">
+                                <input class="form-control" id="clubnameForSingle" type="text" name="clubname" required value="<?php if(isset($data['clubname'])): echo $data['clubname'];endif; ?>">
                             </div>
-                            <input class="d-none" type="checkbox" id="type" name="type" value="1" checked>
+                            <input class="d-none" type="checkbox" id="typeOnce" name="type" value="1" checked>
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <label>Kontaktisik*</label>
-                                <input class="form-control" id="contact" name="contactPerson" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>" required>
+                                <input class="form-control" id="contactForSingle" name="contactPerson" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>" required>
                             </div>
                         </div>
                         <div class="d-flex mt-2 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
                                 <label>Telefoni number</label>
-                                <input class="form-control" id="phone" name="phone" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
+                                <input class="form-control" id="phoneForSingle" name="phone" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
                             </div>
 
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <label>Email</label>
-                                <input class="form-control" id="email" name="email" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
+                                <input class="form-control" id="emailForSingle" name="email" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
                             </div>
                         </div>
 
                         <h4 class="mt-5 txt-xl px-5 mx-5">Asukoht ja sündmus / treeningu tüüp</h4>
                         <div class="d-flex mt-4 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
-                                <label for="sport_facility">Asutus</label>
-                                <input id="sport_facility" class="form-control" list="asutus" id="building" value="<?php $test = $this->session->userdata('building'); foreach ($buildings as $each) { $id = $each->id; $name = $each->name; if ($id == $test) {echo $each->name;}};?>" disabled>
+                                <label for="sport_facilityOnce">Asutus</label>
+                                <input id="sport_facilityOnce" class="form-control" list="asutus" id="building" value="<?php $test = $this->session->userdata('building'); foreach ($buildings as $each) { $id = $each->id; $name = $each->name; if ($id == $test) {echo $each->name;}};?>" disabled>
                             </div>
                            <?php echo $this->input->get('roomId');?>
                             <div class="form-label-group col-6 p-0 pl-5">
-                                <label for="room">Ruum*</label>
-                                <select id="room" list="saal" name="sportrooms" class="form-control arrow" >
+                                <label for="roomOnce">Ruum*</label>
+                                <select id="roomOnce" list="saal" name="sportrooms" class="form-control arrow" >
                                     <?php foreach ($rooms as $each) {
 										echo $each->id;
 										if($data['sportrooms']== $each->id){ 
@@ -101,7 +104,7 @@
                         <div class="d-flex mt-2 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
                                 <label>Sündmus / Treeningu tüüp (avalik info)</label>
-                                <input class="form-control" id="type" name="workoutType" placeholder="nt iluvõimlemine"   value="<?php if(isset($data['workoutType'])): echo $data['workoutType'];endif; ?>">
+                                <input class="form-control" id="typePeriod" name="workoutType" placeholder="nt iluvõimlemine"   value="<?php if(isset($data['workoutType'])): echo $data['workoutType'];endif; ?>">
                             </div>
                             <div class="form-label-group col-6 p-0 pl-5"></div>
                         </div>
@@ -127,11 +130,11 @@
 
                                         <div class="col-2 p-0 ml-5">
 									
-                                            <input type="input" class="clock form-control" name="begin[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_1" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i');?>">
+                                            <input type="input" class="clock form-control" name="begin[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_1" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
                                         </div>
 
                                         <div class="col-2 p-0">
-                                            <input type="input" class="clock form-control" name="end[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_1" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>">
+                                            <input type="input" class="clock form-control" name="end[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_1" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
                                         </div>
                                     </div>
                                 </div>
@@ -205,8 +208,8 @@
                             </div>
 
                             <div class="form-label-group col-6 p-0 pl-5">
-                                <label for="room">Ruum*</label>
-                                <select id="room" list="saal" name="sportrooms" class="form-control arrow" >
+                                <label for="roomPeriod">Ruum*</label>
+                                <select id="roomPeriod" list="saal" name="sportrooms" class="form-control arrow" >
 								<?php 
 								foreach ($rooms as $each) {
 										echo $each->id;
@@ -224,8 +227,8 @@
 
                         <div class="d-flex mt-2 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
-                                <label for="type">Sündmus / Treeningu tüüp (avalik info)</label>
-                                <input class="form-control" id="type" name="workoutType" placeholder="nt iluvõimlemine"  value="<?php if(isset($data['workoutType'])): echo $data['workoutType'];endif; ?>">
+                                <label for="typeClosed">Sündmus / Treeningu tüüp (avalik info)</label>
+                                <input class="form-control" id="typeClosed" name="workoutType" placeholder="nt iluvõimlemine"  value="<?php if(isset($data['workoutType'])): echo $data['workoutType'];endif; ?>">
                             </div>
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <input class="d-none" type="checkbox" name="type" value="2" checked>
@@ -278,10 +281,20 @@
                                         </div>                                    
                                     </div>
                                 </div>
-
+								<?php if($data){ for ($i = 1;$i<count($data['weekday']); $i++) { ?>
+									<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from' + FieldCount + '" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div></div>
+								<?php
+							} };?>
                                 <div id="AddMoreFileId1" class="flex col-5 p-0">
                                     <a id="AddMoreFileBoxPeriod" class="btn btn-custom text-white text-center py-2 px-4 pluss"><p class="m-0 px-0 txt-lg txt-strong text-center align-items-center">Lisa veel üks päev</p></a>
-                                </div>
+								</div>
+								
+							
+
+
+
+
+
                             </div>
                         </div>
 
@@ -300,7 +313,7 @@
                         <div class="mt-4 px-5 mx-5">
                             <div class="form-label-group pb-2 px-0">
                                 <label>Lisainfo</label>
-                                <textarea class="form-control" id="comment2" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"><?php if(isset($data['comment2'])): echo $data['comment2'];endif; ?></textarea>
+                                <textarea class="form-control" id="comment2ForSingle" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"><?php if(isset($data['comment2'])): echo $data['comment2'];endif; ?></textarea>
 							</div>
 							<label><input type="checkbox" checked name="approveNow" id="approvePeriodNow" value="1"><span></span></label> Kinnita kohe
                         </div>
@@ -320,7 +333,7 @@
                         <div class="d-flex px-5 mx-5">
                             <div class="form-label-group col-6 pl-0">
                                 <label for="contact">Ruum</label>
-                                <select name="sportrooms"  class="form-control arrow" id="room2" >
+                                <select name="sportrooms"  class="form-control arrow" id="roomClosed" >
                                 <?php foreach ($rooms as $each) {
 										echo $each->id;
 										if($data['sportrooms']== $each->id){ 
@@ -346,14 +359,14 @@
                             <div class="form-label-group px-5 mx-5"  id="InputsWrapper2">
                                 <div class="d-flex justify-content-between m-0 px-0 pt-0 pb-1">
                             <!-- <div class="form-label-group col-6 pl-0"  id="InputsWrapper2"> -->
-                                    <label class="col-5 m-0 p-0" for="sport_facility2">Nädalapäev</label>
+                                    <label class="col-5 m-0 p-0" for="sport_facility3">Nädalapäev</label>
                                     <label class="d-hidden col-1 mr-1 p-0"></label>
-                                    <label class="col-2 m-0 pl-3" for="from1">Alates</label>
+                                    <label class="col-2 m-0 pl-3" for="from2">Alates</label>
                                     <label class="col-2 m-0 p-0" for="until1">Kuni</label>
                                 </div>
                                 <div id="closeContainer">
                                     <div class="d-flex align-items-center mb-3 justify-content-between">
-                                        <input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]" required>
+                                        <input class="form-control col-5 arrow" id="sport_facility3" list="weekdays" name="weekday[]" required>
 
                                             <datalist id="weekdays">
                                                 <option data-value="1" value="Esmaspäev"></option>
@@ -368,11 +381,11 @@
                                         <a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
 
                                         <div class="col-2 p-0 ml-5">
-                                            <input type="text" class="clock form-control" data-minimum="08:00" data-maximum="22:00" name="timesStart[]" id="from1" value="08:00">
+                                            <input type="text" class="clock form-control" data-minimum="08:00" data-maximum="22:00" name="timesStart[]" id="from2" value="08:00">
                                         </div>
 
                                         <div class="col-2 p-0">
-                                            <input type="text" class="clock form-control" data-minimum="08:00" data-maximum="22:00" name="timeTo[]" id="until1" value="22:00">
+                                            <input type="text" class="clock form-control" data-minimum="08:00" data-maximum="22:00" name="timeTo[]" id="until2" value="22:00">
                                         </div>
                                     </div>
                                 </div>
@@ -387,11 +400,11 @@
                         <div class="d-flex px-5 mx-5 mt-4">                        
                             <div class="form-label-group m-0 pl-0 pr-3 col-3">
                                 <label>Periood</label>
-                                <input class="datePicker form-control" id="periodStart" data-toggle="datepicker" name="startingFrom">
+                                <input class="datePicker form-control" id="periodStartClosed" data-toggle="datepicker" name="startingFrom">
                             </div>
                             <div class="form-label-group m-0 pl-0 col-3">  
                                 <label class="invisible">Periood</label> 
-                                <input class="datePicker form-control" id="periodEnd" data-toggle="datePicker" name="Ending">
+                                <input class="datePicker form-control" id="periodEndClosed" data-toggle="datePicker" name="Ending">
                             </div>
                         </div>
 
@@ -443,8 +456,14 @@
         var checkingDate = '<?php echo $data['Ending']; ?>';
         console.log("kuupäev on "+checkingDate);
         var dateToShow='';
+		if('<?php echo ($data['startingFrom'])?>'){
+			window.history.replaceState("", "",'<?php echo base_url(); ?>booking/create/<?php echo $this->uri->segment(3) . "?startDate=".$data['startingFrom'] .'&start='.$data['timesStart'][0].'&end='.$data['timeTo'][0]; ?>');
+			
+		}
+	
         if (checkingDate){
-            dateToShow=moment(checkingDate);
+            dateToShow=moment(checkingDate, "DD-MM-YYYY");
+			
         }
         else if (today<endOfPeriond){
             dateToShow=endOfPeriond;
@@ -493,7 +512,7 @@
             if (x <= MaxInputs) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#InputsWrapper').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="datePicker col-5 form-control" id="datefield_' + FieldCount + '" data-toggle="datepicker" name="workoutDate[]"><a class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="begin[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_' + FieldCount + '" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i');?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="end[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + FieldCount + '" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>"></div></div>');
+                $('#InputsWrapper').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="datePicker col-5 form-control" id="datefield_' + FieldCount + '" data-toggle="datepicker" name="workoutDate[]"><a class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="begin[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="end[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div></div>');
 
                 $(".datePicker").datepicker({
                     language: "et-EE", 
@@ -558,7 +577,7 @@
             if (y <= maxPeriod) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#dateContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from' + FieldCount + '" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); ?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>"></div></div>');
+                $('#dateContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div></div>');
 
                 $('.clock').clockTimePicker({
                     duration: true,
