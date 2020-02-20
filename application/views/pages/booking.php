@@ -270,11 +270,11 @@
                                         <a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
 
                                         <div class="col-2 p-0 ml-5">
-                                            <input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from1" value="<?php echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); ?>">
+                                            <input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from1" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
                                         </div>
 
                                         <div class="col-2 p-0">
-                                            <input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until1" value="<?php echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); ?>">
+                                            <input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until1" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
                                         </div>                                    
                                     </div>
                                 </div>
@@ -440,8 +440,13 @@
 			list[i].setAttribute("value", days[selectedWeekDay.getDay()]);
 			}
 	};
+        var checkingDate = '<?php echo $data['Ending']; ?>';
+        console.log("kuupäev on "+checkingDate);
         var dateToShow='';
-        if (today<endOfPeriond){
+        if (checkingDate){
+            dateToShow=moment(checkingDate);
+        }
+        else if (today<endOfPeriond){
             dateToShow=endOfPeriond;
 
         }else{
@@ -459,7 +464,7 @@
         $(".datePicker").datepicker({
             language: "et-EE",
             autoHide: true,
-            date: '<?php echo $this->input->get('startDate') ? $this->input->get('startDate'):"new Date()";?>',
+            date: '<?php if ($data['startingFrom']){echo $data['startingFrom'];} else echo $this->input->get('startDate') ? $this->input->get('startDate'):"new Date()";?>',
             autoPick: true,
         });
 

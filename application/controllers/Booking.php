@@ -158,7 +158,7 @@ class Booking extends CI_Controller {
 		//	$this->form_validation->set_rules($event_in, 'Event In', $event_out);
 			if ($event_in > $event_out)
 			{
-			  $this->session->set_flashdata('post_updated', 'Periood on valesti sisestatud');
+			  $this->session->set_flashdata('errors', 'Periood on valesti sisestatud');
 			  $this->session->set_flashdata('key',$postData);
 			  redirect( $this ->input->post('current_url'));
 			}
