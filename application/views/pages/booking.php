@@ -203,8 +203,8 @@
                         <h4 class="mt-5 txt-xl px-5 mx-5">Asukoht ja sündmus / treeningu tüüp</h4>
                         <div class="d-flex mt-4 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
-                                <label for="sport_facility">Asutus</label>
-                                <input id="sport_facility" class="form-control" list="asutus" id="building" value="<?php $test = $this->session->userdata('building'); foreach ($buildings as $each) { $id = $each->id; $name = $each->name; if ($id == $test) {echo $each->name;}};?>" disabled>
+                                <label for="sport_facility2">Asutus</label>
+                                <input id="sport_facility2" class="form-control" list="asutus" id="building" value="<?php $test = $this->session->userdata('building'); foreach ($buildings as $each) { $id = $each->id; $name = $each->name; if ($id == $test) {echo $each->name;}};?>" disabled>
                             </div>
 
                             <div class="form-label-group col-6 p-0 pl-5">
@@ -250,17 +250,13 @@
 						            <div class="d-flex align-items-center mb-3 justify-content-between">
 
 
-									<?php if($this->session->flashdata('weekDayMissing')){ ?>
-									<?php echo '<input class="form-control is-invalid col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]" required>';
-									 ?>
+								<?php if($this->session->flashdata('weekDayMissing')){ ?>
+                                 <input class="form-control is-invalid col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]" required>
 								<?php } else{ ?>
-							
 									<input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]" required>
-								<?php } ?>
-
-
-                                     
-									        <datalist id="weekdays">
+                                <?php } ?>
+                                
+                            		        <datalist id="weekdays">
 									            <option data-value="1" <?php if($data['weekday'][0]=="Esmaspäev"): echo 'selected';endif; ?> value="Esmaspäev"></option>
                                                 <option data-value="2" <?php if($data['weekday'][0]=="Teisipäev"): echo 'selected';endif; ?> value="Teisipäev"></option>
                                                 <option data-value="3" <?php if($data['weekday'][0]=="Kolmapäev"): echo 'selected';endif; ?> value="Kolmapäev"></option>
@@ -281,10 +277,30 @@
                                         </div>                                    
                                     </div>
                                 </div>
-								<?php if($data){ for ($i = 1;$i<count($data['weekday']); $i++) { ?>
-									<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from' + FieldCount + '" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div></div>
-								<?php
-							} };?>
+                                <?php if($data){ for ($i = 1; $i<count($data['weekday']); $i++) { ?>
+                                    
+									<div class="d-flex align-items-center mb-3 justify-content-between">
+
+                                        <input class="form-control 	<?php if($this->session->flashdata('weekDayMissing')){ echo 'is-invalid';}?>  col-5 arrow" id="sport_facility2<?php echo $i;?>" list="weekdays<?php echo $i;?>" name="weekday[]" value="<?php if($data['weekday'][$i]): echo $data['weekday'][$i];endif; ?>">
+                                        <datalist id="weekdays<?php echo $i;?>">
+                                            <option data-value="1" <?php if($data['weekday'][$i]=="Esmaspäev"): echo 'selected';endif; ?> value="Esmaspäev"></option>
+                                            <option data-value="2" <?php if($data['weekday'][$i]=="Teisipäev"): echo 'selected';endif; ?> value="Teisipäev"></option>
+                                            <option data-value="3" <?php if($data['weekday'][$i]=="Kolmapäev"): echo 'selected';endif; ?> value="Kolmapäev"></option>
+                                            <option data-value="4" <?php if($data['weekday'][$i]=="Neljapäev"): echo 'selected';endif; ?> value="Neljapäev"></option>
+                                            <option data-value="5" <?php if($data['weekday'][$i]=="Reede"): echo 'selected';endif; ?> value="Reede"></option>
+                                            <option data-value="6" <?php if($data['weekday'][$i]=="Laupäev"): echo 'selected';endif; ?> value="Laupäev"></option>
+                                            <option data-value="7" <?php if($data['weekday'][$i]=="Pühapäev"): echo 'selected';endif; ?> value="Pühapäev"></option>       
+                                      </datalist>
+                                    <a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
+                                    <div class="col-2 p-0 ml-5">
+                                        <input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from' + FieldCount + '" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
+                                    </div>
+                                    <div class="col-2 p-0">
+                                        <input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
+                                    </div>
+                                </div>
+                                
+                                        <?php 	} };?>
                                 <div id="AddMoreFileId1" class="flex col-5 p-0">
                                     <a id="AddMoreFileBoxPeriod" class="btn btn-custom text-white text-center py-2 px-4 pluss"><p class="m-0 px-0 txt-lg txt-strong text-center align-items-center">Lisa veel üks päev</p></a>
 								</div>
@@ -359,14 +375,14 @@
                             <div class="form-label-group px-5 mx-5"  id="InputsWrapper2">
                                 <div class="d-flex justify-content-between m-0 px-0 pt-0 pb-1">
                             <!-- <div class="form-label-group col-6 pl-0"  id="InputsWrapper2"> -->
-                                    <label class="col-5 m-0 p-0" for="sport_facility3">Nädalapäev</label>
+                                    <label class="col-5 m-0 p-0" for="sport_facility2">Nädalapäev</label>
                                     <label class="d-hidden col-1 mr-1 p-0"></label>
                                     <label class="col-2 m-0 pl-3" for="from2">Alates</label>
                                     <label class="col-2 m-0 p-0" for="until1">Kuni</label>
                                 </div>
                                 <div id="closeContainer">
                                     <div class="d-flex align-items-center mb-3 justify-content-between">
-                                        <input class="form-control col-5 arrow" id="sport_facility3" list="weekdays" name="weekday[]" required>
+                                        <input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]" required>
 
                                             <datalist id="weekdays">
                                                 <option data-value="1" value="Esmaspäev"></option>
@@ -448,7 +464,7 @@
 		
 		console.log(days[selectedWeekDay.getDay()]);
 		if(days.includes(days[selectedWeekDay.getDay()])){
-		var list = document.getElementsByClassName("form-control col-5 arrow");
+		var list = $("#sport_facility2.form-control.col-5.arrow");
 			for (var i = 0; i < list.length; i++) {
 			list[i].setAttribute("value", days[selectedWeekDay.getDay()]);
 			}
