@@ -203,8 +203,8 @@
                         <h4 class="mt-5 txt-xl px-5 mx-5">Asukoht ja sündmus / treeningu tüüp</h4>
                         <div class="d-flex mt-4 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
-                                <label for="sport_facility2">Asutus</label>
-                                <input id="sport_facility2" class="form-control" list="asutus" id="building" value="<?php $test = $this->session->userdata('building'); foreach ($buildings as $each) { $id = $each->id; $name = $each->name; if ($id == $test) {echo $each->name;}};?>" disabled>
+                                <label for="sport_facility">Asutus</label>
+                                <input id="sport_facility" class="form-control" list="asutus" id="building" value="<?php $test = $this->session->userdata('building'); foreach ($buildings as $each) { $id = $each->id; $name = $each->name; if ($id == $test) {echo $each->name;}};?>" disabled>
                             </div>
 
                             <div class="form-label-group col-6 p-0 pl-5">
