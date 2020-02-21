@@ -19,7 +19,7 @@
 		<h6>Soovitud broneering kattub allolevate broneeringutega. Sellist broneeringut automaatselt ei kinnitata. </h6>
 	
 		<table id="myTable" class="table">
-		<thead>	<tr><th>Kuupäev</th><th>Kellaaeg</th><th>Treening</th><th>Klubi</th></tr>	
+		<thead>	<tr><th>Nädalapäev</th><th>Kuupäev</th><th>Kellaaeg</th><th>Treening</th><th>Klubi</th></tr>	
 		</thead>
 			<tbody>
 		
@@ -115,7 +115,7 @@
 							
 								
 								<div class="d-flex justify-content-between m-0 px-0 pt-0 pb-1">
-                                    <label class="col-5 m-0 p-0" for="sport_facility2">Kuupäev</label>
+                                    <label class="col-5 m-0 p-0" for="datetime">Kuupäev</label>
                                     <label class="d-hidden col-1 mr-1 p-0"></label>
                                     <label class="col-2 m-0 pl-3" for="from1">Alates</label>
                                     <label class="col-2 m-0 p-0" for="until1">Kuni</label>
@@ -240,7 +240,7 @@
                         <div class="mt-4 bg-grey py-2">
                             <div class="form-label-group px-5 mx-5"  id="InputsWrapper1">
                                 <div class="d-flex justify-content-between m-0 px-0 pt-0 pb-1">
-									<label class="col-5 m-0 p-0" for="sport_facility2">Nädalapäev <?php if($this->session->flashdata('weekDayMissing')){  echo $this->session->flashdata('weekDayMissing');} ?></label>
+									<label class="col-5 m-0 p-0" for="periodicWeekDay">Nädalapäev <?php if($this->session->flashdata('weekDayMissing')){  echo $this->session->flashdata('weekDayMissing');} ?></label>
 									
                                     <label class="d-hidden col-1 mr-1 p-0"></label>
                                     <label class="col-2 m-0 pl-3" for="from1">Alates</label>
@@ -251,9 +251,9 @@
 
 
 								<?php if($this->session->flashdata('weekDayMissing')){ ?>
-                                 <input class="form-control is-invalid col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]" required>
+                                 <input class="form-control is-invalid col-5 arrow" id="periodicWeekDay" list="weekdays" name="weekday[]" required>
 								<?php } else{ ?>
-									<input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]" required>
+									<input class="form-control col-5 arrow" id="periodicWeekDay" list="weekdays" name="weekday[]" required>
                                 <?php } ?>
                                 
                             		        <datalist id="weekdays">
@@ -281,7 +281,7 @@
                                     
 									<div class="d-flex align-items-center mb-3 justify-content-between">
 
-                                        <input class="form-control 	<?php if($this->session->flashdata('weekDayMissing')){ echo 'is-invalid';}?>  col-5 arrow" id="sport_facility2<?php echo $i;?>" list="weekdays<?php echo $i;?>" name="weekday[]" value="<?php if($data['weekday'][$i]): echo $data['weekday'][$i];endif; ?>">
+                                        <input class="form-control 	<?php if($this->session->flashdata('weekDayMissing')){ echo 'is-invalid';}?>  col-5 arrow" id="periodicWeekDay<?php echo $i;?>" list="weekdays<?php echo $i;?>" name="weekday[]" value="<?php if($data['weekday'][$i]): echo $data['weekday'][$i];endif; ?>">
                                         <datalist id="weekdays<?php echo $i;?>">
                                             <option data-value="1" <?php if($data['weekday'][$i]=="Esmaspäev"): echo 'selected';endif; ?> value="Esmaspäev"></option>
                                             <option data-value="2" <?php if($data['weekday'][$i]=="Teisipäev"): echo 'selected';endif; ?> value="Teisipäev"></option>
@@ -376,14 +376,14 @@
                             <div class="form-label-group px-5 mx-5"  id="InputsWrapper2">
                                 <div class="d-flex justify-content-between m-0 px-0 pt-0 pb-1">
                             <!-- <div class="form-label-group col-6 pl-0"  id="InputsWrapper2"> -->
-                                    <label class="col-5 m-0 p-0" for="sport_facility2">Nädalapäev</label>
+                                    <label class="col-5 m-0 p-0" for="closedWeekDay">Nädalapäev</label>
                                     <label class="d-hidden col-1 mr-1 p-0"></label>
                                     <label class="col-2 m-0 pl-3" for="from2">Alates</label>
                                     <label class="col-2 m-0 p-0" for="until1">Kuni</label>
                                 </div>
                                 <div id="closeContainer">
                                     <div class="d-flex align-items-center mb-3 justify-content-between">
-                                        <input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]" required>
+                                        <input class="form-control col-5 arrow" id="closedWeekDay" list="weekdays" name="weekday[]" required>
 
                                             <datalist id="weekdays">
                                                 <option data-value="1" value="Esmaspäev"></option>
@@ -465,9 +465,12 @@
 		
 		console.log(days[selectedWeekDay.getDay()]);
 		if(days.includes(days[selectedWeekDay.getDay()])){
-		var list = $("#sport_facility2.form-control.col-5.arrow");
+		var list = $("#periodicWeekDay.form-control.col-5.arrow");
+        var list2 = $("#closedWeekDay.form-control.col-5.arrow");
 			for (var i = 0; i < list.length; i++) {
 			list[i].setAttribute("value", days[selectedWeekDay.getDay()]);
+            list2[i].setAttribute("value", days[selectedWeekDay.getDay()]);
+
 			}
 	};
         var checkingDate = '<?php echo $data['Ending']; ?>';
@@ -595,7 +598,7 @@
             if (y <= maxPeriod) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#dateContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div></div>');
+                $('#dateContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="periodicWeekDay' + FieldCount + '" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div></div>');
 
                 $('.clock').clockTimePicker({
                     duration: true,
@@ -648,7 +651,7 @@
             if (z <= maxClosed) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#closeContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="sport_facility2" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" id="from' + FieldCount + '" value="08:00"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="22:00"></div></div>');
+                $('#closeContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="closedWeekDay" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" id="from' + FieldCount + '" value="08:00"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="22:00"></div></div>');
 
                 $('.clock').clockTimePicker({
                     duration: true,
@@ -707,7 +710,7 @@ function isOverlapping(event, conflicts) {
 			if (conflicts[i].start != null && conflicts[i].end != null && event.start != null && event.end != null) {
 				if (moment(conflicts[i].start).isBefore(event.end) && moment(conflicts[i].end).isAfter(event.start)) {
 					//console.log(event.start.substring(0, 16)+ "-"+ event.end.substring(11, 16) + " on konfliktis järgmise ajaga: "+ conflicts[i].start.substring(0, 16)+"-"+conflicts[i].end.substring(11, 16)+" "+conflicts[i].title+" "+conflicts[i].description);
-						$('#myTable > tbody:last-child').append('<tr><td>'+conflicts[i].start.substring(0, 10)+'</td><td>'+ conflicts[i].start.substring(11, 16)+"-"+conflicts[i].end.substring(11, 16)+'</td><td>'+conflicts[i].description+'</td><td>'+conflicts[i].title+'</td></tr>');
+						$('#myTable > tbody:last-child').append('<tr><td>'+days[new Date(conflicts[i].start.substring(0, 10)).getDay()]+'</td><td>'+conflicts[i].start.substring(0, 10)+'</td><td>'+ conflicts[i].start.substring(11, 16)+"-"+conflicts[i].end.substring(11, 16)+'</td><td>'+conflicts[i].description+'</td><td>'+conflicts[i].title+'</td></tr>');
 						$('#myModal').modal('show')
 					return true;
 				}
@@ -725,32 +728,52 @@ return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
     
 	function getDates(startDate, stopDate) {
     var dateArray = [];
+	var weekdSelectedToArray=[];
+	var beginTimedSelectedToArray=[];
+	var untilTimeSelectedToArray=[];
+
     var currentDate = moment(startDate);
 
     var stopDate = moment(stopDate);
-	var val = $('#sport_facility2').val()
-    var startingDate = $('#from1').val();
-	if (isNaN(startingDate.substring(0, 2))) {
-		startingDate = "0" + startingDate;
-	};
-    var endingDate = $('#until1').val();
-	if (isNaN(endingDate.substring(11, 2) < 10)) {
-		endingDate = "0" + endingDate;
-};
-	var weekDaySelected = $('#weekdays option').filter(function() {
-				return this.value == val;
-	}).data('value');
+	var selectedWeekDayInInput = $('#periodicWeekDay').val();
+	var startingDate='';
+	var endingDate='';
+	var weekDaySelected ='';
+	$('[id^=periodicWeekDay]').each(function(i, el) {
+		
+			
+			weekdSelectedToArray.push( days.indexOf($(this).val()));
 
+			startingDate = $('[id^=from]').val();
+			if (isNaN($('[id^=from]').val().substring(0, 2))) {
+				startingDate = "0" + startingDate;
+			};
+			endingDate = $('[id^=until]').val();
+			if (isNaN(endingDate.substring(11, 2) < 10)) {
+				endingDate = "0" + endingDate;
+			};
+			beginTimedSelectedToArray.push(startingDate);
+			untilTimeSelectedToArray.push(endingDate);
+		console.log(weekdSelectedToArray);
+	});
+
+  
     while (currentDate <= stopDate) {
-	
-		if(weekDaySelected==7) weekDaySelected=0;
-		 if(weekDaySelected	== new Date(moment(currentDate).format('YYYY-MM-DD')).getDay() ){
+			weekdSelectedToArray.forEach(function (item, index) {
+		
+			if(item==7) {item=0};
+			if(item == new Date(moment(currentDate).format('YYYY-MM-DD')).getDay() ){
 
             var obj = {
-			start : moment(currentDate).format('YYYY-MM-DD')+" "+startingDate+":00",
-			end : moment(currentDate).format('YYYY-MM-DD')+" "+endingDate+":00"};
+			start : moment(currentDate).format('YYYY-MM-DD')+" "+beginTimedSelectedToArray[index]+":00",
+			end : moment(currentDate).format('YYYY-MM-DD')+" "+untilTimeSelectedToArray[index]+":00"};
 			dateArray.push( obj );
-      	 };
+      		 };
+
+		
+			});
+	
+	
 		 currentDate = moment(currentDate).add(1, 'days');
 	
     }
@@ -824,4 +847,5 @@ $( "#submitWithConflicts" ).click(function() {
 
 	
 });
+
 </script>
