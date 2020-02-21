@@ -148,7 +148,7 @@
                         <div class="mt-4 px-5 mx-5">
                             <div class="form-label-group pb-2 px-0">
                                 <label>Lisainfo</label>
-								<textarea class="form-control" id="additional" name="additionalComment" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"><?php if(isset($data['comment2'])): echo $data['comment2'];endif; ?></textarea>
+								<textarea class="form-control" id="additional" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"><?php if(isset($data['comment2'])): echo $data['comment2'];endif; ?></textarea>
 								
 							</div>
 							<label><input type="checkbox" checked name="approveNow" id="approveNow" value="1"><span></span></label> Kinnita kohe
@@ -253,7 +253,7 @@
 								<?php if($this->session->flashdata('weekDayMissing')){ ?>
                                  <input class="form-control is-invalid col-5 arrow" id="periodicWeekDay" list="weekdays" name="weekday[]" required>
 								<?php } else{ ?>
-									<input class="form-control col-5 arrow" id="periodicWeekDay" list="weekdays" name="weekday[]" required>
+									<input class="form-control col-5 arrow" id="periodicWeekDay" list="weekdays" name="weekday[]" required  value="<?php echo $data['weekday'][0]; ?>">
                                 <?php } ?>
                                 
                             		        <datalist id="weekdays">
@@ -735,7 +735,7 @@ return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
     var currentDate = moment(startDate);
 
     var stopDate = moment(stopDate);
-	var selectedWeekDayInInput = $('#periodicWeekDay').val();
+	//var selectedWeekDayInInput = $('#periodicWeekDay').val();
 	var startingDate='';
 	var endingDate='';
 	var weekDaySelected ='';

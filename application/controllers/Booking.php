@@ -30,7 +30,7 @@ class Booking extends CI_Controller {
 			'c_phone' => $this ->input->post('phone'),
 			'c_email' => $this ->input->post('email'),
 			'comment' => $this ->input->post('comment2'),
-			'comment_inner' => $this ->input->post('additionalComment'),
+		//	'comment_inner' => $this ->input->post('additionalComment'),
 			'workout' => $this ->input->post('workoutType'),
 			'typeID' => $this ->input->post('type'),
 			
@@ -176,7 +176,7 @@ class Booking extends CI_Controller {
 				'c_name' => $this ->input->post('contactPerson'),
 				'c_phone' => $this ->input->post('phone'),
 				'c_email' => $this ->input->post('email'),
-				'comment' => $this ->input->post('additionalComment'),
+				'comment' => $this ->input->post('comment2'),
 				'workout' => $this ->input->post('workoutType'),
 				
 
@@ -325,8 +325,8 @@ class Booking extends CI_Controller {
 			'c_phone' => $this ->input->post('phone'),
 			'c_email' => $this ->input->post('email'),
 			'typeID' => $this ->input->post('type'),
-			'comment' => $this ->input->post('additionalComment'),
-			'comment_inner' => $this ->input->post('comment2'),
+		//	'comment_inner' => $this ->input->post('additionalComment'),
+			'comment' => $this ->input->post('comment2'),
 			'workout' => $this ->input->post('workoutType'),
 		
 		);

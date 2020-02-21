@@ -255,7 +255,7 @@
 						<input class="d-none" type="hidden" name="weekendNumber" id="weekendNumber" value="">
 						<input class="d-none" type="hidden" name="BookingID" id="BookingID" value="<?php echo $_POST['BookingID']; ?>">
 						<input class="d-none" type="hidden" name="isPeriodic" id="isPeriodic" value="<?php echo $_POST['isPeriodic']; ?>">
-						<input class="d-none" type="hidden" name="roomID" id="roomID" value="">
+						<input class="d-none" type="hidden" name="roomID" id="roomIDPeriodic" value="">
 
 						<div class="d-flex justify-content-end mt-5 px-5 mx-5">
 							<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#" onClick="history.go(-1); return false;">Katkesta</a>
@@ -441,7 +441,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 
 					};
 					document.getElementById("roomID").value = obj.roomID;
-
+					document.getElementById("roomIDPeriodic").value = obj.roomID;
 					// $('#start').val(obj.start);
 					// $('#timestartfield').val(obj.start);
 					//   $('#building').val(obj.building);

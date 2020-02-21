@@ -284,6 +284,7 @@ class Edit extends CI_Controller {
 		}	
 		else{
 			if($RedirectToCalendar){
+				//print_r($_POST);
 				redirect(base_url('fullcalendar?roomId='.$this->input->post('roomID')));
 			// $this->load->view('templates/header');
 			// $this->load->view('pages/edit');
