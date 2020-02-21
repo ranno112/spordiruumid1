@@ -276,7 +276,7 @@
                                             <input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until1" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
                                         </div>                                    
                                     </div>
-                                </div>
+                             
                                 <?php if($data){ for ($i = 1; $i<count($data['weekday']); $i++) { ?>
                                     
 									<div class="d-flex align-items-center mb-3 justify-content-between">
@@ -293,14 +293,15 @@
                                       </datalist>
                                     <a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
                                     <div class="col-2 p-0 ml-5">
-                                        <input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from' + FieldCount + '" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
+                                        <input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from<?php echo $i;?>" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
                                     </div>
                                     <div class="col-2 p-0">
-                                        <input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
+                                        <input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until<?php echo $i;?>" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
                                     </div>
                                 </div>
                                 
-                                        <?php 	} };?>
+										<?php 	} };?>
+										</div>
                                 <div id="AddMoreFileId1" class="flex col-5 p-0">
                                     <a id="AddMoreFileBoxPeriod" class="btn btn-custom text-white text-center py-2 px-4 pluss"><p class="m-0 px-0 txt-lg txt-strong text-center align-items-center">Lisa veel üks päev</p></a>
 								</div>
@@ -582,10 +583,11 @@
         });
         
         var maxPeriod = 100;
-        var InputsWrapper1 = $("#InputsWrapper1"); //Input boxes wrapper ID
+        var InputsWrapper1 = $("#InputsWrapper1 #dateContainer"); //Input boxes wrapper ID
         var AddButton1 = $("#AddMoreFileBoxPeriod"); //Add button ID
 
-        var y = InputsWrapper1.length; //initlal text box count
+        var y = InputsWrapper1.children().length; //initlal text box count
+		console.log(y);
         
         $("#AddMoreFileBoxPeriod").click(function(e) {
             //max input box allowed
