@@ -20,7 +20,7 @@
     
 
 
-    <script src="<?php echo base_url(); ?>assets/js/axios.min.js"></script>
+  
     <script src="<?php echo base_url(); ?>assets/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>

@@ -1,8 +1,10 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-<?php $data=$this->session->flashdata('key');if($data): print_r($data); foreach ($data['weekday'] as $each) { 
-   echo $each;
- };endif; ?>
+<?php $data=$this->session->flashdata('key');if($data): print_r($data); 
+// foreach ($data['weekday'] as $each) { 
+//    echo $each;
+//  };
+ endif; ?>
 
 <?php $stack = array(); foreach ($allBookingInfo as $each) { 
     array_push($stack, $each['public_info'] );
@@ -51,13 +53,20 @@
 			
             <div class="tab-content ">
                 <div id="mitmekordne" class="tab-pane center  <?php if(!isset($data['type'])){ echo 'active';}else if($data['type']==1){echo 'active';}; ?>">
-                    <?php echo form_open('booking/createOnce'); ?>
+                    <?php echo form_open('booking/createOnce', array('id' => 'myOnceForm')); ?>
 
                         <h4 class="pt-2 txt-xl px-5 mx-5">Kontakt</h4>
                         <div class="d-flex p-0 mt-4 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
-                                <label for="contact">Klubi nimi (avalik info)*</label>
-                                <input class="form-control" id="clubnameForSingle" type="text" name="clubname" required value="<?php if(isset($data['clubname'])): echo $data['clubname'];endif; ?>">
+
+							<label for="contact">Klubi nimi (avalik info)*	<?php if($this->session->flashdata('validationErrorMessage')){  echo $this->session->flashdata('validationErrorMessage');} ?></label>
+								<?php if($this->session->flashdata('validationErrorMessage')){ ?>
+									<?php echo '<input class="form-control is-invalid" id="clubnameForSingle" type="text" name="clubname" required value="'; if(isset($data['clubname'])): echo $data['clubname'];endif; echo '">';
+									 ?>
+								<?php } else{ ?>
+								<input class="form-control" id="clubnameForSingle" type="text" name="clubname" required value="<?php if(isset($data['clubname'])): echo $data['clubname'];endif; ?>">
+								<?php } ?>
+
                             </div>
                             <input class="d-none" type="checkbox" id="typeOnce" name="type" value="1" checked>
                             <div class="form-label-group col-6 p-0 pl-5">
@@ -124,7 +133,7 @@
 
                                 <div id="InputsWrapper" class="mb-3 p-0">
                                     <div class="d-flex align-items-center mb-3 justify-content-between">
-                                        <input class="datePicker col-5 form-control" id="datefield_1" data-toggle="datepicker" name="workoutDate[]">
+                                        <input class="datePicker col-5 form-control" id="datefield_1" data-toggle="datepicker" name="workoutDate[]" value="<?php echo $data['workoutDate'][0];?>">
 
                                         <a href="#" class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
 
@@ -136,7 +145,20 @@
                                         <div class="col-2 p-0">
                                             <input type="input" class="clock form-control" name="end[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_1" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
                                         </div>
-                                    </div>
+									</div>
+									<?php echo "serw"; if(isset($data['workoutDate'])){ for ($i = 1; $i<count($data['workoutDate']); $i++) { ?>
+									<div class="d-flex align-items-center mb-3 justify-content-between">
+										<input class="datePicker col-5 form-control" id="datefield_<?php echo $i;?>" data-toggle="datepicker" name="workoutDate[]" value="<?php echo $data['workoutDate'][$i];?>">
+										<a class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
+										<div class="col-2 p-0 ml-5">
+											<input type="text" class="clock form-control" name="begin[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_<?php echo $i;?>" value="<?php if(isset($data['begin'][$i])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
+										</div>
+										<div class="col-2 p-0">
+											<input type="text" class="clock form-control" name="end[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_<?php echo $i;?>" value="<?php if(isset($data['end'][$i])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
+										</div>
+									</div>
+									<?php ;}}; ?>
+
                                 </div>
                                 <div id="AddMoreFileId" class="d-flex p-0">
                                     <a id="AddMoreFileBox" class="btn btn-custom text-white text-center py-2 pluss" style="width: 279px"><p class="m-0 px-0 txt-lg txt-strong text-center align-items-center">Lisa veel üks kuupäev</p></a>
@@ -157,7 +179,13 @@
 
                         <div class="d-flex justify-content-end mt-5 px-5 mx-5">
                           	<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#" onClick="history.go(-1); return false;">Katkesta</a>
-                            <input class="btn btn-custom col-3 text-white txt-xl" type="submit" value="Broneeri">
+							<input class="btn btn-custom col-3 text-white txt-xl" type="submit"  id="checkForOnceConflicts" value="Broneeri">
+						
+						<button id="loadingTemporarlyButtonOnce" class="d-none btn btn-custom text-white txt-xl" type="button" disabled>
+							<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+							Kontrollin kattuvusi...
+							</button>
+
                         </div>
 						<input type="hidden" name="current_url" value="<?php echo 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']; ?>" />
                     </form>
@@ -253,17 +281,17 @@
 								<?php if($this->session->flashdata('weekDayMissing')){ ?>
                                  <input class="form-control is-invalid col-5 arrow" id="periodicWeekDay" list="weekdays" name="weekday[]" required>
 								<?php } else{ ?>
-									<input class="form-control col-5 arrow" id="periodicWeekDay" list="weekdays" name="weekday[]" required  value="<?php echo $data['weekday'][0]; ?>">
+									<input class="form-control col-5 arrow" id="periodicWeekDay" list="weekdays" name="weekday[]" required  value="<?php if(isset($data['weekday'])): echo $data['weekday'][0];;endif; ?>">
                                 <?php } ?>
                                 
                             		        <datalist id="weekdays">
-									            <option data-value="1" <?php if($data['weekday'][0]=="Esmaspäev"): echo 'selected';endif; ?> value="Esmaspäev"></option>
-                                                <option data-value="2" <?php if($data['weekday'][0]=="Teisipäev"): echo 'selected';endif; ?> value="Teisipäev"></option>
-                                                <option data-value="3" <?php if($data['weekday'][0]=="Kolmapäev"): echo 'selected';endif; ?> value="Kolmapäev"></option>
-                                                <option data-value="4" <?php if($data['weekday'][0]=="Neljapäev"): echo 'selected';endif; ?> value="Neljapäev"></option>
-                                                <option data-value="5" <?php if($data['weekday'][0]=="Reede"): echo 'selected';endif; ?> value="Reede"></option>
-                                                <option data-value="6" <?php if($data['weekday'][0]=="Laupäev"): echo 'selected';endif; ?> value="Laupäev"></option>
-                                                <option data-value="7" <?php if($data['weekday'][0]=="Pühapäev"): echo 'selected';endif; ?> value="Pühapäev"></option>       
+									            <option data-value="1" <?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Esmaspäev"): echo 'selected';endif; ?> value="Esmaspäev"></option>
+                                                <option data-value="2"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Teisipäev"): echo 'selected';endif; ?> value="Teisipäev"></option>
+                                                <option data-value="3"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Kolmapäev"): echo 'selected';endif; ?> value="Kolmapäev"></option>
+                                                <option data-value="4"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Neljapäev"): echo 'selected';endif; ?> value="Neljapäev"></option>
+                                                <option data-value="5"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Reede"): echo 'selected';endif; ?> value="Reede"></option>
+                                                <option data-value="6"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Laupäev"): echo 'selected';endif; ?> value="Laupäev"></option>
+                                                <option data-value="7"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Pühapäev"): echo 'selected';endif; ?> value="Pühapäev"></option>       
                                             </datalist>
 
                                         <a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
@@ -306,11 +334,6 @@
                                     <a id="AddMoreFileBoxPeriod" class="btn btn-custom text-white text-center py-2 px-4 pluss"><p class="m-0 px-0 txt-lg txt-strong text-center align-items-center">Lisa veel üks päev</p></a>
 								</div>
 								
-							
-
-
-
-
 
                             </div>
                         </div>
@@ -391,14 +414,14 @@
                                     <div class="d-flex align-items-center mb-3 justify-content-between">
                                         <input class="form-control col-5 arrow" id="closedWeekDay" list="weekdays" name="weekday[]" required>
 
-                                            <datalist id="weekdays">
-                                                <option data-value="1" value="Esmaspäev"></option>
-                                                <option data-value="2" value="Teisipäev"></option>
-                                                <option data-value="3" value="Kolmapäev"></option>
-                                                <option data-value="4" value="Neljapäev"></option>
-                                                <option data-value="5" value="Reede"></option>
-                                                <option data-value="6" value="Laupäev"></option>
-                                                <option data-value="7" value="Pühapäev"></option>
+										<datalist id="weekdays">
+									            <option data-value="1"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Esmaspäev"): echo 'selected';endif; ?> value="Esmaspäev"></option>
+                                                <option data-value="2"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Teisipäev"): echo 'selected';endif; ?> value="Teisipäev"></option>
+                                                <option data-value="3"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Kolmapäev"): echo 'selected';endif; ?> value="Kolmapäev"></option>
+                                                <option data-value="4"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Neljapäev"): echo 'selected';endif; ?> value="Neljapäev"></option>
+                                                <option data-value="5"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Reede"): echo 'selected';endif; ?> value="Reede"></option>
+                                                <option data-value="6"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Laupäev"): echo 'selected';endif; ?> value="Laupäev"></option>
+                                                <option data-value="7"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Pühapäev"): echo 'selected';endif; ?> value="Pühapäev"></option>       
                                             </datalist>
 
                                         <a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
@@ -409,9 +432,35 @@
 
                                         <div class="col-2 p-0">
                                             <input type="text" class="clock form-control" data-minimum="08:00" data-maximum="22:00" name="timeTo[]" id="until2" value="22:00">
-                                        </div>
+										</div>
+									</div>	
+
+										<?php if($data){ for ($i = 1; $i<count($data['weekday']); $i++) { ?>
+                                    
+									<div class="d-flex align-items-center mb-3 justify-content-between">
+
+                                        <input class="form-control 	<?php if($this->session->flashdata('weekDayMissing')){ echo 'is-invalid';}?>  col-5 arrow" id="closedWeekDay<?php echo $i;?>" list="weekdays<?php echo $i;?>" name="weekday[]" value="<?php if($data['weekday'][$i]): echo $data['weekday'][$i];endif; ?>">
+                                        <datalist id="weekdays<?php echo $i;?>">
+                                            <option data-value="1" <?php if($data['weekday'][$i]=="Esmaspäev"): echo 'selected';endif; ?> value="Esmaspäev"></option>
+                                            <option data-value="2" <?php if($data['weekday'][$i]=="Teisipäev"): echo 'selected';endif; ?> value="Teisipäev"></option>
+                                            <option data-value="3" <?php if($data['weekday'][$i]=="Kolmapäev"): echo 'selected';endif; ?> value="Kolmapäev"></option>
+                                            <option data-value="4" <?php if($data['weekday'][$i]=="Neljapäev"): echo 'selected';endif; ?> value="Neljapäev"></option>
+                                            <option data-value="5" <?php if($data['weekday'][$i]=="Reede"): echo 'selected';endif; ?> value="Reede"></option>
+                                            <option data-value="6" <?php if($data['weekday'][$i]=="Laupäev"): echo 'selected';endif; ?> value="Laupäev"></option>
+                                            <option data-value="7" <?php if($data['weekday'][$i]=="Pühapäev"): echo 'selected';endif; ?> value="Pühapäev"></option>       
+                                      </datalist>
+                                    <a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
+                                    <div class="col-2 p-0 ml-5">
+                                        <input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from<?php echo $i;?>" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
+                                    </div>
+                                    <div class="col-2 p-0">
+                                        <input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until<?php echo $i;?>" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
                                     </div>
                                 </div>
+                                
+										<?php 	} };?>
+
+					                </div>
 
                                 <div id="AddMoreFileId2" class="flex">
                                     <a id="AddMoreFileBoxClosed" class="btn btn-custom text-white text-center py-2 px-4 pluss"><p class="m-0 px-0 txt-lg txt-strong text-center align-items-center">Lisa nädalapäev</p></a>
@@ -479,11 +528,11 @@
 
 			}
 	};
-        var checkingDate = '<?php echo $data['Ending']; ?>';
+        var checkingDate = '<?php if(isset($data['Ending'])){echo $data['Ending'];}else {echo '';}?>';
         console.log("kuupäev on "+checkingDate);
         var dateToShow='';
-		if('<?php echo ($data['startingFrom'])?>'){
-			window.history.replaceState("", "",'<?php echo base_url(); ?>booking/create/<?php echo $this->uri->segment(3) . "?startDate=".$data['startingFrom'] .'&start='.$data['timesStart'][0].'&end='.$data['timeTo'][0]; ?>');
+		if('<?php if(isset($data['Ending'])){echo $data['Ending'];}else {echo '';}?>'){
+			window.history.replaceState("", "",'<?php echo base_url(); ?>booking/create/<?php echo $this->uri->segment(3);// . "?startDate=".$data['startingFrom'] .'&start='.$data['timesStart'][0].'&end='.$data['timeTo'][0]; ?>');
 			
 		}
 	
@@ -509,7 +558,7 @@
         $(".datePicker").datepicker({
             language: "et-EE",
             autoHide: true,
-            date: '<?php if ($data['startingFrom']){echo $data['startingFrom'];} else echo $this->input->get('startDate') ? $this->input->get('startDate'):"new Date()";?>',
+            date: '<?php if (isset($data['startingFrom'])){echo $data['startingFrom'];} else echo $this->input->get('startDate') ? $this->input->get('startDate'):"new Date()";?>',
             autoPick: true,
         });
 
@@ -707,12 +756,105 @@
 
 
 
+	function checkOnceDates() {
+    var dateArray = [];
+	
+	var startingDate;
+	var endingDate;
+	var weekDaySelected;
+	
+	$('[id^=datefield]').each(function(i, el) {
+	
+		startingDate = $('[id^=timestartfield]').val();
+	
+		if (isNaN(startingDate.substring(0, 2))) {
+			startingDate = "0" + startingDate;
+		};
+		endingDate = $('[id^=timeendfield]').val();
+		if (isNaN(endingDate.substring(11, 2) < 10)) {
+			endingDate = "0" + endingDate;
+		};
+		
+		var obj = {
+			start : moment($(this).val(), 'DD.MM.YYYY').format('YYYY-MM-DD')+" "+startingDate+":00",
+			end : moment($(this).val(), 'DD.MM.YYYY').format('YYYY-MM-DD')+" "+endingDate+":00"
+			};
+			
+		dateArray.push( obj );
+
+	});
+	console.log(dateArray);
+    return dateArray;
+	}
+	
+
+
+
+
+	$("#checkForOnceConflicts").click(function() {
+		$(this).hide();
+		$("#loadingTemporarlyButtonOnce").removeClass('d-none');
+		$("#loadingTemporarlyButtonOnce").html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Kontrollin kattuvusi...');
+		
+		// var startingDate = $('#periodStart').val();
+    	// var startingDateConverted = moment(startingDate, "DD.MM.YYYY").format("YYYY-MM-DD");
+		// var endingDate = $('#periodEnd').val();
+    	// var endingDateConverted = moment(endingDate, "DD.MM.YYYY").format("YYYY-MM-DD");
+		// console.log((getDates(startingDateConverted, endingDateConverted)).length);
+		
+	// 	if((getDates(startingDateConverted, endingDateConverted).length)>100){
+		
+	// 	if (confirm("Selle broneeringuga luuakse "+(getDates(startingDateConverted, endingDateConverted).length)+" aega ning kattuvuse kontroll võtab umbes "+Math.round((getDates(startingDateConverted, endingDateConverted).length)/15)+" sekundit. Selline aegade hulk ühe broneeringu kohta võib süsteemi tööd aeglustada. Te saate broneeringut salvestada, kuid oleks parem, kui tükeldate broneeringut lühemateks perioodideks. Kas muudad kohe?")){
+	 	
+	 		
+	// 		return true;
+	// 	}
+	// };
+	
+//alumine on vaja konfliktide kontrollimiseks.
+$.ajax({
+	url: "<?php echo base_url(); ?>edit/loadAllRoomBookingTimes/"+$( "#roomOnce" ).val(),
+	dataType: 'json',
+	success: function(json) {
+		conflicts = json;
+    	 var canSubmit=true;
+			(checkOnceDates()).some(function(element, index){
+			console.log(index);
+	
+			if(isOverlapping(element, conflicts)){
+			$('#approveNow').prop('checked', false);//kinnitus võetakse automaatselt maha
+			canSubmit=false;
+			}
+		
+		});
+		$( "#checkForOnceConflicts" ).show();
+		$("#loadingTemporarlyButtonOnce").addClass('d-none');
+		
+		//kui konflikte pole, siis salvesta
+		if(canSubmit==true){
+		
+		
+			$( "#myOnceForm" ).submit();
+		};
+		
+	},
+	error: function(jqXHR, textStatus, errorThrown) {
+		//Error handling code
+		console.log(errorThrown);
+		alert('Saalis pole vist ühtegi broneeringut');
+	}
+});
+
+$( "#submitWithConflicts" ).click(function() {
+  $( "#myOnceForm" ).submit();
+});
+	});
 
 
 
 function isOverlapping(event, conflicts) {
 	for (i in conflicts) {
-	
+	console.log("tötab");
 			if (conflicts[i].start != null && conflicts[i].end != null && event.start != null && event.end != null) {
 				if (moment(conflicts[i].start).isBefore(event.end) && moment(conflicts[i].end).isAfter(event.start)) {
 					//console.log(event.start.substring(0, 16)+ "-"+ event.end.substring(11, 16) + " on konfliktis järgmise ajaga: "+ conflicts[i].start.substring(0, 16)+"-"+conflicts[i].end.substring(11, 16)+" "+conflicts[i].title+" "+conflicts[i].description);
@@ -743,7 +885,6 @@ return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
 	
 	$('[id^=periodicWeekDay]').each(function(i, el) {
 		
-
 		startingDate = $('[id^=from]').val();
 		if (isNaN($('[id^=from]').val().substring(0, 2))) {
 			startingDate = "0" + startingDate;
@@ -783,14 +924,10 @@ return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
 	
 
 
-    $( "#checkForConflicts" ).click(function() {
-		
-	
+$( "#checkForConflicts" ).click(function() {
 		$(this).hide();
 		$("#loadingTemporarlyButton").removeClass('d-none');
-	//	$("#loadingTemporarlyButton").html('Kontrollin kattuvusi...');
-      // add spinner to button
-	  	$("#loadingTemporarlyButton").html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Kontrollin kattuvusi...');
+		$("#loadingTemporarlyButton").html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Kontrollin kattuvusi...');
 		var startingDate = $('#periodStart').val();
     	var startingDateConverted = moment(startingDate, "DD.MM.YYYY").format("YYYY-MM-DD");
 		var endingDate = $('#periodEnd').val();
@@ -804,38 +941,21 @@ return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
 			$("#loadingTemporarlyButton").addClass('d-none');
 			return true;
 		}
-	
 	};
-		
-		
 	
-//see on vaja konfliktide kontrollimiseks.
-
-
-
+//alumine on vaja konfliktide kontrollimiseks.
 $.ajax({
 	url: "<?php echo base_url(); ?>edit/loadAllRoomBookingTimes/"+$( "#roomPeriod" ).val(),
 	dataType: 'json',
 	success: function(json) {
-		// Rates are in `json.rates`
-		// Base currency (USD) is `json.base`
-		// UNIX Timestamp when rates were collected is in `json.timestamp`   
-
 		conflicts = json;
-     
-     //   console.log(conflicts);
-	 var canSubmit=true;
-	
-	
-		(getDates(startingDateConverted, endingDateConverted)).some(function(element, index){
-	
+    	 var canSubmit=true;
+			(getDates(startingDateConverted, endingDateConverted)).some(function(element, index){
 			console.log(index);
 	
 			if(isOverlapping(element, conflicts)){
 			$('#approvePeriodNow').prop('checked', false);//kinnitus võetakse automaatselt maha
-
 			canSubmit=false;
-			
 			}
 		
 		});
@@ -846,7 +966,7 @@ $.ajax({
 		if(canSubmit==true){
 		
 		
-	//		$( "#myPeriodicForm" ).submit();
+			$( "#myPeriodicForm" ).submit();
 		};
 		
 	},

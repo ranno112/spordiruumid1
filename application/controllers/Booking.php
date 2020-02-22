@@ -315,6 +315,22 @@ class Booking extends CI_Controller {
 	{
 		if( $this->session->userdata('session_id')===TRUE){
 
+		$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|required|callback_username_check');
+			if($this->form_validation->run() === FALSE ){
+				$postData = $_POST;
+				$postData['error'] = validation_errors() ;
+				$this->session->set_flashdata("message","eroor".form_error());
+				$this->session->set_flashdata('data', $this->input->post());
+
+				if($this->input->post('dontShow')!=1){
+				$this->session->set_flashdata('access_deniedToUrl', 'Midagi on selle vormiga valesti. Palun vaata kõik väljad üle');
+				$this->session->set_flashdata('errors', validation_errors());
+				}
+				
+				$this->session->set_flashdata('key',$postData);
+				redirect( $this ->input->post('current_url'));
+
+			} 
 		$data['rooms'] = $this->booking_model->getAllRooms();
 		$data['buildings'] = $this->booking_model->getAllBuildings();
 	
