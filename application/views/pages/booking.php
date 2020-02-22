@@ -338,6 +338,12 @@
                         <div class="d-flex justify-content-end mt-5 px-5 mx-5">
                             <a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="">Katkesta</a>
                             <input class="btn btn-custom col-3 text-white txt-xl" type="button" id="checkForConflicts" value="Broneeri">
+							
+							<button id="loadingTemporarlyButton" class="d-none btn btn-custom text-white txt-xl" type="button" disabled>
+							<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+							Kontrollin kattuvusi...
+							</button>
+
                         </div>
 						<input type="hidden" name="current_url" value="<?php echo 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']; ?>" />
                     </form>
@@ -725,42 +731,40 @@ var [yyyy, MM, dd, hh, mm] = str.split(/[- :]/g);
 return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
 };
 
-    
+    //find all weekday matches
 	function getDates(startDate, stopDate) {
     var dateArray = [];
 	var weekdSelectedToArray=[];
 	var beginTimedSelectedToArray=[];
 	var untilTimeSelectedToArray=[];
 
-    var currentDate = moment(startDate);
+   
 
-    var stopDate = moment(stopDate);
-	//var selectedWeekDayInInput = $('#periodicWeekDay').val();
-	var startingDate='';
-	var endingDate='';
-	var weekDaySelected ='';
+	var startingDate;
+	var endingDate;
+	var weekDaySelected;
+	
 	$('[id^=periodicWeekDay]').each(function(i, el) {
-		
-			
-			weekdSelectedToArray.push( days.indexOf($(this).val()));
+		weekdSelectedToArray.push( days.indexOf($(this).val()));
 
-			startingDate = $('[id^=from]').val();
-			if (isNaN($('[id^=from]').val().substring(0, 2))) {
-				startingDate = "0" + startingDate;
-			};
-			endingDate = $('[id^=until]').val();
-			if (isNaN(endingDate.substring(11, 2) < 10)) {
-				endingDate = "0" + endingDate;
-			};
-			beginTimedSelectedToArray.push(startingDate);
-			untilTimeSelectedToArray.push(endingDate);
+		startingDate = $('[id^=from]').val();
+		if (isNaN($('[id^=from]').val().substring(0, 2))) {
+			startingDate = "0" + startingDate;
+		};
+		endingDate = $('[id^=until]').val();
+		if (isNaN(endingDate.substring(11, 2) < 10)) {
+			endingDate = "0" + endingDate;
+		};
+		beginTimedSelectedToArray.push(startingDate);
+		untilTimeSelectedToArray.push(endingDate);
 		console.log(weekdSelectedToArray);
 	});
 
-  
+	
+    var stopDate = moment(stopDate);
+	weekdSelectedToArray.forEach(function (item, index) {
+		var currentDate = moment(startDate);
     while (currentDate <= stopDate) {
-			weekdSelectedToArray.forEach(function (item, index) {
-		
 			if(item==7) {item=0};
 			if(item == new Date(moment(currentDate).format('YYYY-MM-DD')).getDay() ){
 
@@ -768,33 +772,32 @@ return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
 			start : moment(currentDate).format('YYYY-MM-DD')+" "+beginTimedSelectedToArray[index]+":00",
 			end : moment(currentDate).format('YYYY-MM-DD')+" "+untilTimeSelectedToArray[index]+":00"};
 			dateArray.push( obj );
+			currentDate = moment(currentDate).add(6, 'days');
       		 };
-
-		
-			});
 	
 	
 		 currentDate = moment(currentDate).add(1, 'days');
 	
     }
-
+});
     return dateArray;
 	}
 	
 
 
     $( "#checkForConflicts" ).click(function() {
+		$(this).hide();
+		$("#loadingTemporarlyButton").removeClass('d-none');
+      // add spinner to button
+     
 		var startingDate = $('#periodStart').val();
     	var startingDateConverted = moment(startingDate, "DD.MM.YYYY").format("YYYY-MM-DD");
 		var endingDate = $('#periodEnd').val();
     	var endingDateConverted = moment(endingDate, "DD.MM.YYYY").format("YYYY-MM-DD");
-	
-	
-	
 
 //see on vaja konfliktide kontrollimiseks.
 
-console.log("<?php echo base_url(); ?>edit/loadAllRoomBookingTimes/"+$( "#roomPeriod" ).val());
+
 
 $.ajax({
 	url: "<?php echo base_url(); ?>edit/loadAllRoomBookingTimes/"+$( "#roomPeriod" ).val(),
@@ -806,26 +809,41 @@ $.ajax({
 
 		conflicts = json;
      
-        console.log(conflicts);
+     //   console.log(conflicts);
 	 var canSubmit=true;
 	
-
-		(getDates(startingDateConverted, endingDateConverted)).forEach(function(element){
+	 var doContinue=true;
+		(getDates(startingDateConverted, endingDateConverted)).some(function(element, index){
 		
-        console.log(element);
+     //   console.log(index);
+		if(index==6){
+			$( "#checkForConflicts" ).show();
+		$("#loadingTemporarlyButton").addClass('d-none');
+		if (confirm("Selle broneeringuga luuakse üle 150 aja. Selline broneering võib süsteemi tööd aeglustada. Te saate broneeringut salvestada, kuid oleks parem, kui tükeldate broneeringut lühemateks perioodideks. Kas muudad kohe?")){
+			doContinue=false;
+			return true;
+		};
+	
+		$( "#checkForConflicts" ).hide();
+		$("#loadingTemporarlyButton").removeClass('d-none');
+		};
+	
 			if(isOverlapping(element, conflicts)){
-			$('#approvePeriodNow').prop('checked', false);
+			$('#approvePeriodNow').prop('checked', false);//kinnitus võetakse automaatselt maha
 
 			canSubmit=false;
 			//console.log($('#approvePeriodNow'));
 			}
 		
 		});
+		$( "#checkForConflicts" ).show();
+		$("#loadingTemporarlyButton").addClass('d-none');
+		
 		//kui konflikte pole, siis salvesta
 		if(canSubmit==true){
-	
 		
-			$( "#myPeriodicForm" ).submit();
+		
+	//		$( "#myPeriodicForm" ).submit();
 		};
 		
 	},
