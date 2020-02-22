@@ -113,7 +113,7 @@
                         <div class="d-flex mt-2 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
                                 <label>Sündmus / Treeningu tüüp (avalik info)</label>
-                                <input class="form-control" id="typePeriod" name="workoutType" placeholder="nt iluvõimlemine"   value="<?php if(isset($data['workoutType'])): echo $data['workoutType'];endif; ?>">
+                                <input class="form-control" id="typePeriod" name="workoutType" placeholder="nt iluvõimlemine" >
                             </div>
                             <div class="form-label-group col-6 p-0 pl-5"></div>
                         </div>
@@ -133,31 +133,34 @@
 
                                 <div id="InputsWrapper" class="mb-3 p-0">
                                     <div class="d-flex align-items-center mb-3 justify-content-between">
-                                        <input class="datePicker col-5 form-control" id="datefield_1" data-toggle="datepicker" name="workoutDate[]" value="<?php echo $data['workoutDate'][0];?>">
+                                        <input class="datePicker col-5 form-control" id="datefield_1" data-toggle="datepicker" name="workoutDate[]" value="<?php  if(isset($data['workoutDate'])){ echo $data['workoutDate'][0];} else if(isset($_GET["startDate"])){echo $_GET["startDate"];}?>">
 
                                         <a href="#" class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
 
                                         <div class="col-2 p-0 ml-5">
 									
-                                            <input type="input" class="clock form-control" name="begin[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_1" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
+                                            <input type="input" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_1" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
                                         </div>
 
                                         <div class="col-2 p-0">
-                                            <input type="input" class="clock form-control" name="end[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_1" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
+                                            <input type="input" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_1" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
                                         </div>
-									</div>
-									<?php echo "serw"; if(isset($data['workoutDate'])){ for ($i = 1; $i<count($data['workoutDate']); $i++) { ?>
-									<div class="d-flex align-items-center mb-3 justify-content-between">
+
+                                    </div>
+                                    
+                                    <?php echo "serw"; if(isset($data['workoutDate'])){ for ($i = 1; $i<count($data['workoutDate']); $i++) { ?>
+									    <div class="d-flex align-items-center mb-3 justify-content-between">
 										<input class="datePicker col-5 form-control" id="datefield_<?php echo $i;?>" data-toggle="datepicker" name="workoutDate[]" value="<?php echo $data['workoutDate'][$i];?>">
 										<a class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
 										<div class="col-2 p-0 ml-5">
-											<input type="text" class="clock form-control" name="begin[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_<?php echo $i;?>" value="<?php if(isset($data['begin'][$i])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
+											<input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_<?php echo $i;?>" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
 										</div>
 										<div class="col-2 p-0">
-											<input type="text" class="clock form-control" name="end[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_<?php echo $i;?>" value="<?php if(isset($data['end'][$i])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
+											<input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_<?php echo $i;?>" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
 										</div>
-									</div>
+								    	</div>
 									<?php ;}}; ?>
+								
 
                                 </div>
                                 <div id="AddMoreFileId" class="d-flex p-0">
@@ -305,7 +308,7 @@
                                         </div>                                    
                                     </div>
                              
-                                <?php if($data){ for ($i = 1; $i<count($data['weekday']); $i++) { ?>
+                                <?php if(isset($data['weekday'])){ for ($i = 1; $i<count($data['weekday']); $i++) { ?>
                                     
 									<div class="d-flex align-items-center mb-3 justify-content-between">
 
@@ -435,7 +438,7 @@
 										</div>
 									</div>	
 
-										<?php if($data){ for ($i = 1; $i<count($data['weekday']); $i++) { ?>
+										<?php if(isset($data['weekday'])){ for ($i = 1; $i<count($data['weekday']); $i++) { ?>
                                     
 									<div class="d-flex align-items-center mb-3 justify-content-between">
 
@@ -558,7 +561,7 @@
         $(".datePicker").datepicker({
             language: "et-EE",
             autoHide: true,
-            date: '<?php if (isset($data['startingFrom'])){echo $data['startingFrom'];} else echo $this->input->get('startDate') ? $this->input->get('startDate'):"new Date()";?>',
+          //  date: '<?php //if (isset($data['startingFrom'])){echo $data['startingFrom'];} else echo $this->input->get('startDate') ? $this->input->get('startDate'):"new Date()";?>',
             autoPick: true,
         });
 
@@ -587,7 +590,7 @@
             if (x <= MaxInputs) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#InputsWrapper').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="datePicker col-5 form-control" id="datefield_' + FieldCount + '" data-toggle="datepicker" name="workoutDate[]"><a class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="begin[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="end[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div></div>');
+                $('#InputsWrapper').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="datePicker col-5 form-control" id="datefield_' + FieldCount + '" data-toggle="datepicker" name="workoutDate[]"><a class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div></div>');
 
                 $(".datePicker").datepicker({
                     language: "et-EE", 
