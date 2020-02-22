@@ -794,8 +794,10 @@ return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
 
 //see on vaja konfliktide kontrollimiseks.
 
+console.log("<?php echo base_url(); ?>edit/loadAllRoomBookingTimes/"+$( "#roomPeriod" ).val());
+
 $.ajax({
-	url: "<?php echo base_url(); ?>edit/loadAllRoomBookingTimes/<?php echo $this->uri->segment(3); ?>",
+	url: "<?php echo base_url(); ?>edit/loadAllRoomBookingTimes/"+$( "#roomPeriod" ).val(),
 	dataType: 'json',
 	success: function(json) {
 		// Rates are in `json.rates`
@@ -804,7 +806,7 @@ $.ajax({
 
 		conflicts = json;
      
-     //   console.log(dateArray);
+        console.log(conflicts);
 	 var canSubmit=true;
 	
 
@@ -830,7 +832,7 @@ $.ajax({
 	error: function(jqXHR, textStatus, errorThrown) {
 		//Error handling code
 		console.log(errorThrown);
-		alert('Oops there was an error');
+		alert('Saalis pole vist ühtegi broneeringut');
 	}
 });
 

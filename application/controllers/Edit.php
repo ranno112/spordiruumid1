@@ -98,6 +98,7 @@ class Edit extends CI_Controller {
 	{
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
 		$this->input->get('saal', TRUE);
+		$data[]='';
 		$event_data = $this->edit_model->fetch_all_Booking_times();
 		foreach($event_data->result_array() as $row)
 		if(	$row['roomID']==$roomId &&	$row['endTime']> date("Y-m-d")){
@@ -114,6 +115,7 @@ class Edit extends CI_Controller {
 				);
 		}
 	}
+
 		
 		echo json_encode($data);
 	}else{redirect('');}
@@ -311,7 +313,7 @@ class Edit extends CI_Controller {
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
 
 			$this->form_validation->set_rules('publicInfoPeriod', 'Klubi nimi', 'required');
-			$this->form_validation->set_rules('contactPersonPeriod', 'Kontaktisik', 'required');
+		//	$this->form_validation->set_rules('contactPersonPeriod', 'Kontaktisik', 'required');
 			if($this->form_validation->run() === FALSE ){
 
 				if($this->input->post('dontShow')!=1){
