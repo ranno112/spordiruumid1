@@ -545,7 +545,7 @@
 				var events = $('#calendar').fullCalendar('clientEvents');
 				$('tbody').attr('id', id);
 
-
+				var eventToCheck=[];
 				var startDateTime = [];
 				var endDateTime = [];
 				var arrayOfIDs = [];
@@ -555,11 +555,8 @@
 				for (var i = 0; i < events.length; i++) {
 					var Bid = events[i].bookingID;
 					var BTimesid = events[i].timeID;
-
-
 					var roomID = <?php echo ($this->input->get('roomId')); ?>;
 					// console.log("event.id="+event.id+" Bookingtimes="+BTimesid+" Bid="+Bid+" "+roomID+ " "+events[i].roomID);
-
 
 					if (events[i].start != null && events[i].end != null) {
 						startDateTime.push(events[i].start._i.substring(0, 16));
@@ -568,157 +565,63 @@
 						arrayOfTitles.push(events[i].title);
 						//  console.log((events[i].start._i.substring(0, 16))+" "+ events[i].end._i.substring(0, 16));
 					}
-
-
-
-
-				}
-
-				// console.log(startDateTime);
-				// console.log(endDateTime);
-				function isBetween(checkDateTime, startDateTime, endDateTime) {
-
-					return (checkDateTime >= startDateTime && checkDateTime <= endDateTime);
-
-				}
-
-				function toDate(str) {
-
-					var [yyyy, MM, dd, hh, mm] = str.split(/[- :]/g);
-					return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
-				}
-
-
-
-
-
-				for (var i = 0; i < events.length; i++) {
-					var Bid = events[i].bookingID;
-					var BTimesid = events[i].timeID;
-
-
-					//   console.log("event.id="+event.id+" Bookingtimes="+BTimesid+" Bid="+Bid);
 					if (event.id == Bid) {
-						var approved = events[i].approved;
-						if (approved == 1) {
-							approved = "Kinnitatud";
-						} else if (approved == 0) {
-							approved = "Kinnitamata";
-						}
+						eventToCheck.push(events[i]);
 
-						var takesPlace = events[i].takesPlace;
-						if (takesPlace == 1) {
-							takesPlace = "";
-						} else if (takesPlace == 0) {
-							takesPlace = "XXX";
-						}
-						var start_date = new Date(events[i].start._d);
+					}
+					
+				};
+			
+			
+				var conflictsToModal=[];
 
-						var weekday = days[start_date.getDay()];
+				for (var i = 0; i < eventToCheck.length; i++) {
+					
+				var approved = eventToCheck[i].approved;
+					if (approved == 1) {
+						approved = "Kinnitatud";
+					} else if (approved == 0) {
+						approved = "Kinnitamata";
+					}
 
-						var end_date = '';
-						if (events[i].end != null) {
-							end_date = new Date(events[i].end._d);
-						}
-						var title = events[i].title;
+				var takesPlace = events[i].takesPlace;
+					if (takesPlace == 1) {
+						takesPlace = "";
+					} else if (takesPlace == 0) {
+						takesPlace = "XXX";
+					}
 
-						var st_day = start_date.getUTCDate();
+				var nameOfWeek=days[moment(eventToCheck[i].start._i).day()];
+				var start_date = new Date(eventToCheck[i].start._i);
+				var st_monthIndex = start_date.getUTCMonth() + 1;
 
-						if (st_day < 10) {
-							st_day = '0' + st_day;
-						}
+				if (monthCheckbox != st_monthIndex) {
 
-						var st_monthIndex = start_date.getUTCMonth() + 1;
-						if (st_monthIndex < 10) {
-							st_monthIndex = '0' + st_monthIndex;
-						}
-						var st_year = start_date.getUTCFullYear();
-						var st_hours = start_date.getUTCHours();
-						if (st_hours == 0) {
-							st_hours = '00';
-						} else if (st_hours < 10) {
-							st_hours = '0' + st_hours;
-						}
-
-						var st_minutes = start_date.getUTCMinutes();
-						if (st_minutes == 0) {
-							st_minutes = '00';
-						}
-
-
-						var en_day = '';
-						var en_monthIndex = '';
-						var en_year = '';
-						if (end_date != '') {
-							en_day = end_date.getUTCDate();
-							if (en_day < 10) {
-								en_day = '0' + en_day;
-							}
-
-							en_monthIndex = end_date.getUTCMonth() + 1;
-							if (en_monthIndex < 10) {
-								en_monthIndex = '0' + en_monthIndex;
-							}
-							en_year = end_date.getUTCFullYear();
-							var en_hours = end_date.getUTCHours();
-							if (en_hours < 10) {
-								en_hours = '0' + en_hours;
-							}
-							var en_minutes = end_date.getUTCMinutes();
-							if (en_minutes == 0) {
-								en_minutes = '00';
-							}
-
-						}
-						var checkDateTime = st_year + '-' + st_monthIndex + '-' + st_day + " " + st_hours + ':' + st_minutes;
-						var checkDateTime2 = en_year + '-' + en_monthIndex + '-' + en_day + " " + en_hours + ':' + en_minutes;
-
-						if (monthCheckbox != st_monthIndex) {
-
-							$('#myTable > tbody:last-child').append('<tr id="monthRow' + start_date.getUTCMonth() + '"><th><label><input type="checkbox"  id="selectMonth[' + start_date.getUTCMonth() + ']" value="1"></label> ' + monthNamesForModal[start_date.getUTCMonth()] + ' </th></tr>');
-						}
-						monthCheckbox = st_monthIndex;
-
-
-						counter++;
-
-						$('#myTable > tbody:last-child').append(' <tr class="red' + i + '">  <td><label><input type="checkbox" class="abc brdr" name="choices" id="' + BTimesid + '"><span></span></label> ' + weekday + ', ' + st_day + '.' + st_monthIndex + '.' + st_year + ' <br></td>  <td>&nbsp;&nbsp; ' + st_hours + ':' + st_minutes + '-' + en_hours + ':' + en_minutes + '</td>   <td>&nbsp;&nbsp;&nbsp;' + approved + ' </td> <td>&nbsp;' + takesPlace + ' </td>   </tr>');
-						if (event.timeID == BTimesid) {
-							//  console.log("klikk");
-							$("#" + BTimesid).prop('checked', true);
-						}
-
-						for (var t = 0; t < startDateTime.length; t++) {
-							if (arrayOfIDs[t] != BTimesid) {
-
-
-								if (isBetween(startDateTime[t], checkDateTime, checkDateTime2) || isBetween(checkDateTime2, startDateTime[t], endDateTime[t]) || isBetween(checkDateTime, startDateTime[t], endDateTime[t]) || isBetween(checkDateTime2, startDateTime[t], endDateTime[t])) {
-
-									//   console.log("konflikt:"+ startDateTime[t] +": "+endDateTime[t]);
-									$(".red" + i).css("color", "red");
-									if ($("table").find(".red" + i + ":first td").length < 5) {
-										(arrayOfTitles[t].length > 10) ? arrayOfTitles[t] = arrayOfTitles[t].substring(0, 10) + "...": arrayOfTitles[i] = arrayOfTitles[i];
-										//    console.log(arrayOfTitles[i]+" "+  arrayOfTitles[t]);
-										$(".red" + i).append('<td> &nbsp;' + arrayOfTitles[t] + '</td>');
-									}
-
-
-
-
-
-								}
-							}
-						}
-
-						//  console.log(startDateTime);
-						//console.log(endDateTime);
-						//  console.log('Title-'+title+', start Date-' + st_year + '-' + st_monthIndex + '-' + st_day + ' , End Date-' + en_year + '-' + en_monthIndex + '-' + en_day + ' '+Bid + ' time ' +st_hours +':' +st_minutes+'-'+ en_hours+':'+en_minutes);
-
-
-
-					};
+				$('#myTable > tbody:last-child').append('<tr id="monthRow' + start_date.getUTCMonth() + '"><th><label><input type="checkbox"  id="selectMonth[' + start_date.getUTCMonth() + ']" value="1"></label> ' + monthNamesForModal[start_date.getUTCMonth()] + ' </th></tr>');
 				}
+				monthCheckbox = st_monthIndex;
 
+
+				$('#myTable > tbody:last-child').append(' <tr class="red' + i + '">  <td><label><input type="checkbox" class="abc brdr" name="choices" id="' + eventToCheck[i].timeID + '"><span></span></label> ' +  nameOfWeek + ', ' + moment(eventToCheck[i].start._i).format('DD.MM.YYYY') + ' <br></td>  <td>&nbsp;&nbsp; ' + moment(eventToCheck[i].start._i).format('HH:mm') +  '-' + moment(eventToCheck[i].end._i).format('HH:mm') + '</td>   <td>&nbsp;&nbsp;&nbsp;' + approved + ' </td> <td>&nbsp;' + takesPlace + ' </td>   </tr>');
+				if (event.timeID == eventToCheck[i].timeID) {
+							  console.log("klikk");
+							$("#" + event.timeID).prop('checked', true);
+						}
+				var checkingConflicts=isOverlapping2(eventToCheck[i], events);
+				console.log(checkingConflicts);
+				if	(checkingConflicts){
+					$(".red" + i).css("color", "red");
+						if ($("table").find(".red" + i + ":first td").length < 5) {
+							(checkingConflicts.title.length > 10) ? checkingConflicts.title = checkingConflicts.title.substring(0, 10) + "...": checkingConflicts.title = checkingConflicts.title;
+							//    console.log(arrayOfTitles[i]+" "+  arrayOfTitles[t]);
+							$(".red" + i).append('<td> &nbsp;' + checkingConflicts.title + '</td>');
+						}
+					
+					}
+
+				}
+				
+				
 
 				$('#phone').val(event.phone);
 				$("#contact #phone").text(event.phone);
@@ -1174,10 +1077,6 @@
 		});
 
 
-
-
-
-
 		$("#datepicker").val('<?php echo ($this->input->get('date')); ?>');
 		if ('<?php echo ($this->input->get('date')); ?>') {
 			console.log('<?php echo ($this->input->get('date')); ?>');
@@ -1275,6 +1174,24 @@
 			if (array[i].id != event.id && array[i].start != null && array[i].end != null && event.start != null && event.end != null) {
 				if (array[i].start.isBefore(event.end) && array[i].end.isAfter(event.start)) {
 					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	function isOverlapping2(event, events) {
+	//	var events = $('#calendar').fullCalendar('clientEvents');
+		
+		for (i in events) {
+		
+			if (events[i].timeID != event.timeID && events[i].start != null && events[i].end != null && event.start != null && event.end != null) {
+			
+				if (events[i].start.isBefore(event.end) && events[i].end.isAfter(event.start) && events[i].end> moment().subtract(7, "days")) {
+				//	 console.log(events[i].end<new Date());
+					// console.log(events[i].end._i +" "+event.start._i)
+				//	console.log(new Date(events[i].start)+" i="+new Date(event.end));
+					return events[i];
 				}
 			}
 		}

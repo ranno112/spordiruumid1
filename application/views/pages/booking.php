@@ -822,7 +822,7 @@ $.ajax({
 		conflicts = json;
     	 var canSubmit=true;
 			(checkOnceDates()).some(function(element, index){
-			console.log(index);
+		//	console.log(index);
 	
 			if(isOverlapping(element, conflicts)){
 			$('#approveNow').prop('checked', false);//kinnitus võetakse automaatselt maha
@@ -857,7 +857,7 @@ $( "#submitWithConflicts" ).click(function() {
 
 function isOverlapping(event, conflicts) {
 	for (i in conflicts) {
-	console.log("tötab");
+	//console.log(moment(new Date(conflicts[i].end))< moment().add(65, "days"));
 			if (conflicts[i].start != null && conflicts[i].end != null && event.start != null && event.end != null) {
 				if (moment(conflicts[i].start).isBefore(event.end) && moment(conflicts[i].end).isAfter(event.start)) {
 					//console.log(event.start.substring(0, 16)+ "-"+ event.end.substring(11, 16) + " on konfliktis järgmise ajaga: "+ conflicts[i].start.substring(0, 16)+"-"+conflicts[i].end.substring(11, 16)+" "+conflicts[i].title+" "+conflicts[i].description);
@@ -882,6 +882,7 @@ return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
 	var weekdSelectedToArray=[];
 	var beginTimedSelectedToArray=[];
 	var untilTimeSelectedToArray=[];
+	var indexes=[];
 	var startingDate;
 	var endingDate;
 	var weekDaySelected;
@@ -900,6 +901,7 @@ return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
 		beginTimedSelectedToArray.push(startingDate);
 		untilTimeSelectedToArray.push(endingDate);
 		weekdSelectedToArray.push( days.indexOf($(this).val()));
+		
 	});
 	
     var stopDate = moment(stopDate);
@@ -939,7 +941,7 @@ $( "#checkForConflicts" ).click(function() {
 		
 		if((getDates(startingDateConverted, endingDateConverted).length)>100){
 		
-		if (confirm("Selle broneeringuga luuakse "+(getDates(startingDateConverted, endingDateConverted).length)+" aega ning kattuvuse kontroll võtab umbes "+Math.round((getDates(startingDateConverted, endingDateConverted).length)/15)+" sekundit. Selline aegade hulk ühe broneeringu kohta võib süsteemi tööd aeglustada. Te saate broneeringut salvestada, kuid oleks parem, kui tükeldate broneeringut lühemateks perioodideks. Kas muudad kohe?")){
+		if (confirm("Selle broneeringuga luuakse "+(getDates(startingDateConverted, endingDateConverted).length)+" aega ning kattuvuse kontroll võtab umbes "+Math.round((getDates(startingDateConverted, endingDateConverted).length)/10)+" sekundit. Selline aegade hulk ühe broneeringu kohta võib süsteemi tööd aeglustada. Te saate broneeringut salvestada, kuid oleks parem, kui tükeldate broneeringut lühemateks perioodideks. Kas muudad kohe?")){
 			$( "#checkForConflicts" ).show();
 			$("#loadingTemporarlyButton").addClass('d-none');
 			return true;
@@ -955,11 +957,13 @@ $.ajax({
     	 var canSubmit=true;
 			(getDates(startingDateConverted, endingDateConverted)).some(function(element, index){
 			console.log(index);
-	
+
+			if(index<10){
 			if(isOverlapping(element, conflicts)){
 			$('#approvePeriodNow').prop('checked', false);//kinnitus võetakse automaatselt maha
 			canSubmit=false;
 			}
+		}
 		
 		});
 		$( "#checkForConflicts" ).show();
