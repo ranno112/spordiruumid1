@@ -882,7 +882,7 @@ return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
 	var weekdSelectedToArray=[];
 	var beginTimedSelectedToArray=[];
 	var untilTimeSelectedToArray=[];
-	var indexes=[];
+	
 	var startingDate;
 	var endingDate;
 	var weekDaySelected;
@@ -905,25 +905,38 @@ return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
 	});
 	
     var stopDate = moment(stopDate);
-
+    maximumToCheck= 60/weekdSelectedToArray.length;
+        console.log("maximumToCheck"+maximumToCheck);
 	weekdSelectedToArray.forEach(function (item, index) {
+
+        var checkHowMuchConflicts=0;
 		var currentDate = moment(startDate);
     	while (currentDate <= stopDate) {
+
+      
 			if(item==7) {item=0};
 			if(item == new Date(moment(currentDate).format('YYYY-MM-DD')).getDay() ){
 
             var obj = {
 			start : moment(currentDate).format('YYYY-MM-DD')+" "+beginTimedSelectedToArray[index]+":00",
-			end : moment(currentDate).format('YYYY-MM-DD')+" "+untilTimeSelectedToArray[index]+":00"};
+			end : moment(currentDate).format('YYYY-MM-DD')+" "+untilTimeSelectedToArray[index]+":00"
+            };
 			dateArray.push( obj );
 			currentDate = moment(currentDate).add(6, 'days');
       		 };
-			
+          
 		 currentDate = moment(currentDate).add(1, 'days');
-	//	 console.log(currentDate)
-	
-    }
+         if(checkHowMuchConflicts > maximumToCheck){
+            currentDate = moment(currentDate).add(1000, 'days');
+        }
+         checkHowMuchConflicts++;
+        
+      
+		
+   
+}
 });
+    console.log(dateArray);
     return dateArray;
 	}
 	
@@ -937,12 +950,14 @@ $( "#checkForConflicts" ).click(function() {
     	var startingDateConverted = moment(startingDate, "DD.MM.YYYY").format("YYYY-MM-DD");
 		var endingDate = $('#periodEnd').val();
     	var endingDateConverted = moment(endingDate, "DD.MM.YYYY").format("YYYY-MM-DD");
-		console.log((getDates(startingDateConverted, endingDateConverted)).length);
+        var getDateArray=getDates(startingDateConverted, endingDateConverted);
+		console.log((getDateArray).length);
 		
-		if((getDates(startingDateConverted, endingDateConverted).length)>100){
+		if((getDateArray.length)>50){
 		
-		if (confirm("Selle broneeringuga luuakse "+(getDates(startingDateConverted, endingDateConverted).length)+" aega ning kattuvuse kontroll võtab umbes "+Math.round((getDates(startingDateConverted, endingDateConverted).length)/10)+" sekundit. Selline aegade hulk ühe broneeringu kohta võib süsteemi tööd aeglustada. Te saate broneeringut salvestada, kuid oleks parem, kui tükeldate broneeringut lühemateks perioodideks. Kas muudad kohe?")){
-			$( "#checkForConflicts" ).show();
+		if (!confirm("Soovid broneerida suurt hulka aegasid. Kattuvuse kontroll teostatakse vaid esimesele 60. ajale. Suur aegade hulk ühe broneeringu kohta võib süsteemi tööd aeglustada. Te saate broneeringut salvestada, kuid oleks parem, kui tükeldate broneeringut lühemateks perioodideks. Kas salvestad ikkagi?")){
+            $('#approvePeriodNow').prop('checked', false);//kinnitus võetakse automaatselt maha
+        	$( "#checkForConflicts" ).show();
 			$("#loadingTemporarlyButton").addClass('d-none');
 			return true;
 		}
@@ -955,10 +970,10 @@ $.ajax({
 	success: function(json) {
 		conflicts = json;
     	 var canSubmit=true;
-			(getDates(startingDateConverted, endingDateConverted)).some(function(element, index){
+			(getDateArray).some(function(element, index){
 			console.log(index);
 
-			if(index<10){
+			if(index<100){
 			if(isOverlapping(element, conflicts)){
 			$('#approvePeriodNow').prop('checked', false);//kinnitus võetakse automaatselt maha
 			canSubmit=false;
