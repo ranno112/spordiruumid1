@@ -1,13 +1,9 @@
 <div class="container">
     <div class="table-container mt-3">
-        <div class="mb-2 pb-5">
-            <a class="btn btn-custom text-white text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss cursor-pointer" onclick="location.href='<?php echo base_url(); ?>createUser';">
-                <p class="m-0 txt-lg txt-strong text-center cursor-pointer">Lisa uus</p>
-            </a>
-        </div>
+       
 		
 		Kõik Nädalavaade
-		<?php echo $this->session->userdata('userID');?>
+		<?php // print_r($manageUsers);?>
         <table class="table-borderless table-users mt-3">
             <thead class="bg-grey border-bottom ">
                 <tr>
@@ -16,40 +12,43 @@
 					<th class="py-2 txt-strong text-darkblue" scope="col">Kuupäev</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">Alates</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">Kuni</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col">Trenni kestus</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Trenni kestus minutites</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Kinnitatud</th>
                     <th class="py-2 txt-strong text-darkblue" scope="col">Klubi</th>
                     <th class="py-2 txt-strong text-darkblue" scope="col">Trenn</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">Kommentaar</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col">Kinnitatud</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col">Toimub</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col">Nimi</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Kontaktisik</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">Telefon</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">e-mail</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Jäi ära</th>
                 </tr>
             </thead>
             <tbody class="">
             <?php foreach($manageUsers as $singleUser) : ?>
                 <tr>
-                    <td class="pl-3 p-1 text-darkblue border-bottom-light"><?php echo $singleUser['userName']; ?></td>
-                    <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['email']; ?></td>
-                    <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['userPhone']; ?></td>
-                    <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['name']; ?></td>
-                    <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['role']; ?> &nbsp; &nbsp;</td>
-                    <td class="p-1 text-darkblue border-bottom-light"><?php if( $singleUser['status']==1){ echo "Aktiivne";} else {echo "Mitteakviivne";} ?></td>
-                    <td class="d-flex justify-content-end p-1 pr-3">
-                        <form class="cat-delete" action="users/edit/<?php echo $singleUser['userID']; ?>" method="POST">
-                            <button type="submit" class="btn btn-second btn-width text-white text-center py-1 px-2 txt-strong ">Muuda</button>
-                        </form>
-                        <?php if($this->session->userdata('roleID')==='1'):?>
-                        <form class="cat-delete pl-1" action="users/delete/<?php echo $singleUser['userID']; ?>" method="POST">
-                            <button type="submit" class="btn btn-delete btn-width text-white text-center py-1 px-2 txt-strong ">Kustuta</button>
-                        </form>
-                        <?php endif;?>
-                    </td>
+                    <td class="pl-3 p-1 text-darkblue border-bottom-light"><?php echo $singleUser['roomName']; ?></td>
+                    <td class="p-1 text-darkblue border-bottom-light"><?php echo $weekdays[idate('w', strtotime($singleUser['startTime']))]; ?></td>
+                    <td class="p-1 text-darkblue border-bottom-light"><?php echo date('d.m.Y', strtotime($singleUser['startTime'])); ?></td>
+					<td class="p-1 text-darkblue border-bottom-light"><?php echo date('H:i', strtotime($singleUser['startTime'])); ?></td>
+					<td class="p-1 text-darkblue border-bottom-light"><?php echo date('H:i', strtotime($singleUser['endTime'])); ?></td>
+
+					<!-- https://stackoverflow.com/questions/365191/how-to-get-time-difference-in-minutes-in-php -->
+					<td class="p-1 text-darkblue border-bottom-light"><?php echo  round(abs( strtotime($singleUser['endTime']) -  strtotime($singleUser['startTime'])) / 60,2);  ?></td>
+					<td class="p-1 text-darkblue border-bottom-light"><?php if( $singleUser['approved']==1){ echo "&#10003;";} else {echo "";} ?></td>
+					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['public_info']; ?></td>
+					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['workout']; ?></td>
+					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['comment']; ?></td>
+					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['c_name']; ?></td>
+					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['c_phone']; ?></td>
+                    <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['c_email']; ?> &nbsp; &nbsp;</td>
+					<td class="p-1 text-darkblue border-bottom-light"><?php if( $singleUser['takes_place']==1){ echo "";} else {echo "&#10003;";} ?></td>
+                
+                   
                 </tr>                
             <?php endforeach; ?>
-</tbody>
+		</tbody>
         </table>
     </div>
 </div>
+
 

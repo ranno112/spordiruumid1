@@ -180,8 +180,8 @@
 		}
 
 		public function index(){
-			$data['title'] = 'Users';
-			$data['manageUsers'] = $this->allbookings_model->get_users();
+			$data['weekdays']=array('Pühapäev','Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev');
+			$data['manageUsers'] = $this->allbookings_model->get_bookings();
 			$this->load->view('templates/header');
 			$this->load->view('pages/allbookings', $data);
 			$this->load->view('templates/footer');
@@ -206,10 +206,10 @@
 			// if(!$this->session->userdata('logged_in')){
 			// 	redirect('users/login');
 			// }
-			$data['manageUsers'] = $this->allbookings_model->get_users();
-			$data['post'] = $this->allbookings_model->get_users($slug);
+			$data['manageUsers'] = $this->allbookings_model->get_bookings();
+			$data['post'] = $this->allbookings_model->get_bookings($slug);
 			// Check user
-			// if($this->session->userdata('user_id') != $this->post_model->get_users($slug)['user_id']){
+			// if($this->session->userdata('user_id') != $this->post_model->get_bookings($slug)['user_id']){
 			// 	redirect('posts');
 			// }
 		//	$data['categories'] = $this->allbookings_model->get_categories();

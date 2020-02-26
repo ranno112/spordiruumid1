@@ -58,20 +58,14 @@
 		}
 
 
-		public function get_users($slug = FALSE){
-			if($slug === FALSE){
-				$this->db->order_by('users.userName');
-			$this->db->join('buildings', 'users.buildingID = buildings.id' , 'left');
-			$this->db->join('userRoles', 'users.roleID = userRoles.id' , 'left');
-			$query = $this->db->get('users');
+		public function get_bookings($slug = FALSE){
+			$this->db->order_by('rooms.id');
+			$this->db->order_by('bookingTimes.startTime');
+			$this->db->join('bookings', 'bookingTimes.bookingID = bookings.id' , 'left');
+			$this->db->join('rooms', 'bookingTimes.roomID = rooms.id' , 'left');
+			$this->db->join('buildings', 'rooms.buildingID = buildings.id' , 'left');
+			$query = $this->db->get('bookingTimes');
 			return $query->result_array();
-			}
-			$this->db->join('buildings', 'users.buildingID = buildings.id' , 'left');
-			$this->db->join('userRoles', 'users.roleID = userRoles.id' , 'left');
-			$query = $this->db->get_where('users', array('userID' => $slug));
-			return $query->row_array();
-		
-		
 		}
 
 
