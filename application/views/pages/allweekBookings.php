@@ -1,9 +1,21 @@
+<button class="printBtn hidden-print">Print</button>
 
-
+<script type="text/javascript">
+  $('.printBtn').on('click', function (){
+    window.print();
+  });
+</script>
+<a href="<?php echo base_url(); ?>/allbookings/">Nimekiri </a>
+	<a href="<?php echo base_url(); ?>/allbookings/weekview">Kalender</a>
+	<?php echo base_url(); ?>allbookings/load/<?php echo $this->session->userdata['building']; ?>
+		
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset='utf-8' />
+<!-- <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css" rel="stylesheet" type="text/css" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.print.css " rel="stylesheet" type="text/css" media="print" /> -->
+<link href='<?php echo base_url(); ?>assets/css/fullcalendar.print.css' rel="stylesheet" type="text/css"  media="print">`
 <link href='<?php echo base_url(); ?>assets/packages/core/main.css' rel='stylesheet' />
 <link href='<?php echo base_url(); ?>assets/packages/daygrid/main.css' rel='stylesheet' />
 <link href='<?php echo base_url(); ?>assets/packages/timegrid/main.css' rel='stylesheet' />
@@ -14,16 +26,20 @@
 <script src='<?php echo base_url(); ?>assets/packages-premium/resource-common/main.js'></script>
 <script src='<?php echo base_url(); ?>assets/packages-premium/resource-daygrid/main.js'></script>
 <script src='<?php echo base_url(); ?>assets/packages-premium/resource-timegrid/main.js'></script>
+
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
+		
       plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid' ],
+		
       defaultView: 'resourceTimeGridWeek',
-	  datesAboveResources: true,
-      defaultDate: '2020-02-07',
+	   datesAboveResources: true,
+   	firstDay: 1,
+		 allDaySlot: false,
 	  aspectRatio: 2.6,
 	 minTime: '08:00:00',
 			maxTime: '22:00:00',
@@ -36,10 +52,12 @@
         right: 'resourceTimeGridDay,resourceTimeGridTwoDay,resourceTimeGridWeek,timeGridWeek,dayGridMonth'
       },
       views: {
-        resourceTimeGridTwoDay: {
+        resourceTimeGridWeek: {
           type: 'resourceTimeGrid',
-          duration: { days: 2 },
-          buttonText: '2 days',
+         
+					slotDuration: '00:30:00',
+          buttonText: 'Resourceweek',
+					
         }
       },
 
@@ -47,25 +65,25 @@
       //allDaySlot: false,
 
       resources: [
-        { id: 'a', title: 'Suur saal' },
-        { id: 'b', title: 'Väike saal', eventColor: 'green' },
-        { id: 'c', title: 'Õueala', eventColor: 'orange' },
-        { id: 'd', title: 'Tohutu ruum', eventColor: 'red' },
-		{ id: 'e', title: 'Kitsas ruum', eventColor: 'ligthblue' },
-		{ id: 'f', title: 'Milline saal', eventColor: 'black' },
+        { id: '1', title: '1. VÄLJAK' },
+        { id: '215', title: '2. VÄLJAK', eventColor: 'yellow' },
+        { id: '20', title: '3. VÄLJAK', eventColor: 'orange' },
+        { id: '214', title: 'Väikse saal', eventColor: 'lightgreen' },
+		{ id: '212', title: 'Aeroobika', eventColor: 'pink' },
+		{ id: '213', title: 'Nõupidamine', eventColor: 'lightblue' },
+		{ id: '216', title: 'Milline saal', eventColor: 'MediumPurple' }
       ],
-	  events: [
+			eventSources: [
 
-		// your event source
-		{
-			url: "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get('roomId')); ?>" // use the `url` property
+// your event source
+{
+	url: "<?php echo base_url(); ?>allbookings/load/<?php echo $this->session->userdata['building']; ?>" // use the `url` property
 
-			// rendering : 'background'
-		}
+}
 
+// any other sources...
 
-		],
-
+],
       select: function(arg) {
         console.log(
           'select',
@@ -129,6 +147,7 @@
 <script src='<?php echo base_url(); ?>assets/packages-premium/timeline/main.js'></script>
 <script src='<?php echo base_url(); ?>assets/packages-premium/resource-common/main.js'></script>
 <script src='<?php echo base_url(); ?>assets/packages-premium/resource-timeline/main.js'></script>
+
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -137,10 +156,10 @@
     var calendar = new FullCalendar.Calendar(calendarEl, {
 		schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
       plugins: [ 'dayGrid', 'timeGrid', 'resourceTimeline' ],
-      now: '2020-02-07',
-	  height: 350,
-	
-      aspectRatio: 1.8,
+     
+	  height: 450,
+		firstDay: 1,
+		allDaySlot: false,
       scrollTime: '00:00',
       header: {
         left: 'today prev,next',
@@ -164,22 +183,29 @@
         }
       
       ],
-      resources: [
-        { id: 'a', title: 'Suur saal', occupancy: 40 },
-        { id: 'b', title: 'Väike saal', occupancy: 40, eventColor: 'green' },
-        { id: 'c', title: 'Õueala', occupancy: 40, eventColor: 'orange' },
-        { id: 'f', title: 'Kitsas saal', occupancy: 40, eventColor: 'red' },
-        { id: 'g', title: 'Punane saal', occupancy: 40 },
-      
-        { id: 'z', title: 'Auditorium Z', occupancy: 40 }
+
+			
+     resources: [
+        { id: '1', title: '1. VÄLJAK' },
+        { id: '215', title: '2. VÄLJAK', eventColor: 'green' },
+        { id: '20', title: '3. VÄLJAK', eventColor: 'orange' },
+        { id: '214', title: 'Väikse saal', eventColor: 'red' },
+		{ id: '212', title: 'Aeroobika', eventColor: 'pink' },
+		{ id: '213', title: 'Nõupidamine', eventColor: 'lightblue' },
+		{ id: '216', title: 'Milline saal', eventColor: 'purple' }
       ],
-      events: [
-        { id: '1', resourceId: 'b', start: '2020-02-07T02:00:00', end: '2020-02-07T07:00:00', title: 'event 1' },
-        { id: '2', resourceId: 'c', start: '2020-02-07T05:00:00', end: '2020-02-07T22:00:00', title: 'event 2' },
-        { id: '3', resourceId: 'd', start: '2020-02-06', end: '2020-02-08', title: 'event 3' },
-        { id: '4', resourceId: 'e', start: '2020-02-07T03:00:00', end: '2020-02-07T08:00:00', title: 'event 4' },
-        { id: '5', resourceId: 'f', start: '2020-02-07T00:30:00', end: '2020-02-07T02:30:00', title: 'event 5' }
-      ]
+			eventSources: [
+
+			// your event source
+			{
+				url: "<?php echo base_url(); ?>allbookings/load/<?php echo $this->session->userdata['building']; ?>" // use the `url` property
+
+			}
+
+			// any other sources...
+
+			]
+
     });
 
     calendar.render();

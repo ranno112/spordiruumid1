@@ -1,12 +1,15 @@
 <div class="container">
     <div class="table-container mt-3">
        
+	<a href="<?php echo base_url(); ?>/allbookings/">Nimekiri </a>
+	<a href="<?php echo base_url(); ?>/allbookings/weekview">Kalender</a>
 		
-		Kõik Nädalavaade
+		
 		<?php // print_r($manageUsers);?>
         <table class="table-borderless table-users mt-3">
             <thead class="bg-grey border-bottom ">
                 <tr>
+				<th class="pl-3 py-2 txt-strong text-darkblue" scope="col">Päring</th>
 					<th class="pl-3 py-2 txt-strong text-darkblue" scope="col">Ruumi nimi</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">Nädalapäev</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">Kuupäev</th>
@@ -26,6 +29,7 @@
             <tbody class="">
             <?php foreach($manageUsers as $singleUser) : ?>
                 <tr>
+				<td class="pl-3 p-1 text-darkblue border-bottom-light"><?php echo date('d.m.Y H:i', strtotime($singleUser['created_at'])); ?></td>
                     <td class="pl-3 p-1 text-darkblue border-bottom-light"><?php echo $singleUser['roomName']; ?></td>
                     <td class="p-1 text-darkblue border-bottom-light"><?php echo $weekdays[idate('w', strtotime($singleUser['startTime']))]; ?></td>
                     <td class="p-1 text-darkblue border-bottom-light"><?php echo date('d.m.Y', strtotime($singleUser['startTime'])); ?></td>
