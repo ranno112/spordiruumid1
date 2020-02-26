@@ -187,6 +187,15 @@
 			$this->load->view('templates/footer');
 		}
 
+		public function weekView(){
+			$data['weekdays']=array('Pühapäev','Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev');
+			$data['manageUsers'] = $this->allbookings_model->get_bookings();
+			$this->load->view('templates/header');
+			$this->load->view('pages/allweekbookings', $data);
+			$this->load->view('templates/footer');
+		}
+
+
 
 		public function delete($id){
 			// Check login

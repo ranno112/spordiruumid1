@@ -7,12 +7,12 @@
         <table class="table-borderless table-users mt-3">
             <thead class="bg-grey border-bottom ">
                 <tr>
-					<th class="pl-3 py-2 txt-strong text-darkblue" scope="col">Ruum</th>
+					<th class="pl-3 py-2 txt-strong text-darkblue" scope="col">Ruumi nimi</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">Nädalapäev</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">Kuupäev</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">Alates</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">Kuni</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col">Trenni kestus minutites</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Kestus</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">Kinnitatud</th>
                     <th class="py-2 txt-strong text-darkblue" scope="col">Klubi</th>
                     <th class="py-2 txt-strong text-darkblue" scope="col">Trenn</th>
