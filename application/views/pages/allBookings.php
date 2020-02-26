@@ -5,17 +5,26 @@
                 <p class="m-0 txt-lg txt-strong text-center cursor-pointer">Lisa uus</p>
             </a>
         </div>
-
+		
+		Kõik Nädalavaade
+		<?php echo $this->session->userdata('userID');?>
         <table class="table-borderless table-users mt-3">
             <thead class="bg-grey border-bottom ">
                 <tr>
-                    <th class="pl-3 py-2 txt-strong text-darkblue" scope="col">Nimi</th>
-                    <th class="py-2 txt-strong text-darkblue" scope="col">Email</th>
-                    <th class="py-2 txt-strong text-darkblue" scope="col">Telefon</th>
-                    <th class="py-2 txt-strong text-darkblue" scope="col">Asutus</th>
-                    <th class="py-2 txt-strong text-darkblue" scope="col">Roll</th>
-                    <th class="py-2 txt-strong text-darkblue" scope="col">Staatus</th>
-                    <th class="py-2 txt-strong text-darkblue" scope="col"></th>
+					<th class="pl-3 py-2 txt-strong text-darkblue" scope="col">Ruum</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Nädalapäev</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Kuupäev</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Alates</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Kuni</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Trenni kestus</th>
+                    <th class="py-2 txt-strong text-darkblue" scope="col">Klubi</th>
+                    <th class="py-2 txt-strong text-darkblue" scope="col">Trenn</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Kommentaar</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Kinnitatud</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Toimub</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Nimi</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Telefon</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">e-mail</th>
                 </tr>
             </thead>
             <tbody class="">
@@ -43,3 +52,4 @@
         </table>
     </div>
 </div>
+
