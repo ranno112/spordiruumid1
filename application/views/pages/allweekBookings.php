@@ -37,7 +37,7 @@
       plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid' ],
 		
       defaultView: 'resourceTimeGridWeek',
-	   datesAboveResources: true,
+	  // datesAboveResources: true,
    	firstDay: 1,
 		 allDaySlot: false,
 	  aspectRatio: 2.6,
@@ -49,7 +49,7 @@
       header: {
         left: 'prev,next today',
         center: 'title',
-        right: 'resourceTimeGridDay,resourceTimeGridTwoDay,resourceTimeGridWeek,timeGridWeek,dayGridMonth'
+        right: 'resourceTimeGridDay,resourceTimeGridThreeDay,resourceTimeGridFourDay,resourceTimeGridWeek,timeGridWeek,dayGridMonth'
       },
       views: {
         resourceTimeGridWeek: {
@@ -58,6 +58,14 @@
 					slotDuration: '00:30:00',
           buttonText: 'Resourceweek',
 					
+        }, resourceTimeGridFourDay: {
+          type: 'resourceTimeGrid',
+          duration: { days: 4 },
+          buttonText: '4 days'
+        }, resourceTimeGridThreeDay: {
+          type: 'resourceTimeGrid',
+          duration: { days: 3 },
+          buttonText: '3 days'
         }
       },
 

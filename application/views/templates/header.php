@@ -16,16 +16,17 @@
     <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet">  
     <link href="<?php echo base_url(); ?>assets/css/calendar.css" rel="stylesheet">
     
-  
-
-
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
+ 	
+ 
   
     <script src="<?php echo base_url(); ?>assets/js/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/js/jquery-clock-timepicker.min.js"></script>
+		<script src="<?php echo base_url(); ?>assets/js/jquery-clock-timepicker.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
     
 </head>
 
