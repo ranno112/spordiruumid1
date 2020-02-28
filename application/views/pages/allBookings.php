@@ -72,7 +72,7 @@
  <script type="text/javascript" language="javascript" >  
  $(document).ready(function(){  
       var dataTable = $('#user_data').DataTable({  
-		"lengthMenu": [[10, 25, 50, 100, 200, 500], [10, 25, 50, 100, 200, 500]],
+		"lengthMenu": [[ 25, 50, 100, 200, 500], [ 25, 50, 100, 200, 500]],
 		"language": {
     "search": "Otsi:",
     "info":           "Kuvatakse _START_ kuni _END_ rida _TOTAL_ reast",
@@ -109,7 +109,7 @@
 function fetch_data(is_date_search, start_date='', end_date='')
  {
   var dataTable = $('#user_data').DataTable({
-	"lengthMenu": [[10, 25, 50, 100, 200, 500], [10, 25, 50, 100, 200, 500]],
+	"lengthMenu": [[25, 50, 100, 200, 500], [ 25, 50, 100, 200, 500]],
    "processing" : true,
    "language": {
     "search": "Otsi:",

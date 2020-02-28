@@ -6,6 +6,18 @@
 		}
 
 
+
+
+		
+		public function get_bookings($slug = FALSE){
+		
+			$this->db->distinct();
+			$query = $this->db->get('bookings');
+			return $query->result_array();
+		}
+
+
+
 		public function registerSelfDB($enc_password){
 			// User data array
 			$data = array(

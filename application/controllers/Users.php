@@ -9,6 +9,8 @@
 		}
 		
 
+
+
 		public function registerSelf(){
 			$data['title'] = 'Sign Up';
 			$this->form_validation->set_rules('name', 'Name', 'required');
@@ -182,9 +184,14 @@
 		public function index(){
 			$data['title'] = 'Users';
 			$data['manageUsers'] = $this->user_model->get_users();
+			$data['viewBookingsUsers'] = $this->user_model->get_bookings();
 			$this->load->view('templates/header');
 			$this->load->view('pages/manageUsers', $data);
 			$this->load->view('templates/footer');
+
+		
+
+
 		}
 
 

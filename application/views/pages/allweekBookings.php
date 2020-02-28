@@ -37,10 +37,10 @@
       plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid' ],
 		
       defaultView: 'resourceTimeGridWeek',
-	  // datesAboveResources: true,
+	   datesAboveResources: true,
    	firstDay: 1,
 		 allDaySlot: false,
-	  aspectRatio: 2.6,
+	  aspectRatio: 2,
 	 minTime: '08:00:00',
 			maxTime: '22:00:00',
       editable: true,
@@ -172,16 +172,22 @@
       header: {
         left: 'today prev,next',
         center: 'title',
-		right: 'resourceTimelineDay,resourceTimelineWeek, timelineWeek,resourceTimelineMonth'
+		right: 'resourceTimelineDay,resourceTimelineWeek, timelineWeek,resourceTimelineMonth, resourceTimelineFourDays '
       },
       defaultView: 'resourceTimelineWeek',
 	  minTime: '08:00:00',
 	maxTime: '22:00:00',
       views: {
+				resourceTimelineFourDays: {
+					slotDuration: '02:00:00',
+      type: 'resourceTimeline',
+      duration: { days: 2 }
+    },
 		resourceTimelineWeek: {
                 type: 'timelineWeek',
-                slotDuration: '02:00:00'
+                slotDuration: '01:00:00'
             },
+						
       },
       resourceAreaWidth: '10%',
       resourceColumns: [
@@ -261,61 +267,39 @@
         <table class="table-borderless table-users mt-3">
             <thead class="bg-grey border-bottom ">
                 <tr>
-					<th class="pl-3 py-2 txt-strong text-darkblue" scope="col" colspan="2">Esmaspäev</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col" colspan="2">Teisipäev</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col" colspan="2">Kolmapäev</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col" colspan="2">Neljapäev</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col" colspan="2">Reede</th>
+					<th class="pl-3 py-2 txt-strong text-darkblue" scope="col" >Klubi nimetus</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col" >Trenn</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col" >Kommentaar</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col" >Nimi</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col" >Telefon</th>
 				
 				
-                    <th class="py-2 txt-strong text-darkblue" scope="col" colspan="2">Laupäev</th>
-                    <th class="py-2 txt-strong text-darkblue" scope="col" colspan="2">Pühapäev</th>
+                    <th class="py-2 txt-strong text-darkblue" scope="col" >Email</th>
+                  
 				
 				
                 </tr>
             </thead>
             <tbody class="">
-			<?php foreach($manageUsers as $singleUser) : 
-				if(date("W", strtotime($singleUser['startTime']))==date("W", strtotime(date('Y-m-d H:i:s')))){
-					echo $singleUser['roomName'];echo date('d.m.Y', strtotime($singleUser['startTime'])); echo date("w", strtotime($singleUser['startTime']));?>
-                <tr>
-                    <td class="pl-3 p-1 text-darkblue border-bottom-light"><?php if(idate('w', strtotime($singleUser['startTime']))==1){ echo date('H:i', strtotime($singleUser['startTime'])); echo "-". date('H:i', strtotime($singleUser['endTime']));?></td>
-					<td class="p-1 text-darkblue border-bottom-light"><?php  echo $singleUser['public_info'].", ".$singleUser['workout'];}?></td>
-					
-		
-				
-					<td class="p-1 text-darkblue border-bottom-light"><?php if(idate('w', strtotime($singleUser['startTime']))==3){ echo date('H:i', strtotime($singleUser['startTime'])); }?></td>
-					<td class="p-1 text-darkblue border-bottom-light"><?php if(idate('w', strtotime($singleUser['startTime']))==4){ echo date('H:i', strtotime($singleUser['endTime']));} ?></td>
-
-					<!-- https://stackoverflow.com/questions/365191/how-to-get-time-difference-in-minutes-in-php -->
-				
-					<td class="p-1 text-darkblue border-bottom-light"><?php if(idate('w', strtotime($singleUser['startTime']))==5){ echo $singleUser['public_info']; }?></td>
-					<td class="p-1 text-darkblue border-bottom-light"><?php if(idate('w', strtotime($singleUser['startTime']))==6){ echo $singleUser['workout'];} ?></td>
-					<td class="p-1 text-darkblue border-bottom-light"><?php if(idate('w', strtotime($singleUser['startTime']))==0){ echo $singleUser['comment'];} ?></td>
-
-
-
-
-
-					<td class="pl-3 p-1 text-darkblue border-bottom-light"><?php echo $singleUser['roomName']; ?></td>
-                    <td class="p-1 text-darkblue border-bottom-light"><?php echo $weekdays[idate('w', strtotime($singleUser['startTime']))]; ?></td>
-                    <td class="p-1 text-darkblue border-bottom-light"><?php echo date('d.m.Y', strtotime($singleUser['startTime'])); ?></td>
-					<td class="p-1 text-darkblue border-bottom-light"><?php echo date('H:i', strtotime($singleUser['startTime'])); ?></td>
-					<td class="p-1 text-darkblue border-bottom-light"><?php echo date('H:i', strtotime($singleUser['endTime'])); ?></td>
-
-					<!-- https://stackoverflow.com/questions/365191/how-to-get-time-difference-in-minutes-in-php -->
-					<td class="p-1 text-darkblue border-bottom-light"><?php echo  round(abs( strtotime($singleUser['endTime']) -  strtotime($singleUser['startTime'])) / 60,2);  ?></td>
-					<td class="p-1 text-darkblue border-bottom-light"><?php if( $singleUser['approved']==1){ echo "&#10003;";} else {echo "";} ?></td>
-					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['public_info']; ?></td>
+			<?php foreach($manageUsers as $singleUser) {  
+				if($singleUser['typeID']==4){
+				continue;
+			}
+			?>
+			
+         <tr>             
+					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['public_info'];?></td>
+			
 					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['workout']; ?></td>
 					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['comment']; ?></td>
 					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['c_name']; ?></td>
 					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['c_phone']; ?></td>
-                    <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['c_email']; ?> &nbsp; &nbsp;</td>
-					<td class="p-1 text-darkblue border-bottom-light"><?php if( $singleUser['takes_place']==1){ echo "";} else {echo "&#10003;";} ?></td>
+          <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['c_email']; ?> &nbsp; &nbsp;</td>
+				 </tr>  
 				                   
-                </tr>                
-            <?php }; endforeach; ?>
+		    
+			<?php }?>          
+           
 		</tbody>
         </table>
     </div>
