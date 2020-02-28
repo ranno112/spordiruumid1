@@ -1,4 +1,5 @@
-
+<a href="<?php echo base_url(); ?>/allbookings/">Nimekiri </a>
+	<a href="<?php echo base_url(); ?>/allbookings/weekview">Kalender</a>
  <head>  
   
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
@@ -71,7 +72,18 @@
  <script type="text/javascript" language="javascript" >  
  $(document).ready(function(){  
       var dataTable = $('#user_data').DataTable({  
-		
+		"lengthMenu": [[10, 25, 50, 100, 200, 500], [10, 25, 50, 100, 200, 500]],
+		"language": {
+    "search": "Otsi:",
+    "info":           "Kuvatakse _START_ kuni _END_ rida _TOTAL_ reast",
+    "lengthMenu":     "Kuva  _MENU_  kirjet lehel",
+    "paginate": {
+        "first":      "Esimene",
+        "last":       "Viimane",
+        "next":       "Järgmine",
+        "previous":   "Eelmine"
+    },
+  },
            "processing":true,  
            "serverSide":true,  
 		 "compact":true,
@@ -97,8 +109,19 @@
 function fetch_data(is_date_search, start_date='', end_date='')
  {
   var dataTable = $('#user_data').DataTable({
+	"lengthMenu": [[10, 25, 50, 100, 200, 500], [10, 25, 50, 100, 200, 500]],
    "processing" : true,
-  
+   "language": {
+    "search": "Otsi:",
+    "info":           "Kuvatakse _START_ kuni _END_ rida _TOTAL_ reast",
+    "lengthMenu":     "Kuva  _MENU_  kirjet lehel",
+    "paginate": {
+        "first":      "Esimene",
+        "last":       "Viimane",
+        "next":       "Järgmine",
+        "previous":   "Eelmine"
+    },
+  },
    "serverSide" : true,
    "order" : [],
    "ajax" : {
