@@ -74,7 +74,6 @@
 		
            "processing":true,  
            "serverSide":true,  
-		
 		 "compact":true,
            "order":[],  
            "ajax":{  
@@ -99,7 +98,7 @@ function fetch_data(is_date_search, start_date='', end_date='')
  {
   var dataTable = $('#user_data').DataTable({
    "processing" : true,
-   "compact":true,
+  
    "serverSide" : true,
    "order" : [],
    "ajax" : {
@@ -134,5 +133,7 @@ $('#search').click(function(){
    alert("Both Date is Required");
   }
  }); 
+
+ 
  });  
  </script>  
