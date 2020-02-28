@@ -9,19 +9,38 @@
 		}
 		
 		function fetch_allbookings(){  
+			$weekdays=array('Pühapäev','Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev');
 			$this->load->model("allbookings_model");  
 			$fetch_data = $this->allbookings_model->make_datatables();  
-			$data = array();  
+			$data = array(); 
+			$ApprovedData=""; 
+			$TakesPlacesData=""; 
 			foreach($fetch_data as $row)  
 			{  
+				if( $row->approved==1){ $ApprovedData= "&#10003;";} else {$ApprovedData= "";}; 
+				if( $row->takes_place==1){ $TakesPlacesData= "";} else {$TakesPlacesData= "&#10003;";}
+				 $savedDate = date('d.m.Y', strtotime($row->startTime));  
+				 
 				 $sub_array = array();  
-				 $sub_array[] = '<a href="'.base_url().'fullcalendar?roomId='.$row->roomID.'">'.$row->roomID.'</a>';  
-				 $sub_array[] = $row->startTime;  
-				 $sub_array[] = $row->endTime;  
+				 $sub_array[] = date('d.m.Y H:i', strtotime($row->created_at));  
+				 $sub_array[] = $row->roomName;  
+				 $sub_array[] = $weekdays[idate('w', strtotime($row->startTime))];  
+				 $sub_array[] = '<a href="'.base_url().'fullcalendar?roomId='.$row->roomID.'&date='.$savedDate.'">'.date('d.m.Y', strtotime($row->startTime)).'</a>';  
+				 $sub_array[] = date('H:i', strtotime($row->startTime));  
+				 $sub_array[] =  date('H:i', strtotime($row->endTime)); 
+				 $sub_array[] = round(abs( strtotime($row->endTime) -  strtotime($row->startTime)) / 60,2);
+				 $sub_array[] = $ApprovedData;   
 				 $sub_array[] = $row->public_info;  
 				 $sub_array[] = $row->workout;  
-				 $sub_array[] = '<button type="button" name="update" id="'.$row->timeID.'" class="btn btn-warning btn-xs">Update</button>';  
-				 $sub_array[] = '<button type="button" name="delete" id="'.$row->timeID.'" class="btn btn-danger btn-xs">Delete</button>';  
+				 $sub_array[] = $row->comment;  
+				 $sub_array[] = $row->c_name;  
+				 $sub_array[] = $row->c_phone;  
+				 $sub_array[] = $row->c_email;  
+				 $sub_array[] = $TakesPlacesData;  
+				 
+				 $sub_array[] = '<a href="'.base_url().'fullcalendar?roomId='.$row->roomID.'&date='.$savedDate.'"><button type="button" name="update" id="'.$row->timeID.'" class="btn btn-success btn-sm ">Kalendrist</button></a>';
+			
+		
 				 $data[] = $sub_array;  
 			}  
 			$output = array(  
