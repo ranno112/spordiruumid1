@@ -114,9 +114,9 @@
 
 
 		var $table = "bookingTimes";  
-		var $select_column = array("created_at","public_info","c_name","c_phone","c_email","buildingID");  
+		var $select_column = array("created_at","public_info","c_name","c_phone","c_email");  
 		//järgmisel real kirjeldan ära millste lahtritega saab sorteerida
-		var $order_column = array("created_at", "public_info", "c_name","c_phone","c_email","buildingID");   
+		var $order_column = array("created_at", "public_info", "c_name","c_phone","c_email");   
 		function make_query()  
 		{    $this->db->distinct();
 			 $this->db->select($this->select_column);  

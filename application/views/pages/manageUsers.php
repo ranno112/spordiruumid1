@@ -143,7 +143,7 @@
 					<th class="py-2 txt-strong text-darkblue" scope="col">Kontaktisik</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">Telefon</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">e-mail</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col">e-mail</th>
+			
 				              
                           </tr>  
                      </thead>  

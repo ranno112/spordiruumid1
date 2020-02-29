@@ -265,7 +265,7 @@
 				 $sub_array[] = $row->c_name;  
 				 $sub_array[] = $row->c_phone;  
 				 $sub_array[] = $row->c_email;  
-				 $sub_array[] = $row->buildingID;  
+			
 				 
 			
 		
