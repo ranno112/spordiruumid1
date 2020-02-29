@@ -5,7 +5,9 @@
                 <p class="m-0 txt-lg txt-strong text-center cursor-pointer">Lisa uus</p>
             </a>
         </div>
-
+	<h4	>	Asutuse kasutajad</h4>
+		<?php if( $this->session->userdata('roleID')==='1'){?>
+		
         <table class="table-borderless table-users mt-3">
             <thead class="bg-grey border-bottom ">
                 <tr>
@@ -39,67 +41,56 @@
                     </td>
                 </tr>                
             <?php endforeach; ?>
-</tbody>
-<?php // print_r($viewBookingsUsers); ?> 
+		</tbody>
+
 		</table>
 		
+		<?php ;} ?>
 
-
-		<table class="table-borderless table-users mt-3">
+		<?php if( $this->session->userdata('roleID')==='2'){?>
+        <table class="table-borderless table-users mt-3">
             <thead class="bg-grey border-bottom ">
                 <tr>
-					<th class="pl-3 py-2 txt-strong text-darkblue" scope="col" >Klubi nimetus</th>
-					<!-- <th class="py-2 txt-strong text-darkblue" scope="col" >Trenn</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col" >Kommentaar</th> -->
-					<th class="py-2 txt-strong text-darkblue" scope="col" >Nimi</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col" >Telefon</th>
-				
-				
-                    <th class="py-2 txt-strong text-darkblue" scope="col" >Email</th>
-                  
-				
-				
+                    <th class="pl-3 py-2 txt-strong text-darkblue" scope="col">Nimi</th>
+                    <th class="py-2 txt-strong text-darkblue" scope="col">Email</th>
+                    <th class="py-2 txt-strong text-darkblue" scope="col">Telefon</th>
+                    <th class="py-2 txt-strong text-darkblue" scope="col">Asutus</th>
+                    <th class="py-2 txt-strong text-darkblue" scope="col">Roll</th>
+                    <th class="py-2 txt-strong text-darkblue" scope="col">Staatus</th>
+                    <th class="py-2 txt-strong text-darkblue" scope="col"></th>
                 </tr>
             </thead>
             <tbody class="">
-			<?php foreach($viewBookingsUsers as $singleUser) {  
-				if($singleUser['typeID']==4){
-				continue;
-			}
-			?>
-			
-         <tr>             
-					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['public_info'];?></td>
-			
-					<!-- <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['workout']; ?></td>
-					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['comment']; ?></td> -->
-					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['c_name']; ?></td>
-					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['c_phone']; ?></td>
-          <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['c_email']; ?> &nbsp; &nbsp;</td>
-				 </tr>  
-				                   
-		    
-			<?php }?>          
-           
+			<?php foreach($manageUsers as $singleUser) : 
+				if($singleUser['buildingID']==$this->session->userdata('building')){?>
+                <tr>
+                    <td class="pl-3 p-1 text-darkblue border-bottom-light"><?php echo $singleUser['userName']; ?></td>
+                    <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['email']; ?></td>
+                    <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['userPhone']; ?></td>
+                    <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['name']; ?></td>
+                    <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['role']; ?> &nbsp; &nbsp;</td>
+                    <td class="p-1 text-darkblue border-bottom-light"><?php if( $singleUser['status']==1){ echo "Aktiivne";} else {echo "Mitteakviivne";} ?></td>
+                    <td class="d-flex justify-content-end p-1 pr-3">
+                        <form class="cat-delete" action="users/edit/<?php echo $singleUser['userID']; ?>" method="POST">
+                            <button type="submit" class="btn btn-second btn-width text-white text-center py-1 px-2 txt-strong ">Muuda</button>
+                        </form>
+                        <?php if($this->session->userdata('roleID')==='1'):?>
+                        <form class="cat-delete pl-1" action="users/delete/<?php echo $singleUser['userID']; ?>" method="POST">
+                            <button type="submit" class="btn btn-delete btn-width text-white text-center py-1 px-2 txt-strong ">Kustuta</button>
+                        </form>
+                        <?php endif;?>
+                    </td>
+                </tr>                
+            <?php ;}  endforeach; ?>
 		</tbody>
-        </table>
+
+		</table>
+		
+		<?php ;} ?>
 
 
 
 
-
-
-    </div>
-</div>
-
-
-
-
-
-
-
-<a href="<?php echo base_url(); ?>/allbookings/">Nimekiri </a>
-	<a href="<?php echo base_url(); ?>/allbookings/weekview">Kalender</a>
  <head>  
   
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
@@ -114,7 +105,9 @@
  <body> 
  
       <div class="container box">  
-	   
+	  <br>  <br>
+
+<h4	>Broneeringute kontaktid</h4>
 	 
 <br>
 
@@ -138,7 +131,7 @@
     
 	
                 <br />  
-                <table id="user_data" class="table  compact table-striped">  
+                <table id="user_data" class="table table-striped">  
 				 
                      <thead>  
                           <tr>  
@@ -159,6 +152,13 @@
       </div>  
  </body>  
 
+
+
+ </div>
+</div>
+
+
+
  <script type="text/javascript" language="javascript" >  
  $(document).ready(function(){  
       var dataTable = $('#user_data').DataTable({  
@@ -177,7 +177,7 @@
   },
            "processing":true,  
            "serverSide":true,  
-		 "compact":true,
+		
            "order":[],  
            "ajax":{  
                 url:"<?php echo base_url() . 'users/fetch_allbookingsInfo'; ?>",  
