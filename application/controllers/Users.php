@@ -245,4 +245,54 @@
 		
 
 
+
+
+
+		function fetch_allbookingsInfo(){  
+		
+			$this->load->model("user_model");  
+			$fetch_data = $this->user_model->make_datatables();  
+			$data = array(); 
+		
+			foreach($fetch_data as $row)  
+			{  
+			
+				 $sub_array = array();  
+				 $sub_array[] = date('d.m.Y H:i', strtotime($row->created_at));  
+			
+				 $sub_array[] = $row->public_info;  
+		
+				 $sub_array[] = $row->c_name;  
+				 $sub_array[] = $row->c_phone;  
+				 $sub_array[] = $row->c_email;  
+				 $sub_array[] = $row->buildingID;  
+				 
+			
+		
+				 $data[] = $sub_array;  
+			}  
+			$output = array(  
+				 "draw"                    =>     intval($_POST["draw"]),  
+				 "recordsTotal"          =>      $this->user_model->get_all_data(),  
+				 "recordsFiltered"     =>     $this->user_model->get_filtered_data(),  
+				 "data"                    =>     $data  
+			);  
+			echo json_encode($output);  
+	   }  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	}

@@ -120,6 +120,93 @@
 
 
 
+		var $table = "bookingTimes";  
+		var $select_column = array("created_at","public_info","c_name","c_phone","c_email","buildingID");  
+		//järgmisel real kirjeldan ära millste lahtritega saab sorteerida
+		var $order_column = array("created_at", "public_info", "c_name","c_phone","c_email","buildingID");   
+		function make_query()  
+		{    $this->db->distinct();
+			 $this->db->select($this->select_column);  
+			 $this->db->join('bookings', 'bookingTimes.bookingID = bookings.id' , 'left');
+			 $this->db->join('rooms', 'bookingTimes.roomID = rooms.id' , 'left');
+			 $this->db->join('buildings', 'rooms.buildingID = buildings.id' , 'left');
+			 $this->db->where('buildingID',  $this->session->userdata('building'));
+			 $this->db->where_not_in('public_info', "Suletud");
+
+			 $this->db->from($this->table);
+	//		 print_r( $this->db->get("bookingTimes"));
+		
+			
+			 if(isset($_POST["search"]["value"]))  
+			 {  
+				 
+				 $this->db->group_start();
+				 $this->db->like("startTime", $_POST["search"]["value"]);  
+				  $this->db->or_like("LOWER(roomName)", $_POST["search"]["value"]);  
+				  $this->db->or_like("LOWER(workout)", $_POST["search"]["value"]);  
+				  $this->db->or_like("created_at", $_POST["search"]["value"]);  
+				  $this->db->or_like("LOWER(public_info)", $_POST["search"]["value"]);  
+				  $this->db->or_like("LOWER(comment)", $_POST["search"]["value"]);  
+				  $this->db->or_like("LOWER(c_name)", $_POST["search"]["value"]);  
+				  $this->db->or_like("LOWER(c_phone)", $_POST["search"]["value"]);  
+				  $this->db->or_like("LOWER(c_email)", $_POST["search"]["value"]);  
+				  $this->db->group_end();
+				//  $this->db->order_by('startTime', 'ASC');  
+				
+			 }  
+			
+			 
+			 if(isset($_POST["order"]))  
+			 {  
+				  $this->db->order_by($this->order_column[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);  
+			 }  
+			 else  
+			 {  
+				
+				  $this->db->order_by('public_info', 'ASC');  }
+				  
+		
+		
+			
+		}  
+		function make_datatables(){  
+			 $this->make_query();  
+			 
+			 if($_POST["length"] != -1)  
+			 {  
+				  $this->db->limit($_POST['length'], $_POST['start']);  
+			 }  
+			 
+			 $query = $this->db->get();  
+			 return $query->result();  
+		}  
+		function get_filtered_data(){  
+			
+			 $this->make_query(); 
+			  
+			 $query = $this->db->get();  
+			 return $query->num_rows();  
+		}       
+		function get_all_data()  
+		{  
+			$this->db->distinct();
+		
+			 $this->db->from($this->table); 
+			
+			 return $this->db->count_all_results();  
+		}  
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	}
