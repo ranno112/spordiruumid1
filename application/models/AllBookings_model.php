@@ -91,7 +91,7 @@
 			 {  
 				if(isset($_POST["orderBy"]))  
 				{  
-				   $this->db->order_by('timeID', 'ASC');    
+				   $this->db->order_by('timeID', 'DESC');    
 				} 
 				else{
 				  $this->db->order_by('startTime', 'ASC');  }
@@ -131,6 +131,22 @@
 			
 			 return $this->db->count_all_results();  
 		}  
+
+	
+		function getUnapprovedBookings($buildingID , $roomID)
+		{
+			$this->db->select("roomID, approved, startTime, id, buildingID");
+			$this->db->where('DATE(startTime) >=', date('Y-m-d'));
+			$this->db->join('rooms', 'bookingTimes.roomID = '. $roomID , 'left');
+			$this->db->where('rooms.buildingID', $buildingID);
+			$this->db->where('rooms.id',$roomID );
+			$this->db->where('approved !=', 1);
+			$query = $this->db->count_all_results('bookingTimes');
+			
+	
+			return $query;
+		}
+
 
 
 	}

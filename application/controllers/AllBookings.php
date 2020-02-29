@@ -38,7 +38,7 @@
 				 $sub_array[] = $row->c_email;  
 				 $sub_array[] = $TakesPlacesData;  
 				 
-				 $sub_array[] = '<a href="'.base_url().'fullcalendar?roomId='.$row->roomID.'&date='.$savedDate.'"><button type="button" name="update" id="'.$row->timeID.'" class="btn btn-success btn-sm ">Kalendrist</button></a>';
+				 $sub_array[] = '<a href="'.base_url().'fullcalendar?roomId='.$row->roomID.'&date='.$savedDate.'"><button type="button" name="update" id="'.$row->timeID.'" class="btn btn-info info btn-sm ">Kalendrist</button></a>';
 			
 		
 				 $data[] = $sub_array;  
@@ -56,9 +56,15 @@
 		public function index(){
 			$data['weekdays']=array('Pühapäev','Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev');
 			$data['manageUsers'] = $this->allbookings_model->get_bookings();
-			$this->load->view('templates/header');
+			if(null!==$this->session->userdata('building')){
+				$data['unapprovedBookings'] = $this->allbookings_model->getUnapprovedBookings($this->session->userdata('building'), $this->session->userdata('room'));
+				
+				}
+			$this->load->view('templates/header', $data);
 			$this->load->view('pages/allbookings', $data);
 			$this->load->view('templates/footer');
+
+		
 		}
 
 		public function weekView(){

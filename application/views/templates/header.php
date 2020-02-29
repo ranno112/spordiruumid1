@@ -36,7 +36,8 @@
     <header>
         <nav class="navbar navbar-expand-md p-0 nav-bg">
             <div class="container p-0">
-      
+   
+
                 <div class="navbar-header pr-lg-5 pr-md-3 pr-sm-1 pl-0">
                 <a class="navbar-brand mr-1 py-1" href="<?php echo base_url(); ?>"><img class="logo" src="<?php echo base_url(); ?>assets/img/plv_vapp_blue.svg" alt="logo"></a>
                     <a class="navbar-brand align-middle p-0 text-white" href="<?php echo base_url(); ?>">Pärnu Linnavalitsus</a>
@@ -52,7 +53,7 @@
                     <?php if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'):?>
                         <!-- <li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="#"><strong>Kõik ruumid</strong></a></li> -->
 												<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $this->session->userdata('room');?>"><strong>Kalender</strong> </a></li>
-												<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>allbookings/"><strong>Broneeringud</strong> <span class="badge badge-danger">5</span></a></li>
+												<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>allbookings/"><strong>Broneeringud</strong> 	<?php if(isset($unapprovedBookings)){echo '<span class="badge badge-danger">'.$unapprovedBookings.'</span>';}; ?></a></li>
                         <?php endif; ?>
                         <?php if($this->session->userdata('roleID')==='1'):?>
                         <li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>building/view/<?php  print_r($this->session->userdata['building']);  ?>">Asutused</a></li>
@@ -83,6 +84,8 @@
         </nav>
   
     </header>
+
+
 <!-- Navigation -->
 <script>
  $(document).ready(function() {

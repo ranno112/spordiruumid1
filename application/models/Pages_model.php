@@ -4,9 +4,6 @@
 class Pages_model extends CI_Model
 {
 
-
-  
-
     function fetch_city($country_id)
     {
         $this->db->where('regionID', $country_id);
@@ -58,6 +55,10 @@ class Pages_model extends CI_Model
             $output .= '<option  data-value="' . $row->id . '" value="' . $row->roomName . '">'.$row->roomName.'</option>';
         }
         return $output;
-    }
+	}
+
+
+
+
 }
 

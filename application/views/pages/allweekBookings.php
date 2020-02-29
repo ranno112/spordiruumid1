@@ -258,51 +258,6 @@
 
 
 
-
-    <div class="table-container mt-3">
-       
-		
-		Kõik Nädalavaade
-		<?php // print_r($manageUsers);?>
-        <table class="table-borderless table-users mt-3">
-            <thead class="bg-grey border-bottom ">
-                <tr>
-					<th class="pl-3 py-2 txt-strong text-darkblue" scope="col" >Klubi nimetus</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col" >Trenn</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col" >Kommentaar</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col" >Nimi</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col" >Telefon</th>
-				
-				
-                    <th class="py-2 txt-strong text-darkblue" scope="col" >Email</th>
-                  
-				
-				
-                </tr>
-            </thead>
-            <tbody class="">
-			<?php foreach($manageUsers as $singleUser) {  
-				if($singleUser['typeID']==4){
-				continue;
-			}
-			?>
-			
-         <tr>             
-					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['public_info'];?></td>
-			
-					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['workout']; ?></td>
-					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['comment']; ?></td>
-					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['c_name']; ?></td>
-					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['c_phone']; ?></td>
-          <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['c_email']; ?> &nbsp; &nbsp;</td>
-				 </tr>  
-				                   
-		    
-			<?php }?>          
-           
-		</tbody>
-        </table>
-    </div>
 </div>
 
 
