@@ -172,8 +172,7 @@
         "last":       "Viimane",
         "next":       "Järgmine",
         "previous":   "Eelmine",
-    },
-	"infoFiltered":   ""
+    }
   },
            "processing":true,  
            "serverSide":true,  
@@ -207,8 +206,7 @@ function fetch_data(is_date_search, start_date='', end_date='')
         "last":       "Viimane",
         "next":       "Järgmine",
         "previous":   "Eelmine"
-    },
-	"infoFiltered":   ""
+    }
   },
    "serverSide" : true,
    "order" : [],
@@ -239,6 +237,8 @@ $('#search').click(function(){
    alert("Both Date is Required");
   }
  }); 
+
+
 
  
  });  

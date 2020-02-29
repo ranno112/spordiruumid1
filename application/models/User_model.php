@@ -182,11 +182,18 @@
 		}       
 		function get_all_data()  
 		{  
-			$this->db->distinct();
 		
-			 $this->db->from($this->table); 
-			
-			 return $this->db->count_all_results();  
+
+			 $this->make_query(); 
+			 $this->db->distinct();
+			 if(isset($_POST["is_date_search"])){
+			 
+				 $this->db->where('DATE(startTime) >=', date('Y-m-d H:i:s',strtotime($_POST["start_date"])));
+				 $this->db->where('DATE(startTime) <=', date('Y-m-d H:i:s',strtotime($_POST["end_date"])));
+			 
+			  }
+			 
+			  return $this->db->count_all_results();  
 		}  
 
 

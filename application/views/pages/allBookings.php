@@ -150,6 +150,8 @@ $('#search').click(function(){
   {
    $('#user_data').DataTable().destroy();
    fetch_data('yes', start_date, end_date);
+   console.log("help"+ dataTable.columns(':visible').count());
+ console.log(dataTable.columns(0).count());
   }
   else
   {
@@ -157,6 +159,6 @@ $('#search').click(function(){
   }
  }); 
 
- 
- });  
- </script>  
+
+
+} ); </script>  

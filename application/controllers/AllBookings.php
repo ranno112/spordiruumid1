@@ -15,8 +15,10 @@
 			$data = array(); 
 			$ApprovedData=""; 
 			$TakesPlacesData=""; 
+			$phoneIsNotZero=""; 
 			foreach($fetch_data as $row)  
 			{  
+				if ($row->c_phone!=0) { $phoneIsNotZero=$row->c_phone; }
 				if( $row->approved==1){ $ApprovedData= "&#10003;";} else {$ApprovedData= "";}; 
 				if( $row->takes_place==1){ $TakesPlacesData= "";} else {$TakesPlacesData= "&#10003;";}
 				 $savedDate = date('d.m.Y', strtotime($row->startTime));  
@@ -34,7 +36,7 @@
 				 $sub_array[] = $row->workout;  
 				 $sub_array[] = $row->comment;  
 				 $sub_array[] = $row->c_name;  
-				 $sub_array[] = $row->c_phone;  
+				 $sub_array[] = $phoneIsNotZero;  
 				 $sub_array[] = $row->c_email;  
 				 $sub_array[] = $TakesPlacesData;  
 				 

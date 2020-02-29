@@ -253,17 +253,17 @@
 			$this->load->model("user_model");  
 			$fetch_data = $this->user_model->make_datatables();  
 			$data = array(); 
-		
+			$phoneIsNotZero=""; 
 			foreach($fetch_data as $row)  
 			{  
-			
+				if ($row->c_phone!=0) { $phoneIsNotZero=$row->c_phone; }
 				 $sub_array = array();  
 				 $sub_array[] = date('d.m.Y H:i', strtotime($row->created_at));  
 			
 				 $sub_array[] = $row->public_info;  
 		
 				 $sub_array[] = $row->c_name;  
-				 $sub_array[] = $row->c_phone;  
+				 $sub_array[] = $phoneIsNotZero;  
 				 $sub_array[] = $row->c_email;  
 			
 				 
