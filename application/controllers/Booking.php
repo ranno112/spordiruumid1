@@ -258,7 +258,7 @@ class Booking extends CI_Controller {
 					//$this->load->view('booking/success');
 					//echo('Nüüd tuleb redirect');
 					$this->session->set_flashdata('post_updated', 'Andmed salvestatud');
-						redirect('fullcalendar?roomId='.$this->input->post('sportrooms'));
+						redirect('fullcalendar?roomId='.$this->input->post('sportrooms').'&date='.$this ->input->post('startingFrom'));
 		
 
 
@@ -391,7 +391,7 @@ class Booking extends CI_Controller {
 		}	}
 			
 		$this->booking_model->create_bookingTimes($insert_data2);
-		redirect('fullcalendar?roomId='.$this->input->post('sportrooms'));
+		redirect('fullcalendar?roomId='.$this->input->post('sportrooms').'&date='.$this->input->post('workoutDate')[0]);
 
 		if($this->form_validation->run()===FALSE){
 	
