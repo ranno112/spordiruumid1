@@ -200,7 +200,8 @@ class Booking extends CI_Controller {
 			
 		
 			// var_dump(date("H:i", strtotime($this->input->post('timesStart')[1])));
-			
+			$dateToRedirect='';
+			$counter=0;
 			$takesPlace= $this ->input->post('approveNow')==1 ? 1 : 0;
 			for($t = 0; $t <= count($this->input->post('timesStart')); $t++)
 				{
@@ -210,11 +211,12 @@ class Booking extends CI_Controller {
 			
 		
 				foreach($days as $key => $value){
-
+		
 			if ($weekday[$t]==$key){
 				//var_dump($this->input->post('Ending'));
 			for($i = strtotime($value, $startDate); $i <= $endDate; $i = strtotime('+1 week', $i))
-				{  echo $i;
+				{  
+					
 					$dateToDb=date('Y-m-d', $i);
 					
 				//	var_dump(date('Y-m-d H:i:s', strtotime("$dateToDb $formated_timeToDb")));
@@ -222,7 +224,7 @@ class Booking extends CI_Controller {
 					$start_data = date('Y-m-d H:i:s', strtotime("$dateToDb $formated_timeToDb"));
 					$end_data = date('Y-m-d H:i:s', strtotime("$dateToDb $formated_EndtimeToDb"));
 				
-					
+				
 					//Kuni kuni aeg on minevikus, siis näita veateadet ning tee redirect
 					if(strtotime("$dateToDb $formated_timeToDb")>strtotime("$dateToDb $formated_EndtimeToDb")){
 							
@@ -238,7 +240,8 @@ class Booking extends CI_Controller {
 						}
 						else
 						{
-
+							$$counter++;
+							if($$counter==1){$dateToRedirect= $start_data;}
 					$insert_data2[] = array(
 						'roomID' => $this->input->post('sportrooms'),
 						'startTime' => $start_data,
@@ -258,7 +261,7 @@ class Booking extends CI_Controller {
 					//$this->load->view('booking/success');
 					//echo('Nüüd tuleb redirect');
 					$this->session->set_flashdata('post_updated', 'Andmed salvestatud');
-						redirect('fullcalendar?roomId='.$this->input->post('sportrooms').'&date='.$this ->input->post('startingFrom'));
+						redirect('fullcalendar?roomId='.$this->input->post('sportrooms').'&date='. date('d.m.Y', strtotime($dateToRedirect)));
 		
 
 
