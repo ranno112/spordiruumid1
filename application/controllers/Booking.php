@@ -16,80 +16,16 @@ class Booking extends CI_Controller {
 	{	
 		
 		if($this->session->userdata('session_id')===TRUE){
-		$data['title']='Tee uus broneering';
-		$data['selectedRoom'] = $this->booking_model->getTheRoom($slug);
+	
+	
 		$data['rooms'] = $this->booking_model->getAllRooms();
 		$data['buildings'] = $this->booking_model->getAllBuildings();
 		$data['allBookingInfo'] = $this->booking_model->getAllBookings();
 	
+		$this->load->view('templates/header');
+		$this->load->view('pages/booking', $data);//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
+		$this->load->view('templates/footer');
 
-		$data1 = array(
-			'public_info'=>$this->input->post('clubname'),
-			//'slug'=>$slug,
-			'c_name' => $this ->input->post('contactPerson'),
-			'c_phone' => $this ->input->post('phone'),
-			'c_email' => $this ->input->post('email'),
-			'comment' => $this ->input->post('comment2'),
-		//	'comment_inner' => $this ->input->post('additionalComment'),
-			'workout' => $this ->input->post('workoutType'),
-			'typeID' => $this ->input->post('type'),
-			
-			
-			//'organizer' => $this ->input->post('phone'),
-			//'event_it' => $this ->input->post('phone'),
-			//'event_out' => $this ->input->post('phone')
-		);
-		
-	//	$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|required');
-		$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|required');
-
-		if ($this->form_validation->run() != FALSE)
-				{
-					
-				   $id= $this->booking_model->create_booking($data1);
-
-
-				$insert_data = array();
-				$takesPlace= $this ->input->post('approveNow')==1 ? 1 : 0;
-				$start_data = $this->input->post('timeTo');
-				$end_data = $this->input->post('timesStart');
-
-				
-
-				for($i = 0; $i <= count($start_data); $i++)
-				{
-
-				if(isset($start_data[$i])){
-				$insert_data[] = array(
-				'roomID' => $this->input->post('sportrooms'),
-				'startTime'=>isset($start_data[$i]) ? $start_data[$i] : '',
-				'endTime'=>isset($end_data[$i]) ? $end_data[$i] : '',
-				'approved' => $takesPlace,
-				'bookingID' => $id
-				);}
-			
-				}
-				var_dump($insert_data);
-					$this->booking_model->create_bookingTimes($insert_data);
-					
-				//	$this->load->view('booking/success');
-				//	redirect('fullcalendar?roomId='.$this->input->post('sportrooms'));
-		}
-
-
-
-		if($this->form_validation->run()===FALSE){
-			
-					$this->load->view('templates/header');
-					$this->load->view('pages/booking', $data);//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
-					$this->load->view('templates/footer');
-
-
-		}
-		// else{
-		// 	$this->booking_model->create_booking();
-		// 	$this->load->view('fullcalendar?roomId=1');//redirectib sinna peale väljade korrektselt sisestamist
-		// }
 
 		}else{redirect('');}
 	}
@@ -189,6 +125,7 @@ class Booking extends CI_Controller {
 			$id= $this->booking_model->create_booking($data1);
 					
 			$insert_data2 = array();
+			$insert_data3 = array();
 			$startDate=$this ->input->post('startingFrom');
 			$startDate = strtotime($startDate);
 			$startDateToDb = strtotime($startDate);
@@ -240,8 +177,8 @@ class Booking extends CI_Controller {
 						}
 						else
 						{
-							$$counter++;
-							if($$counter==1){$dateToRedirect= $start_data;}
+							$counter++;
+							if($counter==1){$dateToRedirect= $start_data;}
 					$insert_data2[] = array(
 						'roomID' => $this->input->post('sportrooms'),
 						'startTime' => $start_data,
@@ -257,49 +194,56 @@ class Booking extends CI_Controller {
 			if (empty($insert_data2)) {
 				$this->session->set_flashdata('access_deniedToUrl', 'Perioodi jooksul pole ühtegi kuupäeva mida salvestada');
 		   }
-			$this->booking_model->create_bookingTimes($insert_data2);
-					//$this->load->view('booking/success');
-					//echo('Nüüd tuleb redirect');
-					$this->session->set_flashdata('post_updated', 'Andmed salvestatud');
-						redirect('fullcalendar?roomId='.$this->input->post('sportrooms').'&date='. date('d.m.Y', strtotime($dateToRedirect)));
+
+		  
+
+			// $this->booking_model->create_bookingTimes($insert_data2);
+				
+			// 		$this->session->set_flashdata('post_updated', 'Andmed salvestatud');
+			// 			redirect('fullcalendar?roomId='.$this->input->post('sportrooms').'&date='. date('d.m.Y', strtotime($dateToRedirect)));
 		
 
 
-					// $insert_data = array();
-					// $start_data = $this->input->post('timeStart');
-					// $end_data = $this->input->post('timeTo');
-
-					// for($i = 1; $i <= count($start_data); $i++)
-					// {
-					// $insert_data[] = array(
-					// 'roomID' => $this->input->post('sportrooms2'),
-					// 'startTime' => $start_data[$i], 
-					// 'endTime' => $end_data[$i],
-					// //'bookingID' => $id
-					// );
-					// }
-
+		
+					$allEventsForConflictCheck=$this->booking_model->get_conflictsDates($this->session->userdata('building'));
+				//	print_r($allEventsForConflictCheck);
 				
 				
-		
+					foreach($allEventsForConflictCheck as $key => $value){
+						$property1 = 'startTime'; 
+						$property2 = 'endTime'; 
+						$property3 = 'public_info'; 
+						foreach($insert_data2 as $key2 => $value2){
+						//	print_r($value2);
+							
+							if($value->$property1<$value2['endTime'] && $value->$property2>$value2['startTime']){
+								$insert_data3[] = array(
+								
+									'startTime' => $value->$property1,
+									'endTime' =>  $value->$property2,
+									'public_info' => $value->$property3
+									);
 
-		
+							break;
+							}
+						
+							//$value['startTime'],$value['endTime']
+						
+						}
 
-			if($this->form_validation->run()===FALSE){
+					}
+					print_r($insert_data3);
+
+
 			
-						print_r($data);
+						$data['conflictDates']=$insert_data2;
 						$this->load->view('templates/header');
-						$this->load->view('pages/booking');//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
+						$this->load->view('pages/booking',  $data);
 						$this->load->view('templates/footer');
 
-
-			}else{
-				//$this->booking_model->create_booking();
-				'fullcalendar?roomId='.$this->input->post('sportrooms');//redirectib sinna peale väljade korrektselt sisestamist
-			//	var_dump($data1);
-		//	echo('Nüüd tuleb redirect');
-
-			}
+		
+				
+			
 			}
 
 		} 

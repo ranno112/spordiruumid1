@@ -7,8 +7,10 @@
  endif; ?>
 
 <?php $stack = array(); foreach ($allBookingInfo as $each) { 
-    array_push($stack, $each['public_info'] );
- };?>
+    array_push($stack, $each['c_name'] );
+ };
+// print_r($allBookingInfo); 
+print_r($_POST);?>
     		
 <div class="modal" id="myModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
