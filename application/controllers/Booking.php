@@ -195,55 +195,53 @@ class Booking extends CI_Controller {
 				$this->session->set_flashdata('access_deniedToUrl', 'Perioodi jooksul pole ühtegi kuupäeva mida salvestada');
 		   }
 
-		  
 
-			// $this->booking_model->create_bookingTimes($insert_data2);
-				
-			// 		$this->session->set_flashdata('post_updated', 'Andmed salvestatud');
-			// 			redirect('fullcalendar?roomId='.$this->input->post('sportrooms').'&date='. date('d.m.Y', strtotime($dateToRedirect)));
-		
-
-
-		
-					$allEventsForConflictCheck=$this->booking_model->get_conflictsDates($this->session->userdata('building'));
-				//	print_r($allEventsForConflictCheck);
-				
-				
-					foreach($allEventsForConflictCheck as $key => $value){
-						$property1 = 'startTime'; 
-						$property2 = 'endTime'; 
-						$property3 = 'public_info'; 
-						foreach($insert_data2 as $key2 => $value2){
-						//	print_r($value2);
+		   $allEventsForConflictCheck=$this->booking_model->get_conflictsDates($this->session->userdata('building'));
 							
-							if($value->$property1<$value2['endTime'] && $value->$property2>$value2['startTime']){
-								$insert_data3[] = array(
-								
-									'startTime' => $value->$property1,
-									'endTime' =>  $value->$property2,
-									'public_info' => $value->$property3
-									);
-
-							break;
-							}
-						
-							//$value['startTime'],$value['endTime']
-						
-						}
-
-					}
-					print_r($insert_data3);
-
-
+		   foreach($allEventsForConflictCheck as $key => $value){
+			   $property1 = 'startTime'; 
+			   $property2 = 'endTime'; 
+			   $property3 = 'public_info'; 
+			   foreach($insert_data2 as $key2 => $value2){
 			
-						$data['conflictDates']=$insert_data2;
-						$this->load->view('templates/header');
-						$this->load->view('pages/booking',  $data);
-						$this->load->view('templates/footer');
+				   
+				   if($value->$property1<$value2['endTime'] && $value->$property2>$value2['startTime']){
+					   $insert_data3[] = array(
+					   
+						   'startTime' => $value->$property1,
+						   'endTime' =>  $value->$property2,
+						   'public_info' => $value->$property3
+						   );
+
+				   break;
+				   }
+			   
+				   //$value['startTime'],$value['endTime']
+			   
+			   }
+
+		   }
+		  if(!empty($insert_data3)){
+      
+			   $data['conflictDates']=$insert_data3;
+			   $this->load->view('templates/header');
+			   $this->load->view('pages/booking',  $data);
+			   $this->load->view('templates/footer');
+
+			}
+			else{
+
+		   
+			$this->booking_model->create_bookingTimes($insert_data2);
+				
+					$this->session->set_flashdata('post_updated', 'Andmed salvestatud');
+						redirect('fullcalendar?roomId='.$this->input->post('sportrooms').'&date='. date('d.m.Y', strtotime($dateToRedirect)));
+		
+					}
+
 
 		
-				
-			
+
 			}
 
 		} 
