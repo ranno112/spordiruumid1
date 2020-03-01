@@ -671,6 +671,12 @@
 
 						jQuery('input:checkbox:checked').parents("tr").remove();
 						$("#lefty").modal("hide");
+						$('#calendar-container').css({
+							'margin-left': '0'
+						});
+						$('#widthToggle').css({
+							'margin-left': '0'
+						});
 						//  alert('Event Removed');
 					},
 					error: function(returnval) {
