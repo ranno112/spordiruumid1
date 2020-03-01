@@ -316,7 +316,7 @@
 
 
 		var calendar = $('#calendar').fullCalendar({
-			editable: false,
+		
 			header: {
 				left: '',
 				center: 'prev, title, next',
@@ -514,7 +514,7 @@
 				} else {
 					$('.remove').each(function() {
 						$(this).show();
-					})
+					});
 				}
 
 				$('#clubname').val(event.title);
@@ -554,10 +554,7 @@
 
 				for (var i = 0; i < events.length; i++) {
 					var Bid = events[i].bookingID;
-					var BTimesid = events[i].timeID;
-					var roomID = <?php echo ($this->input->get('roomId')); ?>;
-					// console.log("event.id="+event.id+" Bookingtimes="+BTimesid+" Bid="+Bid+" "+roomID+ " "+events[i].roomID);
-
+			
 					if (events[i].start != null && events[i].end != null) {
 						startDateTime.push(events[i].start._i.substring(0, 16));
 						arrayOfIDs.push(events[i].timeID);
@@ -570,12 +567,10 @@
 
 					}
 					
-				};
+				}
 			
 			
-				var conflictsToModal=[];
-
-				for (var i = 0; i < eventToCheck.length; i++) {
+				for ( i = 0; i < eventToCheck.length; i++) {
 					
 				var approved = eventToCheck[i].approved;
 					if (approved == 1) {
@@ -612,7 +607,7 @@
 				if	(checkingConflicts){
 					$(".red" + i).css("color", "red");
 						if ($("table").find(".red" + i + ":first td").length < 5) {
-							(checkingConflicts.title.length > 10) ? checkingConflicts.title = checkingConflicts.title.substring(0, 10) + "...": checkingConflicts.title = checkingConflicts.title;
+							checkingConflicts.title.length > 10 ? checkingConflicts.title = checkingConflicts.title.substring(0, 10) + "...": checkingConflicts.title = checkingConflicts.title;
 							//    console.log(arrayOfTitles[i]+" "+  arrayOfTitles[t]);
 							$(".red" + i).append('<td> &nbsp;' + checkingConflicts.title + '</td>');
 						}
@@ -726,7 +721,7 @@
 			} else {
 				alert("Sa ei valinud midagi mida kustutada");
 				event.preventDefault();
-			};
+			}
 
 
 
@@ -789,7 +784,7 @@
 			} else {
 				swal("Sa ei valinud midagi mida kinnitada");
 				event.preventDefault();
-			};
+			}
 
 
 
@@ -813,7 +808,7 @@
 						approvedOrNotToDB = 1;
 					} else {
 						approvedOrNotToDB = 0;
-					};
+					}
 
 					if ($this.is(":checked")) {
 						var id = $this.attr("id");
@@ -841,13 +836,13 @@
 								$(".message").fadeIn("slow");
 								$(".message").delay(2000).fadeOut(1000);
 							}
-						})
+						});
 					}
 				});
 			} else {
 				alert("Sa ei märgistanud ühtegi ruutu");
 				event.preventDefault();
-			};
+			}
 
 
 
@@ -878,7 +873,7 @@
 						hiddenInput.value = value;
 
 						myForm.appendChild(hiddenInput);
-					};
+					}
 
 				});
 				document.getElementById("BookingID").value = id;
@@ -889,7 +884,7 @@
 			} else {
 				alert("Sa ei märgistanud ühtegi ruutu");
 				event.preventDefault();
-			};
+			}
 		});
 	
 		// $("table tr:first-child").on( "click", function() {
@@ -940,7 +935,7 @@
 						hiddenInput.value = value;
 
 						myForm.appendChild(hiddenInput);
-					};
+					}
 
 				});
 				document.getElementById("isPeriodic").value = 1;
@@ -951,7 +946,7 @@
 			} else {
 				alert("Palun vali ainult üks nädalapäev mida muuta soovid");
 				event.preventDefault();
-			};
+			}
 		});
 
 
@@ -1032,7 +1027,7 @@
 					url: "<?php echo base_url(); ?>home/fetch_building",
 					method: "POST",
 					data: {
-						state_id: state_id
+						state_id: state_id	
 					},
 					success: function(data) {
 						console.log("data on " + $("#region").val());
@@ -1048,6 +1043,7 @@
 				$('#room').val('');
 			}
 		});
+	
 		$("#room").on('change keydown input paste', function(e) {
 			var $input = $(this),
 				val = $input.val();
@@ -1058,7 +1054,7 @@
 			console.log(match + "0" + val);
 
 			if (match.length > 0 && val.length > 0) {
-				var val = $('#room').val();
+				val = $('#room').val();
 				var xyz = $('#saal   option').filter(function() {
 					return this.value == val;
 				}).data('value');
@@ -1077,10 +1073,10 @@
 		});
 
 
-		$("#datepicker").val('<?php echo ($this->input->get('date')); ?>');
-		if ('<?php echo ($this->input->get('date')); ?>') {
-			console.log('<?php echo ($this->input->get('date')); ?>');
-			date = moment('<?php echo ($this->input->get('date')); ?>', "DD.MM.YYYY");
+		$("#datepicker").val('<?php echo ($this->input->get("date")); ?>');
+		if ('<?php echo ($this->input->get("date")); ?>') {
+			console.log('<?php echo ($this->input->get("date")); ?>');
+			date = moment('<?php echo ($this->input->get("date")); ?>', "DD.MM.YYYY");
 			$("#calendar").fullCalendar('gotoDate', date);
 			$('.fc-slats tr').css('height', rowHeight + 'px');
 			$(window).trigger('resize');
@@ -1108,7 +1104,7 @@
 			//    $('#datepicker').val($('#calendar').fullCalendar('getDate').format('DD.MM.YYYY'));
 
 			$('.fc-slats tr').css('height', rowHeight + 'px');
-			$(window).trigger('resize');;
+			$(window).trigger('resize');
 		});
 
 		$('body').on('click', 'button.fc-next-button', function() {
@@ -1125,11 +1121,11 @@
 			$(window).trigger('resize');
 		});
 
-		date = moment('<?php echo ($this->input->get('date')); ?>', "DD-MM-YYYY");
+		date = moment('<?php echo ($this->input->get("date")); ?>', "DD-MM-YYYY");
 
-		if ('<?php echo ($this->input->get('date')); ?>') {
-			$("#calendar").fullCalendar('gotoDate', date)
-		};
+		if ('<?php echo ($this->input->get("date")); ?>') {
+			$("#calendar").fullCalendar('gotoDate', date);
+		}
 
 	const items = document.querySelectorAll(".accordion a");
 
@@ -1143,7 +1139,7 @@
 
 	$('#calendar').click(function() {
 
-		var length = $('#myTable tr').length;
+	//	var length = $('#myTable tr').length;
 		$('#countNr').text('Kõik ajad (' + counter + ')');
 	});
 
@@ -1170,7 +1166,7 @@
 
 	function isOverlapping(event) {
 		var array = $('#calendar').fullCalendar('clientEvents');
-		for (i in array) {
+		for (var i in array) {
 			if (array[i].id != event.id && array[i].start != null && array[i].end != null && event.start != null && event.end != null) {
 				if (array[i].start.isBefore(event.end) && array[i].end.isAfter(event.start)) {
 					return true;
@@ -1183,7 +1179,7 @@
 	function isOverlapping2(event, events) {
 	//	var events = $('#calendar').fullCalendar('clientEvents');
 		
-		for (i in events) {
+		for (var i in events) {
 		
 			if (events[i].timeID != event.timeID && events[i].start != null && events[i].end != null && event.start != null && event.end != null) {
 			

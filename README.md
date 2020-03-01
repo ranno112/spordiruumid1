@@ -65,6 +65,7 @@ CREATE TABLE `bookingTimes` (
   `title` varchar(255) NOT NULL,
   `startTime` datetime NOT NULL,
   `endTime` datetime NOT NULL,
+   `bookingTimeColor` char(50),
    PRIMARY KEY (timeID)
 );
 
@@ -101,6 +102,7 @@ CREATE TABLE `rooms` (
   `roomName` varchar(255) NOT NULL,
   `activeRoom` int(11) NOT NULL,
   `roomActive` tinyint(1) NOT NULL DEFAULT '1',
+   `roomColor` char(50),
    PRIMARY KEY (id)
 );
 

@@ -479,7 +479,7 @@
                             </div>
                             <div class="form-label-group m-0 pl-0 col-3">  
                                 <label class="invisible">Periood</label> 
-                                <input class="datePicker form-control" id="periodEndClosed" data-toggle="datePicker" name="Ending">
+                                <input class="datepickerClosedUntil form-control" id="periodEndClosed" data-toggle="datePicker" name="Ending">
                             </div>
                         </div>
 
@@ -556,12 +556,18 @@
             autoHide: true,
             date: dateToShow,
             autoPick: true,
+		});
+		$(".datepickerClosedUntil").datepicker({
+            language: "et-EE",
+            autoHide: true,
+			date: '<?php if (isset($data['Ending'])){echo $data['Ending'];} else echo $this->input->get('startDate') ? $this->input->get('startDate'):"new Date()";?>',
+            autoPick: true,
         });
 
         $(".datePicker").datepicker({
             language: "et-EE",
             autoHide: true,
-          //  date: '<?php //if (isset($data['startingFrom'])){echo $data['startingFrom'];} else echo $this->input->get('startDate') ? $this->input->get('startDate'):"new Date()";?>',
+            date: '<?php if (isset($data['startingFrom'])){echo $data['startingFrom'];} else echo $this->input->get('startDate') ? $this->input->get('startDate'):"new Date()";?>',
             autoPick: true,
         });
 
