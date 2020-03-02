@@ -119,6 +119,7 @@
 		var $order_column = array("created_at", "public_info", "c_name","c_phone","c_email");   
 		function make_query()  
 		{    $this->db->distinct();
+			$this->db->group_by('public_info');
 			 $this->db->select($this->select_column);  
 			 $this->db->join('bookings', 'bookingTimes.bookingID = bookings.id' , 'left');
 			 $this->db->join('rooms', 'bookingTimes.roomID = rooms.id' , 'left');
