@@ -62,6 +62,7 @@
 				$data['unapprovedBookings'] = $this->allbookings_model->getUnapprovedBookings($this->session->userdata('building'), $this->session->userdata('room'));
 				
 				}
+		
 			$this->load->view('templates/header', $data);
 			$this->load->view('pages/allbookings', $data);
 			$this->load->view('templates/footer');
@@ -72,10 +73,14 @@
 		public function weekView(){
 			$data['weekdays']=array('Pühapäev','Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev');
 			$data['manageUsers'] = $this->allbookings_model->get_bookings();
+
+			$data['rooms']=$this->allbookings_model->fetch_all_rooms_for_checkbox($this->session->userdata('building'));
+			
 			$this->load->view('templates/header');
 			$this->load->view('pages/allweekbookings', $data);
 			$this->load->view('templates/footer');
 		}
+
 
 		function load($buildingID)
 		{
@@ -99,6 +104,24 @@
 					 'organizer'	=>	$row['organizer'],
 					 'typeID'	=>	$row['typeID'],
 	
+				);
+		
+		}
+			
+			echo json_encode($data);
+		}
+
+		function loadRooms($buildingID)
+		{
+			$event_data = $this->allbookings_model->fetch_all_rooms($buildingID);
+			foreach($event_data->result_array() as $row)
+				
+			{
+				$data[] = array(
+					'id'	=>	$row['id'],
+					 'title'	=>	$row['roomName'],
+					 'eventColor'	=>	$row['roomColor']
+					
 				);
 		
 		}

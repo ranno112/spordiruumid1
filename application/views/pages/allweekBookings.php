@@ -8,6 +8,8 @@
 <a href="<?php echo base_url(); ?>/allbookings/">Nimekiri </a>
 	<a href="<?php echo base_url(); ?>/allbookings/weekview">Kalender</a>
 	<?php echo base_url(); ?>allbookings/load/<?php echo $this->session->userdata['building']; ?>
+	<br>
+
 		
 <!DOCTYPE html>
 <html>
@@ -30,9 +32,9 @@
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
+    var calendar1El = document.getElementById('calendar1');
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+    var calendar1 = new FullCalendar.Calendar(calendar1El, {
 		
       plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid' ],
 		
@@ -72,21 +74,17 @@
       //// uncomment this line to hide the all-day slot
       //allDaySlot: false,
 
-      resources: [
-        { id: '1', title: '1. VÄLJAK' },
-        { id: '215', title: '2. VÄLJAK', eventColor: 'yellow' },
-        { id: '20', title: '3. VÄLJAK', eventColor: 'orange' },
-        { id: '214', title: 'Väikse saal', eventColor: 'lightgreen' },
-		{ id: '212', title: 'Aeroobika', eventColor: 'pink' },
-		{ id: '213', title: 'Nõupidamine', eventColor: 'lightblue' },
-		{ id: '216', title: 'Milline saal', eventColor: 'MediumPurple' }
-      ],
+      resources: {	
+					url: "<?php echo base_url(); ?>allbookings/loadRooms/<?php echo $this->session->userdata['building']; ?>" // use the `url` property
+				 },
+     
+     
 			eventSources: [
 
 // your event source
 {
 	url: "<?php echo base_url(); ?>allbookings/load/<?php echo $this->session->userdata['building']; ?>" // use the `url` property
-
+	
 }
 
 // any other sources...
@@ -109,7 +107,68 @@
       }
     });
 
-    calendar.render();
+    calendar1.render();
+ var removedResources=[];
+ var removedAll=true;
+    $('input[type="checkbox"]').change(function()
+      {
+			
+			// 			if ($(this).is(':checked')) {
+      //      // Do something...
+      //   //   alert("Id: " + $(this).attr("id") + " Value: " + $(this).val());
+		
+			// index = removedResources.indexOf($(this).val());
+			// if (index == -1) {
+			// 	removedResources.push($(this).val());
+			// 	console.log(removedResources);
+			// 		var resourceA = calendar1.getResourceById($(this).val());
+			// 				resourceA.remove();
+			// }
+          
+      //   }
+			if($(this).is(':checked')){
+					calendar1.refetchResources();
+					
+					index = removedResources.indexOf($(this).val());
+		
+				removedResources=[];
+				removedAll=false;
+		
+	
+				}
+				console.log(calendar1.getResources());
+				var sList = "";
+				setTimeout(function(){ 
+		$('input[type=checkbox]').each(function () {
+				sList += "(" + $(this).val() + "-" + (this.checked ? "checked" : "not checked") + ")";
+				if(!this.checked){
+					index = removedResources.indexOf($(this).val());
+			if (index == -1) {
+				removedResources.push($(this).val());
+				console.log(removedResources);
+					var resourceA = calendar1.getResourceById($(this).val());
+							resourceA.remove();
+			}
+			
+				
+		}
+	
+});
+console.log (sList); }, 100);
+      });
+
+		
+
+
+
+		$(function () {
+		$('#addOrRemoveRoom').click(function () {
+			var id = $(this).attr('id');
+			alert(id);
+		});
+	});
+	
+		console.log(	$("#addOrRemoveRoom").attr("id"));
   });
 
 </script>
@@ -122,7 +181,7 @@
     font-size: 14px;
   }
 
-  #calendar {
+  #calendar1 {
     max-width: 100%;
     margin: 50px auto;
   }
@@ -131,10 +190,30 @@
 </head>
 <body>
 
-  <div id='calendar'></div>
+
+<?php 
+foreach($rooms as $value){
+	echo  '<input type="checkbox" id="addOrRemoveRoom'.$value['id'].'" name="vehicle" value="'.$value['id'].'" checked>
+  <label for="vehicle1"> '.$value['roomName'].'</label>'
+	;}?>
+
+
+
+<input type="button" id="demo" value = "Demo" />
+ 
+<script type = "text/javascript" src = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.1.min.js"></script>
+<script type="text/javascript">
+  
+</script>
+
+
+
+  <div id='calendar1'></div>
 
 </body>
 </html>
+
+
 
 
 
@@ -199,15 +278,9 @@
       ],
 
 			
-     resources: [
-        { id: '1', title: '1. VÄLJAK' },
-        { id: '215', title: '2. VÄLJAK', eventColor: 'green' },
-        { id: '20', title: '3. VÄLJAK', eventColor: 'orange' },
-        { id: '214', title: 'Väikse saal', eventColor: 'red' },
-		{ id: '212', title: 'Aeroobika', eventColor: 'pink' },
-		{ id: '213', title: 'Nõupidamine', eventColor: 'lightblue' },
-		{ id: '216', title: 'Milline saal', eventColor: 'purple' }
-      ],
+			resources: {	
+					url: "<?php echo base_url(); ?>allbookings/loadRooms/<?php echo $this->session->userdata['building']; ?>" // use the `url` property
+				 },
 			eventSources: [
 
 			// your event source

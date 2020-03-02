@@ -21,6 +21,20 @@
 			return $this->db->get('bookingTimes');
 		}
 
+		function fetch_all_rooms($buildingID){
+			$this->db->order_by('roomName');
+			$this->db->where('buildingID', $buildingID);
+			return $this->db->get('rooms');
+		}
+
+		function fetch_all_rooms_for_checkbox($buildingID){
+			$this->db->order_by('roomName');
+			$this->db->where('buildingID', $buildingID);
+			$query =  $this->db->get('rooms');
+			return $query->result_array();
+		}
+
+
 		var $table = "bookingTimes";  
 		var $select_column = array("created_at", "roomName", "startTime", "endTime","approved","public_info", "workout", "comment","c_name","c_phone","c_email","takes_place","timeID","roomID",);  
 		//järgmisel real kirjeldan ära millste lahtritega saab sorteerida
