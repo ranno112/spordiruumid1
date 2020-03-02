@@ -196,7 +196,7 @@ class Booking extends CI_Controller {
 		   }
 
 
-		   $allEventsForConflictCheck=$this->booking_model->get_conflictsDates($this->session->userdata('building'));
+		   $allEventsForConflictCheck=$this->booking_model->get_conflictsDates($this->session->userdata('building'),$this->input->post('sportrooms'));
 							
 		   foreach($allEventsForConflictCheck as $key => $value){
 			   $property1 = 'startTime'; 
@@ -223,10 +223,11 @@ class Booking extends CI_Controller {
 		   }
 		  if(!empty($insert_data3)){
       
-			
+			$this->booking_model->create_bookingTimes('');
 
 			   $this->session->set_flashdata('key',$postData);
 			   $this->session->set_flashdata('conflictDates',$insert_data3);
+			   
 			   redirect( $this ->input->post('current_url'));
 
 			}

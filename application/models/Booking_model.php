@@ -33,7 +33,7 @@ public function create_bookingTimes($insert_data){
 
 
 
-	public function get_conflictsDates($insert_data){
+	public function get_conflictsDates($insert_data, $inserted_room){
 		
 			$this->db->select("created_at, startTime, endTime, public_info");  
 			$this->db->order_by('bookingTimes.startTime');
@@ -41,6 +41,7 @@ public function create_bookingTimes($insert_data){
 			$this->db->join('rooms', 'bookingTimes.roomID = rooms.id' , 'left');
 			$this->db->join('buildings', 'rooms.buildingID = buildings.id' , 'left');
 			$this->db->where('buildingID', $insert_data);
+			$this->db->where('roomID',  $inserted_room);
 			$this->db->where('DATE(startTime) >=', date('Y-m-d H:i:s'));
 			$query=$this->db->get('bookingTimes');
 			return  $query->result();
