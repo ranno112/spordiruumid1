@@ -334,3 +334,207 @@ foreach($rooms as $value){
 </div>
 
 
+
+
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar2');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+		schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+      plugins: [ 'dayGrid', 'timeGrid', 'resourceTimeline' ],
+     
+	  height: 450,
+		firstDay: 1,
+		allDaySlot: false,
+      scrollTime: '00:00',
+      header: {
+        left: 'today prev,next',
+        center: 'title',
+		right: 'resourceTimelineDay,resourceTimelineWeek, timelineWeek,resourceTimelineMonth, resourceTimelineFourDays '
+      },
+      defaultView: 'resourceTimelineWeek',
+	  minTime: '08:00:00',
+	maxTime: '22:00:00',
+      views: {
+				resourceTimelineFourDays: {
+					slotDuration: '02:00:00',
+      type: 'resourceTimeline',
+      duration: { days: 2 }
+    },
+		resourceTimelineWeek: {
+                type: 'timelineWeek',
+                slotDuration: '01:00:00'
+            },
+						
+      },
+      resourceAreaWidth: '10%',
+      resourceColumns: [
+        {
+          labelText: 'Room',
+          field: 'title'
+        }
+      
+      ],
+
+			
+			resources: {	
+					url: "<?php echo base_url(); ?>allbookings/loadRooms/<?php echo $this->session->userdata['building']; ?>" // use the `url` property
+				 },
+			eventSources: [
+
+			// your event source
+			{
+				url: "<?php echo base_url(); ?>allbookings/load/<?php echo $this->session->userdata['building']; ?>" // use the `url` property
+
+			}
+
+			// any other sources...
+
+			]
+
+    });
+
+    calendar.render();
+  });
+
+</script>
+<style>
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 100%;
+    margin: 50px auto;
+  }
+
+</style>
+</head>
+<body>
+
+  <div id='calendar2'></div>
+
+</body>
+</html>
+
+
+
+
+
+<div class="container">
+
+
+
+
+</div>
+
+
+
+
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar3');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+		schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+      plugins: [ 'dayGrid', 'timeGrid', 'resourceTimeline' ],
+     
+	  height: 450,
+		firstDay: 1,
+		allDaySlot: false,
+      scrollTime: '00:00',
+      header: {
+        left: 'today prev,next',
+        center: 'title',
+		right: 'resourceTimelineDay,resourceTimelineWeek, timelineWeek,resourceTimelineMonth, resourceTimelineFourDays '
+      },
+      defaultView: 'resourceTimelineWeek',
+	  minTime: '08:00:00',
+	maxTime: '22:00:00',
+      views: {
+				resourceTimelineFourDays: {
+					slotDuration: '02:00:00',
+      type: 'resourceTimeline',
+      duration: { days: 2 }
+    },
+		resourceTimelineWeek: {
+                type: 'timelineWeek',
+                slotDuration: '01:00:00'
+            },
+						
+      },
+      resourceAreaWidth: '10%',
+      resourceColumns: [
+        {
+          labelText: 'Room',
+          field: 'title'
+        }
+      
+      ],
+
+			
+			resources: {	
+					url: "<?php echo base_url(); ?>allbookings/loadRooms/<?php echo $this->session->userdata['building']; ?>" // use the `url` property
+				 },
+			eventSources: [
+
+			// your event source
+			{
+				url: "<?php echo base_url(); ?>allbookings/load/<?php echo $this->session->userdata['building']; ?>" // use the `url` property
+
+			}
+
+			// any other sources...
+
+			]
+
+    });
+
+    calendar.render();
+  });
+
+</script>
+<style>
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 100%;
+    margin: 50px auto;
+  }
+
+</style>
+</head>
+<body>
+
+  <div id='calendar3'></div>
+
+</body>
+</html>
+
+
+
+
+
+<div class="container">
+
+
+
+
+</div>
+
+
