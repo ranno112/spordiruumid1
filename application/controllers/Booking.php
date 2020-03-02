@@ -223,10 +223,11 @@ class Booking extends CI_Controller {
 		   }
 		  if(!empty($insert_data3)){
       
-			   $data['conflictDates']=$insert_data3;
-			   $this->load->view('templates/header');
-			   $this->load->view('pages/booking',  $data);
-			   $this->load->view('templates/footer');
+			
+
+			   $this->session->set_flashdata('key',$postData);
+			   $this->session->set_flashdata('conflictDates',$insert_data3);
+			   redirect( $this ->input->post('current_url'));
 
 			}
 			else{

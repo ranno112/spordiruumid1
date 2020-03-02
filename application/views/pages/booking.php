@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-<?php $data=$this->session->flashdata('key');if($data): print_r($data); 
+<?php $data=$this->session->flashdata('key');if($data): print_r($data); print_r($this->session->flashdata('conflictDates')); 
 // foreach ($data['weekday'] as $each) { 
 //    echo $each;
 //  };
@@ -43,7 +43,7 @@ if(!empty($conflictDates)){print_r($conflictDates);}?>
         <div id="nav-tabs" class="mt-5 pb-5 form-bg">
             <div class="d-flex mb-5">
                 <ul class="nav nav-tabs nav-justified col-12 bg-grey">
-                    <li class="nav-item"><a  class="nav-link link txt-lg <?php if(!isset($data['type'])){ echo 'active';}else if($data['type']==1){echo 'active';}; ?>" href="#mitmekordne" data-toggle="tab">Ühekordne broneering</a></li>
+                    <li class="nav-item"><a  class="nav-link link txt-lg <?php if(!isset($data['type'])){ echo 'active';$data['type']=1;}else if($data['type']==1){echo 'active';}; ?>" href="#mitmekordne" data-toggle="tab">Ühekordne broneering</a></li>
                     <li class="nav-item"><a  class="nav-link link txt-lg <?php if($data['type']==2){echo 'active';}; ?>" href="#hooajaline" data-toggle="tab">Hooajaline broneering</a></li>
                     <?php if($this->session->userdata('roleID')==='2'||$this->session->userdata('roleID')==='3'):?>
                     <li class="nav-item"><a  class="nav-link link txt-lg <?php if($data['type']==4){echo 'active';}; ?>" href="#suletud" data-toggle="tab">Suletud broneering</a></li>
@@ -286,7 +286,7 @@ if(!empty($conflictDates)){print_r($conflictDates);}?>
 								<?php if($this->session->flashdata('weekDayMissing')){ ?>
                                  <input class="form-control is-invalid col-5 arrow" id="periodicWeekDay" list="weekdays" name="weekday[]" required>
 								<?php } else{ ?>
-									<input class="form-control col-5 arrow" id="periodicWeekDay" list="weekdays" name="weekday[]" required  value="<?php if(isset($data['weekday'])): echo $data['weekday'][0];;endif; ?>">
+									<input class="form-control col-5 arrow" id="periodicWeekDay" list="weekdays" name="weekday[]" required  value="<?php if(isset($data['weekday'])): echo $data['weekday'][0];endif; ?>">
                                 <?php } ?>
                                 
                             		        <datalist id="weekdays">
@@ -417,8 +417,7 @@ if(!empty($conflictDates)){print_r($conflictDates);}?>
                                 </div>
                                 <div id="closeContainer">
                                     <div class="d-flex align-items-center mb-3 justify-content-between">
-                                        <input class="form-control col-5 arrow" id="closedWeekDay" list="weekdays" name="weekday[]" required>
-
+                                        <input class="form-control col-5 arrow" id="closedWeekDay" list="weekdays" name="weekday[]" required  value="<?php if(isset($data['weekday'])): echo $data['weekday'][0];;endif; ?>">
 										<datalist id="weekdays">
 									            <option data-value="1"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Esmaspäev"): echo 'selected';endif; ?> value="Esmaspäev"></option>
                                                 <option data-value="2"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Teisipäev"): echo 'selected';endif; ?> value="Teisipäev"></option>
@@ -432,12 +431,14 @@ if(!empty($conflictDates)){print_r($conflictDates);}?>
                                         <a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
 
                                         <div class="col-2 p-0 ml-5">
-                                            <input type="text" class="clock form-control" data-minimum="08:00" data-maximum="22:00" name="timesStart[]" id="from2" value="08:00">
-                                        </div>
+                                            <input type="text" class="clock form-control" data-minimum="08:00" data-maximum="22:00" name="timesStart[]" id="from2" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo "08:00"; };?>">
+										</div>
 
                                         <div class="col-2 p-0">
-                                            <input type="text" class="clock form-control" data-minimum="08:00" data-maximum="22:00" name="timeTo[]" id="until2" value="22:00">
+                                            <input type="text" class="clock form-control" data-minimum="08:00" data-maximum="22:00" name="timeTo[]" id="until2" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{ echo "22:00"; };?>">
 										</div>
+
+									
 									</div>	
 
 										<?php if(isset($data['weekday'])){ for ($i = 1; $i<count($data['weekday']); $i++) { ?>
@@ -524,15 +525,16 @@ if(!empty($conflictDates)){print_r($conflictDates);}?>
 		var selectedWeekDay = new Date(dateFormat);
 		
 		console.log(days[selectedWeekDay.getDay()]);
-		if(days.includes(days[selectedWeekDay.getDay()])){
-		var list = $("#periodicWeekDay.form-control.col-5.arrow");
-        var list2 = $("#closedWeekDay.form-control.col-5.arrow");
-			for (var i = 0; i < list.length; i++) {
-			list[i].setAttribute("value", days[selectedWeekDay.getDay()]);
-            list2[i].setAttribute("value", days[selectedWeekDay.getDay()]);
+	// 	if(days.includes(days[selectedWeekDay.getDay()])){
+	// 	var list = $("#periodicWeekDay.form-control.col-5.arrow");
+    //     var list2 =$("input:contains('closedWeekDay'):last");
+		
+	// 		for (var i = 0; i < list.length; i++) {
+	// 		list[i].setAttribute("value", days[selectedWeekDay.getDay()]);
+    //         list2[i].setAttribute("value", days[selectedWeekDay.getDay()]);
 
-			}
-	};
+	// 		}
+	// };
         var checkingDate = '<?php if(isset($data['Ending'])){echo $data['Ending'];}else {echo '';}?>';
         console.log("kuupäev on "+checkingDate);
         var dateToShow='';
