@@ -10,7 +10,7 @@
     array_push($stack, $each['c_name'] );
  };
 // print_r($allBookingInfo); 
-print_r($conflictDates);?>
+if(!empty($conflictDates)){print_r($conflictDates);}?>
     		
 <div class="modal" id="myModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
