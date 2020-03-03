@@ -192,7 +192,7 @@
 
 	
 
-function fetch_data(is_date_search, start_date='', end_date='')
+function fetch_data(is_date_search, start_date, end_date)
  {
   var dataTable = $('#user_data').DataTable({
 	"lengthMenu": [[25, 50, 100, 200, 500], [ 25, 50, 100, 200, 500]],
