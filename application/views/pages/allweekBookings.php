@@ -5,12 +5,7 @@
 <br>
 <?php
 $json = file_get_contents(base_url().'allbookings/loadRooms/'.$this->session->userdata['building']);
-
 $array = json_encode(json_decode($json, true));
-
-
-print_r($array);
-
 ?>
 
 <?php 
