@@ -1,20 +1,11 @@
-<button class="printBtn hidden-print">Print</button>
 
-<script type="text/javascript">
-  $('.printBtn').on('click', function (){
-    window.print();
-  });
-</script>
 <a href="<?php echo base_url(); ?>/allbookings/">Nimekiri </a>
-	<a href="<?php echo base_url(); ?>/allbookings/weekview">Kalender</a>
-	<?php echo base_url(); ?>allbookings/load/<?php echo $this->session->userdata['building']; ?>
+<a href="<?php echo base_url(); ?>/allbookings/weekview">Kalender</a>
+
 	<br>
 
 		
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset='utf-8' />
+
 <!-- <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css" rel="stylesheet" type="text/css" />
 <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.print.css " rel="stylesheet" type="text/css" media="print" /> -->
 <link href='<?php echo base_url(); ?>assets/css/fullcalendar.print.css' rel="stylesheet" type="text/css"  media="print">`
@@ -71,7 +62,7 @@
         }
       },
 
-      //// uncomment this line to hide the all-day slot
+
       //allDaySlot: false,
 
       resources: {	
@@ -81,13 +72,13 @@
      
 			eventSources: [
 
-// your event source
+
 {
 	url: "<?php echo base_url(); ?>allbookings/load/<?php echo $this->session->userdata['building']; ?>" // use the `url` property
 	
 }
 
-// any other sources...
+
 
 ],
       select: function(arg) {
@@ -112,20 +103,7 @@
  var removedAll=true;
     $('input[type="checkbox"]').change(function()
       {
-			
-			// 			if ($(this).is(':checked')) {
-      //      // Do something...
-      //   //   alert("Id: " + $(this).attr("id") + " Value: " + $(this).val());
 		
-			// index = removedResources.indexOf($(this).val());
-			// if (index == -1) {
-			// 	removedResources.push($(this).val());
-			// 	console.log(removedResources);
-			// 		var resourceA = calendar1.getResourceById($(this).val());
-			// 				resourceA.remove();
-			// }
-          
-      //   }
 			if($(this).is(':checked')){
 					calendar1.refetchResources();
 					
@@ -159,8 +137,6 @@ console.log (sList); }, 100);
 
 		
 
-
-
 		$(function () {
 		$('#addOrRemoveRoom').click(function () {
 			var id = $(this).attr('id');
@@ -174,17 +150,6 @@ console.log (sList); }, 100);
 </script>
 <style>
 
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-  }
-
-  #calendar1 {
-    max-width: 100%;
-    margin: 50px auto;
-  }
 
 </style>
 </head>
@@ -197,344 +162,11 @@ foreach($rooms as $value){
   <label for="vehicle1"> '.$value['roomName'].'</label>'
 	;}?>
 
+<div id='calendar1'></div>
 
 
-<input type="button" id="demo" value = "Demo" />
- 
-<script type = "text/javascript" src = "http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.1.min.js"></script>
-<script type="text/javascript">
-  
-</script>
 
 
 
-  <div id='calendar1'></div>
-
-</body>
-</html>
-
-
-
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset='utf-8' />
-<link href="<?php echo base_url(); ?>assets/css/bootstrap-clockpicker.min.css" type="text/css" rel="stylesheet">
-<link href='<?php echo base_url(); ?>assets/packages/core/main.css' rel='stylesheet' />
-<link href='<?php echo base_url(); ?>assets/packages/daygrid/main.css' rel='stylesheet' />
-<link href='<?php echo base_url(); ?>assets/packages/timegrid/main.css' rel='stylesheet' />
-<link href='<?php echo base_url(); ?>assets/packages-premium/timeline/main.css' rel='stylesheet' />
-<link href='<?php echo base_url(); ?>assets/packages-premium/resource-timeline/main.css' rel='stylesheet' />
-<script src='<?php echo base_url(); ?>assets/packages/core/main.js'></script>
-<script src='<?php echo base_url(); ?>assets/packages/daygrid/main.js'></script>
-<script src='<?php echo base_url(); ?>assets/packages/timegrid/main.js'></script>
-<script src='<?php echo base_url(); ?>assets/packages-premium/timeline/main.js'></script>
-<script src='<?php echo base_url(); ?>assets/packages-premium/resource-common/main.js'></script>
-<script src='<?php echo base_url(); ?>assets/packages-premium/resource-timeline/main.js'></script>
-
-<script>
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-		schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-      plugins: [ 'dayGrid', 'timeGrid', 'resourceTimeline' ],
-     
-	  height: 450,
-		firstDay: 1,
-		allDaySlot: false,
-      scrollTime: '00:00',
-      header: {
-        left: 'today prev,next',
-        center: 'title',
-		right: 'resourceTimelineDay,resourceTimelineWeek, timelineWeek,resourceTimelineMonth, resourceTimelineFourDays '
-      },
-      defaultView: 'resourceTimelineWeek',
-	  minTime: '08:00:00',
-	maxTime: '22:00:00',
-      views: {
-				resourceTimelineFourDays: {
-					slotDuration: '02:00:00',
-      type: 'resourceTimeline',
-      duration: { days: 2 }
-    },
-		resourceTimelineWeek: {
-                type: 'timelineWeek',
-                slotDuration: '01:00:00'
-            },
-						
-      },
-      resourceAreaWidth: '10%',
-      resourceColumns: [
-        {
-          labelText: 'Room',
-          field: 'title'
-        }
-      
-      ],
-
-			
-			resources: {	
-					url: "<?php echo base_url(); ?>allbookings/loadRooms/<?php echo $this->session->userdata['building']; ?>" // use the `url` property
-				 },
-			eventSources: [
-
-			// your event source
-			{
-				url: "<?php echo base_url(); ?>allbookings/load/<?php echo $this->session->userdata['building']; ?>" // use the `url` property
-
-			}
-
-			// any other sources...
-
-			]
-
-    });
-
-    calendar.render();
-  });
-
-</script>
-<style>
-
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-  }
-
-  #calendar {
-    max-width: 100%;
-    margin: 50px auto;
-  }
-
-</style>
-</head>
-<body>
-
-  <div id='calendar'></div>
-
-</body>
-</html>
-
-
-
-
-
-<div class="container">
-
-
-
-
-</div>
-
-
-
-
-
-<script>
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar2');
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-		schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-      plugins: [ 'dayGrid', 'timeGrid', 'resourceTimeline' ],
-     
-	  height: 450,
-		firstDay: 1,
-		allDaySlot: false,
-      scrollTime: '00:00',
-      header: {
-        left: 'today prev,next',
-        center: 'title',
-		right: 'resourceTimelineDay,resourceTimelineWeek, timelineWeek,resourceTimelineMonth, resourceTimelineFourDays '
-      },
-      defaultView: 'resourceTimelineWeek',
-	  minTime: '08:00:00',
-	maxTime: '22:00:00',
-      views: {
-				resourceTimelineFourDays: {
-					slotDuration: '02:00:00',
-      type: 'resourceTimeline',
-      duration: { days: 2 }
-    },
-		resourceTimelineWeek: {
-                type: 'timelineWeek',
-                slotDuration: '01:00:00'
-            },
-						
-      },
-      resourceAreaWidth: '10%',
-      resourceColumns: [
-        {
-          labelText: 'Room',
-          field: 'title'
-        }
-      
-      ],
-
-			
-			resources: {	
-					url: "<?php echo base_url(); ?>allbookings/loadRooms/<?php echo $this->session->userdata['building']; ?>" // use the `url` property
-				 },
-			eventSources: [
-
-			// your event source
-			{
-				url: "<?php echo base_url(); ?>allbookings/load/<?php echo $this->session->userdata['building']; ?>" // use the `url` property
-
-			}
-
-			// any other sources...
-
-			]
-
-    });
-
-    calendar.render();
-  });
-
-</script>
-<style>
-
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-  }
-
-  #calendar {
-    max-width: 100%;
-    margin: 50px auto;
-  }
-
-</style>
-</head>
-<body>
-
-  <div id='calendar2'></div>
-
-</body>
-</html>
-
-
-
-
-
-<div class="container">
-
-
-
-
-</div>
-
-
-
-
-
-<script>
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar3');
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-		schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-      plugins: [ 'dayGrid', 'timeGrid', 'resourceTimeline' ],
-     
-	  height: 450,
-		firstDay: 1,
-		allDaySlot: false,
-      scrollTime: '00:00',
-      header: {
-        left: 'today prev,next',
-        center: 'title',
-		right: 'resourceTimelineDay,resourceTimelineWeek, timelineWeek,resourceTimelineMonth, resourceTimelineFourDays '
-      },
-      defaultView: 'resourceTimelineWeek',
-	  minTime: '08:00:00',
-	maxTime: '22:00:00',
-      views: {
-				resourceTimelineFourDays: {
-					slotDuration: '02:00:00',
-      type: 'resourceTimeline',
-      duration: { days: 2 }
-    },
-		resourceTimelineWeek: {
-                type: 'timelineWeek',
-                slotDuration: '01:00:00'
-            },
-						
-      },
-      resourceAreaWidth: '10%',
-      resourceColumns: [
-        {
-          labelText: 'Room',
-          field: 'title'
-        }
-      
-      ],
-
-			
-			resources: {	
-					url: "<?php echo base_url(); ?>allbookings/loadRooms/<?php echo $this->session->userdata['building']; ?>" // use the `url` property
-				 },
-			eventSources: [
-
-			// your event source
-			{
-				url: "<?php echo base_url(); ?>allbookings/load/<?php echo $this->session->userdata['building']; ?>" // use the `url` property
-
-			}
-
-			// any other sources...
-
-			]
-
-    });
-
-    calendar.render();
-  });
-
-</script>
-<style>
-
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-  }
-
-  #calendar {
-    max-width: 100%;
-    margin: 50px auto;
-  }
-
-</style>
-</head>
-<body>
-
-  <div id='calendar3'></div>
-
-</body>
-</html>
-
-
-
-
-
-<div class="container">
-
-
-
-
-</div>
 
 
