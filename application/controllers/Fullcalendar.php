@@ -18,7 +18,7 @@ class Fullcalendar extends CI_Controller {
 	
 		
 		$this->load->view('templates/header',$data);
-		$this->load->view('pages/fullcalendar',$data);
+		$this->load->view('pages/kalender',$data);
 		$this->load->view('templates/footer',$data);
 	}
 
