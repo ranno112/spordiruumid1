@@ -359,7 +359,7 @@
 					url: "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get('roomId')); ?>" // use the `url` property
 
 					// rendering : 'background'
-				}
+				},
 			
 
 			],

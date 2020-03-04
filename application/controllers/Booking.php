@@ -17,7 +17,7 @@ class Booking extends CI_Controller {
 		
 		if($this->session->userdata('session_id')===TRUE){
 	
-	
+		$data['weekdays']=array('Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
 		$data['rooms'] = $this->booking_model->getAllRooms();
 		$data['buildings'] = $this->booking_model->getAllBuildings();
 		$data['allBookingInfo'] = $this->booking_model->getAllBookings();
@@ -31,7 +31,7 @@ class Booking extends CI_Controller {
 	}
 
 
-	public function username_check($str= '')
+	public function clubname_check($str= '')
 	{
 			if ($str == '')
 			{
@@ -67,7 +67,7 @@ class Booking extends CI_Controller {
 			$data['buildings'] = $this->booking_model->getAllBuildings();
 			$data['allBookingInfo'] = $this->booking_model->getAllBookings();
 			
-				$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|required|callback_username_check');
+				$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|required|callback_clubname_check');
 				$this->form_validation->set_rules('startingFrom', 'Kuupäev alates', 'trim|required');
 				$this->form_validation->set_rules('Ending', 'Kuupäev kuni', 'trim|required');
 				$this->form_validation->set_rules('weekday[]', 'Nädalapäev puudu', 'trim|required|callback_weekDayMissing');
@@ -184,7 +184,8 @@ class Booking extends CI_Controller {
 						'startTime' => $start_data,
 						'endTime' => $end_data,
 						'approved' => $takesPlace,
-						'bookingID' => $id
+						'bookingID' => $id,
+						'bookingTimeColor' => $this->input->post('color')[$t]
 						);
 					}
 				}
@@ -262,7 +263,7 @@ class Booking extends CI_Controller {
 	{
 		if( $this->session->userdata('session_id')===TRUE){
 
-		$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|required|callback_username_check');
+		$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|required|callback_clubname_check');
 			if($this->form_validation->run() === FALSE ){
 				$postData = $_POST;
 				$postData['error'] = validation_errors() ;
@@ -331,7 +332,8 @@ class Booking extends CI_Controller {
 				'startTime' => $start_date,
 				'endTime' => $end_date,
 				'approved' => $takesPlace,
-				'bookingID' => $id
+				'bookingID' => $id,
+				'bookingTimeColor' => $this->input->post('color')[$t]
 			);
 		}
 
