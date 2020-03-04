@@ -85,6 +85,7 @@ class Edit extends CI_Controller {
 				 'takesPlace'	=>	$row['takes_place'],
 				 'approved'	=>	$row['approved'],
 				 'organizer'	=>	$row['organizer'],
+				 'color'	=>	$row['bookingTimeColor'],
 
 				);
 			}
@@ -222,6 +223,7 @@ class Edit extends CI_Controller {
 							//'roomID' => $this->input->post('sportrooms'),
 							'startTime' => $start_date, 
 							'endTime' => $end_date,
+							'bookingTimeColor' =>$this->input->post('color')[$i]
 							
 							);
 							$this->edit_model->update_bookingTimes($insert_data[$i], $this->input->post('timesIdArray')[$i]);
@@ -258,9 +260,10 @@ class Edit extends CI_Controller {
 					'startTime' => $start_date,
 					'endTime' => $end_date,
 					'bookingID' =>$this ->input->post('id'),
+					'bookingTimeColor' =>$this->input->post('color')[$t]
 				);
-				print_r($addtimes);
-				$id=$this->edit_model->insert($addtimes[$t], $this->input->post('id'));
+			
+				$this->edit_model->insert($addtimes[$t], $this->input->post('id'));
 			
 		
 			//	redirect(base_url('fullcalendar/edit'  ,$_POST));
@@ -287,6 +290,7 @@ class Edit extends CI_Controller {
 		else{
 			if($RedirectToCalendar){
 				//print_r($_POST);
+				
 				redirect(base_url('fullcalendar?roomId='.$this->input->post('roomID')));
 			// $this->load->view('templates/header');
 			// $this->load->view('pages/edit');
@@ -389,6 +393,7 @@ class Edit extends CI_Controller {
 					
 							'startTime' => $start_date, 
 							'endTime' => $end_date,
+							'bookingTimeColor' =>$this->input->post('color')
 							
 							);
 							//print_r( $this->input->post('timesIdArray')[$i]) ;
