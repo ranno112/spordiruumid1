@@ -108,25 +108,53 @@
 			// if(!$this->session->buildingdata('logged_in')){
 			// 	redirect('buildings/login');
 			// }
-			$this->building_model->update_building();
+			$data = array(
+				//	'name' => $this->input->post('building'),
+	
+					'contact_email' => $this->input->post('email'),
+					'phone' => $this->input->post('phone'),
+					'notify_email' => $this->input->post('notifyEmail'),
+					'price_url' => $this->input->post('price_url'),
+					
+				);
+			$this->building_model->update_building($data);
 
+			for($i = 0; $i < count($this->input->post('room')); $i++)
+			{
 			
+				if( $this->input->post('room')[$i]!==null){
+				
+				$data2[] = array(
+						'roomName' => $this->input->post('room')[$i],
+						 'roomColor' => $this->input->post('color')[$i],
+						// 'activeRoom' => 1,
+								
+				);
+				$this->building_model->update_room($data2[$i], $this->input->post('roomID')[$i] );
+			}
+		}
+
+			if(!empty($this->input->post('additionalRoom'))){
+
+		
 			for($t = 0; $t <= count($this->input->post('additionalRoom')); $t++)
 			{
 				if( $this->input->post('additionalRoom')[$t]!==null){
 				
-				$data2[] = array(
+				$data3[] = array(
 						'roomName' => $this->input->post('additionalRoom')[$t],
-						'buildingID' =>$this->input->post('id'),
-						'activeRoom' => 1,
+						'roomColor' => $this->input->post('colorForNewRoom')[$t],
+						'buildingID' => $this->input->post('id'),
+					//	'activeRoom' => 1,
 								
 				);
-				$this->building_model->createNewRoom($data2[$t]);
+				$this->building_model->createNewRoom($data3[$t]);
 			}
 		}
-			
+	}
 			// Set message
 			$this->session->set_flashdata('post_updated', 'Uuendasid asutuse infot');
+		
 			redirect('building/view/'.$this->session->userdata['building']);
 		}
 

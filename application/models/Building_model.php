@@ -85,25 +85,22 @@
 
 
 	
-		public function update_building(){
-			// $slug = url_title($this->input->post('title'));
-			$data = array(
-			//	'name' => $this->input->post('building'),
-
-				'contact_email' => $this->input->post('email'),
-				'phone' => $this->input->post('phone'),
-				'notify_email' => $this->input->post('notifyEmail'),
-				'price_url' => $this->input->post('price_url'),
-				
-			);
-			$this->db->where('id', $this->input->post('id'));
-
-
-		
+		public function update_building($data){
 			
+		
+			$this->db->where('id', $this->input->post('id'));
 
 			return $this->db->update('buildings', $data);
 		}
+
+		public function update_room($data, $roomID){
+			
+		
+			$this->db->where('id',$roomID);
+
+			return $this->db->update('rooms', $data);
+		}
+
 
 
 		public function createNewRoom($data){
