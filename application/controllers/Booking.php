@@ -17,7 +17,7 @@ class Booking extends CI_Controller {
 		
 		if($this->session->userdata('session_id')===TRUE){
 	
-		$data['weekdays']=array('Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
+		$data['weekdays']=array('Pühapäev','Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev');
 		$data['rooms'] = $this->booking_model->getAllRooms();
 		$data['buildings'] = $this->booking_model->getAllBuildings();
 		$data['allBookingInfo'] = $this->booking_model->getAllBookings();
