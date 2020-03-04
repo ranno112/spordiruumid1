@@ -38,13 +38,17 @@
                 </div>
 
                 <h4 class="mt-5 txt-xl px-5 mx-5 pb-3">Ruumid</h4>
-                <div class="form-label-group col-5 py-0 pl-0 pl-5 ml-5">
+                <div class="form-label-group col-5 py-0 pl-0 pl-5 ml-5 form-inline justify-content-between">
                     <label class="txt-regular txt-lg">Aktiivsed ruumid</label>
-                    <?php foreach ($editBuildings as $value) { if ($value['roomActive'] == 1) { echo('<input class="form-control mb-3" id="phone" type="text" name="phone" value="' . $value['roomName'] .'" disabled>'); }}; ?>
+                    <?php foreach ($editBuildings as $value) { if ($value['roomActive'] == 1) { 
+						echo('<input class="form-control mb-3" id="phone" type="text" name="phone" value="' . $value['roomName'] .'" disabled>
+						<input name=color type="color" value="'. $value["roomColor"] .'" disabled>'); }}; ?>
                 </div>
-                <div class="form-label-group col-5 py-0 pl-0 pl-5 ml-5">
+                <div class="form-label-group col-5 py-0 pl-0 pl-5 ml-5  form-inline">
                     <label class="txt-regular txt-lg">Mitteaktiivsed ruumid</label>
-                    <?php foreach ($editBuildings as $key => &$value) { if ($value['roomActive'] == 0) { echo('<input class="form-control mb-3" id="phone" type="text" name="phone" value="' . $value['roomName'] .'" disabled>'); }}; ?>
+                    <?php foreach ($editBuildings as $key => &$value) { if ($value['roomActive'] == 0) { 
+						echo('<input class="form-control mb-3" id="phone" type="text" name="phone" value="' . $value['roomName'] .'" disabled>
+						<input name=color type="color" value="'. $value["roomColor"] .'" disabled>'); }}; ?>
                 </div>
 
                 <div class="d-flex justify-content-end my-4 px-5 mx-5">

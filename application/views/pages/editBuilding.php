@@ -42,9 +42,10 @@
                     <?php foreach ($editBuildings as $value) { 
 									
                       if ($value['roomActive'] == 1) { 
-												echo('<div class="d-flex mb-3 p-0 justify-content-between"> <input class="d-none" type="hidden" name="roomID" value="'
-												.$value['id'].'"> <input class="form-control col-8" id="activeRoom[]" type="text" name="room[]" value="' 
-												. $value['roomName'] .'"><input name=color type="color" value="'. $value["roomColor"] .'">
+												echo('<div class="d-flex mb-3 p-0 justify-content-between"> 
+												<input class="d-none" type="hidden" name="roomID" value="'.$value['id'].'"> 
+												<input class="form-control col-6" id="activeRoom[]" type="text" name="room[]" value="' . $value['roomName'] .'">
+												<input name=color type="color" value="'. $value["roomColor"] .'">
 												<input type="button" id="active' . $value['id']. '" class="btn btn-custom btn-width-md text-white text-center py-1 px-2 txt-strong" value="Aktiivne"> 
 												<a class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong" href="' 
 												. base_url() . 'building/deleteRoom/' . $value['id'] . '">Kustuta</a></div>'); 
@@ -54,9 +55,9 @@
                     <label class="txt-regular txt-lg">Mitteaktiivsed ruumid</label>
                     <?php foreach ($editBuildings as $key => &$value) { 
                       if ($value['roomActive'] == 0) { 
-												echo('<div class="d-flex mb-3 p-0 justify-content-between"><input class="form-control col-8" id="inactiveRoom[]" type="text" name="room[]" value="' 
-												. $value['roomName'] .'"><input type="button" id="inactive' 
-												. $value['id']. '" class="btn btn-inactive btn-width-md text-white text-center py-1 px-2 txt-strong" value="Mitteaktiivne">
+												echo('<div class="d-flex mb-3 p-0 justify-content-between">
+												<input class="form-control col-8" id="inactiveRoom[]" type="text" name="room[]" value="' . $value['roomName'] .'">
+												<input type="button" id="inactive' . $value['id']. '" class="btn btn-inactive btn-width-md text-white text-center py-1 px-2 txt-strong" value="Mitteaktiivne">
 												<a class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong" href="' 
 												 . base_url() . 'building/deleteRoom/' . $value['id'] . '">Kustuta</a></div>');
                       }}; ?>
@@ -76,34 +77,7 @@
     </div>
 </div>
                     <?php } else { redirect(''); }?>
- <!-- seda modalit siin oleks vaja selleks, et kujundada alerti juhul, kui ruumi kustutamisel peaks olema aktiivseid broneeringuid. Kahjuks ma ei saanud seda tööle :(  ) -->
- <!-- <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p>Some text in the modal.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
 
-<div class="text-center">
-  <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm">Launch
-    Modal Login Form</a>
-</div> -->
-
-<!-- <input type="text" class="btn btn-outline-secondary" name="addRoomForm" id="addRoomForm" value=""/>
-
-<input type="button" class="btn btn-success" name="openModal" id="openModal"  value="+ Lisa saal"> -->
 
                              
 <script>
@@ -111,42 +85,6 @@
   $('#lisaSaal').on('click', function() {
     $('#saalid').append('<div class="d-flex mb-3 p-0 justify-content-between"><input class="form-control col-8" id="activeRoom[]" type="text" name="additionalRoom[]" value=""><input name=color type="color"><input type="button" id="active<?php echo($value["id"]); ?>" class="btn btn-second btn-width-md text-white text-center py-1 px-2 txt-strong" value="Aktiivne"><a class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong" href="<?php echo(base_url()); ?>building/deleteRoom/<?php echo($value["id"]); ?>">Kustuta</a></div>');
   });
-
-// $( "#openModal" ).click(function(e) {
-//   e.preventDefault();
-//   // $(this).data('clicked', true);
-//   // $( this ).fadeOut( 100 );
-//   // $( this ).fadeIn( 500 );
-//   console.log( 'tere <?php foreach ($editBuildings as $value) {echo $value['buildingID'];break;}?>  '+$("#addRoomForm").val() );
-//   if($("#addRoomForm").val() ){
-
-//   $.ajax({
-//         type: "POST",
-//         url: "<?php echo base_url(); ?>building/createRoom",
-//         data: { 
-//             id: '<?php echo $this->uri->segment(3);?>',
-//             roomName: $("#addRoomForm").val(),
-//             status: 1  
-//         },
-//         success: function(result) {
-//           $("#addRoomForm").before('<input type="button" class="btn btn-outline-secondary" value="'+ $("#addRoomForm").val() +'" /> ');
-//           $('#addRoomForm').val('');
-//            // alert('ok');
-         
-//         },
-//         error: function(result) {
-//             alert('error');
-//         }
-//     });
-//   }else{
-//     $('#addRoomForm').focus();
-
-//   }
-   // $( this ).parent().append('<input type="text" class="btn btn-outline-secondary" name="addRoomForm" id="addRoomForm" value="" /> ');
-
-// });
-
-
 
 
 </script>
