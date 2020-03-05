@@ -66,6 +66,7 @@
 				<a class="btn btn-custom text-white text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss" href="<?php echo base_url(); ?>booking/create/<?php echo ($this->input->get('roomId')); ?>">
 					<p class="m-0 txt-lg txt-strong text-center">Uus broneering</p>
 				</a>
+				<a id="allCalenderLink" class="text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss" href="<?php echo base_url(); ?>/allbookings/weekview/?date=">Kõik ruumid</a>
 			<?php  } elseif ($this->session->userdata('session_id') === TRUE) { ?>
 				<div class="col-2 mr-auto p-0">
 					<a class="btn btn-custom text-white text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss" href="<?php echo base_url(); ?>booking/create/<?php echo ($this->input->get('roomId')); ?>">
@@ -1202,6 +1203,14 @@
 		return false;
 	}
 		
+
+	$('#allCalenderLink').click( function(e) { 
+		e.preventDefault();
+	
+		window.location.href = '<?php echo base_url(); ?>allbookings/weekview/?date='+	moment($('#calendar').fullCalendar('getDate')).format("DD.MM.YYYY");
+		} );
+
+	
 	});
 
 

@@ -1,6 +1,5 @@
+<a id="allCalenderLink" class="text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss" href="<?php echo base_url(); ?>/fullcalendar?roomId=<?php echo $this->session->userdata('room');?>">Tagasi töökalendrisse</a>
 
-<a href="<?php echo base_url(); ?>/allbookings/">Nimekiri </a>
-<a href="<?php echo base_url(); ?>/allbookings/weekview">Kalender</a>
 
 <br>
 <?php
@@ -34,12 +33,18 @@ foreach($rooms as $value){
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
+			const urlParams = new URLSearchParams(window.location.search);
+			var theUrlDate=urlParams.get('date');
+			var dateConvert = new Date(theUrlDate.replace( /(\d{2}).(\d{2}).(\d{4})/, "$2/$1/$3"))
+	
+	
+
     var calendar1El = document.getElementById('calendar1');
 
     var calendar1 = new FullCalendar.Calendar(calendar1El, {
 		//schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
       plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid' ],
-		
+			defaultDate:dateConvert,
       defaultView: 'resourceTimeGridWeek',
 	   datesAboveResources: true,
    	firstDay: 1,
@@ -137,8 +142,13 @@ foreach($rooms as $value){
 				}
 
       });
-
 		
+			$('#allCalenderLink').click( function(e) { 
+		e.preventDefault();
+	
+		window.location.href="<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $this->session->userdata('room');?>&date="+moment(calendar1.getDate()).format("DD.MM.YYYY");
+		} );
+
 
   });
 
