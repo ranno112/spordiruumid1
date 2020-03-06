@@ -73,7 +73,7 @@ if(!empty($conflictDates)){print_r($conflictDates);}?>
                             <input class="d-none" type="checkbox" id="typeOnce" name="type" value="1" checked>
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <label>Kontaktisik*</label>
-                                <input class="form-control" id="contactForSingle" name="contactPerson" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>" required>
+                                <input class="form-control" id="contactForSingle" name="contactPerson" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>">
                             </div>
                         </div>
                         <div class="d-flex mt-2 px-5 mx-5">
@@ -820,7 +820,8 @@ if(!empty($conflictDates)){print_r($conflictDates);}?>
 
 
 
-	$("#checkForOnceConflicts").click(function() {
+	$("#checkForOnceConflicts").click(function(e) {
+		e.preventDefault();
 		$(this).hide();
 		$("#loadingTemporarlyButtonOnce").removeClass('d-none');
 		$("#loadingTemporarlyButtonOnce").html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Kontrollin kattuvusi...');
@@ -874,12 +875,12 @@ $.ajax({
 	}
 });
 
-$( "#submitWithConflicts" ).click(function() {
-  $( "#myOnceForm" ).submit();
-});
 	});
 
 
+	$( "#submitWithConflicts" ).click(function() {
+  $( "#myOnceForm" ).submit();
+});
 
 function isOverlapping(event, conflicts) {
 	for (i in conflicts) {
@@ -969,6 +970,7 @@ return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
 
 
 $( "#checkForConflicts" ).click(function() {
+	
 		$(this).hide();
 		$("#loadingTemporarlyButton").removeClass('d-none');
 		$("#loadingTemporarlyButton").html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Kontrollin kattuvusi...');

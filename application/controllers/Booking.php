@@ -120,7 +120,7 @@ class Booking extends CI_Controller {
 
 			
 		//	$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|required');
-
+			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim');
 		
 			$id= $this->booking_model->create_booking($data1);
 					
@@ -340,6 +340,8 @@ class Booking extends CI_Controller {
 		}	}
 			
 		$this->booking_model->create_bookingTimes($insert_data2);
+
+		
 		redirect('fullcalendar?roomId='.$this->input->post('sportrooms').'&date='.$this->input->post('workoutDate')[0]);
 
 		if($this->form_validation->run()===FALSE){
