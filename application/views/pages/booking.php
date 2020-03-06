@@ -423,11 +423,10 @@ if(!empty($conflictDates)){print_r($conflictDates);}?>
                                 <div class="d-flex justify-content-between m-0 px-0 pt-0 pb-1">
                             <!-- <div class="form-label-group col-6 pl-0"  id="InputsWrapper2"> -->
                                     <label class="col-5 m-0 p-0" for="closedWeekDay">Nädalapäev</label>
-									<label class=" col-1 mr-1 p-0"></label>
-									<label class=" col-1 mr-1 p-0"></label>
-									<label class="col-2 m-0 pl-3" for="from1">Alates</label>
-                                    <label class="col-2 m-0 p-0" for="until1">Kuni</label>
-									<label class="col-2 m-0 p-0" for="color">Värv </label>
+									<label class="d-hidden col-1 mr-1 p-0"></label>
+                                    <label class="col-2 m-0 pl-3" for="from2">Alates</label>
+                                    <label class="col-2 m-0 p-0" for="until2">Kuni</label>
+								
                                                              </div>
                                 <div id="closeContainer">
                                     <div class="d-flex align-items-center mb-3 justify-content-between">
@@ -444,16 +443,14 @@ if(!empty($conflictDates)){print_r($conflictDates);}?>
 
                                         <a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
 
-                                        <div class="col-2 ml-5">
+                                        <div class="col-2  p-0  ml-5">
                                             <input type="text" class="clock form-control" data-minimum="08:00" data-maximum="22:00" name="timesStart[]" id="from2" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo "08:00"; };?>">
 										</div>
 
-                                        <div class="col-2">
+                                        <div class="col-2  p-0 ">
                                             <input type="text" class="clock form-control" data-minimum="08:00" data-maximum="22:00" name="timeTo[]" id="until2" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{ echo "22:00"; };?>">
 										</div>
-										<div class="col-2">
-                                            <input type="color" class="form-control" name="color[]" value="#ffffff" >
-										</div>
+									
 									
 									</div>	
 
@@ -735,8 +732,8 @@ if(!empty($conflictDates)){print_r($conflictDates);}?>
             if (z <= maxClosed) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#closeContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="closedWeekDay" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 ml-5"><input type="text" class="clock form-control" name="timesStart[]" id="from' + FieldCount + '" value="08:00"></div><div class="col-2"><input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="22:00"></div>	<div class="col-2"><input type="color" class="form-control" name="color[]" value="#ffffff"></div></div>');
-
+				$('#closeContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="closedWeekDay" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" id="from' + FieldCount + '" value="08:00"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="22:00"></div></div>');
+           
                 $('.clock').clockTimePicker({
                     duration: true,
                     durationNegative: true,
