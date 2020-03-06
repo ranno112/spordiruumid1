@@ -97,8 +97,8 @@
 					'start'	=>	$row['startTime'],
 					'end'	=>	$row['endTime'],
 					'clubname'	=>	$row['c_name'],
-					'phone'	=>	$row['c_phone'],
-					'email'	=>	$row['c_email'],
+				//	'color'	=>	$row['bookingTimeColor'],
+					
 					 'building'	=>	$row['name'],
 					 'roomName'	=>	$row['roomName'],
 					 'organizer'	=>	$row['organizer'],

@@ -100,7 +100,6 @@ CREATE TABLE `rooms` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `buildingID` int(11) NOT NULL,
   `roomName` varchar(255) NOT NULL,
-  `activeRoom` int(11) NOT NULL,
   `roomActive` tinyint(1) NOT NULL DEFAULT '1',
    `roomColor` char(50),
    PRIMARY KEY (id)
