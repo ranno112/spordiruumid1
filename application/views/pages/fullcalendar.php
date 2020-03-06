@@ -596,13 +596,17 @@
 				$('#myTable > tbody:last-child').append('<tr id="monthRow' + start_date.getUTCMonth() + '"><th><label><input type="checkbox"  id="selectMonth[' + start_date.getUTCMonth() + ']" value="1"></label> ' + monthNamesForModal[start_date.getUTCMonth()] + ' </th></tr>');
 				}
 				monthCheckbox = st_monthIndex;
-
-
-				$('#myTable > tbody:last-child').append(' <tr class="red' + i + '">  <td><label><input type="checkbox" class="abc brdr" name="choices" id="' + eventToCheck[i].timeID + '"><span></span></label> ' +  nameOfWeek + ', ' + moment(eventToCheck[i].start._i).format('DD.MM.YYYY') + ' <br></td>  <td>&nbsp;&nbsp; ' + moment(eventToCheck[i].start._i).format('HH:mm') +  '-' + moment(eventToCheck[i].end._i).format('HH:mm') + '</td>   <td>&nbsp;&nbsp;&nbsp;' + approved + ' </td> <td>&nbsp;' + takesPlace + ' </td>   </tr>');
+				var isSelected=false;
 				if (event.timeID == eventToCheck[i].timeID) {
-							  console.log("klikk");
-							$("#" + event.timeID).prop('checked', true);
-						}
+					isSelected='checked';
+				
+				}
+				else {
+					isSelected='';	
+				}
+
+				$('#myTable > tbody:last-child').append(' <tr class="red' + i + '">  <td><label><input type="checkbox" class="abc brdr" name="choices" id="' + eventToCheck[i].timeID + '"'+isSelected+' ><span></span></label> ' +  nameOfWeek + ', ' + moment(eventToCheck[i].start._i).format('DD.MM.YYYY') + ' <br></td>  <td>&nbsp;&nbsp; ' + moment(eventToCheck[i].start._i).format('HH:mm') +  '-' + moment(eventToCheck[i].end._i).format('HH:mm') + '</td>   <td>&nbsp;&nbsp;&nbsp;' + approved + ' </td> <td>&nbsp;' + takesPlace + ' </td>   </tr>');
+				
 				var checkingConflicts=isOverlapping2(eventToCheck[i], events);
 				console.log(checkingConflicts);
 				if	(checkingConflicts){
