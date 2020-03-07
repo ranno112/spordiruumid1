@@ -10,6 +10,7 @@
     array_push($stack, $each['c_name'] );
  };
 // print_r($allBookingInfo); 
+$conflictDates=$this->session->flashdata('conflictDates');
 if(!empty($conflictDates)){print_r($conflictDates);}?>
     		
 <div class="modal" id="myModal" tabindex="-1" role="dialog">
@@ -450,6 +451,7 @@ if(!empty($conflictDates)){print_r($conflictDates);}?>
                                         <div class="col-2  p-0 ">
                                             <input type="text" class="clock form-control" data-minimum="08:00" data-maximum="22:00" name="timeTo[]" id="until2" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{ echo "22:00"; };?>">
 										</div>
+										<input type="color" class="d-none form-control" name="color[]" value="#ffffff" >
 									
 									
 									</div>	
@@ -474,7 +476,8 @@ if(!empty($conflictDates)){print_r($conflictDates);}?>
                                     </div>
                                     <div class="col-2">
                                         <input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until<?php echo $i;?>" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
-                                    </div>
+									</div>
+									<input type="color" class="d-none form-control" name="color[]" value="#ffffff" >
                                 </div>
                                 
 										<?php 	} };?>
@@ -963,7 +966,27 @@ return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
     console.log(dateArray);
     return dateArray;
 	}
+
+function hasJsonStructure(str) {
+    if (typeof str !== 'string') return false;
+    try {
+        const result = JSON.parse(str);
+        const type = Object.prototype.toString.call(result);
+        return type === '[object Object]' 
+            || type === '[object Array]';
+    } catch (err) {
+        return false;
+    }
+}
+
+
 	
+var allConflictsFromBE='<?php echo json_encode($conflictDates);?>';
+if(hasJsonStructure(allConflictsFromBE)){
+console.log("peaks tulem");
+console.log(allConflictsFromBE);
+}
+
 
 
 $( "#checkForConflicts" ).click(function() {

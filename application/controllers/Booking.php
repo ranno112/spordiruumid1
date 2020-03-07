@@ -58,7 +58,7 @@ class Booking extends CI_Controller {
 
 	public function createClosed()
 	{
-		
+		$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
 		$postData = $_POST;
 		$postData['error'] = validation_errors() ;
 		if( $this->session->userdata('session_id')===TRUE){
@@ -151,9 +151,9 @@ class Booking extends CI_Controller {
 		
 			if ($weekday[$t]==$key){
 				//var_dump($this->input->post('Ending'));
-			for($i = strtotime($value, $startDate); $i <= $endDate; $i = strtotime('+1 week', $i))
-				{  
-					
+				for($i = strtotime($value, $startDate); $i <= $endDate; $i = strtotime('+1 week', $i))
+					{  
+						
 					$dateToDb=date('Y-m-d', $i);
 					
 				//	var_dump(date('Y-m-d H:i:s', strtotime("$dateToDb $formated_timeToDb")));
@@ -174,24 +174,26 @@ class Booking extends CI_Controller {
 						   $this->load->view('pages/booking', $data);
 						   $this->load->view('templates/footer');
 					  
+					}
+					else
+					{
+						$counter++;
+						if($counter==1){
+							$dateToRedirect= $start_data;
 						}
-						else
-						{
-							$counter++;
-							if($counter==1){$dateToRedirect= $start_data;}
-					$insert_data2[] = array(
-						'roomID' => $this->input->post('sportrooms'),
-						'startTime' => $start_data,
-						'endTime' => $end_data,
-						'approved' => $takesPlace,
-						'bookingID' => $id,
-						'bookingTimeColor' => $this->input->post('color')[$t]
+						$insert_data2[] = array(
+							'roomID' => $this->input->post('sportrooms'),
+							'startTime' => $start_data,
+							'endTime' => $end_data,
+							'approved' => $takesPlace,
+							'bookingID' => $id,
+							'bookingTimeColor' => $this->input->post('color')[$t]
 						);
 					}
+					}
 				}
-			}
 				}}
-			}
+				}
 			if (empty($insert_data2)) {
 				$this->session->set_flashdata('access_deniedToUrl', 'Perioodi jooksul pole ühtegi kuupäeva mida salvestada');
 		   }
@@ -229,7 +231,9 @@ class Booking extends CI_Controller {
 			   $this->session->set_flashdata('key',$postData);
 			   $this->session->set_flashdata('conflictDates',$insert_data3);
 			   
-			   redirect( $this ->input->post('current_url'));
+			   $this->load->view('templates/header');
+			   $this->load->view('pages/booking', $data);
+			   $this->load->view('templates/footer');
 
 			}
 			else{
