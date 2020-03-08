@@ -394,7 +394,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                 </div>
 
                 <div id="suletud" class="tab-pane center <?php if($data['type']==4){echo 'active';}; ?>">
-                <?php echo form_open('booking/createClosed'); ?>
+				<?php echo form_open('booking/createClosed', array('id' => 'myClosedForm')); ?>
 
                         <h4 class="mt-5 txt-xl px-5 mx-5">Ruum ja aeg</h4>
                         <div class="d-flex px-5 mx-5">
@@ -967,26 +967,25 @@ $( "#checkForConflicts" ).click(function() {
 
 	
 
-	var whichFormToSubmit='<?php if(!isset($data['type'])){ echo $data['type']; }?>';
+	var whichFormToSubmit='<?php echo $data['type']; ?>';
 	console.log(whichFormToSubmit+"nr on");
 $( "#submitWithConflicts" ).click(function() {
-
 	
 	if (whichFormToSubmit==1){
         $( "#allowFormToSubmitAndNeverMindConflicts1" ).val("1");
 		$( "#myOnceForm" ).submit();
 
 	}
-	else if (whichFormToSubmit==2 || whichFormToSubmit==3){
+	else if (whichFormToSubmit==2 ){
         $( "#allowFormToSubmitAndNeverMindConflicts2" ).val("1");
-        $( "#allowFormToSubmitAndNeverMindConflicts3" ).val("1");
+     
         $( "#myPeriodicForm" ).submit();
 
 	}
-	else{
-        $( "#allowFormToSubmitAndNeverMindConflicts2" ).val("1");
+	else if (whichFormToSubmit==4){
+     
         $( "#allowFormToSubmitAndNeverMindConflicts3" ).val("1");
-        $( "#myPeriodicForm" ).submit();
+        $( "#myClosedForm" ).submit();
 
 	}
 	
