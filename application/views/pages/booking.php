@@ -880,9 +880,8 @@ $.ajax({
 	});
 
 
-	$( "#submitWithConflicts" ).click(function() {
-  $( "#myOnceForm" ).submit();
-});
+
+
 
 function isOverlapping(event, conflicts) {
 	for (i in conflicts) {
@@ -934,7 +933,7 @@ return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
 	});
 	
     var stopDate = moment(stopDate);
-    maximumToCheck= 60/weekdSelectedToArray.length;
+    maximumToCheck= weekdSelectedToArray.length;
         console.log("maximumToCheck"+maximumToCheck);
 	weekdSelectedToArray.forEach(function (item, index) {
 
@@ -955,9 +954,7 @@ return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
       		 };
           
 		 currentDate = moment(currentDate).add(1, 'days');
-         if(checkHowMuchConflicts > maximumToCheck){
-            currentDate = moment(currentDate).add(1000, 'days');
-        }
+        
          checkHowMuchConflicts++;
         
       
@@ -994,7 +991,7 @@ conflict.forEach(function(item) {
     $('#myTable > tbody:last-child').append('<tr><td>'+days[new Date(item.startTime.substring(0, 10)).getDay()]+'</td><td>'+moment(item.startTime.substring(0, 10), "YYYY-MM-DD").format("DD.MM.YYYY")+'</td><td>'+ item.startTime.substring(11, 16)+"-"+item.endTime.substring(11, 16)+'</td><td>'+item.workout+'</td><td>'+item.public_info+'</td></tr>');
  
 });
-
+$('#approvePeriodNow').prop('checked', false);//kinnitus võetakse automaatselt maha
 
  $('#myModal').modal('show')
 }
@@ -1017,9 +1014,9 @@ $( "#checkForConflicts" ).click(function() {
 		var endingDate = $('#periodEnd').val();
     	var endingDateConverted = moment(endingDate, "DD.MM.YYYY").format("YYYY-MM-DD");
         var getDateArray=getDates(startingDateConverted, endingDateConverted);
-		console.log((getDateArray).length);
+		console.log("konfliktide kontrollitav on" +(getDateArray).length);
 		
-		if((getDateArray.length)>50){
+		if((getDateArray.length)>300){
 		
 		if (!confirm("Soovid broneerida suurt hulka aegasid. Kattuvuse kontroll teostatakse vaid esimesele 60. ajale. Suur aegade hulk ühe broneeringu kohta võib süsteemi tööd aeglustada. Te saate broneeringut salvestada, kuid oleks parem, kui tükeldate broneeringut lühemateks perioodideks. Kas salvestad ikkagi?")){
             $('#approvePeriodNow').prop('checked', false);//kinnitus võetakse automaatselt maha
@@ -1036,15 +1033,16 @@ $.ajax({
 	success: function(json) {
 		conflicts = json;
     	 var canSubmit=true;
+		 console.log(conflicts.length);
 			(getDateArray).some(function(element, index){
 			console.log(index);
 
-			if(index<100){
+		
 			if(isOverlapping(element, conflicts)){
 			$('#approvePeriodNow').prop('checked', false);//kinnitus võetakse automaatselt maha
 			canSubmit=false;
 			}
-		}
+	
 		
 		});
 		$( "#checkForConflicts" ).show();
@@ -1065,18 +1063,30 @@ $.ajax({
 	}
 });
 
-$( "#submitWithConflicts" ).click(function() {
-  $( "#myPeriodicForm" ).submit();
-});
-
-
-
-
-
-
 	});
 
 	
+
+	var whichFormToSubmit='<?php if(!isset($data['type'])){ echo $data['type']; }?>';
+	console.log(whichFormToSubmit+"nr on");
+$( "#submitWithConflicts" ).click(function() {
+	
+	if (whichFormToSubmit==1){
+		$( "#myOnceForm" ).submit();
+
+	}
+	else if (whichFormToSubmit==2 || whichFormToSubmit==3){
+		$( "#myPeriodicForm" ).submit();
+
+	}
+	else{
+		$( "#myPeriodicForm" ).submit();
+
+	}
+	
+ 
+});
+
 });
 
 </script>
