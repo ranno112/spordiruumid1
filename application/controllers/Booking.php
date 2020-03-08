@@ -226,7 +226,7 @@ class Booking extends CI_Controller {
 			   }
 
 		   }
-		  if(!empty($insert_data3)){
+		  if(!empty($insert_data3)&&$this ->input->post('allowSave')==0){
       
 			$this->booking_model->create_bookingTimes('');
 

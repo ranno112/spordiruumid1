@@ -74,6 +74,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
                             </div>
                             <input class="d-none" type="checkbox" id="typeOnce" name="type" value="1" checked>
+                            <input class="d-none" type="checkbox" id="allowFormToSubmitAndNeverMindConflicts1" name="allowSave" value="0" checked>
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <label>Kontaktisik*</label>
                                 <input class="form-control" id="contactForSingle" name="contactPerson" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>">
@@ -272,7 +273,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                             </div>
                             <div class="form-label-group col-6 p-0 pl-5">
                                 <input class="d-none" type="checkbox" name="type" value="2" checked>
-                             
+                                <input class="d-none" type="checkbox" id="allowFormToSubmitAndNeverMindConflicts2" name="allowSave" value="0" checked>
                             </div>
                         </div>                        
                            
@@ -416,6 +417,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
                             <div class="d-flex mt-2 px-5 mx-5">
                                 <input class="d-none" type="checkbox" name="type" value="4" checked> <!-- Suletud (See tuleb ära peita ehk panna hidden)<br> -->
+                                <input class="d-none" type="checkbox" id="allowFormToSubmitAndNeverMindConflicts3" name="allowSave" value="0" checked>
                                 <input class="d-none" type="checkbox" name="clubname" value="Suletud" checked> <!-- Suletud Title (See tuleb ära peita ehk panna hidden)<br> -->
                                 <input class="d-none" type="checkbox" name="approveNow" value="1" checked>
                             </div>
@@ -827,55 +829,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 		$(this).hide();
 		$("#loadingTemporarlyButtonOnce").removeClass('d-none');
 		$("#loadingTemporarlyButtonOnce").html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Kontrollin kattuvusi...');
-		
-		// var startingDate = $('#periodStart').val();
-    	// var startingDateConverted = moment(startingDate, "DD.MM.YYYY").format("YYYY-MM-DD");
-		// var endingDate = $('#periodEnd').val();
-    	// var endingDateConverted = moment(endingDate, "DD.MM.YYYY").format("YYYY-MM-DD");
-		// console.log((getDates(startingDateConverted, endingDateConverted)).length);
-		
-	// 	if((getDates(startingDateConverted, endingDateConverted).length)>100){
-		
-	// 	if (confirm("Selle broneeringuga luuakse "+(getDates(startingDateConverted, endingDateConverted).length)+" aega ning kattuvuse kontroll võtab umbes "+Math.round((getDates(startingDateConverted, endingDateConverted).length)/15)+" sekundit. Selline aegade hulk ühe broneeringu kohta võib süsteemi tööd aeglustada. Te saate broneeringut salvestada, kuid oleks parem, kui tükeldate broneeringut lühemateks perioodideks. Kas muudad kohe?")){
-	 	
-	 		
-	// 		return true;
-	// 	}
-	// };
-	
-//alumine on vaja konfliktide kontrollimiseks.
-$.ajax({
-	url: "<?php echo base_url(); ?>edit/loadAllRoomBookingTimes/"+$( "#roomOnce" ).val(),
-	dataType: 'json',
-	success: function(json) {
-		conflicts = json;
-    	 var canSubmit=true;
-			(checkOnceDates()).some(function(element, index){
-		//	console.log(index);
-	
-			if(isOverlapping(element, conflicts)){
-			$('#approveNow').prop('checked', false);//kinnitus võetakse automaatselt maha
-			canSubmit=false;
-			}
-		
-		});
-		$( "#checkForOnceConflicts" ).show();
-		$("#loadingTemporarlyButtonOnce").addClass('d-none');
-		
-		//kui konflikte pole, siis salvesta
-		if(canSubmit==true){
-		
-		
-			$( "#myOnceForm" ).submit();
-		};
-		
-	},
-	error: function(jqXHR, textStatus, errorThrown) {
-		//Error handling code
-		console.log(errorThrown);
-		alert('Saalis pole vist ühtegi broneeringut');
-	}
-});
+	    $( "#myOnceForm" ).submit();
 
 	});
 
@@ -883,20 +837,7 @@ $.ajax({
 
 
 
-function isOverlapping(event, conflicts) {
-	for (i in conflicts) {
-	//console.log(moment(new Date(conflicts[i].end))< moment().add(65, "days"));
-			if (conflicts[i].start != null && conflicts[i].end != null && event.start != null && event.end != null) {
-				if (moment(conflicts[i].start).isBefore(event.end) && moment(conflicts[i].end).isAfter(event.start)) {
-					//console.log(event.start.substring(0, 16)+ "-"+ event.end.substring(11, 16) + " on konfliktis järgmise ajaga: "+ conflicts[i].start.substring(0, 16)+"-"+conflicts[i].end.substring(11, 16)+" "+conflicts[i].title+" "+conflicts[i].description);
-						$('#myTable > tbody:last-child').append('<tr><td>'+days[new Date(conflicts[i].start.substring(0, 10)).getDay()]+'</td><td>'+conflicts[i].start.substring(0, 10)+'</td><td>'+ conflicts[i].start.substring(11, 16)+"-"+conflicts[i].end.substring(11, 16)+'</td><td>'+conflicts[i].description+'</td><td>'+conflicts[i].title+'</td></tr>');
-						$('#myModal').modal('show')
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+
 
 	function toDate(str) {
 
@@ -992,11 +933,8 @@ conflict.forEach(function(item) {
  
 });
 $('#approvePeriodNow').prop('checked', false);//kinnitus võetakse automaatselt maha
-
  $('#myModal').modal('show')
 }
-
-
 
 
 
@@ -1006,62 +944,24 @@ $( "#checkForConflicts" ).click(function() {
 		$("#loadingTemporarlyButton").removeClass('d-none');
 		$("#loadingTemporarlyButton").html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Kontrollin kattuvusi...');
 
-       
-
-
 		var startingDate = $('#periodStart').val();
     	var startingDateConverted = moment(startingDate, "DD.MM.YYYY").format("YYYY-MM-DD");
 		var endingDate = $('#periodEnd').val();
     	var endingDateConverted = moment(endingDate, "DD.MM.YYYY").format("YYYY-MM-DD");
         var getDateArray=getDates(startingDateConverted, endingDateConverted);
-		console.log("konfliktide kontrollitav on" +(getDateArray).length);
+		console.log("konfliktide kontrollitav on " +(getDateArray).length);
 		
 		if((getDateArray.length)>300){
 		
-		if (!confirm("Soovid broneerida suurt hulka aegasid. Kattuvuse kontroll teostatakse vaid esimesele 60. ajale. Suur aegade hulk ühe broneeringu kohta võib süsteemi tööd aeglustada. Te saate broneeringut salvestada, kuid oleks parem, kui tükeldate broneeringut lühemateks perioodideks. Kas salvestad ikkagi?")){
+		if (!confirm("Soovid broneerida korraga üle 300 aja (täpsemalt "+getDateArray.length+" aega). Suur aegade hulk ühe broneeringu kohta võib süsteemi tööd aeglustada. Te saate broneeringut salvestada, kuid oleks parem, kui tükeldate broneeringut lühemateks perioodideks. Kas salvestad ikkagi?")){
             $('#approvePeriodNow').prop('checked', false);//kinnitus võetakse automaatselt maha
         	$( "#checkForConflicts" ).show();
 			$("#loadingTemporarlyButton").addClass('d-none');
 			return true;
 		}
+        
 	};
-	
-//alumine on vaja konfliktide kontrollimiseks.
-$.ajax({
-	url: "<?php echo base_url(); ?>edit/loadAllRoomBookingTimes/"+$( "#roomPeriod" ).val(),
-	dataType: 'json',
-	success: function(json) {
-		conflicts = json;
-    	 var canSubmit=true;
-		 console.log(conflicts.length);
-			(getDateArray).some(function(element, index){
-			console.log(index);
-
-		
-			if(isOverlapping(element, conflicts)){
-			$('#approvePeriodNow').prop('checked', false);//kinnitus võetakse automaatselt maha
-			canSubmit=false;
-			}
-	
-		
-		});
-		$( "#checkForConflicts" ).show();
-		$("#loadingTemporarlyButton").addClass('d-none');
-		
-		//kui konflikte pole, siis salvesta
-		if(canSubmit==true){
-		
-		
-			$( "#myPeriodicForm" ).submit();
-		};
-		
-	},
-	error: function(jqXHR, textStatus, errorThrown) {
-		//Error handling code
-		console.log(errorThrown);
-		alert('Saalis pole vist ühtegi broneeringut');
-	}
-});
+	$( "#myPeriodicForm" ).submit();
 
 	});
 
@@ -1070,17 +970,23 @@ $.ajax({
 	var whichFormToSubmit='<?php if(!isset($data['type'])){ echo $data['type']; }?>';
 	console.log(whichFormToSubmit+"nr on");
 $( "#submitWithConflicts" ).click(function() {
+
 	
 	if (whichFormToSubmit==1){
+        $( "#allowFormToSubmitAndNeverMindConflicts1" ).val("1");
 		$( "#myOnceForm" ).submit();
 
 	}
 	else if (whichFormToSubmit==2 || whichFormToSubmit==3){
-		$( "#myPeriodicForm" ).submit();
+        $( "#allowFormToSubmitAndNeverMindConflicts2" ).val("1");
+        $( "#allowFormToSubmitAndNeverMindConflicts3" ).val("1");
+        $( "#myPeriodicForm" ).submit();
 
 	}
 	else{
-		$( "#myPeriodicForm" ).submit();
+        $( "#allowFormToSubmitAndNeverMindConflicts2" ).val("1");
+        $( "#allowFormToSubmitAndNeverMindConflicts3" ).val("1");
+        $( "#myPeriodicForm" ).submit();
 
 	}
 	
