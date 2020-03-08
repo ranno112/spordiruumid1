@@ -258,7 +258,7 @@
 			{  
 				if ($row->c_phone!=0) { $phoneIsNotZero=$row->c_phone; }
 				 $sub_array = array();  
-				 $sub_array[] = date('d.m.Y H:i', strtotime($row->created_at));  
+		
 			
 				 $sub_array[] = $row->public_info;  
 		

@@ -114,12 +114,13 @@
 
 
 		var $table = "bookingTimes";  
-		var $select_column = array("created_at","public_info","c_name","c_phone","c_email");  
+		var $select_column = array("public_info","c_name","c_phone","c_email");  
 		//järgmisel real kirjeldan ära millste lahtritega saab sorteerida
-		var $order_column = array("created_at", "public_info", "c_name","c_phone","c_email");   
+		var $order_column = array( "public_info", "c_name","c_phone","c_email");   
+
 		function make_query()  
 		{    $this->db->distinct();
-			$this->db->group_by('public_info');
+	
 			 $this->db->select($this->select_column);  
 			 $this->db->join('bookings', 'bookingTimes.bookingID = bookings.id' , 'left');
 			 $this->db->join('rooms', 'bookingTimes.roomID = rooms.id' , 'left');
@@ -128,7 +129,7 @@
 			 $this->db->where_not_in('public_info', "Suletud");
 
 			 $this->db->from($this->table);
-	//		 print_r( $this->db->get("bookingTimes"));
+	
 		
 			
 			 if(isset($_POST["search"]["value"]))  
@@ -138,7 +139,7 @@
 				 $this->db->like("startTime", $_POST["search"]["value"]);  
 				  $this->db->or_like("LOWER(roomName)", $_POST["search"]["value"]);  
 				  $this->db->or_like("LOWER(workout)", $_POST["search"]["value"]);  
-				  $this->db->or_like("created_at", $_POST["search"]["value"]);  
+			
 				  $this->db->or_like("LOWER(public_info)", $_POST["search"]["value"]);  
 				  $this->db->or_like("LOWER(comment)", $_POST["search"]["value"]);  
 				  $this->db->or_like("LOWER(c_name)", $_POST["search"]["value"]);  

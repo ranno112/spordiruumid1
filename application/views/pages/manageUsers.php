@@ -102,31 +102,16 @@
          
       </style>  
  </head>  
- <body> 
  
-      <div class="container box">  
+ 
+ <div style="max-width: 800px;  margin: auto;">
 	  <br>  <br>
 
-<h4	>Broneeringute kontaktid</h4>
+<h4	>Broneeringute kontaktid:</h4>
 	 
-<br>
 
-	 <div class="form-row">
+
 	
-    <div class="col-md-2">
-   
-    <input type="date" name="start_date" id="start_date" class="form-control" value="<?php echo date('Y-m-01'); ?>" />
-    </div>
-    <div class="col-md-2">
-   
-    <input type="date" name="end_date" id="end_date" class="form-control" value="<?php echo date('Y-m-t'); ?>" />
-    </div>
-    <div>
-  <div class="col-md-2">
-	  
-      <input type="button" name="search" id="search" value="Filtreeri" class="btn btn-info" />
-	</div>	</div>
-	</div>
          
     
 	
@@ -136,7 +121,7 @@
                      <thead>  
                           <tr>  
 
-					 <th >Salvestamise aeg</th>  
+				
                          
                     <th class="py-2 txt-strong text-darkblue" scope="col">Klubi</th>
           
@@ -150,7 +135,7 @@
                 </table>  
            </div>  
       </div>  
- </body>  
+ 
 
 
 
@@ -190,56 +175,7 @@
           
       });  
 
-	
-
-function fetch_data(is_date_search, start_date, end_date)
- {
-  var dataTable = $('#user_data').DataTable({
-	"lengthMenu": [[25, 50, 100, 200, 500], [ 25, 50, 100, 200, 500]],
-   "processing" : true,
-   "language": {
-    "search": "Otsi:",
-    "info":           "Kuvatakse _START_ kuni _END_ rida _TOTAL_ reast",
-    "lengthMenu":     "Kuva  _MENU_  kirjet lehel",
-    "paginate": {
-        "first":      "Esimene",
-        "last":       "Viimane",
-        "next":       "Järgmine",
-        "previous":   "Eelmine"
-    }
-  },
-   "serverSide" : true,
-   "order" : [],
-   "ajax" : {
-	url:"<?php echo base_url() . 'users/fetch_allbookingsInfo'; ?>",  
-    type:"POST",
-    data:{
-     is_date_search:is_date_search, start_date:start_date, end_date:end_date
-    },
-    
-   },
- 
-  });
- }
 
 
-
-$('#search').click(function(){
-  var start_date = $('#start_date').val();
-  var end_date = $('#end_date').val();
-  if(start_date != '' && end_date !='')
-  {
-   $('#user_data').DataTable().destroy();
-   fetch_data('yes', start_date, end_date);
-  }
-  else
-  {
-   alert("Both Date is Required");
-  }
- }); 
-
-
-
- 
  });  
  </script>  
