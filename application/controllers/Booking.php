@@ -268,10 +268,12 @@ class Booking extends CI_Controller {
 	public function createOnce()
 	{
 		if( $this->session->userdata('session_id')===TRUE){
-
+			$postData = $_POST;
+			$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
+			$data['allBookingInfo'] = $this->booking_model->getAllBookings();
 		$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|required|callback_clubname_check');
 			if($this->form_validation->run() === FALSE ){
-				$postData = $_POST;
+			
 				$postData['error'] = validation_errors() ;
 				$this->session->set_flashdata("message","eroor".form_error());
 				$this->session->set_flashdata('data', $this->input->post());
@@ -304,67 +306,102 @@ class Booking extends CI_Controller {
 		$id= $this->booking_model->create_booking($data1);
 				
 		$insert_data2 = array();
+		$insert_data3 = array();
+
 		$takesPlace = $this ->input->post('approveNow')==1 ? 1 : 0;
 		for($t = 0; $t <= count($this->input->post('workoutDate')); $t++) {
 			if(isset($this->input->post('workoutDate')[$t])){
-			$formated_startTime = date("H:i:s", strtotime($this->input->post('timesStart')[$t]));
-			$formated_endTime = date("H:i:s", strtotime($this->input->post('timeTo')[$t]));
-			$formated_date = date("Y-m-d", strtotime($this->input->post('workoutDate')[$t]));
+				$formated_startTime = date("H:i:s", strtotime($this->input->post('timesStart')[$t]));
+				$formated_endTime = date("H:i:s", strtotime($this->input->post('timeTo')[$t]));
+				$formated_date = date("Y-m-d", strtotime($this->input->post('workoutDate')[$t]));
 
-			$start_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_startTime"));
-			$end_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_endTime"));
-		
-			if(strtotime("$formated_date $formated_startTime")>strtotime("$formated_date $formated_endTime")){
+				$start_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_startTime"));
+				$end_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_endTime"));
+			
+				if(strtotime("$formated_date $formated_startTime")>strtotime("$formated_date $formated_endTime")){
+								
+					$this->form_validation->set_message('validationErrorMessage', 'Kuupäevad ei ole õigesti sisestatud.');
+					$this->session->set_flashdata('validationErrorMessage', 'Kellaaeg on valesti sisestatud');
 							
-				$this->form_validation->set_message('validationErrorMessage', 'Kuupäevad ei ole õigesti sisestatud.');
-				$this->session->set_flashdata('validationErrorMessage', 'Kellaaeg on valesti sisestatud');
-						   
-				if($this->form_validation->run() === FALSE){
-				  redirect( $this ->input->post('current_url'));
-			  
-			  } 
-  
-				 $this->load->view('templates/header');
-		  
-				 $this->load->view('pages/booking', $data);
-				 $this->load->view('templates/footer');
-			
-			  }
-			  else
-			  {
-
-			$insert_data2[] = array(
-				'roomID' => $this->input->post('sportrooms'),
-				'startTime' => $start_date,
-				'endTime' => $end_date,
-				'approved' => $takesPlace,
-				'bookingID' => $id,
-				'bookingTimeColor' => $this->input->post('color')[$t]
-			);
-		}
-
-		}	}
-			
-		$this->booking_model->create_bookingTimes($insert_data2);
-
-		
-		redirect('fullcalendar?roomId='.$this->input->post('sportrooms').'&date='.$this->input->post('workoutDate')[0]);
-
-		if($this->form_validation->run()===FALSE){
+					if($this->form_validation->run() === FALSE){
+						redirect( $this ->input->post('current_url'));
+				
+					} 
 	
+					$this->load->view('templates/header');
+					$this->load->view('pages/booking', $data);
+					$this->load->view('templates/footer');
+				
+				}
+				else
+				{
+
+				$insert_data2[] = array(
+					'roomID' => $this->input->post('sportrooms'),
+					'startTime' => $start_date,
+					'endTime' => $end_date,
+					'approved' => $takesPlace,
+					'bookingID' => $id,
+					'bookingTimeColor' => $this->input->post('color')[$t]
+				);
+				}
+
+			}	
+		}
+		
+		
+
+		$allEventsForConflictCheck=$this->booking_model->get_conflictsDates($this->session->userdata('building'),$this->input->post('sportrooms'));
+							
+		foreach($allEventsForConflictCheck as $key => $value){
+			$property1 = 'startTime'; 
+			$property2 = 'endTime'; 
+			$property3 = 'public_info'; 
+			$property4 = 'workout'; 
+			foreach($insert_data2 as $key2 => $value2){
+		 
+				
+				if($value->$property1<$value2['endTime'] && $value->$property2>$value2['startTime']){
+					$insert_data3[] = array(
+					  
+						'startTime' => $value->$property1,
+						'endTime' =>  $value->$property2,
+						'public_info' => $value->$property3,
+						'workout' => $value->$property4
+						);
+
+				break;
+				}
+			
+				//$value['startTime'],$value['endTime']
+			
+			}
+
+		}
+	   if(!empty($insert_data3)&&$this ->input->post('allowSave')==0){
+   
+		 $this->booking_model->create_bookingTimes('');
+
+			$this->session->set_flashdata('key',$postData);
+			$this->session->set_flashdata('conflictDates',$insert_data3);
+			
 			$this->load->view('templates/header');
-			$this->load->view('pages/booking');//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
+			$this->load->view('pages/booking', $data);
 			$this->load->view('templates/footer');
 
-		}else{
-			$this->load->view('fullcalendar?roomId='.$this->input->post('sportrooms'));
-		}
-		
+		 }
+		 else{
+
+
+		$this->booking_model->create_bookingTimes($insert_data2);
+
+		$this->session->set_flashdata('post_updated', 'Andmed salvestatud');
+		redirect('fullcalendar?roomId='.$this->input->post('sportrooms').'&date='.$this->input->post('workoutDate')[0]);
+		 }
+	
 
 	}
-	// else{
-	// //	redirect('');
-	// };
+	
 }
 	}
 	

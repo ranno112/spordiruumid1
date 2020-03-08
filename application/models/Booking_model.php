@@ -42,7 +42,7 @@ public function create_bookingTimes($insert_data){
 			$this->db->join('buildings', 'rooms.buildingID = buildings.id' , 'left');
 			$this->db->where('buildingID', $insert_data);
 			$this->db->where('roomID',  $inserted_room);
-			$this->db->where('DATE(startTime) >=', date('Y-m-d H:i:s'));
+			$this->db->where('DATE(startTime) >=', date('Y-m-d H:i:s',strtotime("-1 day")));
 			$query=$this->db->get('bookingTimes');
 			return  $query->result();
 		

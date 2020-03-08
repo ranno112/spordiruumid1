@@ -161,12 +161,18 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                     <?php if(isset($data['workoutDate'])){ for ($i = 1; $i<count($data['workoutDate']); $i++) { ?>
 									    <div class="d-flex align-items-center mb-3 justify-content-between">
 										<input class="datePicker col-5 form-control" id="datefield_<?php echo $i;?>" data-toggle="datepicker" name="workoutDate[]" value="<?php echo $data['workoutDate'][$i];?>">
+									
+
+
 										<a class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
-										<div class="col-2 p-0 ml-5">
+										<div class="col-2 ml-5">
 											<input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_<?php echo $i;?>" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
 										</div>
-										<div class="col-2 p-0">
+										<div class="col-2">
 											<input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_<?php echo $i;?>" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
+										</div>
+										<div class="col-2">
+                                            <input type="color" class="form-control" name="color[]" value="<?php if(isset($data['color'][$i])){ echo $data['color'][$i];}else{  echo "#ffffff";}?>">
 										</div>
 								    	</div>
 									<?php ;}}; ?>
@@ -362,8 +368,11 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                         <div class="d-flex px-5 mx-5 mt-4">                        
                             <div class="form-label-group m-0 pl-0 pr-3 col-3">
                                 <label>Periood</label>
-                                <input class="datePicker form-control" id="periodStart" data-toggle="datepicker" name="startingFrom">
-                            </div>
+                                <input class="datePicker form-control" id="periodStart" data-toggle="datepicker" name="startingFrom" value="<?php if(isset($data['startingFrom'])){echo $data['startingFrom'];} else if (null!==$this->input->get('startDate')){echo$this->input->get('startDate');} else {echo '';}?>">
+							</div>
+							
+                 
+
                             <div class="form-label-group m-0 pl-0 col-3">  
                                 <label class="invisible">Periood</label> 
                                 <input class="datepickerUntil form-control" id="periodEnd" data-toggle="datepickerUntil" name="Ending">
@@ -498,7 +507,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                         <div class="d-flex px-5 mx-5 mt-4">                        
                             <div class="form-label-group m-0 pl-0 pr-3 col-3">
                                 <label>Periood</label>
-                                <input class="datePicker form-control" id="periodStartClosed" data-toggle="datepicker" name="startingFrom">
+                                <input class="datePicker form-control" id="periodStartClosed" data-toggle="datepicker" name="startingFrom"  value="<?php if(isset($data['startingFrom'])){echo $data['startingFrom'];} else if (null!==$this->input->get('startDate')){echo$this->input->get('startDate');} else {echo '';}?>">
                             </div>
                             <div class="form-label-group m-0 pl-0 col-3">  
                                 <label class="invisible">Periood</label> 
@@ -591,7 +600,6 @@ if(!empty($conflictDates)){// print_r($conflictDates);
         $(".datePicker").datepicker({
             language: "et-EE",
             autoHide: true,
-            date: '<?php if (isset($data['startingFrom'])){echo $data['startingFrom'];} else echo $this->input->get('startDate') ? $this->input->get('startDate'):"new Date()";?>',
             autoPick: true,
         });
 
@@ -625,7 +633,6 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                 $(".datePicker").datepicker({
                     language: "et-EE", 
                     autoHide: true, 
-                    date: new Date(), 
                     autoPick: true
                 });
 
