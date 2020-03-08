@@ -35,7 +35,7 @@ public function create_bookingTimes($insert_data){
 
 	public function get_conflictsDates($insert_data, $inserted_room){
 		
-			$this->db->select("created_at, startTime, endTime, public_info");  
+			$this->db->select("created_at, startTime, endTime, public_info, workout");  
 			$this->db->order_by('bookingTimes.startTime');
 			$this->db->join('bookings', 'bookingTimes.bookingID = bookings.id' , 'left');
 			$this->db->join('rooms', 'bookingTimes.roomID = rooms.id' , 'left');

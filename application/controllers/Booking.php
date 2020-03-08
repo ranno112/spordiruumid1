@@ -205,15 +205,17 @@ class Booking extends CI_Controller {
 			   $property1 = 'startTime'; 
 			   $property2 = 'endTime'; 
 			   $property3 = 'public_info'; 
+			   $property4 = 'workout'; 
 			   foreach($insert_data2 as $key2 => $value2){
 			
 				   
 				   if($value->$property1<$value2['endTime'] && $value->$property2>$value2['startTime']){
 					   $insert_data3[] = array(
-					   
+					     
 						   'startTime' => $value->$property1,
 						   'endTime' =>  $value->$property2,
-						   'public_info' => $value->$property3
+						   'public_info' => $value->$property3,
+						   'workout' => $value->$property4
 						   );
 
 				   break;

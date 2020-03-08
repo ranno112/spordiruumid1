@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-<?php $data=$this->session->flashdata('key');if($data): print_r($data); print_r($this->session->flashdata('conflictDates')); 
+<?php $data=$this->session->flashdata('key');if($data): print_r($data); 
 // foreach ($data['weekday'] as $each) { 
 //    echo $each;
 //  };
@@ -11,7 +11,9 @@
  };
 // print_r($allBookingInfo); 
 $conflictDates=$this->session->flashdata('conflictDates');
-if(!empty($conflictDates)){print_r($conflictDates);}?>
+if(!empty($conflictDates)){// print_r($conflictDates);
+	echo count($conflictDates);
+}?>
     		
 <div class="modal" id="myModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -151,7 +153,7 @@ if(!empty($conflictDates)){print_r($conflictDates);}?>
                                             <input type="input" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_1" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
                                         </div>
 										<div class="col-2">
-                                            <input type="color" class="form-control" name="color[]" value="#ffffff">
+                                            <input type="color" class="form-control" name="color[]" value="<?php if(isset($data['color'][0])){ echo $data['color'][0];}else{  echo "#ffffff";}?>">
 										</div>
                                     </div>
                                     
@@ -316,7 +318,7 @@ if(!empty($conflictDates)){print_r($conflictDates);}?>
                                             <input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until1" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
 										</div>   
 										<div class="col-2">
-                                            <input type="color" class="form-control" name="color[]" value="#ffffff" >
+										<input type="color" class="form-control" name="color[]" value="<?php if(isset($data['color'][0])){ echo $data['color'][0];}else{  echo "#ffffff";}?>">
 										</div>                                   
                                     </div>
                              
@@ -342,7 +344,7 @@ if(!empty($conflictDates)){print_r($conflictDates);}?>
                                         <input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until<?php echo $i;?>" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
 									</div>
 									<div class="col-2">
-                                            <input type="color" class="form-control" name="color[]" value="#ffffff" >
+									<input type="color" class="form-control" name="color[]" value="<?php if(isset($data['color'][$i])){ echo $data['color'][$i];}else{  echo "#ffffff";}?>">
 										</div>
                                 </div>
                                 
@@ -984,8 +986,20 @@ function hasJsonStructure(str) {
 var allConflictsFromBE='<?php echo json_encode($conflictDates);?>';
 if(hasJsonStructure(allConflictsFromBE)){
 console.log("peaks tulem");
-console.log(allConflictsFromBE);
+//console.log(allConflictsFromBE);
+
+var conflict = JSON.parse(allConflictsFromBE);
+conflict.forEach(function(item) {
+   // console.log(item.public_info+":  "+item.startTime+"-"+item.endTime);
+    $('#myTable > tbody:last-child').append('<tr><td>'+days[new Date(item.startTime.substring(0, 10)).getDay()]+'</td><td>'+moment(item.startTime.substring(0, 10), "YYYY-MM-DD").format("DD.MM.YYYY")+'</td><td>'+ item.startTime.substring(11, 16)+"-"+item.endTime.substring(11, 16)+'</td><td>'+item.workout+'</td><td>'+item.public_info+'</td></tr>');
+ 
+});
+
+
+ $('#myModal').modal('show')
 }
+
+
 
 
 
@@ -994,6 +1008,10 @@ $( "#checkForConflicts" ).click(function() {
 		$(this).hide();
 		$("#loadingTemporarlyButton").removeClass('d-none');
 		$("#loadingTemporarlyButton").html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Kontrollin kattuvusi...');
+
+       
+
+
 		var startingDate = $('#periodStart').val();
     	var startingDateConverted = moment(startingDate, "DD.MM.YYYY").format("YYYY-MM-DD");
 		var endingDate = $('#periodEnd').val();
