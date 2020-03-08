@@ -1,9 +1,7 @@
-<a href="<?php echo base_url(); ?>/allbookings/">Nimekiri </a>
-	<a href="<?php echo base_url(); ?>/allbookings/weekview">Kalender</a>
+
  <head>  
   
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
-     
       <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>  
       <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>            
       <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />  
@@ -11,10 +9,10 @@
          
       </style>  
  </head>  
- <body> 
+
  
       <div class="container box">  
-	   
+	 <div style="max-width: 1800px;  margin: auto;">
 	 
 <br>
 
@@ -67,7 +65,7 @@
                 </table>  
            </div>  
       </div>  
- </body>  
+ 
 
  <script type="text/javascript" language="javascript" >  
  $(document).ready(function(){  
