@@ -26,9 +26,8 @@
                            
 						<?php if($this->session->userdata('roleID')==='2' && $post['roleID']!=1):?>
                                 <select id="buildingID" name="buildingID" class="form-control arrow">
-                                    <option value="2" <?php if ($post['buildingID']==2) echo ' selected'?>>Juht</option>
-                                    <option value="3" <?php if ($post['buildingID']==3) echo ' selected'?>>Haldur</option>
-                                    <option value="4" <?php if ($post['buildingID']==0) echo ' selected'?>>Tavakasutaja</option>
+								<option value="0" <?php if ($post['buildingID']==0) echo ' selected'?>>Pole asutust</option>
+								<option value="<?php echo $post['buildingID'];?>" <?php if ($post['buildingID']!=0) echo ' selected'?>><?php echo $post['name']; ?></option>
                                     </select>
                              <?php endif;?>
     
