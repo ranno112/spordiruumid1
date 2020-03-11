@@ -1,6 +1,7 @@
 <div class="container text-darkblue">
     <form id="change" class="mt-5 container-md" method="post" action="<?php echo base_url(); ?>users/update">
         <div class="form-bg">
+		<?php print_r($buildings);?>
             <div class="mx-auto" style="width: 44%;">
                 
                 <h4 class="mt-5 txt-xl">Konto info</h4>
@@ -17,7 +18,7 @@
                         <option value="0" <?php if ($post['status']==0) echo ' selected'?>>Mitteaktiivne</option>
                     </select>
                 </div>
-				<?php print_r($post);?>
+			
 				
                 <div class="d-flex justify-content-between p-0 m-0">
                     <div class="form-label-group mt-3 pr-5">

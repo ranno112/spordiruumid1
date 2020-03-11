@@ -27,7 +27,12 @@
 		}
 
 
-
+		public function getAllBuildings()
+		{
+			$this->db->select('name, id');  
+			$query = $this->db->get('buildings');
+			return $query->result();
+		}
 
 
 		public function register($enc_password){

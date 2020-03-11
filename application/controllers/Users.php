@@ -184,6 +184,9 @@
 		public function index(){
 			$data['title'] = 'Users';
 			$data['manageUsers'] = $this->user_model->get_users();
+		
+	
+
 
 			$this->load->view('templates/header');
 			$this->load->view('pages/manageUsers', $data);
@@ -215,6 +218,7 @@
 			// }
 			$data['manageUsers'] = $this->user_model->get_users();
 			$data['post'] = $this->user_model->get_users($slug);
+			$data['buildings'] = $this->user_model->getAllBuildings();
 			// Check user
 			// if($this->session->userdata('user_id') != $this->post_model->get_users($slug)['user_id']){
 			// 	redirect('posts');
