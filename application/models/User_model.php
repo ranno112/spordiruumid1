@@ -31,7 +31,7 @@
 		{
 			$this->db->select('name, id');  
 			$query = $this->db->get('buildings');
-			return $query->result();
+			return $query->result_array();
 		}
 
 
@@ -109,8 +109,8 @@
 				'email' => $this->input->post('email'),
 				'status' => $this->input->post('status'),
 				'userPhone' => $this->input->post('phone'),
-				'roleID' => $this->input->post('role'),
-				'buildingID' => $this->input->post('building'),
+				'roleID' => $this->input->post('roleID'),
+				'buildingID' => $this->input->post('buildingID'),
 			);
 			$this->db->where('userID', $this->input->post('id'));
 			return $this->db->update('users', $data);

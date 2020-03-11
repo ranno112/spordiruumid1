@@ -23,11 +23,7 @@
                 <div class="d-flex justify-content-between p-0 m-0">
                     <div class="form-label-group mt-3 pr-5">
                         <label for="building">Asutus</label>
-                        <p id="building" class="txt-strong"><?php echo $post['name']; ?></p>
-                        <input type="text" class="d-none" name="building" value="<?php echo $post['buildingID']; ?>">
-
-						
-
+                           
 						<?php if($this->session->userdata('roleID')==='2' && $post['roleID']!=1):?>
                                 <select id="buildingID" name="buildingID" class="form-control arrow">
                                     <option value="2" <?php if ($post['buildingID']==2) echo ' selected'?>>Juht</option>
@@ -38,8 +34,11 @@
     
                             <?php if($this->session->userdata('roleID')=='1'):?>
                                 <select id="buildingID" name="buildingID" class="form-control arrow">
-								   <option value="1" <?php if ($post['buildingID']==0) echo ' selected'?>>Pole asutust</option>
-								   <option value="2" <?php if ($post['buildingID']!=0) echo ' selected'?>><?php echo $post['name']; ?></option>
+								   <option value="0" <?php if ($post['buildingID']==0) echo ' selected'?>>Pole asutust</option>
+								   <?php foreach($buildings as $each){ ?>
+									   <option value="<?php echo $each['id'];?>" <?php if ($post['buildingID']==$each['id']) echo ' selected'?>><?php echo $each['name']; ?></option>
+								   <?php }?>
+
                                 </select>
                             <?php endif;?>
                             
@@ -59,7 +58,7 @@
                                 <select id="roleID" name="roleID" class="form-control arrow">
                                     <option value="2" <?php if ($post['roleID']==2) echo ' selected'?>>Juht</option>
                                     <option value="3" <?php if ($post['roleID']==3) echo ' selected'?>>Haldur</option>
-                                    <option value="4" <?php if ($post['roleID']==0) echo ' selected'?>>Tavakasutaja</option>
+                                    <option value="4" <?php if ($post['roleID']==4) echo ' selected'?>>Tavakasutaja</option>
                                     </select>
                              <?php endif;?>
     
@@ -68,7 +67,7 @@
                                 <option value="1" <?php if ($post['roleID']==1) echo ' selected'?>>Admin</option>
                                 <option value="2" <?php if ($post['roleID']==2) echo ' selected'?>>Juht</option>
                                 <option value="3" <?php if ($post['roleID']==3) echo ' selected'?>>Haldur</option>
-                                <option value="4" <?php if ($post['roleID']==0) echo ' selected'?>>Tavakasutaja</option>
+                                <option value="4" <?php if ($post['roleID']==4) echo ' selected'?>>Tavakasutaja</option>
                                 </select>
                             <?php endif;?>
                             
