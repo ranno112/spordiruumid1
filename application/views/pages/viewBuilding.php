@@ -71,7 +71,7 @@
                 <p class="m-0 txt-lg txt-strong text-center cursor-pointer">Lisa uus</p>
             </a>
         </div>
-
+		<h4	>	Asutused</h4>
         <table class="table-borderless table-users mt-3">
             <thead class="bg-grey border-bottom ">
             <tr>

@@ -5,8 +5,8 @@
                 <p class="m-0 txt-lg txt-strong text-center cursor-pointer">Lisa uus</p>
             </a>
         </div>
-	<h4	>	Asutuse kasutajad</h4>
 		<?php if( $this->session->userdata('roleID')==='1'){?>
+			<h4	>	Asutuste kasutajad</h4>
 		
         <table class="table-borderless table-users mt-3">
             <thead class="bg-grey border-bottom ">
@@ -47,8 +47,9 @@
 		
 		<?php ;} ?>
 
-		<?php if( $this->session->userdata('roleID')==='2'){?>
-        <table class="table-borderless table-users mt-3">
+		<?php if( $this->session->userdata('roleID')==='2'|| $this->session->userdata('roleID')==='3'){?>
+			<h4	>	Asutuse kasutajad</h4>
+			<table class="table-borderless table-users mt-3">
             <thead class="bg-grey border-bottom ">
                 <tr>
                     <th class="pl-3 py-2 txt-strong text-darkblue" scope="col">Nimi</th>
@@ -87,8 +88,12 @@
 		</table>
 		
 		<?php ;} ?>
+<?php if($this->session->userdata('roleID')==='1'):?>
+	</div></div>
+<?php endif;?>
 
 
+<?php if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'):?>
 
 
  <head>  
@@ -103,7 +108,12 @@
       </style>  
  </head>  
  
+
+
+
  
+
+
  <div style="max-width: 800px;  margin: auto;">
 	  <br>  <br>
 
@@ -179,3 +189,4 @@
 
  });  
  </script>  
+  <?php endif; ?>
