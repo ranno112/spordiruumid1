@@ -44,15 +44,15 @@
 						echo('<input class="form-control mb-3" id="phone" type="text" name="phone" value="' . $value['roomName'] .'" disabled>
 						<input name=color type="color" value="'. $value["roomColor"] .'" disabled>'); }}; ?>
                 </div>
-                <div class="form-label-group col-5 py-0 pl-0 pl-5 ml-5  form-inline">
+                <div class="form-label-group col-5 py-0 pl-0 pl-5 ml-5 form-inline justify-content-between">
                     <label class="txt-regular txt-lg">Mitteaktiivsed ruumid</label>
-                    <?php foreach ($editBuildings as $key => &$value) { if ($value['roomActive'] == 0) { 
+                    <?php foreach ($editBuildings as $key => $value) { if ($value['roomActive'] == '0') { 
 						echo('<input class="form-control mb-3" id="phone" type="text" name="phone" value="' . $value['roomName'] .'" disabled>
 						<input name=color type="color" value="'. $value["roomColor"] .'" disabled>'); }}; ?>
                 </div>
 
                 <div class="d-flex justify-content-end my-4 px-5 mx-5">
-                    <a class="btn btn-custom col-5 text-white txt-xl" href="<?php echo base_url(); ?>building/edit/<?php foreach ($editBuildings as $value) {echo $value['buildingID'];break;}?>">Redigeeri</a>
+                    <a class="btn btn-custom col-5 text-white txt-xl" href="<?php echo base_url(); ?>building/edit/<?php print_r($this->session->userdata('building'));?>">Redigeeri</a>
                 </div>
             </form>
 

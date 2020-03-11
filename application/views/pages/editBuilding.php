@@ -54,9 +54,10 @@
                 <div class="form-label-group py-0 px-5 mx-5">
                     <label class="txt-regular txt-lg">Mitteaktiivsed ruumid</label>
                     <?php foreach ($editBuildings as $key => &$value) { 
-                      if ($value['roomActive'] == 0) { 
+                      if ($value['roomActive'] == '0') { 
 												echo('<div class="d-flex mb-3 p-0 justify-content-between">
-												<input class="form-control col-8" id="inactiveRoom[]" type="text" name="room[]" value="' . $value['roomName'] .'">
+												<input class="form-control col-6" id="inactiveRoom[]" type="text" name="room[]" value="' . $value['roomName'] .'">
+												<input name="color[]" type="color" value="'. $value["roomColor"] .'">
 												<input type="button" id="inactive' . $value['id']. '" class="btn btn-inactive btn-width-md text-white text-center py-1 px-2 txt-strong" value="Mitteaktiivne">
 												<a class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong" href="' 
 												 . base_url() . 'building/deleteRoom/' . $value['id'] . '">Kustuta</a></div>');
