@@ -47,8 +47,9 @@
 												<input class="form-control col-6" id="activeRoom[]" type="text" name="room[]" value="' . $value['roomName'] .'">
 												<input name="color[]" type="color" value="'. $value["roomColor"] .'">
 												<input type="button" id="active' . $value['id']. '" class="btn btn-custom btn-width-md text-white text-center py-1 px-2 txt-strong" value="Aktiivne"> 
-												<a class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong" href="' 
-												. base_url() . 'building/deleteRoom/' . $value['id'] . '">Kustuta</a></div>'); 
+
+												<input data-id="'.$value['id'].'" class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta">
+												</div>'); 
                       }}; ?>
                 </div>
                 <div class="form-label-group py-0 px-5 mx-5">
@@ -59,8 +60,8 @@
 												<input class="form-control col-6" id="inactiveRoom[]" type="text" name="room[]" value="' . $value['roomName'] .'">
 												<input name="color[]" type="color" value="'. $value["roomColor"] .'">
 												<input type="button" id="inactive' . $value['id']. '" class="btn btn-inactive btn-width-md text-white text-center py-1 px-2 txt-strong" value="Mitteaktiivne">
-												<a class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong" href="' 
-												 . base_url() . 'building/deleteRoom/' . $value['id'] . '">Kustuta</a></div>');
+												<input data-id="'.$value['id'].'" class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta">
+												 </div>');
                       }}; ?>
                 </div>
 
@@ -83,9 +84,42 @@
                              
 <script>
 
-  $('#lisaSaal').on('click', function() {
-    $('#saalid').append('<div class="d-flex mb-3 p-0 justify-content-between"><input class="form-control col-6" id="activeRoom[]" type="text" name="additionalRoom[]" value=""><input name="colorForNewRoom[]" type="color" value="#cbe9fe"><input type="button" id="active<?php echo($value["id"]); ?>" class="btn btn-second btn-width-md text-white text-center py-1 px-2 txt-strong" value="Aktiivne"><a class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong" href="<?php echo(base_url()); ?>building/deleteRoom/<?php echo($value["id"]); ?>">Kustuta</a></div>');
+$( document ).ready(function() {
+   $('#lisaSaal').on('click', function() {
+    $('#saalid').append('<div class="d-flex mb-3 p-0 justify-content-between"><input class="form-control col-6" id="activeRoom[]" type="text" name="additionalRoom[]" value=""><input name="colorForNewRoom[]" type="color" value="#cbe9fe"><input type="button" id="active<?php echo($value["id"]); ?>" class="btn btn-second btn-width-md text-white text-center py-1 px-2 txt-strong" value="Aktiivne"><a class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong" href="<?php echo(base_url()); ?>building/deleteRoom/<?php echo($value["id"]); ?>">Kustuta</a>	<input data-id="<?php echo $value['id']; ?>" class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta"></div>');
   });
+
+  $(".btn-delete").on("click", function() {
+	console.log($(this).data("id"));
+	var elementToDelete=$(this);
+    $.ajax({
+	  url: "<?php echo base_url(); ?>building/deleteRoom",
+      method: "POST", // use "GET" if server does not handle DELETE
+      data: { "roomID": $(this).data("id") },
+      dataType: "html"
+    }).done(function( msg ) {
+
+			if(msg=='""'){  
+				elementToDelete.parent().remove(); 
+			}
+			else{
+			console.log(msg);
+
+			$( "#textMessageToUser" ).append('<p class="alert alert-danger text-center">'+msg+'</p>');
+		window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove(); 
+                });
+			}, 4000);}
+	
+    }).fail(function( jqXHR, textStatus ) {
+      alert( "Request failed: " + textStatus );
+    }); 
+  });
+
+
+});
+
 
 
 </script>

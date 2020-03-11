@@ -61,21 +61,23 @@
 		}
 
 	
-		public function deleteRoom($id){
+		public function deleteRoom(){
 			// Check login
-		
+			$id=$this->input->post('roomID');
 			$deletequery=$this->building_model->delete_room($id);
 			// Set message
 			if($deletequery===FALSE){
-				$this->session->set_flashdata('building_deleted', 'Ei saa ruumi kustutada kuna selles on kehtivad broneeringud. Palun kustuta kõik broneeringud ära ja seejärel proovi uuesti.');	
-				redirect('building/view/'.$this->session->userdata['building']);
+			//	$this->session->set_flashdata('building_deleted', 'Ei saa ruumi kustutada kuna selles on kehtivad broneeringud. Palun kustuta kõik broneeringud ära ja seejärel proovi uuesti.');	
+				echo json_encode('Ei saa ruumi kustutada kuna selles on kehtivad broneeringud. Palun kustuta kõik tulevased broneeringud ära ja seejärel proovi uuesti.',JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+			//	redirect('building/view/'.$this->session->userdata['building']);
 			}
-			$this->session->set_flashdata('building_deleted', 'Your building has been deleted');
-			if ($this->session->userdata['building']==0){
-				redirect('building/view/'.$this->session->userdata['building']);
-			}else{
-			redirect('building/edit/'.$this->session->userdata['building']);
+		
+			
+			else{
+				echo json_encode('');
+		//	redirect('building/edit/'.$this->session->userdata['building']);
 			}
+			
 		}
 
 

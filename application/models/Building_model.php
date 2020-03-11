@@ -33,7 +33,7 @@
 
 		public function delete_building($id){
 			$this->db->where('id', $id);
-		//	$this->db->delete('buildings');
+			$this->db->delete('rooms');
 			return true;
 		}
 

@@ -94,7 +94,7 @@
                 $(".alert").fadeTo(500, 0).slideUp(500, function(){
                     $(this).remove(); 
                 });
-            }, 40000);});
+            }, 4000);});
  </script>
 
 
@@ -159,3 +159,4 @@
         <?php echo '<p class="alert alert-danger text-center">'.$this->session->flashdata('message').'</p>'; ?>
       <?php endif; ?>
  
+			<div id="textMessageToUser" ></div>
