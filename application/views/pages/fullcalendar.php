@@ -700,6 +700,8 @@
 				} else {
 					return false;
 				}
+				var countTimes=$('#myTable tr:has(td)').length-$('.abc:checked').length;
+				$('#countNr').text('Kõik ajad (' +countTimes + ')');
 
 				$("input:checkbox").each(function() {
 					var $this = $(this);
@@ -716,8 +718,8 @@
 								timeID: id
 							},
 							success: function() {
+							
 								calendar.fullCalendar('refetchEvents');
-
 								jQuery('input:checkbox:checked').parents("tr").remove();
 
 							},
@@ -1153,7 +1155,8 @@
 	$('#calendar').click(function() {
 
 	//	var length = $('#myTable tr').length;
-		$('#countNr').text('Kõik ajad (' + counter + ')');
+	console.log($('#myTable tr:has(td)').length);
+		$('#countNr').text('Kõik ajad (' +$('#myTable tr:has(td)').length + ')');
 	});
 
 
