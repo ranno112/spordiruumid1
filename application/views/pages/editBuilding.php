@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-label-group py-0 px-5 mx-5">
                     <label class="txt-regular txt-lg">Mitteaktiivsed ruumid</label>
-                    <?php foreach ($editBuildings as $key => &$value) { 
+                    <?php foreach ($editBuildings as $key => $value) { 
                       if ($value['roomActive'] == '0') { 
 												echo('<div class="d-flex mb-3 p-0 justify-content-between">
 												<input class="d-none" type="hidden" name="roomID[]" value="'.$value['id'].'"> 
