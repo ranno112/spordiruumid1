@@ -81,6 +81,20 @@
 		}
 
 
+		public function roomStatus(){
+			// Check login
+		
+
+			$data = array(
+			
+					'roomActive' => $this->input->post('roomStatus')
+				);
+				$this->building_model->update_room($data, $this->input->post('roomID') );
+			
+			
+		}
+
+
 
 		// public function edit($slug){
 		// 	// Check login
@@ -132,6 +146,9 @@
 						// 'activeRoom' => 1,
 								
 				);
+			
+				print_r($this->input->post('roomID')[$i]);
+				
 				$this->building_model->update_room($data2[$i], $this->input->post('roomID')[$i] );
 			}
 		}

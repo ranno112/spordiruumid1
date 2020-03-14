@@ -46,7 +46,7 @@
 												<input class="d-none" type="hidden" name="roomID[]" value="'.$value['id'].'"> 
 												<input class="form-control col-6" id="activeRoom[]" type="text" name="room[]" value="' . $value['roomName'] .'">
 												<input name="color[]" type="color" value="'. $value["roomColor"] .'">
-												<input type="button" id="active' . $value['id']. '" class="btn btn-custom btn-width-md text-white text-center py-1 px-2 txt-strong" value="Aktiivne"> 
+												<input type="button" id="active'.$value['id'].'" data-id="'.$value['id'].'" class="btn btn-custom btn-width-md text-white text-center py-1 px-2 txt-strong" value="Aktiivne"> 
 
 												<input data-id="'.$value['id'].'" class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta">
 												</div>'); 
@@ -57,9 +57,10 @@
                     <?php foreach ($editBuildings as $key => &$value) { 
                       if ($value['roomActive'] == '0') { 
 												echo('<div class="d-flex mb-3 p-0 justify-content-between">
+												<input class="d-none" type="hidden" name="roomID[]" value="'.$value['id'].'"> 
 												<input class="form-control col-6" id="inactiveRoom[]" type="text" name="room[]" value="' . $value['roomName'] .'">
 												<input name="color[]" type="color" value="'. $value["roomColor"] .'">
-												<input type="button" id="inactive' . $value['id']. '" class="btn btn-inactive btn-width-md text-white text-center py-1 px-2 txt-strong" value="Mitteaktiivne">
+												<input type="button" id="active' . $value['id']. '" data-id="'.$value['id'].'" class="btn btn-inactive btn-width-md text-white text-center py-1 px-2 txt-strong" value="Mitteaktiivne">
 												<input data-id="'.$value['id'].'" class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta">
 												 </div>');
                       }}; ?>
@@ -85,9 +86,17 @@
 <script>
 
 $( document ).ready(function() {
+	var counter=1;
    $('#lisaSaal').on('click', function() {
-    $('#saalid').append('<div class="d-flex mb-3 p-0 justify-content-between"><input class="form-control col-6" id="activeRoom[]" type="text" name="additionalRoom[]" value=""><input name="colorForNewRoom[]" type="color" value="#cbe9fe"><input type="button" id="active<?php echo($value["id"]); ?>" class="btn btn-second btn-width-md text-white text-center py-1 px-2 txt-strong" value="Aktiivne"><a class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong" href="<?php echo(base_url()); ?>building/deleteRoom/<?php echo($value["id"]); ?>">Kustuta</a>	<input data-id="<?php echo $value['id']; ?>" class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta"></div>');
+    $('#saalid').append('<div class="d-flex mb-3 p-0 justify-content-between"><input class="form-control col-6" id="activeRoom[]" type="text" name="additionalRoom[]" value=""><input name="colorForNewRoom[]" type="color" value="#cbe9fe"><input type="button" id="active<?php echo($value["id"]); ?>" class="btn btn-custom btn-width-md text-white text-center py-1 px-2 txt-strong" value="Aktiivne">	<input data-id="<?php echo $value['id']; ?>" id="additionalRoom'+counter+'" class="abc btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta"></div>');
+	counter++;
   });
+
+  $(document).on('click', '.abc', function() { 
+	
+	  $(this).parent().remove(); 
+	  });
+
 
   $(".btn-delete").on("click", function() {
 	console.log($(this).data("id"));
@@ -103,8 +112,6 @@ $( document ).ready(function() {
 				elementToDelete.parent().remove(); 
 			}
 			else{
-			console.log(msg);
-
 			$( "#textMessageToUser" ).append('<p class="alert alert-danger text-center">'+msg+'</p>');
 		window.setTimeout(function() {
                 $(".alert").fadeTo(500, 0).slideUp(500, function(){
@@ -116,6 +123,46 @@ $( document ).ready(function() {
       alert( "Request failed: " + textStatus );
     }); 
   });
+
+ 
+  
+
+
+  $('input[id^="active"]').on("click", function() {
+	console.log($(this).data("id"));
+	console.log($(this).val());
+	var roomStatus=1;
+	if($(this).val()=="Aktiivne"){
+		$(this).val("Mitteaktiivne");
+		$(this).removeClass("btn-custom");
+		$(this).addClass("btn-inactive");
+		roomStatus=0;
+		
+	} 
+	else{
+		$(this).val("Aktiivne");
+		$(this).removeClass("btn-inactive");
+		$(this).addClass("btn-custom");
+		roomStatus=1;
+	}
+	
+	var elementToDelete=$(this);
+    $.ajax({
+	  url: "<?php echo base_url(); ?>building/roomStatus",
+      method: "POST", // use "GET" if server does not handle DELETE
+      data: { 
+		"roomID": $(this).data("id"),
+	    "roomStatus": roomStatus
+		 },
+      dataType: "html"
+    }).done(function( msg ) {
+
+	
+    }).fail(function( jqXHR, textStatus ) {
+      alert( "Request failed: " + textStatus );
+    }); 
+  });
+
 
 
 });
