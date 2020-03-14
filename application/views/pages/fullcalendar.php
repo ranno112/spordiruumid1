@@ -311,7 +311,7 @@
 		$("#selectAll").click(function() {
 			var c = this.checked;
 			$(':checkbox').prop('checked', c);
-
+			$('#countNr').text('Kõik ajad (' +$('.abc:checked').length + '/'+ $('#myTable tr:has(td)').length + ')');
 		});
 
 
@@ -1153,12 +1153,13 @@
 	
 
 	$('#calendar').click(function() {
-
-	//	var length = $('#myTable tr').length;
-	console.log($('#myTable tr:has(td)').length);
-		$('#countNr').text('Kõik ajad (' +$('#myTable tr:has(td)').length + ')');
+		$('#countNr').text('Kõik ajad (' +$('.abc:checked').length + '/'+ $('#myTable tr:has(td)').length + ')');
 	});
 
+	$(document).on('click', '.abc', function() { 
+		$('#countNr').text('Kõik ajad (' +$('.abc:checked').length + '/'+ $('#myTable tr:has(td)').length + ')');
+
+	});
 
 	//Kui modalit lahti tehakse, siis kalender läheb väiksemaks. Ja vastupidi
 	$(window).on('click', function(event) {
