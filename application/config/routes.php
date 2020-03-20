@@ -54,6 +54,7 @@ $route['404_override'] = 'error_404';
 $route['translate_uri_dashes'] = FALSE;
 $route['manageUsers'] = 'users/index';
 $route['editBuilding'] = 'building/index';
+$route['editRegion'] = 'region/index';
 $route['allbookings'] = 'allbookings/index';
 
 // $route['default_controller'] = 'pages/view';

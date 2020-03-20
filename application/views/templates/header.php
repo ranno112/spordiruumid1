@@ -56,7 +56,8 @@
 												<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>allbookings/"><strong>Broneeringud</strong> 	<?php if(isset($unapprovedBookings)){echo '<span class="badge badge-danger">'.$unapprovedBookings.'</span>';}; ?></a></li>
                         <?php endif; ?>
                         <?php if($this->session->userdata('roleID')==='1'):?>
-                        <li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>building/view/<?php  print_r($this->session->userdata['building']);  ?>">Asutused</a></li>
+												<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>building/view/">Asutused</a></li>
+												<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>region/view/">Piirkonnad</a></li>
                         <?php endif; ?>
                         <?php if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='1'):?>
                         <li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>manageUsers">Kasutajad</a></li>
