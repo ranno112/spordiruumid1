@@ -111,4 +111,14 @@
 		}
 
 
+
+		function getAllRegions()
+		{
+		  
+			$this->db->order_by('regionID');
+			$query = $this->db->get('regions');
+			return $query->result_array();
+		}
+
+
 	}

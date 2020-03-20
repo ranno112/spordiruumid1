@@ -12,8 +12,19 @@
 
             <form id="change" method="post" action="<?php echo base_url(); ?>building/update">
             <input class="d-none" type="hidden" name="id" value="<?php echo $this->uri->segment(3);?>">
+					
+								<h4 class="pt-2 txt-xl px-5 mx-5">Asutuse info</h4>
 
-                <h4 class="pt-2 txt-xl px-5 mx-5">Asutuse info</h4>
+								<div class="d-flex p-0 mt-4 px-5 mx-5">
+                    <div class="form-label-group col-6 py-0 pl-0 pr-5">
+										<label for="status">Piirkond</label>
+                    <select id="place" name="place" class="form-control arrow">
+										<?php foreach($regions as $region) {?>
+												<option value="<?php echo $region['regionID'];?>" <?php if ($editBuildings[0]['regionID']==$region['regionID']){echo 'selected';}?>><?php echo $region['regionName'];?></option>
+										<?php }?>
+                    </select>
+                    </div>
+                </div>
                 <div class="d-flex p-0 mt-4 px-5 mx-5">
                     <div class="form-label-group col-6 py-0 pl-0 pr-5">
                         <label>Kontakt email*</label>

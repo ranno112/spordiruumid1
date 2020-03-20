@@ -17,7 +17,7 @@
 		public function edit($slug){
 
 			if ($this->session->userdata('roleID')==='1'){
-
+				$data['regions'] = $this->building_model->getAllRegions();
 				$data['editBuildings'] = $this->building_model->get_building($slug);
 				$this->load->view('templates/header');
 				$this->load->view('pages/editBuilding', $data);
@@ -28,7 +28,7 @@
 
 				redirect('building/view/'.$this->session->userdata['building']);
 			}else{
-
+			$data['regions'] = $this->building_model->getAllRegions();
 			$data['editBuildings'] = $this->building_model->get_building($slug);
 			$this->load->view('templates/header');
 			$this->load->view('pages/editBuilding', $data);
@@ -43,7 +43,7 @@
 				redirect('building/view/'.$this->session->userdata['building']);
 			}else{
 			$data['editBuildings'] = $this->building_model->get_building($slug);
-		
+			$data['regions'] = $this->building_model->getAllRegions();
 			$data['editAllBuildings'] = $this->building_model->get_building();
 			$data['editAllRooms'] = $this->building_model->get_rooms();
 			$this->load->view('templates/header');
@@ -126,11 +126,12 @@
 			// }
 			$data = array(
 				//	'name' => $this->input->post('building'),
-	
 					'contact_email' => $this->input->post('email'),
 					'phone' => $this->input->post('phone'),
 					'notify_email' => $this->input->post('notifyEmail'),
 					'price_url' => $this->input->post('price_url'),
+					'regionID' => $this->input->post('place'),
+					
 					
 				);
 			$this->building_model->update_building($data);
