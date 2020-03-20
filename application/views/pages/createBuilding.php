@@ -13,7 +13,17 @@
 
             <?php echo form_open('building/register'); ?>
 
-                <h4 class="pt-2 txt-xl px-5 mx-5">Asutuse info</h4>
+				<h4 class="pt-2 txt-xl px-5 mx-5">Asutuse info</h4>
+				<div class="d-flex p-0 mt-4 px-5 mx-5">
+                    <div class="form-label-group col-6 py-0 pl-0 pr-5">
+										<label for="status">Piirkond</label>
+                    <select id="place" name="place" class="form-control arrow">
+										<?php foreach($regions as $region) {?>
+												<option value="<?php echo $region->regionID;?>" ><?php echo $region->regionName;?></option>
+										<?php }?>
+                    </select>
+                    </div>
+                </div>
                 <div class="d-flex p-0 mt-4 px-5 mx-5">
                     <div class="form-label-group col-6 py-0 pl-0 pr-5">
 						<label>Asutuse nimi*</label>

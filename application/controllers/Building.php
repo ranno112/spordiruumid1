@@ -184,7 +184,7 @@
 			$this->form_validation->set_rules('name', 'Name', 'required');
           //  $this->form_validation->set_rules('phone', 'Phone');
 			//$this->form_validation->set_rules('email', 'Email', 'required|callback_check_email_exists');
-		
+			$data['regions'] = $this->building_model->getAllRegions();
 			if($this->form_validation->run() === FALSE){
               
 				$this->load->view('templates/header');
