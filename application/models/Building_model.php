@@ -34,7 +34,7 @@
 
 		public function delete_building($id){
 			$this->db->where('id', $id);
-			$this->db->delete('rooms');
+			$this->db->delete('buildings');
 			return true;
 		}
 

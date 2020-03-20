@@ -51,9 +51,10 @@
 			$this->load->view('templates/footer');
 		}	}
 
-		public function delete($id){
+		public function delete(){
 			// Check login
-		
+			
+			$id=$this->input->post('buildingID');
 			$this->building_model->delete_building($id);
 			// Set message
 			$this->session->set_flashdata('building_deleted', 'Your building has been deleted');

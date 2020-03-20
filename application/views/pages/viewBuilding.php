@@ -118,8 +118,9 @@
                         <form class="cat-delete" action="<?php echo base_url(); ?>building/edit/<?php echo $singleBuilding['id']; ?>" method="POST">
                             <button type="submit" class="btn btn-second btn-width text-white text-center py-1 px-2 txt-strong ">Muuda</button>
                         </form>
-                        <form class="cat-delete pl-1" action="<?php echo base_url(); ?>building/delete/<?php echo $singleBuilding['id']; ?>" method="POST">
-                            <!-- <input type="submit" class="" value="Kustuta"> -->
+                        <form class="cat-delete pl-1" action="<?php echo base_url(); ?>building/delete" method="POST">
+							<!-- <input type="submit" class="" value="Kustuta"> -->
+							<input type="hidden" name="buildingID" value="<?php echo $singleBuilding['id']; ?>" />
                             <button type="submit" class="btn btn-delete btn-width text-white text-center py-1 px-2 txt-strong ">Kustuta</button>
                         </form>
                     </td>
