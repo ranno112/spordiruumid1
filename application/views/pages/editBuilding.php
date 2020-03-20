@@ -19,6 +19,7 @@
                     <div class="form-label-group col-6 py-0 pl-0 pr-5">
 										<label for="status">Piirkond</label>
                     <select id="place" name="place" class="form-control arrow">
+											<option value="0" >Vali piirkond</option>
 										<?php foreach($regions as $region) {?>
 												<option value="<?php echo $region['regionID'];?>" <?php if ($editBuildings[0]['regionID']==$region['regionID']){echo 'selected';}?>><?php echo $region['regionName'];?></option>
 										<?php }?>
