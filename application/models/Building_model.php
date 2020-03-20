@@ -9,11 +9,12 @@
 			if($slug === FALSE){
 			$this->db->order_by('buildings.id');
 			//$this->db->join('rooms', ' buildings.id = rooms.buildingID' , 'left');
-			
+			$this->db->join('regions', ' buildings.regionID = regions.regionID' , 'left');
 			$query = $this->db->get('buildings');
 			return $query->result_array();
 			}
 			$this->db->join('rooms', ' buildings.id = rooms.buildingID' , 'left');
+			$this->db->join('regions', ' buildings.regionID = regions.regionID' , 'left');
 			$query = $this->db->get_where('buildings', array('buildings.id' => $slug));
 			return $query->result_array();
 		
