@@ -519,7 +519,7 @@
 					
 				}
 			
-			
+		
 				for ( i = 0; i < eventToCheck.length; i++) {
 					
 				var approved = eventToCheck[i].approved;
@@ -529,7 +529,7 @@
 						approved = "Kinnitamata";
 					}
 
-				var takesPlace = events[i].takesPlace;
+				var takesPlace = eventToCheck[i].takesPlace;
 					if (takesPlace == 1) {
 						takesPlace = "";
 					} else if (takesPlace == 0) {
@@ -763,7 +763,7 @@
 					var $this = $(this);
 
 					var approvedOrNot = $this.parents("tr").children("td:nth-child(4)");
-				
+				console.log(approvedOrNot.text());
 					var approvedOrNotToDB;
 					if ($.trim(approvedOrNot.text()) == "XXX") {
 						approvedOrNotToDB = 1;
