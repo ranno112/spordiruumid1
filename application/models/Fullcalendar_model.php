@@ -19,35 +19,7 @@ class Fullcalendar_model extends CI_Model
 		return $query->result();
       
 	}
-
   
-
-
-
-	function insert_event($data)
-	{
-		
-		$this->db->insert('bookingTimes', $data);
-		$fk_sales_id = $this->db->insert_id();
-		
-	}
-
-	public function create_booking($data1){
-
-
-		$this->db->insert('bookings', $data1);
-		return $this->db->insert_id();
-	
-	}
-	
-	public function create_bookingTimes($insert_data){
-			
-		//	$this->db->insert('bookingTimes', $data2);
-			$this->db->insert_batch('bookingTimes', $insert_data);
-			return $this->db->insert_id();
-	}
-
-
 
 	function update_event($data, $id)
 	{
@@ -63,10 +35,7 @@ class Fullcalendar_model extends CI_Model
 
 	function deleteTImesAndBooking($id)
 	{
-		// $this->db->where('bookingTimes.bookingID=bookings.id');
-		// $this->db->where('bookingTimes.bookingID',$id);
-		// $this->db->delete(array('bookingTimes','bookings'));
-
+	
 		$this->db->delete('bookingTimes', array('bookingID' => $id));
 		$this->db->delete('bookings', array('id' => $id));
 

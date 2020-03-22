@@ -21,12 +21,16 @@ class Pages extends CI_Controller
                 $data['sportPlaces'] = $this->pages_model->getAllBuildings();
 		$data['sportPlacesToChoose'] = $this->pages_model->getAllBuildingRooms();
 		
+		if(!isset($data['rooms'])){
+			$this->session->set_flashdata('access_deniedToUrl', 'Sellist ruumi enam ei eksisteeri. Teid suunati avalehele');
+			redirect('');
+		}
 		
 		
                // $data['allBookingInfo'] = $this->pages_model->getAllBookings();
                
                 foreach ( $data['sportPlacesToChoose'] as $each) {
-                        if(($each->buildingID!=$this->session->userdata('building')&&$this->input->get('roomId')==$each->id&&($this->session->userdata('roleID')==='2' or $this->session->userdata('roleID')==='3'))){
+                        if($each->buildingID!=$this->session->userdata('building')&&$this->input->get('roomId')==$each->id&&($this->session->userdata('roleID')==='2' or $this->session->userdata('roleID')==='3')){
                              
                         //        echo  $this->input->get('roomId');
                         //         var_dump( $each->id);
