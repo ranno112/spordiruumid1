@@ -1,3 +1,8 @@
+<?php if(!isset($rooms)){
+			$this->session->set_flashdata('access_deniedToUrl', 'Sellist ruumi enam ei eksisteeri. Teid suunati avalehele');
+			redirect('');
+		}
+		?>
 <div class="container">
 	<div class="d-flex pt-4" id="widthToggle">
 		<form class="d-flex flex-row col-md-11 col-lg-10 p-0" action="fullcalendar" method="get">
