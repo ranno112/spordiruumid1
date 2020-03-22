@@ -2,7 +2,7 @@
 
 Tere tulemast Annemarii Hunt lõputöö projekti GitHubi repositooriumile!
 
-Tegemist on kohaliku omavalitsuste spordiga seotud allasutuste spordiruumide kalendrisüsteemi rakendusega. 
+Tegemist on kohaliku omavalitsuste spordiga seotud allasutuste spordiruumide kalendrisüsteemi rakendusega. Rakendus on edasi arendatud valikpraktika projektist https://github.com/Viiskorda/maag.
 
 Oma serverisse laadimiseks on vaja muuta application/config kaustas kaks faili: config.php ning database.php:
 ```
