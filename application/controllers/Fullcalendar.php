@@ -11,18 +11,6 @@ class Fullcalendar extends CI_Controller {
 		$this->load->model('fullcalendar_model');
 	}
 
-	function index()
-	{//	$data['title'] = "Hello Everyone!";
-		$roomid=$this->input->get('roomID');
-		$data['rooms'] = $this->fullcalendar_model->getAllRooms($roomid);
-	
-		
-		$this->load->view('templates/header',$data);
-		$this->load->view('pages/kalender',$data);
-		$this->load->view('templates/footer',$data);
-	}
-
-
 	function edit()
 	{
 		print_r($_POST);
@@ -36,6 +24,7 @@ class Fullcalendar extends CI_Controller {
 	{
 		$this->input->get('saal', TRUE);
 		$event_data = $this->fullcalendar_model->fetch_all_event();
+		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
 		foreach($event_data->result_array() as $row)
 		if(	$row['roomID']==$roomId){
 			
@@ -69,6 +58,28 @@ class Fullcalendar extends CI_Controller {
 			);
 		}
 	}
+} else{
+	foreach($event_data->result_array() as $row)
+		if(	$row['roomID']==$roomId){
+			
+		{
+			$data[] = array(
+			
+				'roomID'	=>	$row['roomID'],
+				'title'	=>	$row['public_info'],
+				'description'	=>	$row['workout'],
+				'start'	=>	$row['startTime'],
+				'end'	=>	$row['endTime'],
+				 'building'	=>	$row['name'],
+				 'takesPlace'	=>	$row['takes_place'],
+				 'approved'	=>	$row['approved'],
+				 'typeID'	=>	$row['typeID'],
+		
+			);
+		}
+	}
+
+}
 		
 		echo json_encode($data);
 	}

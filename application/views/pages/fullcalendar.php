@@ -283,10 +283,10 @@
 
 
 				</div>
-	</div><!-- container -->
-
-
-<?php endif; ?>
+				
+				
+				<?php endif; ?>
+			</div><!-- container -->
 <!-- ****************** MODAL END ****************** -->
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -364,7 +364,7 @@
 			
 
 			],
-			selectable: true,
+			selectable:  (displayOrNot == 2 || displayOrNot == 3) ? true:false,
 			selectHelper: true,
 			eventRender: function(event, element) {
 
@@ -420,79 +420,28 @@
 			},
 
 			select: function(start, end, allDay) {
-
+				if ( (displayOrNot == 2 || displayOrNot == 3) ){
 				var startDate = $.fullCalendar.formatDate(start, "DD.MM.YYYY");
 				var start = $.fullCalendar.formatDate(start, "HH:mm");
 				var end = $.fullCalendar.formatDate(end, "HH:mm");
 
 				window.location.href = '<?php echo base_url(); ?>booking/create/<?php echo ($this->input->get('roomId')) . "?startDate="; ?>' + startDate + '&start=' + start + '&end=' + end;
-
+			}
 			
 
 			},
-			editable: true,
+			editable: (displayOrNot == 2 || displayOrNot == 3) ? true:false,
 			eventResize: function(event) {
-				// var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-				// var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-				// var title = event.title;
-				// var id = event.id;
-
-				// $.ajax({
-				//     url: "<?php echo base_url(); ?>fullcalendar/update",
-				//     type: "POST",
-				//     data: {
-				//         title: title,
-				//         start: start,
-				//         end: end,
-				//         id: id
-				//     },
-				//     success: function() {
-				//         calendar.fullCalendar('refetchEvents');
-				//         //alert("Event Update");
-				//     }
-				// })
+			
 				calendar.fullCalendar('refetchEvents');
 				alert("Muutsid hetkeks trenni aega, see läheb tagasi oma kohale peale OK nupule vajutamist");
 			},
 			eventDrop: function(event) {
-				// var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-				// //alert(start);
-				// var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-				// //alert(end);
-				// var title = event.title;
-				// var id = event.id;
-				// $.ajax({
-				//     url: "<?php echo base_url(); ?>fullcalendar/update",
-				//     type: "POST",
-				//     data: {
-				//         title: title,
-				//         start: start,
-				//         end: end,
-				//         id: id
-				//     },
-				//     success: function() {
-
-				//     }
-				// })
+				
 				calendar.fullCalendar('refetchEvents');
 				alert("Tõstsid korraks trenni eest ära, see läheb tagasi oma kohale peale OK nupule vajutamist");
 			},
-			// eventClick: function(event) {
-			//     if (confirm("Are you sure you want to remove it?")) {
-			//         var id = event.id;
-			//         $.ajax({
-			//             url: "<?php echo base_url(); ?>fullcalendar/delete",
-			//             type: "POST",
-			//             data: {
-			//                 id: id
-			//             },
-			//             success: function() {
-			//                 calendar.fullCalendar('refetchEvents');
-			//                 alert('Event Removed');
-			//             }
-			//         })
-			//     }
-			// }
+		
 
 			eventClick: function(event) {
 				counter = 0;
@@ -540,9 +489,9 @@
 				// else{
 				//     $('#event_out').val(moment(event.event_out).format('DD/MM/YYYY HH:mm'));
 				// }
-				// console.log($('#calendar').fullCalendar('clientEvents'));
+			
 				var id = event.id;
-				//  console.log(id +" " +  event.timeID);
+			
 				var events = $('#calendar').fullCalendar('clientEvents');
 				$('tbody').attr('id', id);
 
@@ -561,7 +510,7 @@
 						arrayOfIDs.push(events[i].timeID);
 						endDateTime.push(events[i].end._i.substring(0, 16));
 						arrayOfTitles.push(events[i].title);
-						//  console.log((events[i].start._i.substring(0, 16))+" "+ events[i].end._i.substring(0, 16));
+						
 					}
 					if (event.id == Bid) {
 						eventToCheck.push(events[i]);
@@ -608,12 +557,12 @@
 				$('#myTable > tbody:last-child').append(' <tr class="red' + i + '">  <td><label><input type="checkbox" class="abc brdr" name="choices" id="' + eventToCheck[i].timeID + '"'+isSelected+' ><span></span></label> ' +  nameOfWeek + ', ' + moment(eventToCheck[i].start._i).format('DD.MM.YYYY') + ' <br></td>  <td>&nbsp;&nbsp; ' + moment(eventToCheck[i].start._i).format('HH:mm') +  '-' + moment(eventToCheck[i].end._i).format('HH:mm') + '</td>   <td>&nbsp;&nbsp;&nbsp;' + approved + ' </td> <td>&nbsp;' + takesPlace + ' </td>   </tr>');
 				
 				var checkingConflicts=isOverlapping2(eventToCheck[i], events);
-				console.log(checkingConflicts);
+			
 				if	(checkingConflicts){
 					$(".red" + i).css("color", "red");
 						if ($("table").find(".red" + i + ":first td").length < 5) {
 							checkingConflicts.title.length > 10 ? checkingConflicts.title = checkingConflicts.title.substring(0, 10) + "...": checkingConflicts.title = checkingConflicts.title;
-							//    console.log(arrayOfTitles[i]+" "+  arrayOfTitles[t]);
+						
 							$(".red" + i).append('<td> &nbsp;' + checkingConflicts.title + '</td>');
 						}
 					
@@ -664,7 +613,7 @@
 					return false;
 				}
 				var id = $('input:checkbox:checked').parents("tbody").attr('id');
-				// console.log("kõik on ckeckitud, tuleb ka bookings ab-st ära kustutada "+id);
+			
 				$.ajax({
 					url: "<?php echo base_url(); ?>fullcalendar/deleteAllConnectedBookings",
 					type: "POST",
@@ -695,7 +644,7 @@
 
 			} else if ($('.abc:checked').length < $('.abc').length && $('.abc:checked').length > 0) {
 				if (confirm("Oled kindel, et soovid kustutada?" + $('.abc:checked'))) {
-					// console.log($('.abc:checked'));
+				
 					event.preventDefault();
 				} else {
 					return false;
@@ -708,7 +657,7 @@
 
 					if ($this.is(":checked")) {
 						var id = $this.attr("id");
-						// console.log("going to delete " +id);// $this.attr("id");
+					
 
 
 						$.ajax({
@@ -754,10 +703,9 @@
 
 					if ($this.is(":checked")) {
 						var id = $this.attr("id");
-						//  console.log($this);
-						//      console.log("going to kinnitama " +id);// $this.attr("id");
+					
 						var approvedOrNot = $this.parents("tr").children("td:nth-child(3)");
-						//   console.log($.trim(approvedOrNot.text()));
+					
 						var approvedOrNotToDB;
 						if ($.trim(approvedOrNot.text()) == "Kinnitatud") {
 							approvedOrNotToDB = 0;
@@ -815,7 +763,7 @@
 					var $this = $(this);
 
 					var approvedOrNot = $this.parents("tr").children("td:nth-child(4)");
-					console.log($.trim(approvedOrNot.text()) == "XXX");
+				
 					var approvedOrNotToDB;
 					if ($.trim(approvedOrNot.text()) == "XXX") {
 						approvedOrNotToDB = 1;
@@ -900,29 +848,7 @@
 			}
 		});
 	
-		// $("table tr:first-child").on( "click", function() {
-		// 	console.log($('.abc:checked').length);
-		// });
-		
-		// $('.abc').on('ifChecked', function(event){
-		// alert('New value');
-		// });
- 
-		// $('.abc :checkbox').change(function(){
-		// 	console.log($('.abc:checked').length);
-		// });
-
-		// if ($('.abc:checked').length <2) {
-		// 	console.log($('.abc:checked').length);
-		// };
-		// jQuery(".modal input:checkbox,.modal label").on("click", function(e)
-		// {
-		// 	e.stopImmediatePropagation();
-		// 	var element = (e.currentTarget.htmlFor !== undefined) ? e.currentTarget.htmlFor : e.currentTarget;
-		// 	var checked = (element.checked) ? false : true;
-		// 	element.checked = (checked) ? false : checked.toString();
-		// 	console.log($('.abc:checked').length);
-		// });
+	
 
 		$("#changePeriodTimes").on('click', function(event) {
 			if ($('.abc:checked').length <2) {
@@ -972,11 +898,7 @@
 		$(window).trigger('resize');
 		$(".fc-body").trigger('reload');
 
-		console.log(calHeight);
-		console.log(calRows);
-		console.log(rowHeightRaw);
-		console.log(rowHeight);
-
+	
 
 		$('input[id=region]').focusin(function() {
 
@@ -1001,7 +923,7 @@
 					return ($(this).val() === val);
 				});
 			if (match.length > 0) {
-				//    console.log("match");
+		
 				var value = $('#region').val();
 				var country_id = $('#regions [value="' + value + '"]').data('value');
 				$.ajax({
@@ -1011,14 +933,14 @@
 						country_id: country_id
 					},
 					success: function(data) {
-						//   console.log("data on " + data);
+				
 						$("#asutus").empty();
 						$("#room").empty();
 						$('#asutus').html(data).appendTo("#asutus");
 					}
 				});
 			} else {
-				console.log("dismatch");
+			
 				$('#room').val('');
 				$('#sport_facility').val('');
 
@@ -1032,10 +954,10 @@
 					return ($(this).val() === val);
 				});
 			if (match.length > 0) {
-				//    console.log("match");
+			
 				var value = $('#sport_facility').val();
 				var state_id = $('#asutus [value="' + value + '"]').data('value');
-				//     console.log(state_id);
+			
 				$.ajax({
 					url: "<?php echo base_url(); ?>home/fetch_building",
 					method: "POST",
@@ -1043,7 +965,7 @@
 						state_id: state_id	
 					},
 					success: function(data) {
-						console.log("data on " + $("#region").val());
+					
 						$('#room').val('');
 						$("#saal").empty();
 
@@ -1052,7 +974,7 @@
 					}
 				});
 			} else {
-				//    console.log("dismatch");
+				
 				$('#room').val('');
 			}
 		});
@@ -1064,7 +986,7 @@
 				match = $('#' + list + ' option').filter(function() {
 					return ($(this).val() === val);
 				});
-			console.log(match + "0" + val);
+		
 
 			if (match.length > 0 && val.length > 0) {
 				val = $('#room').val();
@@ -1074,7 +996,7 @@
 
 				window.location.href = '<?php echo base_url(); ?>fullcalendar?roomId=' + xyz + '&date=' + $('#calendar').fullCalendar('getDate').format('DD.MM.YYYY');
 			} else {
-				//    console.log("dismatch");
+		
 			}
 		});
 
@@ -1088,7 +1010,7 @@
 
 		$("#datepicker").val('<?php echo ($this->input->get("date")); ?>');
 		if ('<?php echo ($this->input->get("date")); ?>') {
-			console.log('<?php echo ($this->input->get("date")); ?>');
+		
 			date = moment('<?php echo ($this->input->get("date")); ?>', "DD.MM.YYYY");
 			$("#calendar").fullCalendar('gotoDate', date);
 			$('.fc-slats tr').css('height', rowHeight + 'px');
@@ -1101,7 +1023,7 @@
 			.on("input change", function(e) {
 				date = moment(e.target.value, "DD.MM.YYYY");
 				$("#calendar").fullCalendar('gotoDate', date);
-				console.log("Date changed: ", date);
+			
 				// $('#calendar').fullCalendar( 'gotoDate', e.target.value )
 				//  window.location.href = '<?php echo site_url(''); ?>fullcalendar?roomId=<?php echo ($this->input->get('roomId')); ?>&date='+ e.target.value;
 				window.history.replaceState("", "", "fullcalendar?roomId=<?php echo ($this->input->get('roomId')); ?>&date=" + e.target.value);
@@ -1201,9 +1123,7 @@
 			if (events[i].timeID != event.timeID && events[i].start != null && events[i].end != null && event.start != null && event.end != null) {
 			
 				if (events[i].start.isBefore(event.end) && events[i].end.isAfter(event.start) && events[i].end> moment().subtract(7, "days")) {
-				//	 console.log(events[i].end<new Date());
-					// console.log(events[i].end._i +" "+event.start._i)
-				//	console.log(new Date(events[i].start)+" i="+new Date(event.end));
+			
 					return events[i];
 				}
 			}
