@@ -2,6 +2,7 @@
 			$this->session->set_flashdata('access_deniedToUrl', 'Sellist ruumi enam ei eksisteeri. Teid suunati avalehele');
 			redirect('');
 		}
+	
 		?>
 <div class="container">
 	<div class="d-flex pt-4" id="widthToggle">
@@ -655,7 +656,11 @@
 
 				$("input:checkbox").each(function() {
 					var $this = $(this);
-
+					var selectedRoomID = $('#saal  option').filter(function() {
+					return $('#room').val();
+					}).data('value');
+					console.log(selectedRoomID);
+				
 					if ($this.is(":checked")) {
 						var id = $this.attr("id");
 					
@@ -665,7 +670,8 @@
 							url: "<?php echo base_url(); ?>fullcalendar/delete",
 							type: "POST",
 							data: {
-								timeID: id
+								timeID: id,
+								selectedRoomID:selectedRoomID
 							},
 							success: function() {
 							
@@ -713,7 +719,9 @@
 						} else {
 							approvedOrNotToDB = 1;
 						}
-
+						var selectedRoomID = $('#saal  option').filter(function() {
+						return $('#room').val();
+						}).data('value');
 
 
 						$.ajax({
@@ -721,7 +729,8 @@
 							type: "POST",
 							data: {
 								timeID: id,
-								approved: approvedOrNotToDB
+								approved: approvedOrNotToDB,
+								selectedRoomID:selectedRoomID
 
 							},
 							success: function() {
@@ -771,6 +780,9 @@
 					} else {
 						approvedOrNotToDB = 0;
 					}
+					var selectedRoomID = $('#saal  option').filter(function() {
+					return $('#room').val();
+					}).data('value');
 
 					if ($this.is(":checked")) {
 						var id = $this.attr("id");
@@ -779,7 +791,8 @@
 							type: "POST",
 							data: {
 								timeID: id,
-								takesPlace: approvedOrNotToDB
+								takesPlace: approvedOrNotToDB,
+								selectedRoomID:selectedRoomID
 
 							},
 							success: function() {

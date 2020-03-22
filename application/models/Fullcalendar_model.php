@@ -19,7 +19,16 @@ class Fullcalendar_model extends CI_Model
 		return $query->result();
       
 	}
-  
+
+	public function collect_all_room_from_user_session_buildingdata($slug){
+		$this->db->select("rooms.id");
+		$this->db->join('rooms', ' buildings.id = rooms.buildingID' , 'left');
+		$query = $this->db->get_where('buildings', array('buildings.id' => $slug));
+		$array = $query->result_array();
+		return array_column($array,"id");
+	
+	}
+
 
 	function update_event($data, $id)
 	{

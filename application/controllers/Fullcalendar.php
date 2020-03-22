@@ -11,23 +11,14 @@ class Fullcalendar extends CI_Controller {
 		$this->load->model('fullcalendar_model');
 	}
 
-	function edit()
-	{
-		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
-		$this->load->view('templates/header');
-		$this->load->view('pages/edit' ,$_POST);
-		$this->load->view('templates/footer');
-		}
-	}
-
-
+	
 	function load($roomId)
 	{
 		$this->input->get('saal', TRUE);
 		$event_data = $this->fullcalendar_model->fetch_all_event();
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
 		foreach($event_data->result_array() as $row)
-			if(	$row['roomID']==$roomId){
+			if(	$row['roomID']==$roomId &&$row['buildingID'] ==$this->session->userdata('building')){
 				
 				{
 					$data[] = array(
@@ -81,39 +72,39 @@ class Fullcalendar extends CI_Controller {
 			}
 
 		}
-		
+		if(!isset($data)){
+			$data="Sorry, no data for you";
+		}
 		echo json_encode($data);
 	}
 
 
-	public function create()
-	{
-		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
-			$this->load->view('templates/header');
-			$this->load->view('pages/booking');
-			$this->load->view('templates/footer');
-		}
-	}
-
-
-	
 
 	function delete()
 	{
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
-			if($this->input->post('timeID'))
-			{
+			$arrayOfRoomIDWhereCanMakeChanges=$this->fullcalendar_model->collect_all_room_from_user_session_buildingdata($this->session->userdata('building'));
+			if (in_array($this->input->post('selectedRoomID'), $arrayOfRoomIDWhereCanMakeChanges)) {
+				if($this->input->post('timeID'))
+				{
 					$this->fullcalendar_model->delete_event($this->input->post('timeID'));
+				}
 			}
+			
+
+		
 		}
 	}
 
 	function deleteAllConnectedBookings()
 	{
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
-			if($this->input->post('bookingID'))
-			{
-				$this->fullcalendar_model->deleteTImesAndBooking($this->input->post('bookingID'));
+			$arrayOfRoomIDWhereCanMakeChanges=$this->fullcalendar_model->collect_all_room_from_user_session_buildingdata($this->session->userdata('building'));
+			if (in_array($this->input->post('selectedRoomID'), $arrayOfRoomIDWhereCanMakeChanges)) {
+				if($this->input->post('bookingID'))
+				{
+					$this->fullcalendar_model->deleteTImesAndBooking($this->input->post('bookingID'));
+				}
 			}
 		}
 	}
@@ -122,13 +113,16 @@ class Fullcalendar extends CI_Controller {
 	function approveEvents()
 	{
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
-			if($this->input->post('timeID'))
-			{
-				$data = array(
-					'approved'			=>	$this->input->post('approved'),
-					);
+			$arrayOfRoomIDWhereCanMakeChanges=$this->fullcalendar_model->collect_all_room_from_user_session_buildingdata($this->session->userdata('building'));
+			if (in_array($this->input->post('selectedRoomID'), $arrayOfRoomIDWhereCanMakeChanges)) {
+				if($this->input->post('timeID'))
+				{
+					$data = array(
+						'approved'			=>	$this->input->post('approved'),
+						);
 
-				$this->fullcalendar_model->update_event($data, $this->input->post('timeID'));
+					$this->fullcalendar_model->update_event($data, $this->input->post('timeID'));
+				}	
 			}	
 		}
 	}
@@ -137,13 +131,16 @@ class Fullcalendar extends CI_Controller {
 	function takesPlace()
 	{
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
-			if($this->input->post('timeID'))
-			{
-				$data = array(
-					'takes_place'			=>	$this->input->post('takesPlace'),
-					);
+			$arrayOfRoomIDWhereCanMakeChanges=$this->fullcalendar_model->collect_all_room_from_user_session_buildingdata($this->session->userdata('building'));
+			if (in_array($this->input->post('selectedRoomID'), $arrayOfRoomIDWhereCanMakeChanges)) {
+				if($this->input->post('timeID'))
+				{
+					$data = array(
+						'takes_place'			=>	$this->input->post('takesPlace'),
+						);
 
-				$this->fullcalendar_model->update_event($data, $this->input->post('timeID'));
+					$this->fullcalendar_model->update_event($data, $this->input->post('timeID'));
+				}
 			}
 		}
 	}
