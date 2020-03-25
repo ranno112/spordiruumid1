@@ -19,7 +19,7 @@ CREATE TABLE `bookings` (
   `typeID` int(11) DEFAULT NULL,
   `public_info` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `c_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `c_phone` int(11) DEFAULT NULL,
+  `c_phone` varchar(12) DEFAULT NULL,
   `c_email` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `comment` text CHARACTER SET utf8 COLLATE utf8_bin,
   `comment_inner` text CHARACTER SET utf8 COLLATE utf8_bin,
@@ -44,7 +44,6 @@ CREATE TABLE `users` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
    PRIMARY KEY (userID)
 );
-
 
 CREATE TABLE `bookingTypes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -82,7 +81,6 @@ CREATE TABLE `buildings` (
    PRIMARY KEY (id)
 );
 
-
 CREATE TABLE `regions` (
   `regionID` int(11) NOT NULL AUTO_INCREMENT,
   `regionName` varchar(255) NOT NULL,
@@ -97,7 +95,6 @@ INSERT INTO `regions` (`regionID`, `regionName`) VALUES
 (4, 'Tõstamaa'),
 (5, 'Paikuse');
 
-
 CREATE TABLE `rooms` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `buildingID` int(11) NOT NULL,
@@ -107,12 +104,12 @@ CREATE TABLE `rooms` (
    PRIMARY KEY (id)
 );
 
-
 CREATE TABLE `userRoles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `role` varchar(255) NOT NULL,
    PRIMARY KEY (id)
 );
+
 INSERT INTO `userRoles` (`id`, `role`) VALUES
 (1, 'Admin'),
 (2, 'Juht'),
