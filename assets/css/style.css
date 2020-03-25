@@ -341,7 +341,7 @@
   /* START - esilehe pildi container */
 
   .img-container{
-    background:url('../img/welcome.jfif'); 
+		background:url('../img/p2rnu_over.jpg'); 
     background-size:cover;
     height:96vh;/*It will cover whole BODY*/
     background-position: center;

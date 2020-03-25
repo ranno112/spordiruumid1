@@ -78,9 +78,9 @@
 
 				<?php if (!$this->session->userdata('session_id')) { ?>
 					<div class="col-2 p-0 bg-blue info-label text-white px-3 py-2">
-						<p class="txt-strong">Broneerimiseks helista või kirjuta:</p>
-						<p><?php echo $rooms['notify_email']; ?></p>
-						<p><?php echo $rooms['phone']; ?></p>
+						<p class="txt-strong">Broneerimiseks kirjuta või helista:</p>
+						<p><?php echo $rooms['notify_email'].', '. $rooms['phone']; ?></p>
+						<p><?php echo $rooms['price_url']; ?></p>
 					<?php }; ?>
 					</div>
 
