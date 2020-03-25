@@ -32,13 +32,13 @@
 				 $sub_array[] =  date('H:i', strtotime($row->endTime)); 
 				 $sub_array[] = round(abs( strtotime($row->endTime) -  strtotime($row->startTime)) / 60,2);
 				 $sub_array[] = $ApprovedData;   
-				 $sub_array[] = $row->public_info;  
-				 $sub_array[] = $row->workout;  
-				 $sub_array[] = $row->comment;  
-				 $sub_array[] = $row->c_name;  
-				 $sub_array[] = $phoneIsNotZero;  
-				 $sub_array[] = $row->c_email;  
-				 $sub_array[] = $TakesPlacesData;  
+				 $sub_array[] = $this->security->xss_clean($row->public_info);  
+				 $sub_array[] = $this->security->xss_clean($row->workout);  
+				 $sub_array[] = $this->security->xss_clean($row->comment);  
+				 $sub_array[] = $this->security->xss_clean($row->c_name);  
+				 $sub_array[] = $this->security->xss_clean($phoneIsNotZero);  
+				 $sub_array[] = $this->security->xss_clean($row->c_email);  
+				 $sub_array[] = $this->security->xss_clean($TakesPlacesData);  
 				 
 				 $sub_array[] = '<a href="'.base_url().'fullcalendar?roomId='.$row->roomID.'&date='.$savedDate.'"><button type="button" name="update" id="'.$row->timeID.'" class="btn btn-info info btn-sm ">Kalendrist</button></a>';
 			
@@ -51,18 +51,22 @@
 				 "recordsFiltered"     =>     $this->allbookings_model->get_filtered_data(),  
 				 "data"                    =>     $data  
 			);  
+		
+		
 			echo json_encode($output);  
 	   }  
 
 
 		public function index(){
+		
 			$data['weekdays']=array('Pühapäev','Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev');
 			$data['manageUsers'] = $this->allbookings_model->get_bookings();
+		
 			if(null!==$this->session->userdata('building')){
 				$data['unapprovedBookings'] = $this->allbookings_model->getUnapprovedBookings($this->session->userdata('building'), $this->session->userdata('room'));
 				
 				}
-		
+			$data['xssData'] = $this->security->xss_clean($data);
 			$this->load->view('templates/header', $data);
 			$this->load->view('pages/allbookings', $data);
 			$this->load->view('templates/footer');

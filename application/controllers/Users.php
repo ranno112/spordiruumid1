@@ -264,11 +264,11 @@
 				 $sub_array = array();  
 		
 			
-				 $sub_array[] = $row->public_info;  
+				 $sub_array[] = $this->security->xss_clean($row->public_info);  
 		
-				 $sub_array[] = $row->c_name;  
-				 $sub_array[] = $phoneIsNotZero;  
-				 $sub_array[] = $row->c_email;  
+				 $sub_array[] = $this->security->xss_clean($row->c_name);  
+				 $sub_array[] = $this->security->xss_clean($phoneIsNotZero);  
+				 $sub_array[] = $this->security->xss_clean($row->c_email);  
 			
 				 
 			
