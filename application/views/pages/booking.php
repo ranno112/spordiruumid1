@@ -82,12 +82,12 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                         </div>
                         <div class="d-flex mt-2 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
-                                <label>Telefoni number <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?></label>
+                                <label>Telefon <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?></label>
                                 <input class="form-control" id="phoneForSingle" name="phone" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
                             </div>
 
                             <div class="form-label-group col-6 p-0 pl-5">
-                                <label>Email</label>
+                                <label>Email <?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?></label>
                                 <input class="form-control" id="emailForSingle" name="email" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
                             </div>
                         </div>
@@ -119,7 +119,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                         <div class="d-flex mt-2 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
                                 <label>Sündmus / Treeningu tüüp (avalik info)</label>
-                                <input class="form-control" id="typePeriod" name="workoutType" placeholder="nt iluvõimlemine" >
+                                <input class="form-control" id="typePeriod" name="workoutType" placeholder="nt iluvõimlemine" value="<?php if(isset($data['workoutType'])){ echo $data['workoutType'];}?>">
                             </div>
                             <div class="form-label-group col-6 p-0 pl-5"></div>
                         </div>
@@ -545,6 +545,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
 		$('#myModal').on('hidden.bs.modal', function (e) {
 			$('#approvePeriodNow').prop('checked', true);
+			$('#approveNow').prop('checked', true);
 			$("#myTable").find("tr:gt(0)").remove();
 		});
 		var days=['Pühapäev', 'Esmaspäev', 'Teisipäev', 'Kolmapäev', 'Neljapäev', 'Reede', 'Laupäev'];
@@ -932,16 +933,17 @@ var allConflictsFromBE=JSON.stringify(<?php echo json_encode($conflictDates);?>)
 
 console.log(allConflictsFromBE);
 if(hasJsonStructure(allConflictsFromBE)){
-//console.log(allConflictsFromBE);
+	//console.log(allConflictsFromBE);
 
-var conflict = JSON.parse(allConflictsFromBE);
-conflict.forEach(function(item) {
-   // console.log(item.public_info+":  "+item.startTime+"-"+item.endTime);
-    $('#myTable > tbody:last-child').append('<tr><td>'+days[new Date(item.startTime.substring(0, 10)).getDay()]+'</td><td>'+moment(item.startTime.substring(0, 10), "YYYY-MM-DD").format("DD.MM.YYYY")+'</td><td>'+ item.startTime.substring(11, 16)+"-"+item.endTime.substring(11, 16)+'</td><td>'+item.workout+'</td><td>'+item.public_info+'</td></tr>');
- 
-});
-$('#approvePeriodNow').prop('checked', false);//kinnitus võetakse automaatselt maha
- $('#myModal').modal('show')
+	var conflict = JSON.parse(allConflictsFromBE);
+	conflict.forEach(function(item) {
+	// console.log(item.public_info+":  "+item.startTime+"-"+item.endTime);
+		$('#myTable > tbody:last-child').append('<tr><td>'+days[new Date(item.startTime.substring(0, 10)).getDay()]+'</td><td>'+moment(item.startTime.substring(0, 10), "YYYY-MM-DD").format("DD.MM.YYYY")+'</td><td>'+ item.startTime.substring(11, 16)+"-"+item.endTime.substring(11, 16)+'</td><td>'+item.workout+'</td><td>'+item.public_info+'</td></tr>');
+	
+		});
+	$('#approvePeriodNow').prop('checked', false);//kinnitus võetakse automaatselt maha
+	$('#approveNow').prop('checked', false);//kinnitus võetakse automaatselt maha
+		$('#myModal').modal('show')
 }
 
 

@@ -84,7 +84,7 @@ class Booking extends CI_Controller {
 			}
 		else if(!preg_match('/^\+?[\d\s]+$/', $str))
 			{
-					$this->session->set_flashdata('phoneIsNotCorrect', "<small class='text-danger'>Telefoninumbri formaat ei sobi</small>");
+					$this->session->set_flashdata('phoneIsNotCorrect', "<small class='text-danger'>Numbri formaat ei sobi</small>");
 					return FALSE;
 			}
 			else
@@ -312,13 +312,14 @@ class Booking extends CI_Controller {
 			$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
 			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactTerson_check');
 			$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
-		//	$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
-			
+			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
+			$this->form_validation->set_rules('workoutType', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars');
+			$this->form_validation->set_rules('comment2', 'Lisainfo', 'trim|htmlspecialchars');
 		
 			if($this->form_validation->run() === FALSE ){
 			
 				$postData['error'] = validation_errors() ;
-			
+				$this->session->set_flashdata("emailIsNotCorrect",form_error('email', '<small class="text-danger">','</small>'));
 				$this->session->set_flashdata('data', $this->input->post())." vahepealne info läks kaduma";
 
 				if($this->input->post('dontShow')!=1){
