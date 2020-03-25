@@ -76,13 +76,13 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                             <input class="d-none" type="checkbox" id="typeOnce" name="type" value="1" checked>
                             <input class="d-none" type="checkbox" id="allowFormToSubmitAndNeverMindConflicts1" name="allowSave" value="0" checked>
                             <div class="form-label-group col-6 p-0 pl-5">
-                                <label>Kontaktisik*</label>
+                                <label>Kontaktisik*	<?php if($this->session->flashdata('validationErrorMessageContactPerson')){  echo $this->session->flashdata('validationErrorMessageContactPerson');} ?> </label>
                                 <input class="form-control" id="contactForSingle" name="contactPerson" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>">
                             </div>
                         </div>
                         <div class="d-flex mt-2 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
-                                <label>Telefoni number</label>
+                                <label>Telefoni number <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?></label>
                                 <input class="form-control" id="phoneForSingle" name="phone" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
                             </div>
 

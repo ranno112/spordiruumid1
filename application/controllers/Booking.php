@@ -35,9 +35,30 @@ class Booking extends CI_Controller {
 	{
 			if ($str == '')
 			{
-					$this->session->set_flashdata('validationErrorMessage', "<small class='text-danger'>See väli on kohustuslik</small>");
-					return FALSE;
+				$this->session->set_flashdata('validationErrorMessage', "<small class='text-danger'>See väli on kohustuslik</small>");
+				return FALSE;
 			}
+			else if(!preg_match("/^[a-zA-Z0-9 -.,:']+$/", $str)){
+				$this->session->set_flashdata('validationErrorMessage', "<small class='text-danger'>Sellised märgid ei ole lubatud</small>");
+				return FALSE;
+			}
+
+			else
+			{
+					return TRUE;
+			}
+	}
+	public function contactTerson_check($str= '')
+	{
+			if ($str == '')
+			{
+				return TRUE;
+			}
+			else if(!preg_match("/[a-zA-Z0-9 -.,\']+$/", $str)){
+				$this->session->set_flashdata('validationErrorMessageContactPerson', "<small class='text-danger'>Sellised märgid ei ole lubatud</small>");
+				return FALSE;
+			}
+
 			else
 			{
 					return TRUE;
@@ -55,6 +76,23 @@ class Booking extends CI_Controller {
 					return TRUE;
 			}
 	}
+	public function phoneNumber_check($str= '')
+	{
+		if ($str == '')
+			{
+				return TRUE;
+			}
+		else if(!preg_match('/^\+?[\d\s]+$/', $str))
+			{
+					$this->session->set_flashdata('phoneIsNotCorrect', "<small class='text-danger'>Telefoninumbri formaat ei sobi</small>");
+					return FALSE;
+			}
+			else
+			{
+					return TRUE;
+			}
+	}
+
 
 	public function createClosed()
 	{
@@ -271,20 +309,25 @@ class Booking extends CI_Controller {
 			$postData = $_POST;
 			$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
 			$data['allBookingInfo'] = $this->booking_model->getAllBookings();
-		$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
+			$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
+			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactTerson_check');
+			$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
+		//	$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
+			
+		
 			if($this->form_validation->run() === FALSE ){
 			
 				$postData['error'] = validation_errors() ;
-				$this->session->set_flashdata("message","eroor".form_error());
-				$this->session->set_flashdata('data', $this->input->post());
+			
+				$this->session->set_flashdata('data', $this->input->post())." vahepealne info läks kaduma";
 
 				if($this->input->post('dontShow')!=1){
-				$this->session->set_flashdata('access_deniedToUrl', 'Midagi on selle vormiga valesti. Palun vaata kõik väljad üle');
-				$this->session->set_flashdata('errors', validation_errors());
+				$this->session->set_flashdata('access_deniedToUrl', 'Midagi on selle vormiga valesti. Palun vaata kõik väljad üle'.$this->input->post('current_url'));
+			
 				}
 				
-				$this->session->set_flashdata('key',$postData);
-				redirect( $this ->input->post('current_url'));
+				$this->session->set_flashdata('key',$this->security->xss_clean($postData));
+				redirect( $this->input->post('current_url'));
 
 			} 
 		$data['rooms'] = $this->booking_model->getAllRooms();
@@ -382,7 +425,7 @@ class Booking extends CI_Controller {
    
 		 $this->booking_model->create_bookingTimes('');
 
-			$this->session->set_flashdata('key',$postData);
+			$this->session->set_flashdata('key',$this->security->xss_clean($postData));
 			$this->session->set_flashdata('conflictDates', $this->security->xss_clean($insert_data3));
 			
 			$this->load->view('templates/header');
