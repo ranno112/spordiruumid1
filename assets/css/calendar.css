@@ -151,9 +151,15 @@
 }
 
 .fc-center h2 {
+	float:left;
     width: 310px;
     margin: 0;
     padding: 0;
+}
+
+.fc-prev-button {
+	float:left;
+
 }
 
 .notice {
