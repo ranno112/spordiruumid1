@@ -928,9 +928,10 @@ function hasJsonStructure(str) {
 
 
 	
-var allConflictsFromBE='<?php echo json_encode($conflictDates);?>';
+var allConflictsFromBE=JSON.stringify(<?php echo json_encode($conflictDates);?>);
+
+console.log(allConflictsFromBE);
 if(hasJsonStructure(allConflictsFromBE)){
-console.log("peaks tulem");
 //console.log(allConflictsFromBE);
 
 var conflict = JSON.parse(allConflictsFromBE);

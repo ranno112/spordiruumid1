@@ -271,7 +271,7 @@ class Booking extends CI_Controller {
 			$postData = $_POST;
 			$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
 			$data['allBookingInfo'] = $this->booking_model->getAllBookings();
-		$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|required|callback_clubname_check');
+		$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
 			if($this->form_validation->run() === FALSE ){
 			
 				$postData['error'] = validation_errors() ;
