@@ -383,7 +383,7 @@ class Booking extends CI_Controller {
 		 $this->booking_model->create_bookingTimes('');
 
 			$this->session->set_flashdata('key',$postData);
-			$this->session->set_flashdata('conflictDates',$insert_data3);
+			$this->session->set_flashdata('conflictDates', $this->security->xss_clean($insert_data3));
 			
 			$this->load->view('templates/header');
 			$this->load->view('pages/booking', $data);

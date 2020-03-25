@@ -608,6 +608,9 @@
 		});
 
 		$("#delete").submit(function(event) {
+			var selectedRoomID = $('#saal  option').filter(function() {
+					return $('#room').val();
+					}).data('value');
 			if ($('.abc:checked').length == $('.abc').length) {
 				if (confirm("Oled kindel kustutada KÕIK ajad?")) {
 					event.preventDefault();
@@ -620,7 +623,8 @@
 					url: "<?php echo base_url(); ?>fullcalendar/deleteAllConnectedBookings",
 					type: "POST",
 					data: {
-						bookingID: id
+						bookingID: id,
+						selectedRoomID:selectedRoomID
 					},
 					success: function() {
 						calendar.fullCalendar('refetchEvents');
@@ -656,16 +660,11 @@
 
 				$("input:checkbox").each(function() {
 					var $this = $(this);
-					var selectedRoomID = $('#saal  option').filter(function() {
-					return $('#room').val();
-					}).data('value');
+			
 					console.log(selectedRoomID);
 				
 					if ($this.is(":checked")) {
 						var id = $this.attr("id");
-					
-
-
 						$.ajax({
 							url: "<?php echo base_url(); ?>fullcalendar/delete",
 							type: "POST",
