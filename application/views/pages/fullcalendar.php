@@ -792,7 +792,23 @@
 					}
 				});
 			} else {
-				swal("Sa ei valinud midagi mida kinnitada");
+			//	swal("Sa ei valinud midagi mida kinnitada");
+			
+			swal({
+				title: "Good job",
+				text: "You clicked the button!",
+				icon: "success",
+				buttons: [
+					'NO',
+					'YES'
+				],
+				}).then(function(isConfirm) {
+				if (isConfirm) {
+					location.reload();
+				} else {
+					//if no clicked => do something else
+				}
+				});
 				event.preventDefault();
 			}
 
