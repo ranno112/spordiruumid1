@@ -445,8 +445,54 @@
 		
 			eventResize: function(event) {
 			
-				calendar.fullCalendar('refetchEvents');
-				alert("Muutsid hetkeks trenni aega, see läheb tagasi oma kohale peale OK nupule vajutamist");
+				if(!(moment($.fullCalendar.formatDate(event.start, "Y-MM-DD")).isSame($.fullCalendar.formatDate(event.end, "Y-MM-DD")))){
+					swal({
+						icon: 'info',
+						title: "Trenni lõpuaeg peab jääma samale päevale!",
+						content: "input",
+					}).then((value) => {
+						swal(`You typed: ${value}`);
+						});
+					calendar.fullCalendar('refetchEvents');
+				event.preventDefault();
+				}
+			
+				swal({
+					title:  "Kas salvestan uut lõpuaega? ",
+					input: 'text',
+					showClass: {
+					popup: 'animated fadeInDown faster'
+				},
+				hideClass: {
+					popup: 'animated fadeOutUp faster'
+				},
+					buttons: [
+						'Ei',
+						'Jah'
+					],
+					}).then(function(isConfirm) {
+					if (isConfirm) {
+						$.ajax({
+						url:"<?php echo base_url(); ?>fullcalendar/updateEvent",
+						type:"POST",
+						data: {
+							start: $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss"),
+							end: $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss"),
+							timeID: event.timeID,
+							selectedRoomID: event.roomID,
+						},
+						success:function()
+						{
+							
+							calendar.fullCalendar('refetchEvents');
+						
+						}
+					})
+					} else {
+						calendar.fullCalendar('refetchEvents');
+					}
+					});
+
 			},
 			
 			eventDrop: function(event) {
@@ -461,6 +507,7 @@
 					takesPlace: event.takesPlace,
 					approved: event.approved,
 					typeID: event.typeID,
+					selectedRoomID: event.roomID,
 				};
 				if (copyKey) {
 				
@@ -835,7 +882,7 @@
 					}
 				});
 			} else {
-			//	swal("Sa ei valinud midagi mida kinnitada");
+				swal("Sa ei valinud midagi mida kinnitada");
 			
 			swal({
 				title: "Good job",

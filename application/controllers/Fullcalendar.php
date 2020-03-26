@@ -81,7 +81,9 @@ class Fullcalendar extends CI_Controller {
 
 	function insert()
 	{
-		
+		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+			$arrayOfRoomIDWhereCanMakeChanges=$this->fullcalendar_model->collect_all_room_from_user_session_buildingdata($this->session->userdata('building'));
+			if (in_array($this->input->post('selectedRoomID'), $arrayOfRoomIDWhereCanMakeChanges)) {
 			$data = array(
 				'roomID'			=>	$this->input->post('roomID'),
 				'startTime'	=>	$this->input->post('start'),
@@ -91,10 +93,10 @@ class Fullcalendar extends CI_Controller {
 				'takes_place'		=>	$this->input->post('takesPlace'),
 				'approved'			=>	$this->input->post('approved')
 			);
-
-
 			$this->fullcalendar_model->insert_event($data);
-	
+		
+		}
+	}
 	}
 
 
