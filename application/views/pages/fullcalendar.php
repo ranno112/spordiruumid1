@@ -296,6 +296,14 @@
 <script>
 	var counter = 0;
 	$(document).ready(function() {
+
+		var copyKey = false;
+		$(document).keydown(function (e) {
+			copyKey = e.shiftKey;
+		}).keyup(function () {
+			copyKey = false;
+		});
+
 		var days = ['P', 'E', 'T', 'K', 'N', 'R', 'L'];
 		var displayOrNot = '<?php echo $this->session->userdata('roleID') ?>';
 
@@ -433,15 +441,47 @@
 
 			},
 			editable: (displayOrNot == 2 || displayOrNot == 3) ? true:false,
+			
+		
 			eventResize: function(event) {
 			
 				calendar.fullCalendar('refetchEvents');
 				alert("Muutsid hetkeks trenni aega, see läheb tagasi oma kohale peale OK nupule vajutamist");
 			},
+			
 			eventDrop: function(event) {
+			console.log(event);
+				if (copyKey) {
+				var eClone = {
+					
+					start: $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss"),
+					end: $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss"),
+					roomID: event.roomID,
+					bookingID: event.bookingID,
+					color: event.color,
+					takesPlace: event.takesPlace,
+					approved: event.approved,
+					typeID: event.typeID,
+				};
+			
+				$.ajax({
+                    url:"<?php echo base_url(); ?>fullcalendar/insert",
+                    type:"POST",
+                    data:eClone,
+                    success:function()
+                    {
+						console.log( eClone);
+                        calendar.fullCalendar('refetchEvents');
+                     
+                    }
+                })
+
 				
+			}else{
+			
+				alert("Tõstsid korraks trenni eest ära, see läheb tagasi oma kohale peale OK nupule vajutamist");}
+			//	$('#calendar').fullCalendar('renderEvent', event, true);
 				calendar.fullCalendar('refetchEvents');
-				alert("Tõstsid korraks trenni eest ära, see läheb tagasi oma kohale peale OK nupule vajutamist");
 			},
 		
 
@@ -492,7 +532,7 @@
 				//     $('#event_out').val(moment(event.event_out).format('DD/MM/YYYY HH:mm'));
 				// }
 			
-				var id = event.id;
+				var id = event.bookingID;
 			
 				var events = $('#calendar').fullCalendar('clientEvents');
 				$('tbody').attr('id', id);
@@ -514,7 +554,7 @@
 						arrayOfTitles.push(events[i].title);
 						
 					}
-					if (event.id == Bid) {
+					if (event.bookingID == Bid) {
 						eventToCheck.push(events[i]);
 
 					}
@@ -1119,7 +1159,7 @@
 	function isOverlapping(event) {
 		var array = $('#calendar').fullCalendar('clientEvents');
 		for (var i in array) {
-			if (array[i].id != event.id && array[i].start != null && array[i].end != null && event.start != null && event.end != null) {
+			if (array[i].bookingID != event.bookingID && array[i].start != null && array[i].end != null && event.start != null && event.end != null) {
 				if (array[i].start.isBefore(event.end) && array[i].end.isAfter(event.start)) {
 					return true;
 				}

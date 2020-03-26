@@ -22,7 +22,7 @@ class Fullcalendar extends CI_Controller {
 				
 				{
 					$data[] = array(
-						'id'	=>	$row['bookingID'],
+						'id'	=>	$row['timeID'],
 						'roomID'	=>	$row['roomID'],
 						'timeID'=>	$row['timeID'],
 						'title'	=>	$row['public_info'],
@@ -78,6 +78,24 @@ class Fullcalendar extends CI_Controller {
 		echo json_encode($data);
 	}
 
+
+	function insert()
+	{
+		
+			$data = array(
+				'roomID'			=>	$this->input->post('roomID'),
+				'startTime'	=>	$this->input->post('start'),
+				'endTime'		=>	$this->input->post('end'),
+				'bookingID'			=>	$this->input->post('bookingID'),
+				'bookingTimeColor'	=>	$this->input->post('color'),
+				'takes_place'		=>	$this->input->post('takesPlace'),
+				'approved'			=>	$this->input->post('approved')
+			);
+
+
+			$this->fullcalendar_model->insert_event($data);
+	
+	}
 
 
 	function delete()
@@ -164,6 +182,8 @@ class Fullcalendar extends CI_Controller {
 	  echo $this->home_model->fetch_building($this->input->post('state_id'));
 	 }
 	}
+
+
 
 
 }
