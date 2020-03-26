@@ -502,16 +502,17 @@
 					}).then(function(isConfirm) {
 					if (isConfirm) {
 						$.ajax({
-						url:"<?php echo base_url(); ?>fullcalendar/approveEvents",
+						url:"<?php echo base_url(); ?>fullcalendar/updateEvent",
 						type:"POST",
 						data: {
 							start: $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss"),
 							end: $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss"),
 							timeID: event.timeID,
+							selectedRoomID: $.fullCalendar.formatDate(event.roomID, "Y-MM-DD HH:mm:ss"),
 						},
 						success:function()
 						{
-							console.log( data);
+							
 							calendar.fullCalendar('refetchEvents');
 						
 						}
