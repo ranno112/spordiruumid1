@@ -508,7 +508,7 @@
 							start: $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss"),
 							end: $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss"),
 							timeID: event.timeID,
-							selectedRoomID: $.fullCalendar.formatDate(event.roomID, "Y-MM-DD HH:mm:ss"),
+							selectedRoomID: event.roomID,
 						},
 						success:function()
 						{
