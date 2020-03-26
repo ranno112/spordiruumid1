@@ -127,6 +127,25 @@ class Fullcalendar extends CI_Controller {
 		}
 	}
 
+	function updateEvent()
+	{
+		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+			$arrayOfRoomIDWhereCanMakeChanges=$this->fullcalendar_model->collect_all_room_from_user_session_buildingdata($this->session->userdata('building'));
+			if (in_array($this->input->post('selectedRoomID'), $arrayOfRoomIDWhereCanMakeChanges)) {
+				if($this->input->post('timeID'))
+				{
+					$data = array(
+						'startTime'	=>	$this->input->post('start'),
+						'endTime'		=>	$this->input->post('end'),
+						);
+
+					$this->fullcalendar_model->update_event($data, $this->input->post('timeID'));
+				}	
+			}	
+		}
+	}
+
+
 
 	function approveEvents()
 	{

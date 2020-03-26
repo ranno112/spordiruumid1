@@ -451,8 +451,7 @@
 			
 			eventDrop: function(event) {
 			console.log(event);
-				if (copyKey) {
-				var eClone = {
+			var eClone = {
 					
 					start: $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss"),
 					end: $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss"),
@@ -463,25 +462,68 @@
 					approved: event.approved,
 					typeID: event.typeID,
 				};
-			
-				$.ajax({
-                    url:"<?php echo base_url(); ?>fullcalendar/insert",
-                    type:"POST",
-                    data:eClone,
-                    success:function()
-                    {
-						console.log( eClone);
-                        calendar.fullCalendar('refetchEvents');
-                     
-                    }
-                })
-
+				if (copyKey) {
 				
-			}else{
+				swal({
+
+					title: "Kas teen dublikaadi?",
+					buttons: [
+						'Ei',
+						'Jah'
+					],
+					}).then(function(isConfirm) {
+					if (isConfirm) {
+						$.ajax({
+						url:"<?php echo base_url(); ?>fullcalendar/insert",
+						type:"POST",
+						data:eClone,
+						success:function()
+						{
+							console.log( eClone);
+							calendar.fullCalendar('refetchEvents');
+						
+						}
+					})
+					} else {
+						calendar.fullCalendar('refetchEvents');
+					}
+					});
+				event.preventDefault();
+		
 			
-				alert("Tõstsid korraks trenni eest ära, see läheb tagasi oma kohale peale OK nupule vajutamist");}
-			//	$('#calendar').fullCalendar('renderEvent', event, true);
-				calendar.fullCalendar('refetchEvents');
+			}else{
+				swal({
+					title:  "Kas salvestan uut asukohta? ",
+					text: "Kui soovid teha dublikaadi, siis hoia lohistamise ajal SHIFT klahvi all",
+					buttons: [
+						'Ei',
+						'Jah'
+					],
+					}).then(function(isConfirm) {
+					if (isConfirm) {
+						$.ajax({
+						url:"<?php echo base_url(); ?>fullcalendar/approveEvents",
+						type:"POST",
+						data: {
+							start: $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss"),
+							end: $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss"),
+							timeID: event.timeID,
+						},
+						success:function()
+						{
+							console.log( data);
+							calendar.fullCalendar('refetchEvents');
+						
+						}
+					})
+					} else {
+						calendar.fullCalendar('refetchEvents');
+					}
+					});
+					//event.preventDefault();
+					
+				}
+				
 			},
 		
 
@@ -797,7 +839,6 @@
 			swal({
 				title: "Good job",
 				text: "You clicked the button!",
-				icon: "success",
 				buttons: [
 					'NO',
 					'YES'
