@@ -6,12 +6,12 @@
 				<ul class="nav nav-tabs nav-justified col-12 bg-grey">
 
 				<?php if ($_POST['isPeriodic'] == 0):?>	
-				<li class="nav-item"><a class="nav-link link txt-lg single-tab active" href="#mitmekordne" data-toggle="tab">Ühekordne broneering</a></li>
-				<li class="nav-item"><a class="nav-link link txt-lg  " href="#hooajaline" data-toggle="tab">Hooajaline broneering</a></li>
+				<li class="nav-item"><a class="nav-link link txt-lg single-tab active" href="#mitmekordne" data-toggle="tab">Broneeringu muudatus</a></li>
+			
 				<?php endif;?>
 				<?php if ($_POST['isPeriodic'] == 1):?>
-					<li class="nav-item"><a class="nav-link link txt-lg single-tab " href="#mitmekordne" data-toggle="tab">Ühekordne broneering</a></li>
-					<li class="nav-item"><a class="nav-link link txt-lg  active" href="#hooajaline" data-toggle="tab">Hooajaline broneering</a></li>
+				
+					<li class="nav-item"><a class="nav-link link txt-lg  active" href="#hooajaline" data-toggle="tab">Hooajaline broneeringu muutmine</a></li>
 					<?php endif;?>
 					<li class="nav-item"></li>
 				</ul>
@@ -93,7 +93,7 @@
 											<td id="kp" class="text-white txt-regular td-width-s p-1 pl-3">Kuupäev</td>
 											<td id="alates" class="text-white txt-regular td-width-s p-1 pl-3">Alates</td>
 											<td id="kuni" class="text-white txt-regular td-width-s p-1 pl-3">Kuni</td>
-											<td id="kuni" class="text-white txt-regular td-width-s p-1 pl-3">Värv</td>
+											<td id="color" class="text-white txt-regular td-width-s p-1 pl-3">Värv</td>
 										</tr><br />
 										<!-- Genereerib automaatselt -->
 									</tbody>
@@ -112,6 +112,9 @@
 							<div class="form-label-group pb-2 px-0">
 								<label>Lisainfo</label>
 								<textarea class="form-control" id="additional" name="additionalComment" rows="3"></textarea>
+							</br>
+								<label>Muutmise põhjus</label>
+								<input class="form-control" id="reason" name="reason" rows="3"></input>
 							</div>
 						</div>
 						<input class="d-none" type="hidden" name="BookingID" id="BookingID" value="<?php echo $_POST['BookingID']; ?>">
@@ -228,7 +231,7 @@
 								<table id="myTablePeriod" class="table table-borderless">
 									<thead>
 										<tr>
-											<th colspan=2 class="txt-regular txt-lg p-0">Muudetakse kõiki alljärgnevaid aegu</th>
+											<th colspan="3" class="txt-regular txt-lg p-0">Muudetakse kõiki alljärgnevaid aegu ja värve</th>
 											<th class="p-0"></th>
 								
 											<th class="p-0"></th>
@@ -237,8 +240,9 @@
 									</thead>
 									<tbody>
 										<tr class="bg-blue mb-5">
-											<td id="month" class="text-white txt-regular td-width-l p-1">Nädalapäev ja kuupäev</td>
+											<td id="month" class="text-white txt-regular td-width-l p-1">Kuupäev</td>
 											<td id="blank" class="text-white txt-regular td-width-m p-1">Aeg</td>
+											<td id="blank" class="text-white txt-regular td-width-m p-1">Värv</td>
 											<td id="blank" colspan=3 class="text-white txt-regular td-width-m p-1"></td>
 										
 										</tr><br />
@@ -260,6 +264,7 @@
 								<textarea class="form-control" id="additionalPeriod" name="additionalCommentPeriod" rows="3"></textarea>
 							</div>
 						</div>
+						
 						<input class="d-none" type="hidden" name="weekendNumber" id="weekendNumber" value="">
 						<input class="d-none" type="hidden" name="BookingID" id="BookingID" value="<?php echo $_POST['BookingID']; ?>">
 						<input class="d-none" type="hidden" name="isPeriodic" id="isPeriodic" value="<?php echo $_POST['isPeriodic']; ?>">
@@ -366,7 +371,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 		$.post("<?php echo base_url(); ?>edit/load/<?php echo $_POST['BookingID']; ?>",
 			function(data) {
 				var res = $.parseJSON(data);
-
+				console.log(res);
 				var days = ['P', 'E', 'T', 'K', 'N', 'R', 'L'];
 				var weekDays= ['Pühapäev', 'Esmaspäev', 'Teisipäev', 'Kolmapäev', 'Neljapäev', 'Reede', 'Laupäev'];
 				var conflicts = "";
@@ -465,7 +470,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 
 					var eventColor=obj.color;
 					console.log(eventColor);
-					if(eventColor==null){
+					if(!eventColor){
 						eventColor='#ffffff';
 					}
 				
@@ -495,7 +500,8 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 							if(startPeriodTime==moment(start).format("HH.mm")&&endPeriodTime==moment(end).format("HH.mm")){
 							console.log("aeg klapib");
 
-							$('#myTablePeriod > tbody').append(' <tr id="' + BTimesid + '"> <td class="td-width-l"><b>' + days[new Date(start).getDay()] + '</b>, ' + moment(start).format("DD.MM.YYYY") + '</td><td class="td-width-m">' + moment(start).format("HH.mm") + '–' + moment(end).format("HH.mm") + '</td><td class="td-width-s pl-3"></td><td class="td-width-s pl-3"><input class="d-none" type="hidden" name="timesIdArray[]"  value="' +BTimesid +'"></td>  <td class="td-width-s pl-3" >	<input class="d-none" type="hidden" name="bookingtimesFrom[' + counter + ']"  value="' + moment(start).format("DD.MM.YYYY") +'"></td></tr>');
+							$('#myTablePeriod > tbody').append(' <tr id="' + BTimesid + '"> <td class="td-width-l"><b>' + days[new Date(start).getDay()] + '</b>, ' + moment(start).format("DD.MM.YYYY") + '</td><td class="td-width-s pl-3">' + moment(start).format("HH.mm") + '–' + moment(end).format("HH.mm") + '</td>'+
+							'<td class="td-width-m"> <input type="color" id="periodWorkoutColor"  name="color" value="' + eventColor + '" disabled ></td><td class="td-width-s pl-3"></td><td class="td-width-s pl-3"><input class="d-none" type="hidden" name="timesIdArray[]"  value="' +BTimesid +'"></td>  <td class="td-width-s pl-3" >	<input class="d-none" type="hidden" name="bookingtimesFrom[' + counter + ']"  value="' + moment(start).format("DD.MM.YYYY") +'"></td></tr>');
 								resConflicts.push(start.replace('T', ' ').substring(0, 16));
 								res2Conflicts.push(end.replace('T', ' ').substring(0, 16));
 								ConflictID.push(obj.timeID);
@@ -517,7 +523,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 					}
 					else if (n) {
 						//     console.log(i);
-						$('#myTable > tbody').append(' <tr id="' + BTimesid + '"> <td class="td-width-l"><b>' + days[new Date(start).getDay()] + '</b>, ' + moment(start).format("DD.MM.YYYY") + '</td><td class="td-width-m">' + moment(start).format("HH.mm") + '–' + moment(end).format("HH.mm") + '</td><td class="td-width-s pl-3"><input class="datePicker form-control p" id="time_' + BTimesid + '" data-toggle="datepicker" name="bookingtimesFrom[' + counter + ']"  value="' + moment(start).format("DD.MM.YYYY") + '"></td><td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield' + i + '" value="' + moment(start).format("HH.mm") + '"></td>  <td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeEnd[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + i + '" value="' + moment(end).format("HH.mm") + '"></td><td class="td-width-s pl-3"><input name="color[]" type="color" value="'+eventColor+'"></td></tr>');
+						$('#myTable > tbody').append(' <tr id="' + BTimesid + '"> <td class="td-width-l"><b>' + days[new Date(start).getDay()] + '</b>, ' + moment(start).format("DD.MM.YYYY") + '</td><td class="td-width-m">' + moment(start).format("HH.mm") + '–' + moment(end).format("HH.mm") + '</td><td class="td-width-s pl-3"><input class="datePicker form-control p" id="time_' + BTimesid + '" data-toggle="datepicker" name="bookingtimesFrom[' + counter + ']"  value="' + moment(start).format("DD.MM.YYYY") + '"></td><td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield' + i + '" value="' + moment(start).format("HH.mm") + '"></td>  <td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeEnd[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + i + '" value="' + moment(end).format("HH.mm") + '"></td><td class="pl-3"><input name="color[]" type="color" class="form-control" value="'+eventColor+'"></td></tr>'); 
 						resConflicts.push(start.replace('T', ' ').substring(0, 16));
 						res2Conflicts.push(end.replace('T', ' ').substring(0, 16));
 						ConflictID.push(obj.timeID);

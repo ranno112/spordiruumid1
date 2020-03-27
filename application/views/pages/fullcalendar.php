@@ -244,7 +244,7 @@
 								<br>
 								<div class="accordion px-4">
 									<div class="accordion-item">
-										<a id="versions" class="txt-xl text-darkblue  py-2">Versioonid</a>
+										<a id="versions" class="txt-xl text-darkblue  py-2">Eelnevad versioonid</a>
 										<div id="version" class="content  p-0 m-0">
 										
 											<table id="versionTable">
@@ -645,7 +645,7 @@
 						$('#versionTable > tbody:last-child').append('<tr id=""><th colspan="3"> Aeg </th><th> &nbsp; Kes? </th><th>&nbsp;  Põhjus </th><th>&nbsp;  Muudatus </th></tr>');
 						jQuery.each(toJSjson, function(i, val) {
 						$("#" + i).append(document.createTextNode(" - " + val));
-						$('#versionTable > tbody:last-child').append(' <tr> <td> '+days[moment(toJSjson[i].startTime).day()] +',&nbsp;'+  moment(toJSjson[i].startTime).format('DD.MM.YYYY') + '&nbsp;&nbsp;  </td> <td> ' +   moment(toJSjson[i].startTime).format('HH:mm') + '-</td><td> ' +  moment(toJSjson[i].endTime).format('HH:mm') + '  </td><td> &nbsp;' +  toJSjson[i].nameWhoChanged + '  </td><td> &nbsp;' +  toJSjson[i].reason + '  </td> <td> &nbsp;' +   moment(toJSjson[i].whenChanged).format('DD.MM.YYYY HH:MM') + '  </td> </tr>');
+						$('#versionTable > tbody:last-child').append(' <tr> <td> '+days[moment(toJSjson[i].startTime).day()] +',&nbsp;'+  moment(toJSjson[i].startTime).format('DD.MM.YYYY') + '&nbsp;&nbsp;  </td> <td> ' +   moment(toJSjson[i].startTime).format('HH:mm') + '-</td><td> ' +  moment(toJSjson[i].endTime).format('HH:mm') + '  </td><td> &nbsp;' +  toJSjson[i].nameWhoChanged + '  </td><td> &nbsp;' +  toJSjson[i].reason + '  </td> <td> &nbsp;' +   moment(toJSjson[i].whenChanged).format('DD.MM.YYYY HH:mm') + '  </td> </tr>');
 					
 						});
 					}
