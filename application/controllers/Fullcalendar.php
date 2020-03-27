@@ -109,6 +109,7 @@ class Fullcalendar extends CI_Controller {
 			if (in_array($this->input->post('selectedRoomID'), $arrayOfRoomIDWhereCanMakeChanges)) {
 				if($this->input->post('timeID'))
 				{
+					$this->fullcalendar_model->delete_versions($this->input->post('timeID'));
 					$this->fullcalendar_model->delete_event($this->input->post('timeID'));
 				}
 			}

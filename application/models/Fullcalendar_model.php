@@ -51,9 +51,25 @@ class Fullcalendar_model extends CI_Model
 		$this->db->delete('bookingTimes');
 	}
 
+	function delete_versions($id)
+	{
+		$this->db->where('timeID', $id);
+		$this->db->delete('bookingTimeVersions');
+	}
+
 	function deleteTImesAndBooking($id)
 	{
+		
+		$this->db->select("timeID");
+		$this->db->where('bookingID',$id);
+		
+		$versionsToDelete=$this->db->get('bookingTimes');
+		$query = $this->db->get_where('bookingTimes', array('bookingID' => $id));
 	
+		$array = $query->result_array();
+		$alltimeIDWhichVersionsToDelete=array_column($array,"timeID");
+		$this->db->where_in('timeID', $alltimeIDWhichVersionsToDelete);
+		$this->db->delete('bookingTimeVersions');
 		$this->db->delete('bookingTimes', array('bookingID' => $id));
 		$this->db->delete('bookings', array('id' => $id));
 

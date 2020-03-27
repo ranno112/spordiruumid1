@@ -472,9 +472,9 @@
 						
 					})
 					calendar.fullCalendar('refetchEvents');
-				event.preventDefault();
-				}
-			
+					event.preventDefault();
+					}
+				
 				swal({
 					title:  "Kas salvestan? ",
 					buttons: {
@@ -484,11 +484,12 @@
 					}).then((value) => {
 						if(value){
 							swal({
-					title:  "Kirjuta põhjendus",
+					title: "Muudatus on salvestatud",
+					text: "Soovi korral kirjuta põhjendus",
 					content: "input",
 					buttons: "Salvesta"
 					}).then((value2) => {
-				swal(`You typed: ${value2}`);
+			
 				$.ajax({
 						url:"<?php echo base_url(); ?>fullcalendar/updateEvent",
 						type:"POST",
@@ -522,7 +523,6 @@
 			eventDrop: function(event) {
 			
 			var eClone = {
-					
 					start: $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss"),
 					end: $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss"),
 					roomID: event.roomID,
@@ -564,37 +564,57 @@
 			
 			}else{
 			
-				swal({
-				
+			
+					
+
+
+
+					swal({
 					title:  "Kas salvestan uut asukohta? ",
 					text: "*Kui soovid teha dublikaadi, siis hoia lohistamise ajal SHIFT klahvi all",
-					buttons: [
-						'Ei',
-						'Jah'
-					],
-					}).then(function(isConfirm) {
-					if (isConfirm) {
+					buttons: {
+					cancel: "Ära salvesta",
+					Salvesta: true,
+				},
+					}).then((value) => {
+					if(value){
+						swal({
+						title: "Muudatus on salvestatud",
+						text: "Soovi korral kirjuta põhjendus",
+						content: "input",
+						buttons: "Salvesta"
+					}).then((value2) => {
+			
 						$.ajax({
-						url:"<?php echo base_url(); ?>fullcalendar/updateEvent",
-						type:"POST",
-						data: {
-							start: $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss"),
-							end: $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss"),
-							timeID: event.timeID,
-							selectedRoomID: event.roomID,
-						},
-						success:function()
-						{
-							
-							calendar.fullCalendar('refetchEvents');
-						
-						}
-					})
-					} else {
-						calendar.fullCalendar('refetchEvents');
-					}
-					});
-					//event.preventDefault();
+								url:"<?php echo base_url(); ?>fullcalendar/updateEvent",
+								type:"POST",
+								data: {
+									start: $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss"),
+									end: $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss"),
+									timeID: event.timeID,
+									selectedRoomID: event.roomID,
+									versionStart: event.start._i,
+									versionEnd: event.end._i,
+									versionNameWhoChanged: '<?php echo $this->session->userdata('userName');?>',
+									reason: value2,
+
+								},
+								success:function()
+								{
+									
+									calendar.fullCalendar('refetchEvents');
+								
+								}
+							});
+						})
+								}
+						else{	calendar.fullCalendar('refetchEvents');}
+			
+				})
+
+
+
+
 					
 				}
 				
@@ -622,7 +642,7 @@
 							$('#versionTable > tbody:last-child').append('<tr id=""><th colspan="3">Muudatusi pole </th></tr>');
 						}
 						else{
-						$('#versionTable > tbody:last-child').append('<tr id=""><th colspan="3"> Aeg </th><th> &nbsp; Kes? </th><th>&nbsp;  Põhjus </th><th>&nbsp;  Viimane muudatus </th></tr>');
+						$('#versionTable > tbody:last-child').append('<tr id=""><th colspan="3"> Aeg </th><th> &nbsp; Kes? </th><th>&nbsp;  Põhjus </th><th>&nbsp;  Muudatus </th></tr>');
 						jQuery.each(toJSjson, function(i, val) {
 						$("#" + i).append(document.createTextNode(" - " + val));
 						$('#versionTable > tbody:last-child').append(' <tr> <td> '+days[moment(toJSjson[i].startTime).day()] +',&nbsp;'+  moment(toJSjson[i].startTime).format('DD.MM.YYYY') + '&nbsp;&nbsp;  </td> <td> ' +   moment(toJSjson[i].startTime).format('HH:mm') + '-</td><td> ' +  moment(toJSjson[i].endTime).format('HH:mm') + '  </td><td> &nbsp;' +  toJSjson[i].nameWhoChanged + '  </td><td> &nbsp;' +  toJSjson[i].reason + '  </td> <td> &nbsp;' +   moment(toJSjson[i].whenChanged).format('DD.MM.YYYY HH:MM') + '  </td> </tr>');
