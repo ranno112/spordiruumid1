@@ -141,14 +141,25 @@ class Fullcalendar extends CI_Controller {
 					$data = array(
 						'startTime'	=>	$this->input->post('start'),
 						'endTime'		=>	$this->input->post('end'),
+						'hasChanged'	=>	1,
 						);
 
 					$this->fullcalendar_model->update_event($data, $this->input->post('timeID'));
+
+					$dataForVersioning = array(
+						'timeID'	=>	$this->input->post('timeID'),
+						'startTime'		=>	$this->input->post('versionStart'),
+						'endTime'	=>	$this->input->post('versionEnd'),
+						'nameWhoChanged'		=>	$this->input->post('versionNameWhoChanged'),
+						'reason'	=>	$this->input->post('reason'),
+					
+						);
+
+					$this->fullcalendar_model->insert_version($dataForVersioning);
 				}	
 			}	
 		}
 	}
-
 
 
 	function approveEvents()

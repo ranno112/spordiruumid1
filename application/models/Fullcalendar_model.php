@@ -34,6 +34,10 @@ class Fullcalendar_model extends CI_Model
 		$this->db->insert('bookingTimes', $data);
 	}
 
+	function insert_version($data)
+	{
+		$this->db->insert('bookingTimeVersions', $data);
+	}
 
 	function update_event($data, $id)
 	{

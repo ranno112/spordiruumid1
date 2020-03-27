@@ -462,35 +462,34 @@
 			
 		
 			eventResize: function(event) {
-			
+				console.log(event.end._i);
+				console.log( $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss"));
+
 				if(!(moment($.fullCalendar.formatDate(event.start, "Y-MM-DD")).isSame($.fullCalendar.formatDate(event.end, "Y-MM-DD")))){
 					swal({
 						icon: 'info',
 						title: "Trenni lõpuaeg peab jääma samale päevale!",
-						content: "input",
-					}).then((value) => {
-						swal(`You typed: ${value}`);
-						});
+						
+					})
 					calendar.fullCalendar('refetchEvents');
 				event.preventDefault();
 				}
 			
 				swal({
-					title:  "Kas salvestan uut lõpuaega? ",
-					input: 'text',
-					showClass: {
-					popup: 'animated fadeInDown faster'
+					title:  "Kas salvestan? ",
+					buttons: {
+					cancel: "Ära salvesta",
+					Salvesta: true,
 				},
-				hideClass: {
-					popup: 'animated fadeOutUp faster'
-				},
-					buttons: [
-						'Ei',
-						'Jah'
-					],
-					}).then(function(isConfirm) {
-					if (isConfirm) {
-						$.ajax({
+					}).then((value) => {
+						if(value){
+							swal({
+					title:  "Kirjuta põhjendus",
+					content: "input",
+					buttons: "Salvesta"
+					}).then((value2) => {
+				swal(`You typed: ${value2}`);
+				$.ajax({
 						url:"<?php echo base_url(); ?>fullcalendar/updateEvent",
 						type:"POST",
 						data: {
@@ -498,6 +497,11 @@
 							end: $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss"),
 							timeID: event.timeID,
 							selectedRoomID: event.roomID,
+							versionStart: event.start._i,
+							versionEnd: event.end._i,
+							versionNameWhoChanged: '<?php echo $this->session->userdata('userName');?>',
+							reason: value2,
+
 						},
 						success:function()
 						{
@@ -505,16 +509,18 @@
 							calendar.fullCalendar('refetchEvents');
 						
 						}
-					})
-					} else {
-						calendar.fullCalendar('refetchEvents');
-					}
 					});
+				})
+						}
+						else{	calendar.fullCalendar('refetchEvents');}
+			
+				})
+				
 
 			},
 			
 			eventDrop: function(event) {
-			console.log(event);
+			
 			var eClone = {
 					
 					start: $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss"),
@@ -557,9 +563,11 @@
 		
 			
 			}else{
+			
 				swal({
+				
 					title:  "Kas salvestan uut asukohta? ",
-					text: "Kui soovid teha dublikaadi, siis hoia lohistamise ajal SHIFT klahvi all",
+					text: "*Kui soovid teha dublikaadi, siis hoia lohistamise ajal SHIFT klahvi all",
 					buttons: [
 						'Ei',
 						'Jah'
