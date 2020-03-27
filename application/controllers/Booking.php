@@ -35,11 +35,11 @@ class Booking extends CI_Controller {
 	{
 			if ($str == '')
 			{
-				$this->session->set_flashdata('validationErrorMessage', "<small class='text-danger'>See väli on kohustuslik</small>");
+				$this->session->set_flashdata('validationErrorMessageForClubname', "<small class='text-danger'>See väli on kohustuslik</small>");
 				return FALSE;
 			}
-			else if(!preg_match("/^[a-zA-Z0-9 -.,:']+$/", $str)){
-				$this->session->set_flashdata('validationErrorMessage', "<small class='text-danger'>Sellised märgid ei ole lubatud</small>");
+			else if(!preg_match("/^[A-Za-z0-9\x{00C0}-\x{00FF} ][A-Za-z0-9\x{00C0}-\x{00FF}\'\-\.\,]+([\ A-Za-z0-9\x{00C0}-\x{00FF}][A-Za-z0-9\x{00C0}-\x{00FF}\'\-]+)*/u", $str)){
+				$this->session->set_flashdata('validationErrorMessageForClubname', "<small class='text-danger'>Sellised märgid ei ole lubatud</small>");
 				return FALSE;
 			}
 
@@ -48,13 +48,13 @@ class Booking extends CI_Controller {
 					return TRUE;
 			}
 	}
-	public function contactTerson_check($str= '')
+	public function contactPerson_check($str= '')
 	{
 			if ($str == '')
 			{
 				return TRUE;
 			}
-			else if(!preg_match("/[a-zA-Z0-9 -.,\']+$/", $str)){
+			else if(!preg_match("/^[A-Za-z0-9\x{00C0}-\x{00FF} ][A-Za-z0-9\x{00C0}-\x{00FF}\'\-\.\,]+([\ A-Za-z0-9\x{00C0}-\x{00FF}][A-Za-z0-9\x{00C0}-\x{00FF}\'\-]+)*/u", $str)){
 				$this->session->set_flashdata('validationErrorMessageContactPerson', "<small class='text-danger'>Sellised märgid ei ole lubatud</small>");
 				return FALSE;
 			}
@@ -68,7 +68,7 @@ class Booking extends CI_Controller {
 	{
 			if ($str == '')
 			{
-					$this->session->set_flashdata('weekDayMissing', "<small class='text-danger'>See väli on kohustuslik</small>");
+					$this->session->set_flashdata('weekDayMissing', "<small class='text-danger'>Nädalapäev on kohustuslik</small>");
 					return FALSE;
 			}
 			else
@@ -97,44 +97,48 @@ class Booking extends CI_Controller {
 	public function createClosed()
 	{
 		$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
-		$postData = $_POST;
-		$postData['error'] = validation_errors() ;
+		$postData = $this->input->post();
+	
 		if( $this->session->userdata('session_id')===TRUE){
 
 			$data['rooms'] = $this->booking_model->getAllRooms();
 			$data['buildings'] = $this->booking_model->getAllBuildings();
 			$data['allBookingInfo'] = $this->booking_model->getAllBookings();
 			
-				$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|required|callback_clubname_check');
-				$this->form_validation->set_rules('startingFrom', 'Kuupäev alates', 'trim|required');
-				$this->form_validation->set_rules('Ending', 'Kuupäev kuni', 'trim|required');
-				$this->form_validation->set_rules('weekday[]', 'Nädalapäev puudu', 'trim|required|callback_weekDayMissing');
-
-			
+			$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
+			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactPerson_check');
+			$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
+			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
+			$this->form_validation->set_rules('workoutType', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars');
+			$this->form_validation->set_rules('comment2', 'Lisainfo', 'trim|htmlspecialchars');
+			$this->form_validation->set_rules('type', 'Tüüp', 'integer');
+		//	$this->form_validation->set_rules('weekday', 'Nädal', 'callback_weekDayMissing');
+				
 
 			if($this->form_validation->run() === FALSE ){
-				$this->session->set_flashdata("message","eroor".form_error());
-				$this->session->set_flashdata('data', $this->input->post());
-
-				if($this->input->post('dontShow')!=1){
-				$this->session->set_flashdata('access_deniedToUrl', 'Midagi on selle vormiga valesti. Palun vaata kõik väljad üle');
-				$this->session->set_flashdata('errors', validation_errors());
-				}
 				
-				$this->session->set_flashdata('key',$postData);
-				redirect( $this ->input->post('current_url'));
+			//	$this->session->set_flashdata('data', $this->input->post());
+			$this->session->set_flashdata("emailIsNotCorrect",form_error('email', '<small class="text-danger">','</small>')); // tekst '{field} ei ole korrektselt sisestatud' tuleb failist form_validation_lang.php
+			//	if($this->input->post('dontShow')!=1){
+				$this->session->set_flashdata('errors', 'Midagi on selle vormiga valesti. Palun vaata kõik väljad üle');
+				
+			//	}
+				
+			$this->session->set_flashdata('key',$this->security->xss_clean($postData));
+				redirect( $this->input->post('current_url'));
 
 			} 
 			else{
-			$event_in = strtotime($this ->input->post('startingFrom'));
-			$event_out = strtotime($this ->input->post('Ending'));
+			$event_in = strtotime($this->input->post('startingFrom'));
+			$event_out = strtotime($this->input->post('Ending'));
 
-		//	$this->form_validation->set_rules($event_in, 'Event In', $event_out);
+	
 			if ($event_in > $event_out)
 			{
 			  $this->session->set_flashdata('errors', 'Periood on valesti sisestatud');
-			  $this->session->set_flashdata('key',$postData);
-			  redirect( $this ->input->post('current_url'));
+			  $this->session->set_flashdata('validationErrorMessageforPeriod', "<small class='text-danger'>Periood on valesti sisestatud</small>");
+			  $this->session->set_flashdata('key',$this->security->xss_clean($postData));
+			  redirect( $this->input->post('current_url'));
 			}
 			else
 			{
@@ -143,15 +147,15 @@ class Booking extends CI_Controller {
 			$event_out = date('Y-m-d H:i:s', $event_out);
 			$data1 = array(
 				'public_info'=>$this->input->post('clubname'),
-				'comment_inner' => $this ->input->post('comment2'),
+			//	'comment_inner' => $this->input->post('comment2'),
 				'event_in' => $event_in,
 				'event_out' => $event_out,
-				'typeID' => $this ->input->post('type'),
-				'c_name' => $this ->input->post('contactPerson'),
-				'c_phone' => $this ->input->post('phone'),
-				'c_email' => $this ->input->post('email'),
-				'comment' => $this ->input->post('comment2'),
-				'workout' => $this ->input->post('workoutType'),
+				'typeID' => $this->input->post('type'),
+				'c_name' => $this->input->post('contactPerson'),
+				'c_phone' => $this->input->post('phone'),
+				'c_email' => $this->input->post('email'),
+				'comment' => $this->input->post('comment2'),
+				'workout' => $this->input->post('workoutType'),
 				
 
 			);
@@ -164,10 +168,10 @@ class Booking extends CI_Controller {
 					
 			$insert_data2 = array();
 			$insert_data3 = array();
-			$startDate=$this ->input->post('startingFrom');
+			$startDate=$this->input->post('startingFrom');
 			$startDate = strtotime($startDate);
 			$startDateToDb = strtotime($startDate);
-			$endDate = $this ->input->post('Ending');
+			$endDate = $this->input->post('Ending');
 			$endDate = strtotime($endDate);
 			$endDateToDb = strtotime($endDate);
 			$weekday=$this->input->post('weekday');
@@ -177,7 +181,7 @@ class Booking extends CI_Controller {
 			// var_dump(date("H:i", strtotime($this->input->post('timesStart')[1])));
 			$dateToRedirect='';
 			$counter=0;
-			$takesPlace= $this ->input->post('approveNow')==1 ? 1 : 0;
+			$takesPlace= $this->input->post('approveNow')==1 ? 1 : 0;
 			for($t = 0; $t <= count($this->input->post('timesStart')); $t++)
 				{
 					if(isset($this->input->post('timesStart')[$t])){
@@ -233,7 +237,10 @@ class Booking extends CI_Controller {
 				}}
 				}
 			if (empty($insert_data2)) {
-				$this->session->set_flashdata('access_deniedToUrl', 'Perioodi jooksul pole ühtegi kuupäeva mida salvestada');
+				$this->session->set_flashdata('weekDayMissing', '<small class="text-danger">Perioodi jooksul pole ühtegi kuupäeva mida salvestada</small>');
+				
+				$this->session->set_flashdata('key',$this->security->xss_clean($postData));
+				redirect( $this->input->post('current_url'));
 		   }
 
 
@@ -264,11 +271,11 @@ class Booking extends CI_Controller {
 			   }
 
 		   }
-		  if(!empty($insert_data3)&&$this ->input->post('allowSave')==0){
+		  if(!empty($insert_data3)&&$this->input->post('allowSave')==0){
       
 			$this->booking_model->create_bookingTimes('');
 
-			   $this->session->set_flashdata('key',$postData);
+			$this->session->set_flashdata('key',$this->security->xss_clean($postData));
 			   $this->session->set_flashdata('conflictDates',$insert_data3);
 			   
 			   $this->load->view('templates/header');
@@ -306,26 +313,26 @@ class Booking extends CI_Controller {
 	public function createOnce()
 	{
 		if( $this->session->userdata('session_id')===TRUE){
-			$postData = $_POST;
+			$postData = $this->input->post();
 			$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
 			$data['allBookingInfo'] = $this->booking_model->getAllBookings();
 			$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
-			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactTerson_check');
+			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactPerson_check');
 			$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
 			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
 			$this->form_validation->set_rules('workoutType', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars');
 			$this->form_validation->set_rules('comment2', 'Lisainfo', 'trim|htmlspecialchars');
+			$this->form_validation->set_rules('type', 'Tüüp', 'integer');
 		
 			if($this->form_validation->run() === FALSE ){
-			
+				
+				$this->form_validation->set_message('clubname', 'text dont match captcha'); 
 				$postData['error'] = validation_errors() ;
-				$this->session->set_flashdata("emailIsNotCorrect",form_error('email', '<small class="text-danger">','</small>'));
-				$this->session->set_flashdata('data', $this->input->post())." vahepealne info läks kaduma";
-
-				if($this->input->post('dontShow')!=1){
-				$this->session->set_flashdata('access_deniedToUrl', 'Midagi on selle vormiga valesti. Palun vaata kõik väljad üle'.$this->input->post('current_url'));
-			
-				}
+				$this->session->set_flashdata("emailIsNotCorrect",form_error('email', '<small class="text-danger">','</small>')); // tekst '{field} ei ole korrektselt sisestatud' tuleb failist form_validation_lang.php
+		
+			//	if($this->input->post('dontShow')!=1){
+				$this->session->set_flashdata('access_deniedToUrl', 'Midagi on selle vormiga valesti. Palun vaata kõik väljad üle');
+			//	}
 				
 				$this->session->set_flashdata('key',$this->security->xss_clean($postData));
 				redirect( $this->input->post('current_url'));
@@ -337,13 +344,13 @@ class Booking extends CI_Controller {
 
 		$data1 = array(
 			'public_info'=>$this->input->post('clubname'),
-			'c_name' => $this ->input->post('contactPerson'),
-			'c_phone' => $this ->input->post('phone'),
-			'c_email' => $this ->input->post('email'),
-			'typeID' => $this ->input->post('type'),
-		//	'comment_inner' => $this ->input->post('additionalComment'),
-			'comment' => $this ->input->post('comment2'),
-			'workout' => $this ->input->post('workoutType'),
+			'c_name' => $this->input->post('contactPerson'),
+			'c_phone' => $this->input->post('phone'),
+			'c_email' => $this->input->post('email'),
+			'typeID' => $this->input->post('type'),
+		//	'comment_inner' => $this->input->post('additionalComment'),
+			'comment' => $this->input->post('comment2'),
+			'workout' => $this->input->post('workoutType'),
 		
 		);
 	
@@ -352,7 +359,7 @@ class Booking extends CI_Controller {
 		$insert_data2 = array();
 		$insert_data3 = array();
 
-		$takesPlace = $this ->input->post('approveNow')==1 ? 1 : 0;
+		$takesPlace = $this->input->post('approveNow')==1 ? 1 : 0;
 		for($t = 0; $t <= count($this->input->post('workoutDate')); $t++) {
 			if(isset($this->input->post('workoutDate')[$t])){
 				$formated_startTime = date("H:i:s", strtotime($this->input->post('timesStart')[$t]));
@@ -368,7 +375,7 @@ class Booking extends CI_Controller {
 					$this->session->set_flashdata('validationErrorMessage', 'Kellaaeg on valesti sisestatud');
 							
 					if($this->form_validation->run() === FALSE){
-						redirect( $this ->input->post('current_url'));
+						redirect( $this->input->post('current_url'));
 				
 					} 
 	
@@ -422,7 +429,7 @@ class Booking extends CI_Controller {
 			}
 
 		}
-	   if(!empty($insert_data3)&&$this ->input->post('allowSave')==0){
+	   if(!empty($insert_data3)&&$this->input->post('allowSave')==0){
    
 		 $this->booking_model->create_bookingTimes('');
 

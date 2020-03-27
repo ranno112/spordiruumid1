@@ -64,15 +64,9 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                         <div class="d-flex p-0 mt-4 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
 
-							<label for="contact">Klubi nimi (avalik info)*	<?php if($this->session->flashdata('validationErrorMessage')){  echo $this->session->flashdata('validationErrorMessage');} ?></label>
-								<?php if($this->session->flashdata('validationErrorMessage')){ ?>
-									<?php echo '<input class="form-control is-invalid" id="clubnameForSingle" type="text" name="clubname" required value="'; if(isset($data['clubname'])): echo $data['clubname'];endif; echo '">';
-									 ?>
-								<?php } else{ ?>
-								<input class="form-control" id="clubnameForSingle" type="text" name="clubname" required value="<?php if(isset($data['clubname'])): echo $data['clubname'];endif; ?>">
-								<?php } ?>
-
-                            </div>
+							<label for="contact">Klubi nimi (avalik info)*	<?php if($this->session->flashdata('validationErrorMessageForClubname')){  echo $this->session->flashdata('validationErrorMessageForClubname');} ?></label>
+							<input class="form-control <?php if($this->session->flashdata('validationErrorMessageForClubname')){ echo 'is-invalid';}?>" id="clubnameForSingle" type="text" name="clubname" required value="<?php if(isset($data['clubname'])): echo $data['clubname'];endif; ?>">
+							</div>
                             <input class="d-none" type="checkbox" id="typeOnce" name="type" value="1" checked>
                             <input class="d-none" type="checkbox" id="allowFormToSubmitAndNeverMindConflicts1" name="allowSave" value="0" checked>
                             <div class="form-label-group col-6 p-0 pl-5">
@@ -217,31 +211,24 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                         <div class="d-flex px-5 mx-5 mt-4">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
 							<?php echo form_error('clubname'); ?>
-								<label for="contact">Klubi nimi (avalik info)*	<?php if($this->session->flashdata('validationErrorMessage')){  echo $this->session->flashdata('validationErrorMessage');} ?></label>
-								<?php if($this->session->flashdata('validationErrorMessage')){ ?>
-									<?php echo '<input class="form-control is-invalid" id="clubname" type="text" name="clubname" required value="'; if(isset($data['clubname'])): echo $data['clubname'];endif; echo '">';
-									 ?>
-								<?php } else{ ?>
-							
-		
-      
-								<input class="form-control" id="clubname" type="text" name="clubname" required value="<?php if(isset($data['clubname'])): echo $data['clubname'];endif; ?>">
-								<?php } ?>
+								<label for="contact">Klubi nimi (avalik info)*	<?php if($this->session->flashdata('validationErrorMessageForClubname')){  echo $this->session->flashdata('validationErrorMessageForClubname');} ?></label>
+								<input class="form-control <?php if($this->session->flashdata('validationErrorMessageForClubname')){  echo 'is-invalid';} ?>" id="clubname" type="text" name="clubname" required value="<?php if(isset($data['clubname'])): echo $data['clubname'];endif; ?>">
+								
                             </div>
 
                             <div class="form-label-group col-6 p-0 pl-5">
-                                <label>Kontaktisik*</label>
+                                <label>Kontaktisik* <?php if($this->session->flashdata('validationErrorMessageContactPerson')){  echo $this->session->flashdata('validationErrorMessageContactPerson');} ?></label>
                                 <input class="form-control" id="contact" name="contactPerson" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>" required>
                             </div>
                         </div>
                         <div class="d-flex mt-2 px-5 mx-5">
                             <div class="form-label-group col-6 py-0 pl-0 pr-5">
-                                <label>Telefoni number</label>
+                                <label>Telefon <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?></label>
                                 <input class="form-control" id="phone" name="phone" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
                             </div>
 
                             <div class="form-label-group col-6 p-0 pl-5">
-                                <label>Email</label>
+                                <label>Email <?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?></label>
                                 <input class="form-control" id="email" name="email" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
                             </div>
                         </div>
@@ -297,13 +284,8 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                 </div>
                                 <div id="dateContainer">
 						            <div class="d-flex align-items-center mb-3 justify-content-between">
-
-
-								<?php if($this->session->flashdata('weekDayMissing')){ ?>
-                                 <input class="form-control is-invalid col-5 arrow" id="periodicWeekDay" list="weekdays" name="weekday[]" required>
-								<?php } else{ ?>
-									<input class="form-control col-5 arrow" id="periodicWeekDay" list="weekdays" name="weekday[]" required  value="<?php if(isset($data['weekday'])){ echo $data['weekday'][0];} else if (null!==($this->input->get('startDate'))){echo $weekdays[date('N', strtotime($this->input->get('startDate')))];} else {echo $weekdays[date('N', strtotime(date("d.m.Y")))]; ;}?>">
-                                <?php } ?>
+									<input class="form-control col-5 arrow <?php if($this->session->flashdata('weekDayMissing')){ echo 'is-invalid'; }?>" id="periodicWeekDay" list="weekdays" name="weekday[]" required  value="<?php if(isset($data['weekday'])){ echo $data['weekday'][0];} else if (null!==($this->input->get('startDate'))){echo $weekdays[date('N', strtotime($this->input->get('startDate')))];} else {echo $weekdays[date('N', strtotime(date("d.m.Y")))]; ;}?>">
+                            
                                 
                             		        <datalist id="weekdays">
 									            <option data-value="1" <?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Esmaspäev"): echo 'selected';endif; ?> value="Esmaspäev"></option>
@@ -367,18 +349,41 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
                         <div class="d-flex px-5 mx-5 mt-4">                        
                             <div class="form-label-group m-0 pl-0 pr-3 col-3">
-                                <label>Periood</label>
-                                <input class="datePicker form-control" id="periodStart" data-toggle="datepicker" name="startingFrom" value="<?php if(isset($data['startingFrom'])){echo $data['startingFrom'];} else if (null!==$this->input->get('startDate')){echo$this->input->get('startDate');} else {echo '';}?>">
+                                <label>Periood </label>
+                              
+								<?php if($this->session->flashdata('validationErrorMessageforPeriod')){  
+							 ?>
+						  <input class="datePicker form-control is-invalid" id="periodStart" data-toggle="datepicker" name="startingFrom" value="<?php if(isset($data['startingFrom'])){echo $data['startingFrom'];} else if (null!==$this->input->get('startDate')){echo$this->input->get('startDate');} else {echo '';}?>">
+							<?php 
+						} 
+							else {
+
+								?> 
+								  <input class="datePicker form-control" id="periodStart" data-toggle="datepicker" name="startingFrom" value="<?php if(isset($data['startingFrom'])){echo $data['startingFrom'];} else if (null!==$this->input->get('startDate')){echo$this->input->get('startDate');} else {echo '';}?>">
+								<?php } ?>
+						
 							</div>
 							
                  
 
                             <div class="form-label-group m-0 pl-0 col-3">  
-                                <label class="invisible">Periood</label> 
-                                <input class="datepickerUntil form-control" id="periodEnd" data-toggle="datepickerUntil" name="Ending">
-                            </div>
-                        </div>
+								<label class="invisible">Periood</label> 
+								<?php if($this->session->flashdata('validationErrorMessageforPeriod')){  
+							 ?>
+							<input class="datepickerUntil form-control is-invalid" id="periodEnd" data-toggle="datepickerUntil" name="Ending">
+							<?php 
+						} 
+							else {
 
+								?> <input class="datepickerUntil form-control " id="periodEnd" data-toggle="datepickerUntil" name="Ending">
+								<?php } ?>
+                                
+							</div>
+						</div>
+						      
+						<?php if($this->session->flashdata('validationErrorMessageforPeriod')){  
+							echo  '<div class="d-flex px-5 mx-5">'.	$this->session->flashdata('validationErrorMessageforPeriod').'	</div>';} ?>
+					
                         <h4 class="mt-5 txt-xl px-5 mx-5">Lisainfo (valikuline) </h4>
                         <div class="mt-4 px-5 mx-5">
                             <div class="form-label-group pb-2 px-0">
@@ -436,7 +441,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                             <div class="form-label-group px-5 mx-5"  id="InputsWrapper2">
                                 <div class="d-flex justify-content-between m-0 px-0 pt-0 pb-1">
                             <!-- <div class="form-label-group col-6 pl-0"  id="InputsWrapper2"> -->
-                                    <label class="col-5 m-0 p-0" for="closedWeekDay">Nädalapäev</label>
+                                    <label class="col-5 m-0 p-0" for="closedWeekDay">Nädalapäev <?php if($this->session->flashdata('weekDayMissing')){  echo $this->session->flashdata('weekDayMissing');} ?></label>
 									<label class="d-hidden col-1 mr-1 p-0"></label>
                                     <label class="col-2 m-0 pl-3" for="from2">Alates</label>
                                     <label class="col-2 m-0 p-0" for="until2">Kuni</label>
@@ -444,7 +449,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                                              </div>
                                 <div id="closeContainer">
                                     <div class="d-flex align-items-center mb-3 justify-content-between">
-                                        <input class="form-control col-5 arrow" id="closedWeekDay" list="weekdays" name="weekday[]" required  value="<?php if(isset($data['weekday'])){ echo $data['weekday'][0];}else if (null!==($this->input->get('startDate'))){echo $weekdays[date('N', strtotime($this->input->get('startDate')))];} else {echo $weekdays[date('N', strtotime(date("d.m.Y")))]; ;}?>">
+                                        <input class="form-control col-5 arrow <?php if($this->session->flashdata('weekDayMissing')){ echo 'is-invalid'; }?>" id="closedWeekDay" list="weekdays" name="weekday[]" required  value="<?php if(isset($data['weekday'])){ echo $data['weekday'][0];}else if (null!==($this->input->get('startDate'))){echo $weekdays[date('N', strtotime($this->input->get('startDate')))];} else {echo $weekdays[date('N', strtotime(date("d.m.Y")))]; ;}?>">
 										<datalist id="weekdays">
 									            <option data-value="1"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Esmaspäev"): echo 'selected';endif; ?> value="Esmaspäev"></option>
                                                 <option data-value="2"<?php if(isset($data['weekday'][0])&&$data['weekday'][0]=="Teisipäev"): echo 'selected';endif; ?> value="Teisipäev"></option>
@@ -506,15 +511,18 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
                         <div class="d-flex px-5 mx-5 mt-4">                        
                             <div class="form-label-group m-0 pl-0 pr-3 col-3">
-                                <label>Periood</label>
-                                <input class="datePicker form-control" id="periodStartClosed" data-toggle="datepicker" name="startingFrom"  value="<?php if(isset($data['startingFrom'])){echo $data['startingFrom'];} else if (null!==$this->input->get('startDate')){echo$this->input->get('startDate');} else {echo '';}?>">
+								<label>Periood</label>
+								<input class="datePicker form-control <?php if($this->session->flashdata('validationErrorMessageforPeriod')){ echo 'is-invalid';} ?>" id="periodStartClosed" data-toggle="datepicker" name="startingFrom"  value="<?php if(isset($data['startingFrom'])){echo $data['startingFrom'];} else if (null!==$this->input->get('startDate')){echo$this->input->get('startDate');} else {echo '';}?>">
                             </div>
                             <div class="form-label-group m-0 pl-0 col-3">  
                                 <label class="invisible">Periood</label> 
-                                <input class="datepickerClosedUntil form-control" id="periodEndClosed" data-toggle="datePicker" name="Ending">
+                                <input class="datepickerClosedUntil form-control <?php if($this->session->flashdata('validationErrorMessageforPeriod')){ echo 'is-invalid';} ?>" id="periodEndClosed" data-toggle="datePicker" name="Ending">
                             </div>
-                        </div>
-
+						</div>
+						
+						<?php if($this->session->flashdata('validationErrorMessageforPeriod')){  
+							echo  '<div class="d-flex px-5 mx-5">'.	$this->session->flashdata('validationErrorMessageforPeriod').'	</div>';} ?>
+							
                         <h4 class="mt-5 txt-xl px-5 mx-5">Lisainfo (valikuline) </h4>
                         <div class="mt-4 px-5 mx-5">
                             <div class="form-label-group pb-2 px-0">
@@ -747,7 +755,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
             if (z <= maxClosed) {
                 FieldCount++; //text box added ncrement
                 //add input box
-				$('#closeContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="closedWeekDay" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" id="from' + FieldCount + '" value="08:00"></div><div class="col-2 p-0"><input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="22:00"></div></div>');
+				$('#closeContainer').append('<div class="d-flex align-items-center mb-3 justify-content-between"><input class="form-control col-5 arrow" id="closedWeekDay" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist><a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timesStart[]" id="from' + FieldCount + '" value="08:00"></div><div class="col-2 p-0 ml-5"><input type="text" class="clock form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="22:00"></div></div>');
            
                 $('.clock').clockTimePicker({
                     duration: true,
