@@ -46,6 +46,8 @@ class Fullcalendar extends CI_Controller {
 						'organizer'	=>	$row['organizer'],
 						'typeID'	=>	$row['typeID'],
 						'color'	=>	$row['bookingTimeColor'],
+						'hasChanged'	=>	$row['hasChanged'],
+						
 
 					);
 				}
@@ -185,6 +187,14 @@ class Fullcalendar extends CI_Controller {
 	}
 
 
+	
+	function fetch_versions()
+	{
+	 if($this->input->post('timeID'))
+	 {
+		echo json_encode($this->fullcalendar_model->fetch_versions($this->input->post('timeID'), JSON_UNESCAPED_UNICODE));
+	 }
+	}
 
 
 	function fetch_city()

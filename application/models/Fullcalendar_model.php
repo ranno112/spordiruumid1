@@ -55,6 +55,18 @@ class Fullcalendar_model extends CI_Model
 
 	}
 
+
+	function fetch_versions($timeID)
+    {
+        $this->db->where('timeID', $timeID);
+		$this->db->order_by('versionID', 'DESC');
+		$this->db->limit(20);
+		$query = $this->db->get('bookingTimeVersions');
+		return $query->result();
+      	
+	
+    }
+
 	function fetch_city($country_id)
     {
         $this->db->where('regionID', $country_id);
@@ -66,6 +78,7 @@ class Fullcalendar_model extends CI_Model
         }
         return $output;
     }
+
 
 
     function fetch_building($state_id)

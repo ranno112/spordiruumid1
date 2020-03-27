@@ -241,6 +241,20 @@
 										</div>
 									</div>
 								</div>
+								<br>
+								<div class="accordion px-4">
+									<div class="accordion-item">
+										<a id="versions" class="txt-xl text-darkblue  py-2">Versioonid</a>
+										<div id="version" class="content  p-0 m-0">
+										
+											<table id="versionTable">
+												<tbody>
+													<tr class="myTable"></tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
 
 								<?php echo form_close() ?>
 								<input type="hidden" name="eventid" id="event_id" value="0" />
@@ -410,10 +424,11 @@
 
 				}
 
-
 				if (event.takesPlace == false) {
 					element.find('.fc-content').after('<span class="notice notice-error">Ei toimunud</span>');
 				}
+	
+
 				//kui on suletud
 				if (event.typeID == 4) {
 					element.find('.fc-time').addClass('d-none');
@@ -425,6 +440,9 @@
 					element.find('.fc-content').css({
 						'text-align': 'center'
 					});
+				}
+				else if(event.hasChanged==1){
+					element.find('.fc-content').after('<span style="font-size:20px;">&#9432;</span>');
 				}
 
 			},
@@ -577,6 +595,36 @@
 
 			eventClick: function(event) {
 				counter = 0;
+				var hasVersions=false;
+				$.ajax({
+					url: "<?php echo base_url(); ?>fullcalendar/fetch_versions",
+					method: "POST",
+					data: {
+						timeID: event.timeID
+					},
+					success: function(data) {
+						var toJSjson=JSON.parse(data);
+						console.log(toJSjson.length);
+						if(toJSjson.length>0){
+							hasVersions=true;
+						}
+									
+						$('#versionTable tbody').empty();
+						if(!hasVersions){
+							$('#versionTable > tbody:last-child').append('<tr id=""><th colspan="3">Muudatusi pole </th></tr>');
+						}
+						else{
+						$('#versionTable > tbody:last-child').append('<tr id=""><th colspan="3"> Aeg </th><th> &nbsp; Kes? </th><th>&nbsp;  Põhjus </th><th>&nbsp;  Viimane muudatus </th></tr>');
+						jQuery.each(toJSjson, function(i, val) {
+						$("#" + i).append(document.createTextNode(" - " + val));
+						$('#versionTable > tbody:last-child').append(' <tr> <td> '+days[moment(toJSjson[i].startTime).day()] +',&nbsp;'+  moment(toJSjson[i].startTime).format('DD.MM.YYYY') + '&nbsp;&nbsp;  </td> <td> ' +   moment(toJSjson[i].startTime).format('HH:mm') + '-</td><td> ' +  moment(toJSjson[i].endTime).format('HH:mm') + '  </td><td> &nbsp;' +  toJSjson[i].nameWhoChanged + '  </td><td> &nbsp;' +  toJSjson[i].reason + '  </td> <td> &nbsp;' +   moment(toJSjson[i].whenChanged).format('DD.MM.YYYY HH:MM') + '  </td> </tr>');
+					
+						});
+					}
+									
+					}
+				});
+
 				$(':checkbox[name=selectAll]').prop('checked', false);
 
 				// $("#successModal").modal("show");
