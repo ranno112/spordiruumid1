@@ -123,15 +123,8 @@ class Booking extends CI_Controller {
 				$this->session->set_flashdata('key',$this->security->xss_clean($postData));
 				$this->session->set_flashdata('errors', 'Ai ai ai nii küll teha ei tohi! '.$isAllowedOrNot->id);
 				redirect('booking/create/'.$this->input->post('sportrooms'));
-				
 			}
 			
-		  
-			
-			
-		
-
-
 
 			if($this->form_validation->run() === FALSE ){
 				
@@ -344,6 +337,16 @@ class Booking extends CI_Controller {
 			$this->form_validation->set_rules('comment2', 'Lisainfo', 'trim|htmlspecialchars');
 			$this->form_validation->set_rules('type', 'Tüüp', 'integer');
 		
+			//check if selected room exists and user has right to make a booking in this room $this->input->post('sportrooms') 
+			$isAllowedOrNot=$this->booking_model->checkIfRoomIsBookable($this->input->post('sportrooms'));
+						
+			if(empty($isAllowedOrNot[0]['id'])){
+				$postData['thisIsWhatIm']=$isAllowedOrNot[0]['id'];
+				$this->session->set_flashdata('key',$this->security->xss_clean($postData));
+				$this->session->set_flashdata('errors', 'Ai ai ai nii küll teha ei tohi! '.$isAllowedOrNot->id);
+				redirect('booking/create/'.$this->input->post('sportrooms'));
+			}
+
 			if($this->form_validation->run() === FALSE ){
 				
 				$this->form_validation->set_message('clubname', 'text dont match captcha'); 
