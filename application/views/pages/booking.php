@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-<?php $data=$this->session->flashdata('key');if($data): print_r($data); 
+<?php $data=$this->session->flashdata('key');if($data):// print_r($data); 
 
 // foreach ($data['weekday'] as $each) { 
 //    echo $each;
@@ -413,7 +413,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
                         <h4 class="mt-5 txt-xl px-5 mx-5">Ruum ja aeg</h4>
                         <div class="d-flex px-5 mx-5">
-                            <div class="form-label-group col-6 pl-0">
+                            <div class="form-label-group col-5 p-0 pl-6">
                                 <label for="contact">Ruum</label>
                                 <select name="sportrooms"  class="form-control arrow" id="roomClosed" >
                                 <?php foreach ($rooms as $each) {
@@ -528,7 +528,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                         <div class="mt-4 px-5 mx-5">
                             <div class="form-label-group pb-2 px-0">
                                 <label>Lisainfo</label>
-                                <textarea class="form-control" id="comment2" name="comment2" rows="3"></textarea>
+                                <textarea class="form-control" id="comment2" name="comment2" rows="3"><?php if(isset($data['comment2'])): echo $data['comment2'];endif; ?></textarea>
                             </div>
                         </div>
 
