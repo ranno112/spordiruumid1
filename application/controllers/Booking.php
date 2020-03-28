@@ -112,21 +112,23 @@ class Booking extends CI_Controller {
 			$this->form_validation->set_rules('workoutType', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars');
 			$this->form_validation->set_rules('comment2', 'Lisainfo', 'trim|htmlspecialchars');
 			$this->form_validation->set_rules('type', 'Tüüp', 'integer');
-		//	$this->form_validation->set_rules('weekday', 'Nädal', 'callback_weekDayMissing');
-				
+			$this->form_validation->set_rules('weekday[]', 'Nädal', 'required|callback_weekDayMissing');
+			$this->form_validation->set_rules('current_url', 'URL ei näita', 'required');	
 
 			if($this->form_validation->run() === FALSE ){
 				
 			//	$this->session->set_flashdata('data', $this->input->post());
-			$this->session->set_flashdata("emailIsNotCorrect",form_error('email', '<small class="text-danger">','</small>')); // tekst '{field} ei ole korrektselt sisestatud' tuleb failist form_validation_lang.php
+			$this->session->set_flashdata("emailIsNotCorrect", form_error('email', '<small class="text-danger">','</small>')); // tekst '{field} ei ole korrektselt sisestatud' tuleb failist form_validation_lang.php
+		//	$this->session->set_flashdata("weekDayMissing",form_error('weekday[]', '<small class="text-danger">','</small>')); // tekst '{field} ei ole korrektselt sisestatud' tuleb failist form_validation_lang.php
 			//	if($this->input->post('dontShow')!=1){
 				$this->session->set_flashdata('errors', 'Midagi on selle vormiga valesti. Palun vaata kõik väljad üle');
+				$this->session->set_flashdata("message", form_error('current_url', '<small class="text-danger">','</small>'.$this->input->post('current_url'))); // tekst '{field} ei ole korrektselt sisestatud' tuleb failist form_validation_lang.php
+			//	$this->session->set_flashdata('message', 'Urliga on midagi mäda. See on:'. $this->input->post('current_url'));
 				
 			//	}
 				
 			$this->session->set_flashdata('key',$this->security->xss_clean($postData));
-				redirect( $this->input->post('current_url'));
-
+			redirect('booking/create/'.$this->input->post('sportrooms'));
 			} 
 			else{
 			$event_in = strtotime($this->input->post('startingFrom'));
@@ -302,7 +304,7 @@ class Booking extends CI_Controller {
 
 	}else{
 	
-		redirect('');
+		//redirect('');
 	}
 	}
 

@@ -1,6 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
 <?php $data=$this->session->flashdata('key');if($data): print_r($data); 
+
 // foreach ($data['weekday'] as $each) { 
 //    echo $each;
 //  };
@@ -488,7 +489,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                             <option data-value="6" <?php if($data['weekday'][$i]=="Laupäev"): echo 'selected';endif; ?> value="Laupäev"></option>
                                             <option data-value="7" <?php if($data['weekday'][$i]=="Pühapäev"): echo 'selected';endif; ?> value="Pühapäev"></option>       
                                       </datalist>
-                                    <a href="#" class="removeclass1 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
+                                    <a href="#" class="removeclass2 col-1 pl-1 pr-5"><span class="icon-cancel"></span></a>
                                     <div class="col-2 ml-5 p-0">
                                         <input type="text" class="clock form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from<?php echo $i;?>" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
                                     </div>
@@ -550,7 +551,6 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
 
     $(document).ready(function() {
-
 		$('#myModal').on('hidden.bs.modal', function (e) {
 			$('#approvePeriodNow').prop('checked', true);
 			$('#approveNow').prop('checked', true);
@@ -743,10 +743,10 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
 
         var maxClosed = 100;
-        var InputsWrapper2 = $("#InputsWrapper2"); //Input boxes wrapper ID
+        var InputsWrapper2 = $("#InputsWrapper2 #closeContainer"); //Input boxes wrapper ID
         var AddButton2 = $("#AddMoreFileBoxClosed"); //Add button ID
 
-        var z = InputsWrapper2.length; //initlal text box count
+        var z = InputsWrapper2.children().length; //initlal text box count
 
 
         $("#AddMoreFileBoxClosed").click(function(e) {
