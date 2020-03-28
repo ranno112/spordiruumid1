@@ -115,6 +115,24 @@ class Booking extends CI_Controller {
 			$this->form_validation->set_rules('weekday[]', 'Nädal', 'required|callback_weekDayMissing');
 			$this->form_validation->set_rules('current_url', 'URL ei näita', 'required');	
 
+			//check if selected room exists and user has right to make a booking in this room $this->input->post('sportrooms') 
+			$isAllowedOrNot=$this->booking_model->checkIfRoomIsBookable($this->input->post('sportrooms'));
+			
+			if(empty($isAllowedOrNot[0]['id'])){
+				$postData['thisIsWhatIm']=$isAllowedOrNot[0]['id'];
+				$this->session->set_flashdata('key',$this->security->xss_clean($postData));
+				$this->session->set_flashdata('errors', 'Ai ai ai nii küll teha ei tohi! '.$isAllowedOrNot->id);
+				redirect('booking/create/'.$this->input->post('sportrooms'));
+				
+			}
+			
+		  
+			
+			
+		
+
+
+
 			if($this->form_validation->run() === FALSE ){
 				
 			//	$this->session->set_flashdata('data', $this->input->post());
