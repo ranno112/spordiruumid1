@@ -183,6 +183,9 @@ class Edit extends CI_Controller {
 
 		};
 		}
+
+	
+
 	
 	     $this->form_validation->set_rules('publicInfo', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
 		 $this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactPerson_check');
@@ -196,7 +199,19 @@ class Edit extends CI_Controller {
 	
 		$roomWhereSearchForConflicts=$this->edit_model->get_room($this->input->post('BookingID'));
 		$allEventsForConflictCheck=$this->edit_model->get_conflictsDates($roomWhereSearchForConflicts['roomID'], $this->input->post('BookingID'));
-	
+
+
+		if($this->input->post('isPeriodic')){
+			$whichWeekDaynumberToSearch=date('N', strtotime($data['bookingData']['startTime']));
+			print_r($whichWeekDaynumberToSearch);
+			$startTime= $this->input->post('startTime');
+			$startingTime= date("H:i:s", strtotime($data['bookingData']['startTime'])); //kell alates
+			$endingTime= date("H:i:s", strtotime($data['bookingData']['endTime']));
+		
+			$retrieveDatesFromDataBase=$this->edit_model->get_allTimesThatMatch($whichWeekDaynumberToSearch, $data['bookingData']['bookingID'], $startingTime ,$endingTime,$roomWhereSearchForConflicts['roomID'], $data['bookingData']['startTime'] );
+			print_r($retrieveDatesFromDataBase);
+		}
+		echo '<br>';
 	   foreach($allEventsForConflictCheck as $key => $value){
 			   $property1 = 'startTime'; 
 			   $property2 = 'endTime'; 
@@ -245,6 +260,9 @@ class Edit extends CI_Controller {
 
 				$this->load->view('templates/header');
 				$this->load->view('pages/edit',$this->security->xss_clean($data));//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
+				print_r($conflictTimes);
+				echo '<br>';
+				print_r($data);
 				$this->load->view('templates/footer');
 
 			} 

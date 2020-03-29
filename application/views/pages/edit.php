@@ -230,8 +230,8 @@
 								<table id="myTablePeriod" class="table table-borderless">
 									<thead>
 										<tr>
-											<th colspan="3" class="txt-regular txt-lg p-0">Muudetakse kõiki alljärgnevaid aegu ja värve</th>
-											<th class="p-0"></th>
+											<th colspan="4" class="txt-regular txt-lg p-0">Muudetakse kõiki alljärgnevaid aegu ja värve</th>
+										
 								
 											<th class="p-0"></th>
 											<th class="p-0"></th>
@@ -571,6 +571,8 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 								//   console.log("tingumus on täidetud " + resConflicts[t] + " või "+res2Conflicts[t]);
 								$('#myTable #' + ConflictID[t]).after("<tr class='m-0 p-0'><td colspan='5' class='conflict txt-regular'><img src='<?php echo base_url(); ?>assets/img/warning.svg'> Kattuv aeg: " + moment(conflicts2.start).format('HH:mm') /*conflicts2.start.substring(0, 16) */ + "–" + moment(conflicts2.end).format('HH:mm') + " " /*conflicts2.end.substring(0, 16)*/ + titleIDofConflict + "</td></tr>");
 								//   console.log( ConflictID[t] +" ning " +timeIDofConflict);
+								$('#myTablePeriod #' + ConflictID[t]).after("<tr class='m-0 p-0'><td colspan='5' class='conflict txt-regular'><img src='<?php echo base_url(); ?>assets/img/warning.svg'> Kattuv aeg: " + moment(conflicts[i].start).format('HH:mm') /*conflicts2.start.substring(0, 16) */ + "–" + moment(conflicts[i].end).format('HH:mm') + " " /*conflicts2.end.substring(0, 16)*/ + conflicts[i].title + "</td></tr>");
+						
 								$('#myTable #' + ConflictID[t]).find('.clock.form-control, .datePicker.form-control').css('border', '1px solid #9E3253')
 
 							}
