@@ -107,6 +107,69 @@ class Edit extends CI_Controller {
 
 
 
+	public function clubname_check($str= '')
+	{
+			if ($str == '')
+			{
+				$this->session->set_flashdata('validationErrorMessageForClubname', "<small class='text-danger'>See väli on kohustuslik</small>");
+				return FALSE;
+			}
+			else if(!preg_match("/^[A-Za-z0-9\x{00C0}-\x{00FF} ][A-Za-z0-9\x{00C0}-\x{00FF}\'\-\.\,]+([\ A-Za-z0-9\x{00C0}-\x{00FF}][A-Za-z0-9\x{00C0}-\x{00FF}\'\-]+)*/u", $str)){
+				$this->session->set_flashdata('validationErrorMessageForClubname', "<small class='text-danger'>Sellised märgid ei ole lubatud</small>");
+				return FALSE;
+			}
+
+			else
+			{
+					return TRUE;
+			}
+	}
+
+	public function contactPerson_check($str= '')
+	{
+			if ($str == '')
+			{
+				return TRUE;
+			}
+			else if(!preg_match("/^[A-Za-z0-9\x{00C0}-\x{00FF} ][A-Za-z0-9\x{00C0}-\x{00FF}\'\-\.\,]+([\ A-Za-z0-9\x{00C0}-\x{00FF}][A-Za-z0-9\x{00C0}-\x{00FF}\'\-]+)*/u", $str)){
+				$this->session->set_flashdata('validationErrorMessageContactPerson', "<small class='text-danger'>Sellised märgid ei ole lubatud</small>");
+				return FALSE;
+			}
+
+			else
+			{
+					return TRUE;
+			}
+	}
+
+
+	public function phoneNumber_check($str= '')
+	{
+		if ($str == '')
+			{
+				return TRUE;
+			}
+		else if(!preg_match('/^\+?[\d\s]+$/', $str))
+			{
+					$this->session->set_flashdata('phoneIsNotCorrect', "<small class='text-danger'>Numbri formaat ei sobi</small>");
+					return FALSE;
+			}
+			else
+			{
+					return TRUE;
+			}
+	}
+
+
+	public function checkIfIsAllowedToUpdate($id)
+	{
+		
+		return $this->edit_model->can_update_or_not($this->session->userdata('building'),$id);
+
+	}
+
+
+
 	// The Main function
 	public function update()
 	{	
@@ -115,8 +178,18 @@ class Edit extends CI_Controller {
 		$data['allPostData']=$this->input->post();
 		foreach ($this->input->post('timesIdArray') as $id) {
 		$bookingDataWhichUserWantsToChange[]=$this->edit_model->get_allbookingtimes($this->input->post('BookingID'),$id);
+		if(!$this->checkIfIsAllowedToUpdate($id)){
+			redirect('fullcalendar?roomId='.$this->input->post('roomID').'&date='. date('d.m.Y', strtotime($this->input->post('bookingtimesFrom')[0])));
+
+		};
 		}
 	
+	     $this->form_validation->set_rules('publicInfo', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
+		 $this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactPerson_check');
+		 $this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
+		 $this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
+		 $this->form_validation->set_rules('workoutType', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars');
+		 $this->form_validation->set_rules('additionalComment', 'Lisainfo', 'trim|htmlspecialchars');
 
 		$data['bookingData']=$bookingDataWhichUserWantsToChange[0][0];
 		$data['allBookingData']=$bookingDataWhichUserWantsToChange;
@@ -153,14 +226,14 @@ class Edit extends CI_Controller {
 		 
 			  $data['conflictTimes']= json_encode($conflictTimes);
 			
-			$this->form_validation->set_rules('publicInfo', 'Klubi nimi', 'required');
+		//	$this->form_validation->set_rules('publicInfo', 'Klubi nimi', 'required');
 		//	$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'required');
 
 			if($this->form_validation->run() === FALSE ){
 
 				if($this->input->post('dontShow')!=1){
-				$this->form_validation->set_message('validationErrorMessage', 'Klubi nimi puudu');
-				$this->session->set_flashdata('validationErrorMessage', 'Klubi nimi puudu');
+				$this->form_validation->set_message('validationErrorMessage', 'Vormiga on midagi valesti');
+				$this->session->set_flashdata('validationErrorMessage', 'Vormiga on midagi valesti');
 
 				
 				}
@@ -171,10 +244,7 @@ class Edit extends CI_Controller {
 
 
 				$this->load->view('templates/header');
-				$this->load->view('pages/edit',$data);//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
-			
-				print_r($data);
-
+				$this->load->view('pages/edit',$this->security->xss_clean($data));//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
 				$this->load->view('templates/footer');
 
 			} 
@@ -189,8 +259,7 @@ class Edit extends CI_Controller {
 				'comment' => $this ->input->post('additionalComment'),
 				//'building' => $this ->input->post('building'), //pole seda formis
 				'workout' => $this ->input->post('workoutType'),
-				// 'event_in' => $this ->input->post('eventIn'),
-				// 'event_out' => $this ->input->post('phone')
+				
 			);
 			
 				$this->edit_model->update_booking($data1, $this->input->post('BookingID'));
@@ -203,6 +272,7 @@ class Edit extends CI_Controller {
 					$RedirectToCalendar='';
 					for($i = 0; $i < count($start_data); $i++)
 					{
+						
 
 						$formated_startTime = date("H:i:s", strtotime($this->input->post('timeStart')[$i])); //kell alates
 						$formated_endTime = date("H:i:s", strtotime($this->input->post('timeEnd')[$i])); //kell kuni
@@ -297,8 +367,9 @@ class Edit extends CI_Controller {
 		else{
 			if($RedirectToCalendar){
 				//print_r($_POST);
-				
-				redirect(base_url('fullcalendar?roomId='.$this->input->post('roomID')));
+			
+			//	redirect(base_url('fullcalendar?roomId='.$this->input->post('roomID')));
+				redirect('fullcalendar?roomId='.$this->input->post('roomID').'&date='. date('d.m.Y', strtotime($this->input->post('bookingtimesFrom')[0])));
 			// $this->load->view('templates/header');
 			// $this->load->view('pages/edit');
 			// $this->load->view('templates/footer');
@@ -422,7 +493,7 @@ class Edit extends CI_Controller {
 		}	
 		else{
 			if($RedirectToCalendar){
-				redirect(base_url('fullcalendar?roomId='.$this->input->post('roomID')));
+				redirect('fullcalendar?roomId='.$this->input->post('roomID').'&date='. date('d.m.Y', strtotime($this->input->post('bookingtimesFrom')[0])));
 		
 				// $this->load->view('templates/header');
 				// $this->load->view('pages/edit');//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte

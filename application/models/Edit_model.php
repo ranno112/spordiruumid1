@@ -87,6 +87,23 @@ class Edit_model extends CI_Model
 		}
 
 
+		
+
+	public function can_update_or_not($sessionBuilding,$timeID)
+    {
+		$this->db->where('timeID',  $timeID);
+		$this->db->join('rooms', 'bookingTimes.roomID = rooms.id' , 'left');
+		$this->db->where('buildingID',  $sessionBuilding);
+		$query = $this->db->get('bookingTimes');
+		if ($query->num_rows() > 0) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+      
+	}
+
+
 }
 
 ?>

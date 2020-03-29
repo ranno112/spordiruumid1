@@ -16,7 +16,7 @@
 					<li class="nav-item"></li>
 				</ul>
 			</div>
-	<?php print_r($allBookingData);?>
+
 			<div class="tab-content ">
 		
 				<div id="mitmekordne" class="tab-pane center <?php if ($_POST['isPeriodic'] == 0) echo "active";?>">
@@ -78,8 +78,7 @@
 								<table id="myTable" class="table table-borderless">
 									<thead>
 										<tr>
-											<th class="txt-regular txt-lg p-0">Broneeritud aeg</th>
-											<th class="p-0"></th>
+											<th class="txt-regular txt-lg p-0" colspan="2">Broneeritud aeg</th>
 											<th class="txt-regular txt-lg p-0">Uus aeg</th>
 											<th class="p-0"></th>
 											<th class="p-0"></th>
@@ -111,7 +110,7 @@
 						<div class="mt-4 px-5 mx-5">
 							<div class="form-label-group pb-2 px-0">
 								<label>Lisainfo</label>
-								<textarea class="form-control" id="additional" name="additionalComment" rows="3"> <?php echo $bookingData['comment'];?></textarea>
+								<textarea class="form-control" id="additional" name="additionalComment" rows="3"><?php echo $bookingData['comment'];?></textarea>
 							</br>
 								<label>Muutmise põhjus</label>
 								<input class="form-control" id="reason" name="reason" rows="3"></input>
@@ -305,7 +304,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 			//max input box allowed
 			FieldCount++;
 			//add input box
-			$('#myTable > tbody').append('<tr> <td class="td-width-l"></td><td class="td-width-m"><span class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></span></td><td class="td-width-s pl-3"><input class="datePicker form-control p" id="date_' + FieldCount + '" data-toggle="datepicker" name="additionalBookingDate[]"  value="<?php echo date("d.m.Y"); ?>"></td><td class="td-width-s pl-3"><input type="text" class="clock form-control" name="additionalBookingtimeStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_' + FieldCount + '"value="<?php echo date("H:i"); ?>"></td>  <td class="td-width-s pl-3"><input type="text" class="clock form-control" name="additionalBookingtimeEnd[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + FieldCount + '"value="<?php echo date("H:i", strtotime('+90 minutes')); ?>"></td></tr>');
+			$('#myTable > tbody').append('<tr> <td class="td-width-l"></td><td class="td-width-m"><span class="removeclass col-1 pl-1 pr-5"><span class="icon-cancel"></span></span></td><td class="td-width-s pl-3"><input class="datePicker form-control p" id="date_' + FieldCount + '" data-toggle="datepicker" name="additionalBookingDate[]"  value="<?php echo date("d.m.Y");?>"></td><td class="td-width-s pl-3"><input type="text" class="clock form-control" name="additionalBookingtimeStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_' + FieldCount + '"value="<?php echo date("H:i"); ?>"></td>  <td class="td-width-s pl-3"><input type="text" class="clock form-control" name="additionalBookingtimeEnd[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + FieldCount + '"value="<?php echo date("H:i", strtotime('+90 minutes')); ?>"></td></tr>');
 			var once = false;
 			$('.datePicker, .clock').focusin(function() {
 				if (once == false) {
