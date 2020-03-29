@@ -971,7 +971,7 @@ $( "#checkForConflicts" ).click(function() {
 		
 		if((getDateArray.length)>300){
 		
-		if (!confirm("Soovid broneerida korraga üle 300 aja (täpsemalt "+getDateArray.length+" aega). Suur aegade hulk ühe broneeringu kohta võib süsteemi tööd aeglustada. Te saate broneeringut salvestada, kuid oleks parem, kui tükeldate broneeringut lühemateks perioodideks. Kas salvestad ikkagi?")){
+		if (!confirm("Soovid broneerida korraga üle 300 aja (täpsemalt "+getDateArray.length+" aega). Suur aegade hulk ühe broneeringu kohta võib süsteemi tööd aeglustada. Te saate broneeringut salvestada, kuid oleks parem, kui tükeldate broneeringut lühemateks perioodideks. Kas soovid siiski salvestada?")){
             $('#approvePeriodNow').prop('checked', false);//kinnitus võetakse automaatselt maha
         	$( "#checkForConflicts" ).show();
 			$("#loadingTemporarlyButton").addClass('d-none');

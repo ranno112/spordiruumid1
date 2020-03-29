@@ -43,20 +43,14 @@ class Edit extends CI_Controller {
 	
 	// 		}
 	
-
-
-
 	
 
-
-
-
-	function load($bookingID)
+	function load2($bookingID)
 	{
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
 
 
-			$this->form_validation->set_rules('e-mail', 'Email', 'trim|required|valid_email');
+		//	$this->form_validation->set_rules('e-mail', 'Email', 'trim|required|valid_email');
 		
 	//	$this->input->get('saal', TRUE);
 		$event_data = $this->edit_model->fetch_all_event();
@@ -74,8 +68,6 @@ class Edit extends CI_Controller {
 				'event_in'	=>	$row['event_in'],
 				'event_out'	=>	$row['event_out'],
 				'clubname'	=>	$row['c_name'],
-				'phone'	=>	$row['c_phone'],
-				'email'	=>	$row['c_email'],
 				'workout'	=>	$row['workout'],
 				'created_at'	=>	$row['created_at'],
 				 'comment'	=>	$row['comment'],
@@ -95,33 +87,7 @@ class Edit extends CI_Controller {
 	}else{redirect('');}
 	}
 	
-	function loadAllRoomBookingTimes($roomId)
-	{
-		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
-		$this->input->get('saal', TRUE);
-		$data[]='';
-		$event_data = $this->edit_model->fetch_all_Booking_times();
-		foreach($event_data->result_array() as $row)
-		if(	$row['roomID']==$roomId &&	$row['endTime']> date("Y-m-d")){
-			
-		{
-			$data[] = array(
-				'id'	=>	$row['bookingID'],
-				//'building'=>	$row['building'],
-				'timeID'=>	$row['timeID'],
-				'title'	=>	$row['public_info'],
-				'description'	=>	$row['workout'],
-				'start'	=>	$row['startTime'],
-				'end'	=>	$row['endTime'],
-				);
-		}
-	}
 
-		
-		echo json_encode($data);
-	}else{redirect('');}
-	}
-    
 
 	function updateprevtodelete()
 	{
@@ -140,11 +106,53 @@ class Edit extends CI_Controller {
 	}
 
 
+
+	// The Main function
 	public function update()
 	{	
-		$data['title'] = 'Sign Up';
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+		$conflictTimes = array();
+		$data['allPostData']=$this->input->post();
+		foreach ($this->input->post('timesIdArray') as $id) {
+		$bookingDataWhichUserWantsToChange[]=$this->edit_model->get_allbookingtimes($this->input->post('BookingID'),$id);
+		}
+	
 
+		$data['bookingData']=$bookingDataWhichUserWantsToChange[0][0];
+		$data['allBookingData']=$bookingDataWhichUserWantsToChange;
+	
+		$roomWhereSearchForConflicts=$this->edit_model->get_room($this->input->post('BookingID'));
+		$allEventsForConflictCheck=$this->edit_model->get_conflictsDates($roomWhereSearchForConflicts['roomID'], $this->input->post('BookingID'));
+	
+	   foreach($allEventsForConflictCheck as $key => $value){
+			   $property1 = 'startTime'; 
+			   $property2 = 'endTime'; 
+			   $property3 = 'public_info'; 
+			   $property4 = 'workout'; 
+			   $property5 = 'timeID'; 
+			   foreach($bookingDataWhichUserWantsToChange as $key2 => $value2){
+			
+			
+				   if($value->$property1<$value2[0]['endTime'] && $value->$property2>$value2[0]['startTime']){
+					   $conflictTimes[] = array(
+						   'start' => $value->$property1,
+						   'end' =>  $value->$property2,
+						   'title' => $value->$property3,
+						   'description' => $value->$property4,
+						   'timeID' => $value->$property5
+						   );
+
+				   break;
+				   }
+			   
+				   //$value['startTime'],$value['endTime']
+			   
+			   }
+
+		   }	
+		 
+			  $data['conflictTimes']= json_encode($conflictTimes);
+			
 			$this->form_validation->set_rules('publicInfo', 'Klubi nimi', 'required');
 		//	$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'required');
 
@@ -159,14 +167,13 @@ class Edit extends CI_Controller {
 				// $this->load->view('templates/header');
 				// $this->load->view('pages/edit', $data);
                 // $this->load->view('templates/footer');
-
 				// redirect(base_url('fullcalendar/edit'  ,$_POST));
 
-			
 
 				$this->load->view('templates/header');
-				$this->load->view('pages/edit');//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
-				print_r($_POST);
+				$this->load->view('pages/edit',$data);//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
+			
+				print_r($data);
 
 				$this->load->view('templates/footer');
 

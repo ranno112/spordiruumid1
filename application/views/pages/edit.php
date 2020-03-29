@@ -16,7 +16,7 @@
 					<li class="nav-item"></li>
 				</ul>
 			</div>
-
+	<?php print_r($allBookingData);?>
 			<div class="tab-content ">
 		
 				<div id="mitmekordne" class="tab-pane center <?php if ($_POST['isPeriodic'] == 0) echo "active";?>">
@@ -25,23 +25,23 @@
 						<div class="d-flex p-0 mt-4 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
 								<label for="contact">Klubi nimi (avalik info)*</label>
-								<input type="text" class="form-control" name="publicInfo" value="" id="publicInfo" required>
+								<input type="text" class="form-control" name="publicInfo" value="<?php echo $bookingData['public_info'];?>" id="publicInfo" required>
 							</div>
 							<input class="d-none" type="checkbox" id="type" name="type" value="1" checked>
 							<div class="form-label-group col-6 p-0 pl-5">
 								<label>Kontaktisik</label>
-								<input type="text" class="form-control" name="contactPerson" id="contactPerson">
+								<input type="text" class="form-control" name="contactPerson" id="contactPerson" value="<?php echo $bookingData['c_name'];?>">
 							</div>
 						</div>
 						<div class="d-flex mt-2 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
 								<label>Telefoni number</label>
-								<input type="number" class="form-control" name="phone" id="phone">
+								<input type="number" class="form-control" name="phone" id="phone" value="<?php echo $bookingData['c_phone'];?>">
 							</div>
 
 							<div class="form-label-group col-6 p-0 pl-5">
 								<label>Email</label>
-								<input type="email" class="form-control" name="email" id="email">
+								<input type="email" class="form-control" name="email" id="email" value="<?php echo $bookingData['c_email'];?>">
 							</div>
 						</div>
 
@@ -67,7 +67,7 @@
 						<div class="d-flex mt-2 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
 								<label>Sündmus / Treeningu tüüp (avalik info)</label>
-								<input type="text" class="form-control" name="workoutType" id="workoutType">
+								<input type="text" class="form-control" name="workoutType" id="workoutType" value="<?php echo $bookingData['workout'];?>">
 							</div>
 							<div class="form-label-group col-6 p-0 pl-5"></div>
 						</div>
@@ -88,8 +88,8 @@
 									</thead>
 									<tbody>
 										<tr class="bg-blue mb-5">
-											<td id="month" class="text-white txt-regular td-width-l p-1">Siia kuu nimetus</td>
-											<td id="blank" class="text-white txt-regular td-width-m p-1"></td>
+											<td id="month" class="text-white txt-regular td-width-l p-1">Kuupäev</td>
+											<td id="blank" class="text-white txt-regular td-width-m p-1">Vahemik</td>
 											<td id="kp" class="text-white txt-regular td-width-s p-1 pl-3">Kuupäev</td>
 											<td id="alates" class="text-white txt-regular td-width-s p-1 pl-3">Alates</td>
 											<td id="kuni" class="text-white txt-regular td-width-s p-1 pl-3">Kuni</td>
@@ -111,7 +111,7 @@
 						<div class="mt-4 px-5 mx-5">
 							<div class="form-label-group pb-2 px-0">
 								<label>Lisainfo</label>
-								<textarea class="form-control" id="additional" name="additionalComment" rows="3"></textarea>
+								<textarea class="form-control" id="additional" name="additionalComment" rows="3"> <?php echo $bookingData['comment'];?></textarea>
 							</br>
 								<label>Muutmise põhjus</label>
 								<input class="form-control" id="reason" name="reason" rows="3"></input>
@@ -119,7 +119,7 @@
 						</div>
 						<input class="d-none" type="hidden" name="BookingID" id="BookingID" value="<?php echo $_POST['BookingID']; ?>">
 						<input class="d-none" type="hidden" name="isPeriodic" id="isPeriodic" value="<?php echo $_POST['isPeriodic']; ?>">
-						<input class="d-none" type="hidden" name="roomID" id="roomID" value="">
+						<input class="d-none" type="hidden" name="roomID" id="roomID" value="<?php echo $bookingData['roomID'];?>"> 
 
 						<div class="d-flex justify-content-end mt-5 px-5 mx-5">
 							<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#" onClick="history.go(-1); return false;">Katkesta</a>
@@ -135,23 +135,23 @@
 						<div class="d-flex p-0 mt-4 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
 								<label for="contact">Klubi nimi (avalik info)*</label>
-								<input type="text" class="form-control" name="publicInfoPeriod" value="" id="publicInfoPeriod" required>
+								<input type="text" class="form-control" name="publicInfoPeriod" value="<?php echo $bookingData['public_info'];?>" id="publicInfoPeriod" required>
 							</div>
 							<input class="d-none" type="checkbox" id="type" name="type" value="1" checked>
 							<div class="form-label-group col-6 p-0 pl-5">
 								<label>Kontaktisik</label>
-								<input type="text" class="form-control" name="contactPersonPeriod" id="contactPersonPeriod">
+								<input type="text" class="form-control" name="contactPersonPeriod" id="contactPersonPeriod"  value="<?php echo $bookingData['c_name'];?>">
 							</div>
 						</div>
 						<div class="d-flex mt-2 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
 								<label>Telefoni number</label>
-								<input type="number" class="form-control" name="phonePeriod" id="phonePeriod">
+								<input type="number" class="form-control" name="phonePeriod" id="phonePeriod" value="<?php echo $bookingData['c_phone'];?>">
 							</div>
 
 							<div class="form-label-group col-6 p-0 pl-5">
 								<label>Email</label>
-								<input type="email" class="form-control" name="emailPeriod" id="emailPeriod">
+								<input type="email" class="form-control" name="emailPeriod" id="emailPeriod" value="<?php echo $bookingData['c_email'];?>">
 							</div>
 						</div>
 
@@ -177,7 +177,7 @@
 						<div class="d-flex mt-2 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
 								<label>Sündmus / Treeningu tüüp (avalik info)</label>
-								<input type="text" class="form-control" name="workoutTypePeriod" id="workoutTypePeriod">
+								<input type="text" class="form-control" name="workoutTypePeriod" id="workoutTypePeriod" value="<?php echo $bookingData['workout'];?>">
 							</div>
 							<div class="form-label-group col-6 p-0 pl-5"></div>
 						</div>
@@ -261,14 +261,14 @@
 						<div class="mt-4 px-5 mx-5">
 							<div class="form-label-group pb-2 px-0">
 								<label>Lisainfo</label>
-								<textarea class="form-control" id="additionalPeriod" name="additionalCommentPeriod" rows="3"></textarea>
+								<textarea class="form-control" id="additionalPeriod" name="additionalCommentPeriod" rows="3"><?php echo $bookingData['comment'];?></textarea>
 							</div>
 						</div>
 						
 						<input class="d-none" type="hidden" name="weekendNumber" id="weekendNumber" value="">
 						<input class="d-none" type="hidden" name="BookingID" id="BookingID" value="<?php echo $_POST['BookingID']; ?>">
 						<input class="d-none" type="hidden" name="isPeriodic" id="isPeriodic" value="<?php echo $_POST['isPeriodic']; ?>">
-						<input class="d-none" type="hidden" name="roomID" id="roomIDPeriodic" value="">
+						<input class="d-none" type="hidden" name="roomID" id="roomIDPeriodic" value="<?php echo $bookingData['roomID'];?>">
 
 						<div class="d-flex justify-content-end mt-5 px-5 mx-5">
 							<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#" onClick="history.go(-1); return false;">Katkesta</a>
@@ -356,7 +356,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 
 
 
-		//   var eventToModificate = "<?php echo base_url(); ?>edit/load/<?php echo $_POST['BookingID']; ?>";
+		//   var eventToModificate = "<?php echo base_url(); ?>edit/load2/<?php echo $_POST['BookingID']; ?>";
 		var resConflicts = [];
 		var res2Conflicts = [];
 		var ConflictID = [];
@@ -368,10 +368,12 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 		var datafrom = ['<?= implode("', '", $arr2) ?>'];
 
 
-		$.post("<?php echo base_url(); ?>edit/load/<?php echo $_POST['BookingID']; ?>",
+		$.post("<?php echo base_url(); ?>edit/load2/<?php echo $allPostData['BookingID']; ?>",
 			function(data) {
 				var res = $.parseJSON(data);
 				console.log(res);
+			
+				
 				var days = ['P', 'E', 'T', 'K', 'N', 'R', 'L'];
 				var weekDays= ['Pühapäev', 'Esmaspäev', 'Teisipäev', 'Kolmapäev', 'Neljapäev', 'Reede', 'Laupäev'];
 				var conflicts = "";
@@ -391,6 +393,8 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 				};
 
 
+
+
 				//   console.log(datafrom);
 				for (var i = 0, l = res.length; i < l; i++) {
 					var obj = res[i];
@@ -402,13 +406,14 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 					//  $("#lefty .modal-header h4").text(obj.title);
 					//  $("#lefty #time").text(obj.created_at);
 
-					$('#publicInfo').val(obj.title);
-					$('#publicInfoPeriod').val(obj.title);
+				
+				//	$('#publicInfo').val(obj.title);
+			//		$('#publicInfoPeriod').val(obj.title);
 					
-					$('#contactPerson').val(obj.clubname);
-					$('#contactPersonPeriod').val(obj.clubname);
+				//	$('#contactPerson').val(obj.clubname);
+				//	$('#contactPersonPeriod').val(obj.clubname);
 				//	$('#organizer').val(obj.organizer);
-					$('#organizerPeriod').val(obj.organizer);
+				//	$('#organizerPeriod').val(obj.organizer);
 					// if ($('#eventIn').is(':empty')){
 					// $('#eventIn').val('Pole hooajaline broneering');}
 					// else{
@@ -419,17 +424,17 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 					// else{
 					//     $('#eventOut').val(moment(obj.event_out).format('DD/MM/YYYY HH:mm'));
 					// }
-					$('#phone').val(obj.phone);
-					$('#phonePeriod').val(obj.phone);
-					$('#additional').val(obj.comment);
-					$('#additionalPeriod').val(obj.comment);
+				//	$('#phone').val(obj.phone);
+				//	$('#phonePeriod').val(obj.phone);
+				//	$('#additional').val(obj.comment);
+				//	$('#additionalPeriod').val(obj.comment);
 
-					$('#email').val(obj.email);
-					$('#emailPeriod').val(obj.email);
+				//	$('#email').val(obj.email);
+				//	$('#emailPeriod').val(obj.email);
 					
-					$('#created_at').val(obj.created_at);
-					$('#workoutType').val(obj.workout);
-					$('#workoutTypePeriod').val(obj.workout);
+				//	$('#created_at').val(obj.created_at);
+				//	$('#workoutType').val(obj.workout);
+				//	$('#workoutTypePeriod').val(obj.workout);
 					$('#selectedroom').val(obj.roomName);
 					$('#selectedroomPeriod').val(obj.roomName);
 				//	document.getElementById("selectedroom").value = obj.roomName;
@@ -453,8 +458,8 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 					
 
 					};
-					document.getElementById("roomID").value = obj.roomID;
-					document.getElementById("roomIDPeriodic").value = obj.roomID;
+				//	document.getElementById("roomID").value = obj.roomID;
+				//	document.getElementById("roomIDPeriodic").value = obj.roomID;
 					// $('#start').val(obj.start);
 					// $('#timestartfield').val(obj.start);
 					//   $('#building').val(obj.building);
@@ -483,8 +488,8 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 					if(isPeriodic==1){
 						if(n){
 							var weekDayToChange=new Date(obj.start).getDay();
-							var startPeriodTime=moment(start).format("HH.mm");
-							var endPeriodTime=moment(end).format("HH.mm");
+							var startPeriodTime=moment(start).format("HH:mm");
+							var endPeriodTime=moment(end).format("HH:mm");
 							$('#sport_facility2').val(weekDays[weekDayToChange]);
 							$('#weekendNumber').val(weekDayToChange);
 							
@@ -497,10 +502,10 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 						if(weekDayToChange==new Date(obj.start).getDay()){
 						
 							//kui ajad klapivad, siis pane muutmisvaatesse
-							if(startPeriodTime==moment(start).format("HH.mm")&&endPeriodTime==moment(end).format("HH.mm")){
+							if(startPeriodTime==moment(start).format("HH:mm")&&endPeriodTime==moment(end).format("HH:mm")){
 							console.log("aeg klapib");
 
-							$('#myTablePeriod > tbody').append(' <tr id="' + BTimesid + '"> <td class="td-width-l"><b>' + days[new Date(start).getDay()] + '</b>, ' + moment(start).format("DD.MM.YYYY") + '</td><td class="td-width-s pl-3">' + moment(start).format("HH.mm") + '–' + moment(end).format("HH.mm") + '</td>'+
+							$('#myTablePeriod > tbody').append(' <tr id="' + BTimesid + '"> <td class="td-width-l"><b>' + days[new Date(start).getDay()] + '</b>,&nbsp;' + moment(start).format("DD.MM.YYYY") + '</td><td class="td-width-s pl-3">&nbsp;&nbsp;' + moment(start).format("HH:mm") + '&#8209;' + moment(end).format("HH:mm") + '</td>'+
 							'<td class="td-width-m"> <input type="color" id="periodWorkoutColor"  name="color" value="' + eventColor + '" disabled ></td><td class="td-width-s pl-3"></td><td class="td-width-s pl-3"><input class="d-none" type="hidden" name="timesIdArray[]"  value="' +BTimesid +'"></td>  <td class="td-width-s pl-3" >	<input class="d-none" type="hidden" name="bookingtimesFrom[' + counter + ']"  value="' + moment(start).format("DD.MM.YYYY") +'"></td></tr>');
 								resConflicts.push(start.replace('T', ' ').substring(0, 16));
 								res2Conflicts.push(end.replace('T', ' ').substring(0, 16));
@@ -523,7 +528,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 					}
 					else if (n) {
 						//     console.log(i);
-						$('#myTable > tbody').append(' <tr id="' + BTimesid + '"> <td class="td-width-l"><b>' + days[new Date(start).getDay()] + '</b>, ' + moment(start).format("DD.MM.YYYY") + '</td><td class="td-width-m">' + moment(start).format("HH.mm") + '–' + moment(end).format("HH.mm") + '</td><td class="td-width-s pl-3"><input class="datePicker form-control p" id="time_' + BTimesid + '" data-toggle="datepicker" name="bookingtimesFrom[' + counter + ']"  value="' + moment(start).format("DD.MM.YYYY") + '"></td><td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield' + i + '" value="' + moment(start).format("HH.mm") + '"></td>  <td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeEnd[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + i + '" value="' + moment(end).format("HH.mm") + '"></td><td class="pl-3"><input name="color[]" type="color" class="form-control" value="'+eventColor+'"></td></tr>'); 
+						$('#myTable > tbody').append(' <tr id="' + BTimesid + '"> <td class="td-width-l"><b>' + days[new Date(start).getDay()] + '</b>,&nbsp;' + moment(start).format("DD.MM.YYYY") + '</td><td class="td-width-m">&nbsp;&nbsp;' + moment(start).format("HH:mm") + '&#8209;' + moment(end).format("HH:mm") + '</td><td class="td-width-s pl-3"><input class="datePicker form-control p" id="time_' + BTimesid + '" data-toggle="datepicker" name="bookingtimesFrom[' + counter + ']"  value="' + moment(start).format("DD.MM.YYYY") + '"></td><td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield' + i + '" value="' + moment(start).format("HH:mm") + '"></td>  <td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeEnd[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + i + '" value="' + moment(end).format("HH:mm") + '"></td><td class="pl-3"><input name="color[]" type="color" class="form-control" value="'+eventColor+'"></td></tr>'); 
 						resConflicts.push(start.replace('T', ' ').substring(0, 16));
 						res2Conflicts.push(end.replace('T', ' ').substring(0, 16));
 						ConflictID.push(obj.timeID);
@@ -535,76 +540,50 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 
 				}
 
-				$.ajax({
-					url: "<?php echo base_url(); ?>edit/loadAllRoomBookingTimes/" + res[0].roomID,
-					dataType: 'json',
-					success: function(json) {
-						// Rates are in `json.rates`
-						// Base currency (USD) is `json.base`
-						// UNIX Timestamp when rates were collected is in `json.timestamp`   
 
-						conflicts = json;
+				var conflictTimes=<?php echo $conflictTimes; ?>
+
+
+				conflicts = conflictTimes;
+
+				for (var i = 0, l = conflicts.length; i < l; i++) {
+					var conflicts2 = conflicts[i];
+					// console.log(conflicts2.start+" - "+conflicts2.end + " "+ i);
+
+					var startDateTime = toDate(conflicts2.start.substring(0, 16)); //yyyy-mm-dd hh:tt
+					var endDateTime = toDate(conflicts2.end.substring(0, 16));
+					var timeIDofConflict = conflicts2.timeID;
+					var titleIDofConflict = conflicts2.title;
+
 
 					
+				//	console.log(roomID);
+					//   console.log(timeIDofConflict); 
 
-						res.forEach(function(element){
-							if(isOverlapping(element, conflicts)){
-							
-						
+					// iga selle aja kohta tuleb kontrollida ajaxi aega"
+					for (var t = 0; t < resConflicts.length; t++) {
+
+						var checkDateTime = toDate(resConflicts[t]); //magic date
+						var checkDateTime2 = toDate(res2Conflicts[t]); //magic date
+
+						if (ConflictID[t] !== timeIDofConflict) {
+							if (isBetween(startDateTime, checkDateTime, checkDateTime2) || isBetween(endDateTime, checkDateTime, checkDateTime2) || isBetween(checkDateTime, startDateTime, endDateTime) || isBetween(checkDateTime2, startDateTime, endDateTime)) {
+								//   console.log(checkDateTime +" - "+ checkDateTime2 + " nende vastu "+ startDateTime+ " " +endDateTime);// 
+								//   console.log("tingumus on täidetud " + resConflicts[t] + " või "+res2Conflicts[t]);
+								$('#myTable #' + ConflictID[t]).after("<tr class='m-0 p-0'><td colspan='5' class='conflict txt-regular'><img src='<?php echo base_url(); ?>assets/img/warning.svg'> Kattuv aeg: " + moment(conflicts2.start).format('HH:mm') /*conflicts2.start.substring(0, 16) */ + "–" + moment(conflicts2.end).format('HH:mm') + " " /*conflicts2.end.substring(0, 16)*/ + titleIDofConflict + "</td></tr>");
+								//   console.log( ConflictID[t] +" ning " +timeIDofConflict);
+								$('#myTable #' + ConflictID[t]).find('.clock.form-control, .datePicker.form-control').css('border', '1px solid #9E3253')
+
 							}
-								//console.log(isOverlapping(element, conflicts))
-						});
-
-						for (var i = 0, l = conflicts.length; i < l; i++) {
-							var conflicts2 = conflicts[i];
-							// console.log(conflicts2.start+" - "+conflicts2.end + " "+ i);
-
-							var startDateTime = toDate(conflicts2.start.substring(0, 16)); //yyyy-mm-dd hh:tt
-							var endDateTime = toDate(conflicts2.end.substring(0, 16));
-							var timeIDofConflict = conflicts2.timeID;
-							var titleIDofConflict = conflicts2.title;
-
-						
-							
-						//	console.log(roomID);
-							//   console.log(timeIDofConflict); 
-
-							// iga selle aja kohta tuleb kontrollida ajaxi aega"
-							for (var t = 0; t < resConflicts.length; t++) {
-
-								var checkDateTime = toDate(resConflicts[t]); //magic date
-								var checkDateTime2 = toDate(res2Conflicts[t]); //magic date
-
-								if (ConflictID[t] !== timeIDofConflict) {
-									if (isBetween(startDateTime, checkDateTime, checkDateTime2) || isBetween(endDateTime, checkDateTime, checkDateTime2) || isBetween(checkDateTime, startDateTime, endDateTime) || isBetween(checkDateTime2, startDateTime, endDateTime)) {
-										//   console.log(checkDateTime +" - "+ checkDateTime2 + " nende vastu "+ startDateTime+ " " +endDateTime);// 
-										//   console.log("tingumus on täidetud " + resConflicts[t] + " või "+res2Conflicts[t]);
-										$('#myTable #' + ConflictID[t]).after("<tr class='m-0 p-0'><td colspan='5' class='conflict txt-regular'><img src='<?php echo base_url(); ?>assets/img/warning.svg'> Kattuv aeg: " + moment(conflicts2.start).format('HH:mm') /*conflicts2.start.substring(0, 16) */ + "–" + moment(conflicts2.end).format('HH:mm') + " " /*conflicts2.end.substring(0, 16)*/ + titleIDofConflict + "</td></tr>");
-										//   console.log( ConflictID[t] +" ning " +timeIDofConflict);
-										$('#myTable #' + ConflictID[t]).find('.clock.form-control, .datePicker.form-control').css('border', '2px solid #9E3253')
-
-									}
-								}
-
-								//Do something
-							};
-
-
-
-							//  console.log(isBetween(checkDateTime,startDateTime,endDateTime) + " esimene kord ");
-
-							//   $('#myTable #'+timeIDofConflict).append("siin on konflikt");
-							//  console.log(conflicts2.timeID + " id");
 						}
 
+					
+					};
 
-					},
-					error: function(jqXHR, textStatus, errorThrown) {
-						//Error handling code
-						console.log(errorThrown);
-						alert('Oops there was an error');
-					}
-				});
+
+				}
+
+
 				var once = false;
 				$('.datePicker, .clock').focusin(function() {
 					if (once == false) {
@@ -697,20 +676,4 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
         $(this).addClass("active");
 	});
 	
-	function isOverlapping(event, conflicts) {
-	for (i in conflicts) {
-			if (conflicts[i].id != event.id && conflicts[i].start != null && conflicts[i].end != null && event.start != null && event.end != null) {
-				if (moment(conflicts[i].start).isBefore(event.end) && moment(conflicts[i].end).isAfter(event.start)) {
-				
-						$('#myTablePeriod #' + event.timeID).after("<tr class='m-0 p-0'><td colspan='5' class='conflict txt-regular'><img src='<?php echo base_url(); ?>assets/img/warning.svg'> Kattuv aeg: " + moment(conflicts[i].start).format('HH:mm') /*conflicts2.start.substring(0, 16) */ + "–" + moment(conflicts[i].end).format('HH:mm') + " " /*conflicts2.end.substring(0, 16)*/ + conflicts[i].title + "</td></tr>");
-							
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-
-
 </script>

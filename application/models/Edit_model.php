@@ -16,6 +16,8 @@ class Edit_model extends CI_Model
 	}
 
 
+	
+
 	function fetch_all_Booking_times(){
 		$this->db->order_by('bookingTimes.timeID');
 		$this->db->join('bookings', 'bookingTimes.bookingID = bookings.id' , 'left');
@@ -46,7 +48,43 @@ class Edit_model extends CI_Model
 		$this->db->insert('bookingTimes', $insert_data);
 		return $this->db->insert_id();
 		}
-	
+
+		public function get_room($insert_data){
+		
+			$this->db->select("roomID");  
+			$this->db->order_by('bookingTimes.startTime');
+			$this->db->where('bookingID', $insert_data);
+			$query=$this->db->get('bookingTimes');
+			return $query->row_array();
+		
+		}
+
+		public function get_allbookingtimes($bookingID, $timeID){
+			
+			$this->db->where('bookingID', $bookingID);
+			$this->db->where('timeID', $timeID);
+			$this->db->join('bookings', 'bookingTimes.bookingID = bookings.id' , 'left');
+			$this->db->order_by('bookingTimes.startTime','ASC');
+			$query=$this->db->get('bookingTimes');
+			return $query->result_array();
+		
+		}
+
+		public function get_conflictsDates($insert_data, $bookingID ){
+		
+			$this->db->select("timeID, created_at, startTime, endTime, public_info, workout");  
+			$this->db->order_by('bookingTimes.startTime');
+			$this->db->join('bookings', 'bookingTimes.bookingID = bookings.id' , 'left');
+			$this->db->join('rooms', 'bookingTimes.roomID = rooms.id' , 'left');
+			$this->db->join('buildings', 'rooms.buildingID = buildings.id' , 'left');
+		//	$this->db->where('buildingID', $insert_data);
+			$this->db->where('roomID',  $insert_data);
+			$this->db->where('bookingID != ', $bookingID); 
+			$this->db->where('DATE(startTime) >=', date('Y-m-d H:i:s',strtotime("-1 day")));
+			$query=$this->db->get('bookingTimes');
+			return  $query->result();
+		
+		}
 
 
 }
