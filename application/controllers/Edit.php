@@ -208,9 +208,10 @@ class Edit extends CI_Controller {
 			$startingTime= date("H:i:s", strtotime($data['bookingData']['startTime'])); //kell alates
 			$endingTime= date("H:i:s", strtotime($data['bookingData']['endTime']));
 		
+			$getLasDateToCheck=$this->edit_model->get_lastDate($whichWeekDaynumberToSearch, $data['bookingData']['bookingID'],$data['bookingData']['startTime']);
 			$retrieveDatesFromDataBase=$this->edit_model->get_allTimesThatMatch($whichWeekDaynumberToSearch, $data['bookingData']['bookingID'], $startingTime ,$endingTime,$roomWhereSearchForConflicts['roomID'], $data['bookingData']['startTime'] );
-			print_r($retrieveDatesFromDataBase);
 		}
+		print_r($getLasDateToCheck);
 		echo '<br>';
 	   foreach($allEventsForConflictCheck as $key => $value){
 			   $property1 = 'startTime'; 
