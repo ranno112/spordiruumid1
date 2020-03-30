@@ -115,7 +115,22 @@ class Edit_model extends CI_Model
 		return  $query->result_array();
       
 	}
+
+	public function get_info_for_version( $timID)
+    {
+		$this->db->select("startTime, endTime");  
+		$this->db->order_by('bookingTimes.startTime');
+		 $this->db->where('timeID',  $timID);
+		$query=$this->db->get('bookingTimes');
+		return  $query->result_array();
+      
+	}
 	
+	function insert_version($data)
+	{
+		$this->db->insert('bookingTimeVersions', $data);
+	}
+
 
 }
 

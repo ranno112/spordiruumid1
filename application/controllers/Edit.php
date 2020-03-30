@@ -262,7 +262,7 @@ class Edit extends CI_Controller {
 
 				$this->load->view('templates/header');
 				$this->load->view('pages/edit',$this->security->xss_clean($data));//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
-				// print_r($conflictTimes);
+				 //print_r($bookingDataWhichUserWantsToChange);
 				// echo '<br>';
 				// print_r($data);
 				$this->load->view('templates/footer');
@@ -279,6 +279,7 @@ class Edit extends CI_Controller {
 				'comment' => $this ->input->post('additionalComment'),
 				//'building' => $this ->input->post('building'), //pole seda formis
 				'workout' => $this ->input->post('workoutType'),
+				
 				
 			);
 			
@@ -316,13 +317,26 @@ class Edit extends CI_Controller {
 						}
 						else{
 							$RedirectToCalendar=true;
-						$insert_data[] = array(
+							$insert_data[] = array(
 							//'roomID' => $this->input->post('sportrooms'),
 							'startTime' => $start_date, 
 							'endTime' => $end_date,
-							'bookingTimeColor' =>$this->input->post('color')[$i]
+							'bookingTimeColor' =>$this->input->post('color')[$i],
+							'hasChanged' => '1',
 							
 							);
+							$dataForVersion=$this->edit_model->get_info_for_version($this->input->post('timesIdArray')[$i]);
+
+							$dataForVersioning = array(
+								'timeID'	=>	$this->input->post('timesIdArray')[$i],
+								'startTime'		=>	$dataForVersion[0]['startTime'],
+								'endTime'	=>		$dataForVersion[0]['endTime'],
+								'nameWhoChanged'		=>	$this->session->userdata('userName'),
+								'reason'	=>	$this->input->post('reason'),
+							
+								);
+							
+							$this->edit_model->insert_version($dataForVersioning);
 							$this->edit_model->update_bookingTimes($insert_data[$i], $this->input->post('timesIdArray')[$i]);
 						}
 				
@@ -357,7 +371,8 @@ class Edit extends CI_Controller {
 					'startTime' => $start_date,
 					'endTime' => $end_date,
 					'bookingID' =>$this ->input->post('id'),
-					'bookingTimeColor' =>$this->input->post('color')[$t]
+					'bookingTimeColor' =>$this->input->post('color')[$t],
+					'hasChanged' => '1',
 				);
 			
 				$this->edit_model->insert($addtimes[$t], $this->input->post('id'));
@@ -390,9 +405,7 @@ class Edit extends CI_Controller {
 			
 			//	redirect(base_url('fullcalendar?roomId='.$this->input->post('roomID')));
 				redirect('fullcalendar?roomId='.$this->input->post('roomID').'&date='. date('d.m.Y', strtotime($this->input->post('bookingtimesFrom')[0])));
-			// $this->load->view('templates/header');
-			// $this->load->view('pages/edit');
-			// $this->load->view('templates/footer');
+	
 			}
 		
 		}
@@ -496,7 +509,18 @@ class Edit extends CI_Controller {
 							);
 							//print_r( $this->input->post('timesIdArray')[$i]) ;
 
+							$dataForVersion=$this->edit_model->get_info_for_version($this->input->post('timesIdArray')[$i]);
+
+							$dataForVersioning = array(
+								'timeID'	=>	$this->input->post('timesIdArray')[$i],
+								'startTime'		=>	$dataForVersion[0]['startTime'],
+								'endTime'	=>		$dataForVersion[0]['endTime'],
+								'nameWhoChanged'		=>	$this->session->userdata('userName'),
+								'reason'	=>	$this->input->post('reason'),
 							
+								);
+							
+							$this->edit_model->insert_version($dataForVersioning);
 							$this->edit_model->update_bookingTimes($insert_data[$i], $this->input->post('timesIdArray')[$i]);
 						}
 				

@@ -261,6 +261,9 @@
 							<div class="form-label-group pb-2 px-0">
 								<label>Lisainfo</label>
 								<textarea class="form-control" id="additionalPeriod" name="additionalCommentPeriod" rows="3"><?php echo $bookingData['comment'];?></textarea>
+								</br>
+								<label>Muutmise põhjus</label>
+								<input class="form-control" id="reason" name="reason" rows="3"></input>
 							</div>
 						</div>
 						

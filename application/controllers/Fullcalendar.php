@@ -151,7 +151,7 @@ class Fullcalendar extends CI_Controller {
 						'timeID'	=>	$this->input->post('timeID'),
 						'startTime'		=>	$this->input->post('versionStart'),
 						'endTime'	=>	$this->input->post('versionEnd'),
-						'nameWhoChanged'		=>	$this->input->post('versionNameWhoChanged'),
+						'nameWhoChanged'		=> $this->session->userdata('userName'),
 						'reason'	=>	$this->input->post('reason'),
 					
 						);
