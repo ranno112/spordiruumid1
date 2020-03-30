@@ -230,7 +230,7 @@
 								<table id="myTablePeriod" class="table table-borderless">
 									<thead>
 										<tr>
-											<th colspan="4" class="txt-regular txt-lg p-0">Muudetakse kõiki alljärgnevaid aegu ja värve</th>
+											<th colspan="4" class="txt-regular txt-lg p-0">Korraga muudetakse kõiki alljärgnevaid aegu ja värve</th>
 										
 								
 											<th class="p-0"></th>

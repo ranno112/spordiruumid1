@@ -176,6 +176,7 @@ class Edit extends CI_Controller {
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
 		$conflictTimes = array();
 		$data['allPostData']=$this->input->post();
+
 		foreach ($this->input->post('timesIdArray') as $id) {
 		$bookingDataWhichUserWantsToChange[]=$this->edit_model->get_allbookingtimes($this->input->post('BookingID'),$id);
 		if(!$this->checkIfIsAllowedToUpdate($id)){
@@ -184,9 +185,6 @@ class Edit extends CI_Controller {
 		};
 		}
 
-	
-
-	
 	     $this->form_validation->set_rules('publicInfo', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
 		 $this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactPerson_check');
 		 $this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
@@ -202,17 +200,20 @@ class Edit extends CI_Controller {
 
 
 		if($this->input->post('isPeriodic')){
+	
 			$whichWeekDaynumberToSearch=date('N', strtotime($data['bookingData']['startTime']));
-			print_r($whichWeekDaynumberToSearch);
-			$startTime= $this->input->post('startTime');
-			$startingTime= date("H:i:s", strtotime($data['bookingData']['startTime'])); //kell alates
-			$endingTime= date("H:i:s", strtotime($data['bookingData']['endTime']));
+			$getAlltimeIDToChange=$this->edit_model->get_lastDate($whichWeekDaynumberToSearch, $data['bookingData']['bookingID'],$data['bookingData']['startTime']);
+			foreach ($getAlltimeIDToChange as $id) {
+				
+				$bookingDataWhichUserWantsToChange[]=$this->edit_model->get_allbookingtimes($this->input->post('BookingID'),$id['timeID']);
+				if(!$this->checkIfIsAllowedToUpdate($id['timeID'])){
+					redirect('fullcalendar?roomId='.$this->input->post('roomID').'&date='. date('d.m.Y', strtotime($this->input->post('bookingtimesFrom')[0])));
 		
-			$getLasDateToCheck=$this->edit_model->get_lastDate($whichWeekDaynumberToSearch, $data['bookingData']['bookingID'],$data['bookingData']['startTime']);
-			$retrieveDatesFromDataBase=$this->edit_model->get_allTimesThatMatch($whichWeekDaynumberToSearch, $data['bookingData']['bookingID'], $startingTime ,$endingTime,$roomWhereSearchForConflicts['roomID'], $data['bookingData']['startTime'] );
+				};
+			}
+
 		}
-		print_r($getLasDateToCheck);
-		echo '<br>';
+	
 	   foreach($allEventsForConflictCheck as $key => $value){
 			   $property1 = 'startTime'; 
 			   $property2 = 'endTime'; 
@@ -261,9 +262,9 @@ class Edit extends CI_Controller {
 
 				$this->load->view('templates/header');
 				$this->load->view('pages/edit',$this->security->xss_clean($data));//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
-				print_r($conflictTimes);
-				echo '<br>';
-				print_r($data);
+				// print_r($conflictTimes);
+				// echo '<br>';
+				// print_r($data);
 				$this->load->view('templates/footer');
 
 			} 

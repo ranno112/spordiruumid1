@@ -104,32 +104,15 @@ class Edit_model extends CI_Model
 	}
 
 
-
-	public function get_allTimesThatMatch($whichWeekDaynumberToSearch, $bookingID, $startingTime ,$endingTime, $roomID, $startingDate )
-    {
-		//$this->db->select("timeID, created_at, startTime, endTime, public_info, workout");  
-		$this->db->order_by('bookingTimes.startTime');
-		 $this->db->where('bookingID !=',  $bookingID);
-	 	 $this->db->where('WEEKDAY(startTime)+1=',  $whichWeekDaynumberToSearch);
-		 $this->db->where('DATE_FORMAT(startTime,"%H:%i:%s")<', $endingTime);
-		 $this->db->where('roomID',  $roomID);
-		 $this->db->where('DATE_FORMAT(endTime,"%H:%i:%s")>', $startingTime);
-		 $this->db->where('startTime>=', $startingDate);
-		 $this->db->join('bookings', 'bookingTimes.bookingID = bookings.id' , 'left');
-		$query=$this->db->get('bookingTimes');
-		return  $query->result();
-      
-	}
-
 	public function get_lastDate( $whichWeekDaynumberToSearch,$bookingID,$startingDate)
     {
-		$this->db->select("startTime");  
+		$this->db->select("timeID");  
 		$this->db->order_by('bookingTimes.startTime');
 		 $this->db->where('bookingID',  $bookingID);
 		 $this->db->where('startTime>=', $startingDate);
 		 $this->db->where('WEEKDAY(startTime)+1=',  $whichWeekDaynumberToSearch);
 		$query=$this->db->get('bookingTimes');
-		return  $query->result();
+		return  $query->result_array();
       
 	}
 	
