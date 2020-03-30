@@ -133,23 +133,23 @@
 						<h4 class="pt-2 txt-xl px-5 mx-5">Kontakt</h4>
 						<div class="d-flex p-0 mt-4 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
-								<label for="contact">Klubi nimi (avalik info)*</label>
+								<label for="contact">Klubi nimi (avalik info)* <?php if($this->session->flashdata('validationErrorMessageForClubname')){  echo $this->session->flashdata('validationErrorMessageForClubname');} ?></label>	
 								<input type="text" class="form-control" name="publicInfoPeriod" value="<?php echo $bookingData['public_info'];?>" id="publicInfoPeriod" required>
 							</div>
 							<input class="d-none" type="checkbox" id="type" name="type" value="1" checked>
 							<div class="form-label-group col-6 p-0 pl-5">
-								<label>Kontaktisik</label>
-								<input type="text" class="form-control" name="contactPersonPeriod" id="contactPersonPeriod"  value="<?php echo $bookingData['c_name'];?>">
+								<label>Kontaktisik <?php if($this->session->flashdata('validationErrorMessageContactPerson')){  echo $this->session->flashdata('validationErrorMessageContactPerson');} ?> </label>
+								<input type="text" class="form-control" name="contactPersonPeriod" id="contactPersonPeriod"  value="<?php if(!empty($allPostData['contactPersonPeriod'])){echo $allPostData['contactPersonPeriod'];}else {echo $bookingData['c_name'];}?>">
 							</div>
 						</div>
 						<div class="d-flex mt-2 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
-								<label>Telefoni number</label>
+								<label>Telefon <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?></label>
 								<input type="number" class="form-control" name="phonePeriod" id="phonePeriod" value="<?php echo $bookingData['c_phone'];?>">
 							</div>
 
 							<div class="form-label-group col-6 p-0 pl-5">
-								<label>Email</label>
+								<label>Email  <?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?></label>
 								<input type="email" class="form-control" name="emailPeriod" id="emailPeriod" value="<?php echo $bookingData['c_email'];?>">
 							</div>
 						</div>
