@@ -67,8 +67,8 @@
 				
 				}
 			$data['xssData'] = $this->security->xss_clean($data);
-			$this->load->view('templates/header', $data);
-			$this->load->view('pages/allbookings', $data);
+			$this->load->view('templates/header', $this->security->xss_clean($data));
+			$this->load->view('pages/allbookings', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
 
 		
@@ -81,7 +81,7 @@
 			$data['rooms']=$this->allbookings_model->fetch_all_rooms_for_checkbox($this->session->userdata('building'));
 			
 			$this->load->view('templates/header');
-			$this->load->view('pages/allweekbookings', $data);
+			$this->load->view('pages/allweekbookings', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
 		}
 
@@ -112,7 +112,7 @@
 		
 		}
 			
-			echo json_encode($data);
+			echo json_encode($this->security->xss_clean($data));
 		}
 
 		function loadRooms($buildingID)
@@ -130,7 +130,7 @@
 		
 		}
 			
-			echo json_encode($data);
+			echo json_encode($this->security->xss_clean($data));
 		}
 
 		
