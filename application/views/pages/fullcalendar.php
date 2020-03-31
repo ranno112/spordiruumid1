@@ -559,7 +559,7 @@
 						calendar.fullCalendar('refetchEvents');
 					}
 					});
-				event.preventDefault();
+			//	event.preventDefault();
 		
 			
 			}else{

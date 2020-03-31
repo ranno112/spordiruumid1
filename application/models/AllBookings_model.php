@@ -28,7 +28,7 @@
 		}
 
 		function fetch_all_rooms_for_checkbox($buildingID){
-			$this->db->order_by('roomName');
+			$this->db->order_by('id');
 			$this->db->where('buildingID', $buildingID);
 			$query =  $this->db->get('rooms');
 			return $query->result_array();
