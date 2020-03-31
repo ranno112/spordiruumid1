@@ -267,7 +267,7 @@
 									<input type="submit" class="btn btn-custom text-white txt-strong btn-width-lg example1" value="Kinnita">
 								</form>
 
-								<form id="change" method="post" action="<?php echo base_url(); ?>edit/update" class="m-0 pt-2">
+								<form id="change" method="post" action="<?php echo base_url(); ?>edit/index" class="m-0 pt-2">
 									<input type="hidden" id="dontShow" name="dontShow" value="1">
 									<input type="hidden" id="BookingID" name="BookingID" value="">
 									<input type="hidden" id="isPeriodic" name="isPeriodic" value="0">

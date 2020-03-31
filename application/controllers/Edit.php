@@ -168,6 +168,7 @@ class Edit extends CI_Controller {
 
 	}
 
+
 	public function getAllConflictData($allEventsForConflictCheck,$bookingDataWhichUserWantsToChange)
 	{
 		$conflictTimes = array();
@@ -195,84 +196,81 @@ class Edit extends CI_Controller {
 				//$value['startTime'],$value['endTime']
 			
 			}
-			
 		}
 		return json_encode($conflictTimes);
 	}
 
+	public function index()
+	{
+		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+
+			$data['allPostData']=$this->input->post();
+			// print_r($data['allPostData']);
+			// echo '<br>';
+			// print_r($this->security->xss_clean($data['allPostData']));
+			// echo '<br>';
+			foreach ($this->input->post('timesIdArray') as $id) {
+				$bookingDataWhichUserWantsToChange[]=$this->edit_model->get_allbookingtimes($this->input->post('BookingID'),$id);
+				if(!$this->checkIfIsAllowedToUpdate($id)){
+					redirect('fullcalendar?roomId='.$this->input->post('roomID').'&date='. date('d.m.Y', strtotime($this->input->post('bookingtimesFrom')[0])));
+		
+				};
+			}
+			$data['bookingData']=$bookingDataWhichUserWantsToChange[0][0];
+			$data['allBookingData']=$bookingDataWhichUserWantsToChange;
+			
+			$roomWhereSearchForConflicts=$this->edit_model->get_room($this->input->post('BookingID'));
+			$allEventsForConflictCheck=$this->edit_model->get_conflictsDates($roomWhereSearchForConflicts['roomID'], $this->input->post('BookingID'));
+
+
+			if($this->input->post('isPeriodic')){
+		
+				$whichWeekDaynumberToSearch=date('N', strtotime($data['bookingData']['startTime']));
+				$getAlltimeIDToChange=$this->edit_model->get_lastDate($whichWeekDaynumberToSearch, $data['bookingData']['bookingID'],$data['bookingData']['startTime']);
+				foreach ($getAlltimeIDToChange as $id) {
+					
+					$bookingDataWhichUserWantsToChange[]=$this->edit_model->get_allbookingtimes($this->input->post('BookingID'),$id['timeID']);
+					if(!$this->checkIfIsAllowedToUpdate($id['timeID'])){
+						redirect('fullcalendar?roomId='.$this->input->post('roomID').'&date='. date('d.m.Y', strtotime($this->input->post('bookingtimesFrom')[0])));
+			
+					};
+				}
+
+			}
+			$conflictTimes=$this->getAllConflictData($allEventsForConflictCheck,$bookingDataWhichUserWantsToChange);
+			$data['conflictTimes']= $conflictTimes;
+
+
+			$this->load->view('templates/header');
+			$this->load->view('pages/edit',$this->security->xss_clean($data));//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
+			$this->load->view('templates/footer');
+
+			return $data;
+		}
+	}
 
 
 	// The Main function
 	public function update()
 	{	
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
-		
-		$data['allPostData']=$this->input->post();
 
-		foreach ($this->input->post('timesIdArray') as $id) {
-		$bookingDataWhichUserWantsToChange[]=$this->edit_model->get_allbookingtimes($this->input->post('BookingID'),$id);
-		if(!$this->checkIfIsAllowedToUpdate($id)){
-			redirect('fullcalendar?roomId='.$this->input->post('roomID').'&date='. date('d.m.Y', strtotime($this->input->post('bookingtimesFrom')[0])));
-
-		};
-		}
-		$data['bookingData']=$bookingDataWhichUserWantsToChange[0][0];
-		$data['allBookingData']=$bookingDataWhichUserWantsToChange;
-
-	     $this->form_validation->set_rules('publicInfo', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
-		 $this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactPerson_check');
-		 $this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
-		 $this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
-		 $this->form_validation->set_rules('workoutType', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars');
-		 $this->form_validation->set_rules('additionalComment', 'Lisainfo', 'trim|htmlspecialchars');
-
-		
+		$this->form_validation->set_rules('publicInfo', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
+		$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactPerson_check');
+		$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
+		$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
+		$this->form_validation->set_rules('workoutType', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars');
+		$this->form_validation->set_rules('additionalComment', 'Lisainfo', 'trim|htmlspecialchars');
 	
-		$roomWhereSearchForConflicts=$this->edit_model->get_room($this->input->post('BookingID'));
-		$allEventsForConflictCheck=$this->edit_model->get_conflictsDates($roomWhereSearchForConflicts['roomID'], $this->input->post('BookingID'));
+		if($this->form_validation->run() === FALSE ){
 
-
-		if($this->input->post('isPeriodic')){
-	
-			$whichWeekDaynumberToSearch=date('N', strtotime($data['bookingData']['startTime']));
-			$getAlltimeIDToChange=$this->edit_model->get_lastDate($whichWeekDaynumberToSearch, $data['bookingData']['bookingID'],$data['bookingData']['startTime']);
-			foreach ($getAlltimeIDToChange as $id) {
-				
-				$bookingDataWhichUserWantsToChange[]=$this->edit_model->get_allbookingtimes($this->input->post('BookingID'),$id['timeID']);
-				if(!$this->checkIfIsAllowedToUpdate($id['timeID'])){
-					redirect('fullcalendar?roomId='.$this->input->post('roomID').'&date='. date('d.m.Y', strtotime($this->input->post('bookingtimesFrom')[0])));
-		
-				};
+			if($this->input->post('dontShow')!=1){
+			$this->session->set_flashdata('validationErrorMessage', 'Vormiga on midagi valesti');
 			}
+			$data=$this-> index();
 
-		}
-		
-		$conflictTimes=$this->getAllConflictData($allEventsForConflictCheck,$bookingDataWhichUserWantsToChange);
-		$data['conflictTimes']= $conflictTimes;
-		//print_r($bookingDataWhichUserWantsToChange);
-	
-			
-		//	$this->form_validation->set_rules('publicInfo', 'Klubi nimi', 'required');
-		//	$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'required');
-
-			if($this->form_validation->run() === FALSE ){
-
-				if($this->input->post('dontShow')!=1){
-				$this->form_validation->set_message('validationErrorMessage', 'Vormiga on midagi valesti');
-				$this->session->set_flashdata('validationErrorMessage', 'Vormiga on midagi valesti');
-
-				
-				}
-			
-
-
-				$this->load->view('templates/header');
-				$this->load->view('pages/edit',$this->security->xss_clean($data));//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
-			
-				$this->load->view('templates/footer');
-
-			} 
-			else{
+		} 
+		else{
 
 			$data1 = array(
 				'public_info'=>$this->input->post('publicInfo'),
@@ -398,6 +396,9 @@ class Edit extends CI_Controller {
 	
 		
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+		
+
+
 			$this->form_validation->set_rules('publicInfoPeriod', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
 			$this->form_validation->set_rules('contactPersonPeriod', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactPerson_check');
 			$this->form_validation->set_rules('phonePeriod', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
@@ -405,36 +406,16 @@ class Edit extends CI_Controller {
 			$this->form_validation->set_rules('workoutTypePeriod', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars');
 			$this->form_validation->set_rules('additionalCommentPeriod', 'Lisainfo', 'trim|htmlspecialchars');
 			
-			$data['allPostData']=$this->input->post();
-			foreach ($this->input->post('timesIdArray') as $id) {
-				$bookingDataWhichUserWantsToChange[]=$this->edit_model->get_allbookingtimes($this->input->post('BookingID'),$id);
-				if(!$this->checkIfIsAllowedToUpdate($id)){
-					redirect('fullcalendar?roomId='.$this->input->post('roomID').'&date='. date('d.m.Y', strtotime($this->input->post('bookingtimesFrom')[0])));
 		
-				};
-			}
-			$data['bookingData']=$bookingDataWhichUserWantsToChange[0][0];
-			$roomWhereSearchForConflicts=$this->edit_model->get_room($this->input->post('BookingID'));
-			$allEventsForConflictCheck=$this->edit_model->get_conflictsDates($roomWhereSearchForConflicts['roomID'], $this->input->post('BookingID'));
-			$conflictTimes=$this->getAllConflictData($allEventsForConflictCheck,$bookingDataWhichUserWantsToChange);
-			$data['conflictTimes']= $conflictTimes;
-			print_r($conflictTimes);
-
 
 			if($this->form_validation->run() === FALSE ){
 
 				if($this->input->post('dontShow')!=1){
-				$this->form_validation->set_message('validationErrorMessage', 'Klubi nimi puudu');
-				$this->session->set_flashdata('validationErrorMessage', 'Klubi nimi puudu');
-				}
-				$this->session->set_flashdata('key',$this->security->xss_clean($data));
-				print_r($this->security->xss_clean($data));
-
-				$this->load->view('templates/header');
-				$this->load->view('pages/edit',$this->security->xss_clean($data));//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
 			
-
-				$this->load->view('templates/footer');
+				$this->session->set_flashdata('validationErrorMessage', 'Vormiga on midagi valesti');
+				}
+				$data=$this-> index();
+			//	print_r($data);
 
 			} 
 			else{

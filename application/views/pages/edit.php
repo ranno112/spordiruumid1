@@ -20,28 +20,28 @@
 			<div class="tab-content ">
 		
 				<div id="mitmekordne" class="tab-pane center <?php if ($_POST['isPeriodic'] == 0) echo "active";?>">
-					<form id="change" method="post" action="<?php echo base_url(); ?>edit/update">
+					<?php echo form_open('edit/update', array('id' => 'change')); ?>
 						<h4 class="pt-2 txt-xl px-5 mx-5">Kontakt</h4>
 						<div class="d-flex p-0 mt-4 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
-								<label for="contact">Klubi nimi (avalik info)*</label>
-								<input type="text" class="form-control" name="publicInfo" value="<?php echo $bookingData['public_info'];?>" id="publicInfo" required>
+								<label for="contact">Klubi nimi (avalik info)* <?php if($this->session->flashdata('validationErrorMessageForClubname')){  echo $this->session->flashdata('validationErrorMessageForClubname');} ?></label>
+								<input type="text" class="form-control" name="publicInfo" value="<?php if(!empty($allPostData['publicInfo'])){echo $allPostData['publicInfo'];}else {echo $bookingData['public_info'];}?>" id="publicInfo" required>
 							</div>
 							<input class="d-none" type="checkbox" id="type" name="type" value="1" checked>
 							<div class="form-label-group col-6 p-0 pl-5">
-								<label>Kontaktisik</label>
-								<input type="text" class="form-control" name="contactPerson" id="contactPerson" value="<?php echo $bookingData['c_name'];?>">
+								<label>Kontaktisik <?php if($this->session->flashdata('validationErrorMessageContactPerson')){  echo $this->session->flashdata('validationErrorMessageContactPerson');} ?> </label>
+								<input type="text" class="form-control" name="contactPerson" id="contactPerson" value="<?php if(!empty($allPostData['contactPerson'])){echo $allPostData['contactPerson'];}else {echo $bookingData['c_name'];}?>">
 							</div>
 						</div>
 						<div class="d-flex mt-2 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
-								<label>Telefoni number</label>
-								<input type="number" class="form-control" name="phone" id="phone" value="<?php echo $bookingData['c_phone'];?>">
+								<label>Telefoni number  <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?></label>
+								<input type="number" class="form-control" name="phone" id="phone" value="<?php if(!empty($allPostData['phone'])){echo $allPostData['phone'];}else {echo $bookingData['c_phone'];}?>">
 							</div>
 
 							<div class="form-label-group col-6 p-0 pl-5">
-								<label>Email</label>
-								<input type="email" class="form-control" name="email" id="email" value="<?php echo $bookingData['c_email'];?>">
+								<label>Email  <?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?></label>
+								<input type="email" class="form-control" name="email" id="email" value="<?php if(!empty($allPostData['email'])){echo $allPostData['email'];}else {echo $bookingData['c_email'];}?>">
 							</div>
 						</div>
 
@@ -67,7 +67,7 @@
 						<div class="d-flex mt-2 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
 								<label>Sündmus / Treeningu tüüp (avalik info)</label>
-								<input type="text" class="form-control" name="workoutType" id="workoutType" value="<?php echo $bookingData['workout'];?>">
+								<input type="text" class="form-control" name="workoutType" id="workoutType" value="<?php if(!empty($allPostData['workoutType'])){echo $allPostData['workoutType'];}else {echo $bookingData['workout'];}?>">
 							</div>
 							<div class="form-label-group col-6 p-0 pl-5"></div>
 						</div>
@@ -110,7 +110,7 @@
 						<div class="mt-4 px-5 mx-5">
 							<div class="form-label-group pb-2 px-0">
 								<label>Lisainfo</label>
-								<textarea class="form-control" id="additional" name="additionalComment" rows="3"><?php echo $bookingData['comment'];?></textarea>
+								<textarea class="form-control" id="additional" name="additionalComment" rows="3"><?php if(!empty($allPostData['additionalComment'])){echo $allPostData['additionalComment'];}else {echo $bookingData['comment'];}?></textarea>
 							</br>
 								<label>Muutmise põhjus</label>
 								<input class="form-control" id="reason" name="reason" rows="3"></input>
@@ -129,12 +129,12 @@
 				</div>
 
 				 <div id="hooajaline" class="tab-pane center  <?php if ($_POST['isPeriodic'] == 1) echo "active";?>">
-					<form id="changePeriod" method="post" action="<?php echo base_url(); ?>edit/updatePeriod">
+					<?php echo form_open('edit/updatePeriod', array('id' => 'changePeriod')); ?>
 						<h4 class="pt-2 txt-xl px-5 mx-5">Kontakt</h4>
 						<div class="d-flex p-0 mt-4 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
 								<label for="contact">Klubi nimi (avalik info)* <?php if($this->session->flashdata('validationErrorMessageForClubname')){  echo $this->session->flashdata('validationErrorMessageForClubname');} ?></label>	
-								<input type="text" class="form-control" name="publicInfoPeriod" value="<?php echo $bookingData['public_info'];?>" id="publicInfoPeriod" required>
+								<input type="text" class="form-control" name="publicInfoPeriod" value="<?php if(!empty($allPostData['publicInfoPeriod'])){echo $allPostData['publicInfoPeriod'];}else { echo $bookingData['public_info'];}?>" id="publicInfoPeriod" required>
 							</div>
 							<input class="d-none" type="checkbox" id="type" name="type" value="1" checked>
 							<div class="form-label-group col-6 p-0 pl-5">
@@ -145,12 +145,12 @@
 						<div class="d-flex mt-2 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
 								<label>Telefon <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?></label>
-								<input type="number" class="form-control" name="phonePeriod" id="phonePeriod" value="<?php echo $bookingData['c_phone'];?>">
+								<input type="number" class="form-control" name="phonePeriod" id="phonePeriod" value="<?php if(!empty($allPostData['phonePeriod'])){echo $allPostData['phonePeriod'];}else {echo $bookingData['c_phone'];}?>">
 							</div>
 
 							<div class="form-label-group col-6 p-0 pl-5">
 								<label>Email  <?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?></label>
-								<input type="email" class="form-control" name="emailPeriod" id="emailPeriod" value="<?php echo $bookingData['c_email'];?>">
+								<input type="email" class="form-control" name="emailPeriod" id="emailPeriod" value="<?php if(!empty($allPostData['emailPeriod'])){echo $allPostData['emailPeriod'];}else {echo $bookingData['c_email'];}?>">
 							</div>
 						</div>
 
@@ -176,7 +176,7 @@
 						<div class="d-flex mt-2 px-5 mx-5">
 							<div class="form-label-group col-6 py-0 pl-0 pr-5">
 								<label>Sündmus / Treeningu tüüp (avalik info)</label>
-								<input type="text" class="form-control" name="workoutTypePeriod" id="workoutTypePeriod" value="<?php echo $bookingData['workout'];?>">
+								<input type="text" class="form-control" name="workoutTypePeriod" id="workoutTypePeriod" value="<?php if(!empty($allPostData['workoutTypePeriod'])){echo $allPostData['workoutTypePeriod'];}else {echo $bookingData['workout'];}?>">
 							</div>
 							<div class="form-label-group col-6 p-0 pl-5"></div>
 						</div>
@@ -260,7 +260,7 @@
 						<div class="mt-4 px-5 mx-5">
 							<div class="form-label-group pb-2 px-0">
 								<label>Lisainfo</label>
-								<textarea class="form-control" id="additionalPeriod" name="additionalCommentPeriod" rows="3"><?php echo $bookingData['comment'];?></textarea>
+								<textarea class="form-control" id="additionalPeriod" name="additionalCommentPeriod" rows="3"><?php if(!empty($allPostData['additionalCommentPeriod'])){echo $allPostData['additionalCommentPeriod'];}else {echo $bookingData['comment'];}?></textarea>
 								</br>
 								<label>Muutmise põhjus</label>
 								<input class="form-control" id="reason" name="reason" rows="3"></input>
