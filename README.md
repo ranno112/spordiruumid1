@@ -78,7 +78,8 @@ CREATE TABLE `bookingTimes` (
   `title` varchar(255) NOT NULL,
   `startTime` datetime NOT NULL,
   `endTime` datetime NOT NULL,
-   `bookingTimeColor` char(50),
+  `bookingTimeColor` char(50),
+	`hasChanged` tinyint(1) NOT NULL DEFAULT 0,
    PRIMARY KEY (timeID)
 );
 
