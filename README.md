@@ -33,6 +33,7 @@ CREATE TABLE `bookings` (
 
 CREATE TABLE `users` (
   `userID` int(11) NOT NULL AUTO_INCREMENT,
+	`login_oauth_uid` varchar(100) CHARACTER SET utf8 NOT NULL,
   `roleID` int(11) NOT NULL,
   `buildingID` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -42,6 +43,7 @@ CREATE TABLE `users` (
   `pw_hash` varchar(255) NOT NULL,
   `session_id` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated_at` datetime NOT NULL
    PRIMARY KEY (userID)
 );
 
