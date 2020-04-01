@@ -8,8 +8,15 @@ Rakenduse näol on tegemist kohaliku omavalitsuste spordiga seotud allasutuste s
 
 Oma serverisse laadimiseks on vaja muuta application/config kaustas kaks faili: config.php ning database.php:
 ```
-config.php tuleb määrata URL $config['base_url']
-database.php tuleb määrata 'hostname', 'username', ning 'password'.
+config.php //tuleb määrata URL $config['base_url']
+database.php //tuleb määrata 'hostname', 'username', ning 'password'.
+```
+Lisaks tuleb minna kontrollerisse nimega Login.php ning järgmistesse ridadesse panema oma Google poolt genereeritud OAuth 2.0 genereeritud id ja salajane võti.
+
+```
+$google_client->setClientId(''); //Kirjuta oma ClientID	 
+$google_client->setClientSecret(''); //Kirjuta oma Client Secret Key
+$google_client->setRedirectUri('http://localhost/spordiruumid/login/login'); //Vajadusel muuda suunamise universaalset ressursiidentifikaatorit (Redirect Uri)
 ```
 
 Rakenduse tööle saamiseks tuleb luua SQL tabelid:
