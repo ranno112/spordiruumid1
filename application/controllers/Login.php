@@ -7,8 +7,9 @@ class Login extends CI_Controller{
   }
  
   function index(){
+	$data=$this->login();
     $this->load->view('templates/header');
-    $this->load->view('login_view');
+    $this->load->view('pages/login',$data);
     $this->load->view('templates/footer');
   }
  
@@ -46,7 +47,8 @@ class Login extends CI_Controller{
     }else{
         echo $this->session->set_flashdata('msg','Username or Password is Wrong');
         redirect('login');
-    }
+	}
+	
 	}
 	
 
@@ -108,7 +110,7 @@ class Login extends CI_Controller{
 	 {
 		$login_button = '<a href="'.$google_client->createAuthUrl().'"><img src="'.base_url().'assets/img/sign-in-with-google.png" /></a>';
 		$data['login_button'] = $login_button;
-		$this->load->view('pages/logingoogle', $data);
+		return $data;
 		
 	 }
 	 else
