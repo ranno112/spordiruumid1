@@ -33,7 +33,7 @@ CREATE TABLE `bookings` (
 
 CREATE TABLE `users` (
   `userID` int(11) NOT NULL AUTO_INCREMENT,
-	`login_oauth_uid` varchar(100) CHARACTER SET utf8 NOT NULL,
+  `login_oauth_uid` varchar(100) CHARACTER SET utf8 NOT NULL,
   `roleID` int(11) NOT NULL,
   `buildingID` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -43,9 +43,12 @@ CREATE TABLE `users` (
   `pw_hash` varchar(255) NOT NULL,
   `session_id` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`updated_at` datetime NOT NULL
+  `updated_at` datetime NOT NULL
    PRIMARY KEY (userID)
 );
+
+INSERT INTO `users` (`userID`, `login_oauth_uid`, `roleID`, `buildingID`, `email`, `status`, `userName`, `userPhone`, `pw_hash`, `session_id`, `created_at`, `updated_at`) VALUES
+(1, '', 1, 0, 'admin@admin.ee', 1, 'Admin', '12345', 'admin', '', '2020-03-02 09:00:46', '0000-00-00 00:00:00');
 
 CREATE TABLE `bookingTypes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
