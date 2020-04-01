@@ -2,12 +2,14 @@
 class Login extends CI_Controller{
     
   function __construct(){
-    parent::__construct();
+	parent::__construct();
+	$this->load->library('facebook'); 
     $this->load->model('login_model');
   }
  
   function index(){
-	$data=$this->login();
+	$data['google']=$this->login();
+	$data['facebook']=$this->fblogin();
     $this->load->view('templates/header');
     $this->load->view('pages/login',$data);
     $this->load->view('templates/footer');
@@ -51,20 +53,75 @@ class Login extends CI_Controller{
 	
 	}
 	
+
+
+
+//begin with Facebook OAuth
+// Source code: https://www.codexworld.com/facebook-login-codeigniter/
 	function fblogin()
 	{
-		include_once APPPATH . "libraries/facebook-php-graph-sdk-5/src/Facebook/autoload.php"; 
-		if (!session_id())
-		{
-			session_start();
-		}
 
-		// Call Facebook API
+	$userData = array(); 
+         
+	// Authenticate user with facebook 
+	if($this->facebook->is_authenticated()){ 
+		// Get user info from facebook 
+		$fbUser = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email'); 
 
+		// Preparing data for database insertion 
+	//	$userData['oauth_provider'] = 'facebook'; 
+		$userData['login_oauth_uid']    = !empty($fbUser['id'])?$fbUser['id']:'';; 
+		$userData['userName']    = !empty($fbUser['first_name'])?$fbUser['first_name'].' '.$fbUser['last_name']:''; 
+	//	$userData['last_name']    = !empty($fbUser['last_name'])?$fbUser['last_name']:''; 
+		$userData['email']        = !empty($fbUser['email'])?$fbUser['email']:''; 
+	//	$userData['gender']        = !empty($fbUser['gender'])?$fbUser['gender']:''; 
+	//	$userData['picture']    = !empty($fbUser['picture']['data']['url'])?$fbUser['picture']['data']['url']:''; 
+	//	$userData['link']        = !empty($fbUser['link'])?$fbUser['link']:'https://www.facebook.com/'; 
+		 
+		// Insert or update user data to the database 
+		$userID = $this->login_model->checkUser($userData); 
+		 
+		// Check user data insert or update status 
+		if(!empty($userID)){ 
+			$data['userData'] = $userData; 
+			 
+			// Store the user profile info into session 
+			$this->session->set_userdata('userData', $userData); 
+		}else{ 
+		   $data['userData'] = array(); 
+		} 
+		 
+		// Facebook logout URL 
+		$data['logoutURL'] = $this->facebook->logout_url(); 
+	}else{ 
+		// Facebook authentication url 
+		$data['authURL'] =  $this->facebook->login_url(); 
+	} 
+	 
 
-
-
+	if(!$this->session->userdata('userData'))
+	{
+	  
+	   return $data;
+	   
 	}
+	else
+	{
+		print_r($data);
+		$this->load->view('templates/header');
+		$this->load->view('pages/fblogin', $data);
+		$this->load->view('templates/footer');
+	}
+	// Load login/profile view 
+	
+	  
+	
+	
+		
+	}
+
+//end of Facebook OAuth
+
 
 	// Google OAuth start
 	// used Webslesson from youtube: https://www.youtube.com/watch?v=Kd9Yp9CcVIY and his/her homepage https://www.webslesson.info/2020/03/google-login-integration-in-codeigniter.html

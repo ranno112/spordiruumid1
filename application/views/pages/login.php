@@ -1,8 +1,26 @@
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/et_EE/sdk.js#xfbml=1&version=v6.0&appId=320472512246850&autoLogAppEvents=1"></script>
  
+<!-- Display login button / Facebook profile information -->
 
 
+
+<?php if(!empty($facebook['authURL'])){ ?>
+	<h2>CodeIgniter Facebook Login</h2>
+    <a href="<?php echo $facebook['authURL']; ?>"><img src="<?php echo base_url('assets/images/fb-login-btn.png'); ?>"></a>
+<?php }else{ ?>
+    <h2>Facebook Profile Details</h2>
+    <div class="ac-data">
+       
+        <p><b>Facebook ID:</b> <?php echo $facebook['userData']['login_oauth_uid']; ?></p>
+        <p><b>Name:</b> <?php echo $facebook['userData']['userName']; ?></p>
+        <p><b>Email:</b> <?php echo $facebook['userData']['email']; ?></p>
+    
+        <p><b>Logged in with:</b> Facebook</p>
+    
+        <p><b>Logout from <a href="<?php echo $logoutURL; ?>">Facebook</a></p>
+    </div>
+<?php } ?>
 <div class="container">
 	<div class="container-sm h-100 mx-auto">
 		<div class="vert-center form-bg">
@@ -35,9 +53,10 @@
 			<?php echo form_close(); ?>
 			
 			 <?php
-   if(!isset($login_button))
+			
+   if(!isset($google['login_button']))
    {
-
+	
     $user_data = $this->session->userdata('user_data');
     echo '<div class="panel-heading">Welcome User</div><div class="panel-body">';
   //  echo '<img src="'.$user_data['profile_picture'].'" class="img-responsive img-circle img-thumbnail" />';
@@ -47,7 +66,7 @@
    }
    else
    {
-    echo '<div align="center">'.$login_button . '</div>';
+    echo '<div align="center">'.$google['login_button'] . '</div>';
    }
 	 ?>
 	<div align="center"> <div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="false"></div></div>
