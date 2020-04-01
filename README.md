@@ -8,8 +8,15 @@ Rakenduse näol on tegemist kohaliku omavalitsuste spordiga seotud allasutuste s
 
 Oma serverisse laadimiseks on vaja muuta application/config kaustas kaks faili: config.php ning database.php:
 ```
-config.php tuleb määrata URL $config['base_url']
-database.php tuleb määrata 'hostname', 'username', ning 'password'.
+config.php //tuleb määrata URL $config['base_url']
+database.php //tuleb määrata 'hostname', 'username', ning 'password'.
+```
+Lisaks tuleb minna kontrollerisse nimega Login.php ning järgmistesse ridadesse panema oma Google poolt genereeritud OAuth 2.0 genereeritud id ja salajane võti.
+
+```
+$google_client->setClientId(''); //Kirjuta oma ClientID	 
+$google_client->setClientSecret(''); //Kirjuta oma Client Secret Key
+$google_client->setRedirectUri('http://localhost/spordiruumid/login/login'); //Vajadusel muuda suunamise universaalset ressursiidentifikaatorit (Redirect Uri)
 ```
 
 Rakenduse tööle saamiseks tuleb luua SQL tabelid:
@@ -33,6 +40,7 @@ CREATE TABLE `bookings` (
 
 CREATE TABLE `users` (
   `userID` int(11) NOT NULL AUTO_INCREMENT,
+  `login_oauth_uid` varchar(100) CHARACTER SET utf8 NOT NULL,
   `roleID` int(11) NOT NULL,
   `buildingID` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -42,8 +50,12 @@ CREATE TABLE `users` (
   `pw_hash` varchar(255) NOT NULL,
   `session_id` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL
    PRIMARY KEY (userID)
 );
+
+INSERT INTO `users` (`userID`, `login_oauth_uid`, `roleID`, `buildingID`, `email`, `status`, `userName`, `userPhone`, `pw_hash`, `session_id`, `created_at`, `updated_at`) VALUES
+(1, '', 1, 0, 'admin@admin.ee', 1, 'Admin', '12345', 'admin', '', '2020-03-02 09:00:46', '0000-00-00 00:00:00');
 
 CREATE TABLE `bookingTypes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -69,6 +81,16 @@ CREATE TABLE `bookingTimes` (
    `bookingTimeColor` char(50),
    PRIMARY KEY (timeID)
 );
+
+CREATE TABLE `bookingtimeversions` (
+  `versionID` int(11) NOT NULL,
+  `timeID` int(11) NOT NULL,
+  `startTime` timestamp NULL DEFAULT NULL,
+  `endTime` timestamp NULL DEFAULT NULL,
+  `nameWhoChanged` varchar(30) DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `whenChanged` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `buildings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
