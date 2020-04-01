@@ -51,6 +51,20 @@ class Login extends CI_Controller{
 	
 	}
 	
+	function fblogin()
+	{
+		include_once APPPATH . "libraries/facebook-php-graph-sdk-5/src/Facebook/autoload.php"; 
+		if (!session_id())
+		{
+			session_start();
+		}
+
+		// Call Facebook API
+
+
+
+
+	}
 
 	// Google OAuth start
 	// used Webslesson from youtube: https://www.youtube.com/watch?v=Kd9Yp9CcVIY and his/her homepage https://www.webslesson.info/2020/03/google-login-integration-in-codeigniter.html
@@ -85,7 +99,7 @@ class Login extends CI_Controller{
 			$user_data = array(
 			'userName'  => $data['given_name'].' '.$data['family_name'],
 			'email'  => $data['email'],
-			 'updated_at' => $current_datetime
+			'updated_at' => $current_datetime
 			);
  
 			$this->login_model->update_user_data($user_data, $data['id']);
@@ -108,7 +122,7 @@ class Login extends CI_Controller{
 	 $login_button = '';
 	 if(!$this->session->userdata('access_token'))
 	 {
-		$login_button = '<a href="'.$google_client->createAuthUrl().'"><img src="'.base_url().'assets/img/sign-in-with-google.png" /></a>';
+		$login_button = '<a href="'.$google_client->createAuthUrl().'"><img src="'.base_url().'assets/img/sign-in-with-google.png"  width="54%" /></a>';
 		$data['login_button'] = $login_button;
 		return $data;
 		

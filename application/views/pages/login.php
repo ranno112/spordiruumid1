@@ -1,3 +1,6 @@
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/et_EE/sdk.js#xfbml=1&version=v6.0&appId=320472512246850&autoLogAppEvents=1"></script>
+ 
 
 
 <div class="container">
@@ -47,11 +50,12 @@
     echo '<div align="center">'.$login_button . '</div>';
    }
 	 ?>
+	<div align="center"> <div class="fb-login-button" data-width="" data-size="large" data-button-type="login_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="false"></div></div>
+</br>
 		</div>
 	</div>
 </div>
 
- 
 <script>
 $(".toggle-password").click(function() {
 
