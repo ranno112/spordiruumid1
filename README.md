@@ -70,6 +70,16 @@ CREATE TABLE `bookingTimes` (
    PRIMARY KEY (timeID)
 );
 
+CREATE TABLE `bookingtimeversions` (
+  `versionID` int(11) NOT NULL,
+  `timeID` int(11) NOT NULL,
+  `startTime` timestamp NULL DEFAULT NULL,
+  `endTime` timestamp NULL DEFAULT NULL,
+  `nameWhoChanged` varchar(30) DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `whenChanged` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE `buildings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `regionID` int(11) NOT NULL,
