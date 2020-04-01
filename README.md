@@ -83,7 +83,7 @@ CREATE TABLE `bookingTimes` (
    PRIMARY KEY (timeID)
 );
 
-CREATE TABLE `bookingtimeversions` (
+CREATE TABLE `bookingTimeVersions` (
   `versionID` int(11) NOT NULL,
   `timeID` int(11) NOT NULL,
   `startTime` timestamp NULL DEFAULT NULL,
