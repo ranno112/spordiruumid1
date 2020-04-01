@@ -49,6 +49,11 @@ class Login extends CI_Controller{
     }
 	}
 	
+
+	// Google OAuth start
+	// used Webslesson from youtube: https://www.youtube.com/watch?v=Kd9Yp9CcVIY and his/her homepage https://www.webslesson.info/2020/03/google-login-integration-in-codeigniter.html
+	// WPHire from youtube: https://www.youtube.com/watch?v=lAqOZ3nXG7o
+
 	function login()
 	{
 	 include_once APPPATH . "libraries/vendor/autoload.php";
@@ -111,7 +116,7 @@ class Login extends CI_Controller{
 		$this->load->view('pages/logingoogle', $data);
 	 }
 	}
-
+// Google OAuth finish
 
  
   function logout(){
