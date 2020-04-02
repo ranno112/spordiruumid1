@@ -79,7 +79,7 @@
 					</div>
 
 					<div class="d-flex justify-content-end my-5 px-5 mx-5">
-                        <a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="<?php echo base_url(); ?>profile">Katkesta</a>
+                        <a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="<?php echo base_url(); ?>profile/view/<?php echo $this->session->userdata('userID');?>">Katkesta</a>
                         <button type="submit" class="btn btn-custom col-5 text-white txt-xl">Salvesta muudatused</button>
                     </div>
 					<?php }?>
