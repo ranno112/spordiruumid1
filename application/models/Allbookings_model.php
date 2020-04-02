@@ -1,5 +1,5 @@
 <?php
-	class AllBookings_model extends CI_Model{
+	class Allbookings_model extends CI_Model{
 
 		public function __construct(){
 			$this->load->database();

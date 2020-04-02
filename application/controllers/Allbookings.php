@@ -1,5 +1,5 @@
 <?php
-	class AllBookings extends CI_Controller{
+	class Allbookings extends CI_Controller{
         
         public function __construct()
         {
@@ -16,6 +16,7 @@
 			$ApprovedData=""; 
 			$TakesPlacesData=""; 
 			$phoneIsNotZero=""; 
+		
 			foreach($fetch_data as $row)  
 			{  
 				if ($row->c_phone!=0) { $phoneIsNotZero=$row->c_phone; }
@@ -68,7 +69,7 @@
 				}
 			$data['xssData'] = $this->security->xss_clean($data);
 			$this->load->view('templates/header', $this->security->xss_clean($data));
-			$this->load->view('pages/allbookings', $this->security->xss_clean($data));
+			$this->load->view('pages/allBookings', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
 
 		
@@ -81,7 +82,7 @@
 			$data['rooms']=$this->allbookings_model->fetch_all_rooms_for_checkbox($this->session->userdata('building'));
 			
 			$this->load->view('templates/header');
-			$this->load->view('pages/allweekbookings', $this->security->xss_clean($data));
+			$this->load->view('pages/allweekBookings', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
 		}
 

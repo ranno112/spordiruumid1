@@ -106,7 +106,7 @@ class Booking extends CI_Controller {
 			$data['allBookingInfo'] = $this->booking_model->getAllBookings();
 			
 			$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
-			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactPerson_check');
+			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|required|callback_contactPerson_check');
 			$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
 			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
 			$this->form_validation->set_rules('workoutType', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars');
@@ -327,7 +327,7 @@ class Booking extends CI_Controller {
 			$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
 			$data['allBookingInfo'] = $this->booking_model->getAllBookings();
 			$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
-			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactPerson_check');
+			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|required|callback_contactPerson_check');
 			$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
 			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
 			$this->form_validation->set_rules('workoutType', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars');
