@@ -7,9 +7,9 @@
                 <p class="mt-2 txt-sm">Tehniliste brobleemide või ettepanekute korral pöördu it@parnu.ee</p>
             </div>
             <div class="col-4 d-flex justify-content-around">
-                <a class="link txt-sm" href="https://parnu.ee/">parnu.ee</a>
-                <a class="link txt-sm" href="https://kultuur.parnu.ee/et">kultuur.parnu.ee</a>
-                <a class="link txt-sm" href="https://www.facebook.com/parnusport/">facebook</a>
+                <a class="link txt-sm" href="https://parnu.ee/" target="_blank">parnu.ee</a>
+                <a class="link txt-sm" href="https://kultuur.parnu.ee/et" target="_blank">kultuur.parnu.ee</a>
+                <a class="link txt-sm" href="https://www.facebook.com/parnusport/" target="_blank">facebook</a>
             </div>
             <div class="col-4">
             </div>
