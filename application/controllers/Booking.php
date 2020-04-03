@@ -52,7 +52,8 @@ class Booking extends CI_Controller {
 	{
 			if ($str == '')
 			{
-				return TRUE;
+				$this->session->set_flashdata('validationErrorMessageContactPerson', "<small class='text-danger'>See väli on kohustuslik</small>");
+				return FALSE;
 			}
 			else if(!preg_match("/^[A-Za-z0-9\x{00C0}-\x{00FF} ][A-Za-z0-9\x{00C0}-\x{00FF}\'\-\.\,]+([\ A-Za-z0-9\x{00C0}-\x{00FF}][A-Za-z0-9\x{00C0}-\x{00FF}\'\-]+)*/u", $str)){
 				$this->session->set_flashdata('validationErrorMessageContactPerson', "<small class='text-danger'>Sellised märgid ei ole lubatud</small>");
