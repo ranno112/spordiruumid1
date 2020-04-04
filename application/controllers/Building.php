@@ -41,7 +41,6 @@
 
 		
 		public function view($slug=FALSE){
-			
 			if ($this->session->userdata['building']!=$slug){
 			redirect('building/view/'.$this->session->userdata['building']);
 			}else{
@@ -56,6 +55,7 @@
 
 		public function delete(){
 			// Check login
+			if ($this->session->userdata('roleID')==='1'){
 			$this->form_validation->set_rules('buildingID', 'Asutus', 'integer|required');
 			if($this->form_validation->run() === FALSE ){
 			$this->session->set_flashdata('errors', 'Ei tohi süsteemi kompromiteerida');
@@ -81,6 +81,7 @@
 			$this->building_model->delete_building($buildingID);
 			$this->session->set_flashdata('building_deleted', 'Asutus kustutatud');
 			redirect('building/view/'.$this->session->userdata['building']);
+		}
 		}
 
 	
@@ -274,12 +275,6 @@
 				redirect('building/view/'.$this->session->userdata['building']);
 			}
 		}
-
-
-
-
-
-
 
 
 	}
