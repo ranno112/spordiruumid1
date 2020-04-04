@@ -166,3 +166,6 @@ Under the GPL license, you may use Scheduler and this project without charge. Yo
       <?php endif; ?>
  
 			<div id="textMessageToUser" ></div>
+
+
+		<?php print_r($this->session->userdata);?>

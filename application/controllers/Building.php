@@ -5,7 +5,11 @@
         {
             parent::__construct();
             $this->load->model('building_model');
-    
+			if ($this->session->userdata['roleID']==4){
+				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+				redirect('');
+			}
+			
 		}
 		
 
@@ -15,6 +19,7 @@
 		// }
 
 		public function edit($slug){
+
 
 			if ($this->session->userdata('roleID')==='1'){
 				$data['regions'] = $this->building_model->getAllRegions();
@@ -38,6 +43,7 @@
 
 		
 		public function view($slug=FALSE){
+			
 			if ($this->session->userdata['building']!=$slug){
 				
 				redirect('building/view/'.$this->session->userdata['building']);
@@ -53,7 +59,10 @@
 
 		public function delete(){
 			// Check login
-			
+			$this->form_validation->set_rules('buildingID', 'Asutus', 'integer|required');
+			if($this->form_validation->run() === FALSE ){
+			redirect('building/view/'.$this->session->userdata['building']);
+			}
 			$id=$this->input->post('buildingID');
 			$this->building_model->delete_building($id);
 			// Set message
