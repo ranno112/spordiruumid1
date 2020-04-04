@@ -41,8 +41,8 @@
                         <input type="number" class="form-control" name="phone">
                     </div>
                     <div class="form-label-group col-6 p-0 pl-5">
-                        <label>Päringute email</label>
-                        <input type="email" class="form-control" name="notifyEmail">
+                        <label>Hinnakirja URL</label>
+                        <input type="text" class="form-control" name="price_url">
                     </div>
                 </div>
 

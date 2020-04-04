@@ -58,7 +58,7 @@
 												<input class="d-none" type="hidden" name="roomID[]" value="'.$value['id'].'"> 
 												<input class="form-control col-6" id="activeRoom[]" type="text" name="room[]" value="' . $value['roomName'] .'">
 												<input name="color[]" type="color" value="'. $value["roomColor"] .'">
-												<input type="button" id="active'.$value['id'].'" data-id="'.$value['id'].'" class="btn btn-custom btn-width-md text-white text-center py-1 px-2 txt-strong" value="Aktiivne"> 
+												<input type="button" id="activeOrPassive'.$value['id'].'" data-id="'.$value['id'].'" class="btn btn-custom btn-width-md text-white text-center py-1 px-2 txt-strong" value="Aktiivne"> 
 
 												<input data-id="'.$value['id'].'" class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta">
 												</div>'); 
@@ -72,7 +72,7 @@
 												<input class="d-none" type="hidden" name="roomID[]" value="'.$value['id'].'"> 
 												<input class="form-control col-6" id="inactiveRoom[]" type="text" name="room[]" value="' . $value['roomName'] .'">
 												<input name="color[]" type="color" value="'. $value["roomColor"] .'">
-												<input type="button" id="active' . $value['id']. '" data-id="'.$value['id'].'" class="btn btn-inactive btn-width-md text-white text-center py-1 px-2 txt-strong" value="Mitteaktiivne">
+												<input type="button" id="activeOrPassive' . $value['id']. '" data-id="'.$value['id'].'" class="btn btn-inactive btn-width-md text-white text-center py-1 px-2 txt-strong" value="Mitteaktiivne">
 												<input data-id="'.$value['id'].'" class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta">
 												 </div>');
                       }}; ?>
@@ -100,7 +100,7 @@
 $( document ).ready(function() {
 	var counter=1;
    $('#lisaSaal').on('click', function() {
-    $('#saalid').append('<div class="d-flex mb-3 p-0 justify-content-between"><input class="form-control col-6" id="activeRoom[]" type="text" name="additionalRoom[]" value=""><input name="colorForNewRoom[]" type="color" value="#cbe9fe"><input type="button" id="active<?php echo($value["id"]); ?>" class="btn btn-custom btn-width-md text-white text-center py-1 px-2 txt-strong" value="Aktiivne">	<input data-id="<?php echo $value['id']; ?>" id="additionalRoom'+counter+'" class="abc btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta"></div>');
+    $('#saalid').append('<div class="d-flex mb-3 p-0 justify-content-between"><input class="form-control col-6" id="activeRoom[]" type="text" name="additionalRoom[]" value=""><input name="colorForNewRoom[]" type="color" value="#cbe9fe"><input type="button" id="activeOrPassive<?php echo($value["id"]); ?>" class="btn btn-custom btn-width-md text-white text-center py-1 px-2 txt-strong" value="Aktiivne">	<input data-id="<?php echo $value['id']; ?>" id="additionalRoom'+counter+'" class="abc btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta"></div>');
 	counter++;
   });
 
@@ -140,7 +140,7 @@ $( document ).ready(function() {
   
 
 
-  $('input[id^="active"]').on("click", function() {
+  $('input[id^="activeOrPassive"]').on("click", function() {
 	console.log($(this).data("id"));
 	console.log($(this).val());
 	var roomStatus=1;

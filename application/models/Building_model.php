@@ -93,16 +93,7 @@
 
 
 
-		public function registerBuilding(){
-		
-			$data = array(
-				'name' => $this->input->post('name'),
-				'contact_email' => $this->input->post('email'),
-				'phone' => $this->input->post('phone'),
-				'notify_email' => $this->input->post('notifyEmail'),
-				'regionID' => $this->input->post('place'),
-			//	'price_url' => $this->input->post('price_url'),				
-			);
+		public function registerBuilding($data){
 		
 			return $this->db->insert('buildings', $data);
 		}

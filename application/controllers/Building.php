@@ -73,7 +73,7 @@
 			{
 				echo $this->building_model->check_if_room_has_reservations_only_in_past($id->id);
 				if(!$this->building_model->check_if_room_has_reservations_only_in_past($id->id)){
-				$this->session->set_flashdata('message', 'Kahjuks ei saa asutust kustutada, kuna selles on broneeringud alates eelmisest aastast.');
+				$this->session->set_flashdata('message', 'Kahjuks ei saa asutust kustutada, kuna selles on broneeringud alates eelmisest aastast');
 				redirect('building/view/'.$this->session->userdata['building']);	
 				};	
 			}
@@ -164,12 +164,33 @@
 			
 		// }
 
+		public function check_color($input){
+			if(preg_match('/^#[a-f0-9]{6}$/', $input)){
+				return TRUE;
+			}
+		
+		}
+
+	
+	
 
 		public function update(){
-			//Check login
-			// if(!$this->session->buildingdata('logged_in')){
-			// 	redirect('buildings/login');
-			// }
+			
+			$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars');
+			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
+			$this->form_validation->set_rules('notifyEmail', 'Teavitamise E-mail', 'trim|htmlspecialchars|valid_email');
+			$this->form_validation->set_rules('price_url', 'URL', 'valid_url');
+			$this->form_validation->set_rules('place', 'Regiooni ID', 'integer');
+			$this->form_validation->set_rules('room[]', 'Ruumi nimetus', 'trim|htmlspecialchars');
+			$this->form_validation->set_rules('color[]', 'Ruumi värv', 'trim|htmlspecialchars|callback_check_color');
+			$this->form_validation->set_rules('additionalRoom[]', 'Ruumi värv', 'trim|htmlspecialchars');
+			$this->form_validation->set_rules('colorForNewRoom[]', 'Ruumi värv', 'trim|htmlspecialchars|callback_check_color');
+			$this->form_validation->set_rules('id', 'Asutuse ID', 'integer');
+			if($this->form_validation->run() === FALSE){
+              
+				$this->session->set_flashdata('errors','Sisestatud andmetega on midagi korrast ära. Palun proovi uuesti.');
+				redirect('building/view/');
+			}
 			$data = array(
 				//	'name' => $this->input->post('building'),
 					'contact_email' => $this->input->post('email'),
@@ -218,18 +239,20 @@
 			}
 		}
 	}
-			// Set message
+			
 			$this->session->set_flashdata('post_updated', 'Uuendasid asutuse infot');
-		
 			redirect('building/view/'.$this->session->userdata['building']);
 		}
 
 
 		public function register(){
-			
-			$this->form_validation->set_rules('name', 'Name', 'required');
-          //  $this->form_validation->set_rules('phone', 'Phone');
-			//$this->form_validation->set_rules('email', 'Email', 'required|callback_check_email_exists');
+			$this->form_validation->set_rules('name', 'Name', 'required|trim|htmlspecialchars');
+			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
+			$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars');
+			//$this->form_validation->set_rules('notifyEmail', 'Teavitamise E-mail', 'trim|htmlspecialchars|valid_email');
+			$this->form_validation->set_rules('place', 'Regiooni ID', 'integer');
+			$this->form_validation->set_rules('price_url', 'URL', 'valid_url');
+		
 			$data['regions'] = $this->building_model->getAllRegions();
 			if($this->form_validation->run() === FALSE){
               
@@ -238,8 +261,15 @@
                 $this->load->view('templates/footer');
                 
 			} else {
-				
-				$this->building_model->registerBuilding();
+				$data = array(
+					'name' => $this->input->post('name'),
+					'contact_email' => $this->input->post('email'),
+					'phone' => $this->input->post('phone'),
+				//	'notify_email' => $this->input->post('notifyEmail'),
+					'regionID' => $this->input->post('place'),
+					'price_url' => $this->input->post('price_url'),				
+				);
+				$this->building_model->registerBuilding($data);
 				$this->session->set_flashdata('user_registered', 'Asutus lisatud');
 				redirect('building/view/'.$this->session->userdata['building']);
 			}
