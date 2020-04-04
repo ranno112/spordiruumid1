@@ -5,7 +5,7 @@
         {
             parent::__construct();
             $this->load->model('building_model');
-			if ($this->session->userdata['roleID']==4){
+			if ($this->session->userdata('roleID')==='4'){
 				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
 				redirect('');
 			}
