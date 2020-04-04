@@ -27,6 +27,9 @@ class Pages_model extends CI_Model
     }
     function getAllBuildingRooms()
     {
+		if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'){
+			$this->db->where('roomActive','1');
+		}
         $query = $this->db->get('rooms');
         return $query->result();
     }

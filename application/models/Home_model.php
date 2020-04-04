@@ -37,7 +37,10 @@ class Home_model extends CI_Model
 
     function getAllRooms()
     {
-        $query = $this->db->get('rooms');
+		if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'){
+		$this->db->where('roomActive','1');
+		}
+		$query = $this->db->get('rooms');
         return $query->result();
     }
 
