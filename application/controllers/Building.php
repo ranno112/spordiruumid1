@@ -53,7 +53,7 @@
 			$data['editAllBuildings'] = $this->building_model->get_building();
 			$data['editAllRooms'] = $this->building_model->get_rooms();
 			$this->load->view('templates/header');
-			$this->load->view('pages/viewBuilding', $data);
+			$this->load->view('pages/viewBuilding', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
 		}	}
 
