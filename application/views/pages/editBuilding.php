@@ -168,8 +168,10 @@ $( document ).ready(function() {
 		 },
       dataType: "html"
     }).done(function( msg ) {
-
-	
+			if(msg=='"Sa ei saa muuta teiste ruumide staatust. Andmeid ei salvestatud!"'){
+				alert( msg );
+				location.reload();
+			}
     }).fail(function( jqXHR, textStatus ) {
       alert( "Request failed: " + textStatus );
     }); 

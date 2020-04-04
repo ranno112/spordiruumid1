@@ -118,14 +118,24 @@
 
 
 		public function roomStatus(){
-			// Check login
-		
-
+			$this->form_validation->set_rules('roomID', 'Ruum', 'integer|required');
+			$this->form_validation->set_rules('roomStatus', 'Ruum', 'integer|required');
+			if($this->form_validation->run() === FALSE ){
+			$this->session->set_flashdata('errors', 'Ei tohi süsteemi kompromiteerida');
+			redirect('');
+			}
+			$id=$this->input->post('roomID');
+			if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+			$isAllowedOrNot=$this->building_model->checkIfRoomIsBookable($id);
+			if(empty($isAllowedOrNot)){
+					echo json_encode('Sa ei saa muuta teiste ruumide staatust. Andmeid ei salvestatud!',JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+			};
+			}
 			$data = array(
 			
 					'roomActive' => $this->input->post('roomStatus')
 				);
-				$this->building_model->update_room($data, $this->input->post('roomID') );
+				$this->building_model->update_room($data, $id);
 			
 			
 		}
