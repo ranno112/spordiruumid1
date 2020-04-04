@@ -100,7 +100,7 @@ Under the GPL license, you may use Scheduler and this project without charge. Yo
                 $(".alert").fadeTo(500, 0).slideUp(500, function(){
                     $(this).remove(); 
                 });
-            }, 4000);});
+            }, 5000);});
  </script>
 
 

@@ -53,7 +53,6 @@ public function create_bookingTimes($insert_data){
 	public function checkIfRoomIsBookable($roomID)
 	{
 		if($this->session->userdata('roleID')=='2' || $this->session->userdata('roleID')=='3'){
-		
 			$this->db->where('rooms.buildingID', $this->session->userdata('building'));
 			$this->db->where('rooms.id',$roomID);
 			$query = $this->db->get('rooms');

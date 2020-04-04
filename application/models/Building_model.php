@@ -53,7 +53,13 @@
 			return true;
 		}
 
-
+		public function checkIfRoomIsBookable($roomID)
+		{
+				$this->db->where('rooms.buildingID', $this->session->userdata('building'));
+				$this->db->where('rooms.id',$roomID);
+				$query = $this->db->get('rooms');
+				return $query->result();
+		}
 
 
 		public function delete_room($id){

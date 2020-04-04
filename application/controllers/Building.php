@@ -19,13 +19,11 @@
 		// }
 
 		public function edit($slug){
-
-
 			if ($this->session->userdata('roleID')==='1'){
 				$data['regions'] = $this->building_model->getAllRegions();
 				$data['editBuildings'] = $this->building_model->get_building($slug);
 				$this->load->view('templates/header');
-				$this->load->view('pages/editBuilding', $data);
+				$this->load->view('pages/editBuilding', $this->security->xss_clean($data));
 				$this->load->view('templates/footer');
 			}
 
@@ -36,7 +34,7 @@
 			$data['regions'] = $this->building_model->getAllRegions();
 			$data['editBuildings'] = $this->building_model->get_building($slug);
 			$this->load->view('templates/header');
-			$this->load->view('pages/editBuilding', $data);
+			$this->load->view('pages/editBuilding', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
 		}	}
 
@@ -87,8 +85,21 @@
 
 	
 		public function deleteRoom(){
-			// Check login
+		
+			$this->form_validation->set_rules('roomID', 'Ruum', 'integer|required');
+			if($this->form_validation->run() === FALSE ){
+			$this->session->set_flashdata('errors', 'Ei tohi süsteemi kompromiteerida');
+			redirect('');
+			}
+
 			$id=$this->input->post('roomID');
+			if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+			$isAllowedOrNot=$this->building_model->checkIfRoomIsBookable($id);
+			if(empty($isAllowedOrNot)){
+					echo json_encode('Sa ei saa kustutada võõraid ruume!',JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+			};
+			}
+			
 			$deletequery=$this->building_model->delete_room($id);
 			// Set message
 			if($deletequery===FALSE){
@@ -138,7 +149,7 @@
 		// 	}
 		// 	$data['title'] = 'Edit Post';
 		// 	$this->load->view('templates/header');
-		// 	$this->load->view('pages/editbuilding', $data);
+		// 	$this->load->view('pages/editbuilding', $this->security->xss_clean($data));
 		// 	$this->load->view('templates/footer');
 			
 		// }
