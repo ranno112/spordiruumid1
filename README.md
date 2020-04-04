@@ -41,7 +41,7 @@ CREATE TABLE `bookings` (
 CREATE TABLE `users` (
   `userID` int(11) NOT NULL AUTO_INCREMENT,
   `login_oauth_uid` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `roleID` int(11) NOT NULL,
+  `roleID` int(11) NOT NULL DEFAULT '4',
   `buildingID` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
