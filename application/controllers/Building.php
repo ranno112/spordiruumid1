@@ -45,8 +45,7 @@
 		public function view($slug=FALSE){
 			
 			if ($this->session->userdata['building']!=$slug){
-				
-				redirect('building/view/'.$this->session->userdata['building']);
+			redirect('building/view/'.$this->session->userdata['building']);
 			}else{
 			$data['editBuildings'] = $this->building_model->get_building($slug);
 			$data['regions'] = $this->building_model->getAllRegions();
@@ -61,12 +60,28 @@
 			// Check login
 			$this->form_validation->set_rules('buildingID', 'Asutus', 'integer|required');
 			if($this->form_validation->run() === FALSE ){
-			redirect('building/view/'.$this->session->userdata['building']);
+			$this->session->set_flashdata('errors', 'Ei tohi süsteemi kompromiteerida');
+			redirect('');
 			}
-			$id=$this->input->post('buildingID');
-			$this->building_model->delete_building($id);
-			// Set message
-			$this->session->set_flashdata('building_deleted', 'Your building has been deleted');
+			$buildingID=$this->input->post('buildingID');
+			$allRoomsID=$this->building_model->get_all_roomsID_from_one_building($buildingID);
+			print_r($allRoomsID);
+			if(empty($allRoomsID)){
+				$this->building_model->delete_building($buildingID);
+				$this->session->set_flashdata('building_deleted', 'Asutus kustutatud');
+				redirect('building/view/'.$this->session->userdata['building']);
+			}
+			foreach ($allRoomsID as $id)
+			{
+				echo $this->building_model->check_if_room_has_reservations_only_in_past($id->id);
+				if(!$this->building_model->check_if_room_has_reservations_only_in_past($id->id)){
+				$this->session->set_flashdata('message', 'Kahjuks ei saa asutust kustutada, kuna selles on broneeringud alates eelmisest aastast.');
+				redirect('building/view/'.$this->session->userdata['building']);	
+				};	
+			}
+
+			$this->building_model->delete_building($buildingID);
+			$this->session->set_flashdata('building_deleted', 'Asutus kustutatud');
 			redirect('building/view/'.$this->session->userdata['building']);
 		}
 

@@ -142,7 +142,7 @@ Under the GPL license, you may use Scheduler and this project without charge. Yo
       <?php endif; ?>
       
       <?php if($this->session->flashdata('building_deleted')): ?>
-        <?php echo '<p class="alert alert-danger text-center">'.$this->session->flashdata('building_deleted').'</p>'; ?>
+        <?php echo '<p class="alert alert-success text-center">'.$this->session->flashdata('building_deleted').'</p>'; ?>
       <?php endif; ?>
 
 			<?php if($this->session->flashdata('validationErrorMessage')): ?>

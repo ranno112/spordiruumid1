@@ -22,13 +22,16 @@
 
 
 		public function get_rooms(){
-		
 			$this->db->order_by('buildingID');
-			
 			$query = $this->db->get('rooms');
 			return $query->result_array();
-				
-		
+		}
+
+		public function get_all_roomsID_from_one_building($buildingID){
+			$this->db->select('id');
+			$this->db->where('buildingID', $buildingID);
+			$query = $this->db->get('rooms');
+			return $query->result();
 		}
 
 
@@ -37,6 +40,21 @@
 			$this->db->delete('buildings');
 			return true;
 		}
+
+		public function check_if_room_has_reservations_only_in_past($id){
+			$query1 = $this->db->get_where('bookingTimes', array('roomID' => $id));
+			foreach ($query1->result() as $row)
+				{
+					$lastYear = strtotime("-1 year");
+					if (strtotime($row->endTime)>$lastYear ){
+						return false;
+					}
+				}
+			return true;
+		}
+
+
+
 
 		public function delete_room($id){
 			$query1 = $this->db->get_where('bookingTimes', array('roomID' => $id));
