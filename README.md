@@ -78,8 +78,8 @@ CREATE TABLE `bookingTimes` (
   `title` varchar(255) NOT NULL,
   `startTime` datetime NOT NULL,
   `endTime` datetime NOT NULL,
-  `bookingTimeColor` char(50),
-	`hasChanged` tinyint(1) NOT NULL DEFAULT 0,
+  `bookingTimeColor` char(50) DEFAULT '#ffffff',
+  `hasChanged` tinyint(1) NOT NULL DEFAULT 0,
    PRIMARY KEY (timeID)
 );
 
@@ -123,7 +123,7 @@ CREATE TABLE `rooms` (
   `buildingID` int(11) NOT NULL,
   `roomName` varchar(255) NOT NULL,
   `roomActive` tinyint(1) NOT NULL DEFAULT '1',
-   `roomColor` char(50),
+  `roomColor` char(50) DEFAULT '#ffffff',
    PRIMARY KEY (id)
 );
 
