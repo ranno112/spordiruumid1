@@ -182,7 +182,7 @@
 		}
 
 		public function index(){
-			if (!empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
 			
 				$data['title'] = 'Users';
 			$data['manageUsers'] = $this->user_model->get_users();
@@ -201,12 +201,13 @@
 
 
 		public function delete($id){
-			// Check login
-		
-			$this->user_model->delete_user($id);
-			// Set message
-			$this->session->set_flashdata('user_deleted', 'Your user has been deleted');
-			redirect('manageUsers');
+			// Only admins allowed to make changes
+			if ( $this->session->userdata('roleID')==='1'){
+				$this->user_model->delete_user($id);
+			
+				$this->session->set_flashdata('user_deleted', 'Your user has been deleted');
+				redirect('manageUsers');
+			}
 		}
 
 
@@ -214,48 +215,34 @@
 
 
 		public function edit($slug){
-			// Check login
-			// if(!$this->session->userdata('logged_in')){
-			// 	redirect('users/login');
-			// }
-			$data['manageUsers'] = $this->user_model->get_users();
-			$data['post'] = $this->user_model->get_users($slug);
-			$data['buildings'] = $this->user_model->getAllBuildings();
-			// Check user
-			// if($this->session->userdata('user_id') != $this->post_model->get_users($slug)['user_id']){
-			// 	redirect('posts');
-			// }
-		//	$data['categories'] = $this->user_model->get_categories();
-			if(empty($data['post'])){
-				show_404();
-			}
-			$data['title'] = 'Edit Post';
-			$this->load->view('templates/header');
-			$this->load->view('pages/editUser', $data);
-			$this->load->view('templates/footer');
+			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+				$data['manageUsers'] = $this->user_model->get_users();
+				$data['post'] = $this->user_model->get_users($slug);
+				$data['buildings'] = $this->user_model->getAllBuildings();
 			
+				if(empty($data['post'])){
+					show_404();
+				}
+				$data['title'] = 'Edit Post';
+				$this->load->view('templates/header');
+				$this->load->view('pages/editUser', $data);
+				$this->load->view('templates/footer');
+			}
 		}
 
 
 		public function update(){
-			// Check login
-			// if(!$this->session->userdata('logged_in')){
-			// 	redirect('users/login');
-			// }
-			$this->user_model->update_user();
-			// Set message
-			$this->session->set_flashdata('post_updated', 'Uuendasid kasutajat');
-			redirect('manageUsers');
+			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+				$this->user_model->update_user();
+				// Set message
+				$this->session->set_flashdata('post_updated', 'Uuendasid kasutajat');
+				redirect('manageUsers');
+			}
 		}
 
-		
-
-
-
-
-
+		//for DataTables
 		function fetch_allbookingsInfo(){  
-		
+			if ($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
 			$this->load->model("user_model");  
 			$fetch_data = $this->user_model->make_datatables();  
 			$data = array(); 
@@ -264,17 +251,11 @@
 			{  
 				if ($row->c_phone!=0) { $phoneIsNotZero=$row->c_phone; }
 				 $sub_array = array();  
-		
-			
 				 $sub_array[] = $this->security->xss_clean($row->public_info);  
-		
 				 $sub_array[] = $this->security->xss_clean($row->c_name);  
 				 $sub_array[] = $this->security->xss_clean($phoneIsNotZero);  
 				 $sub_array[] = $this->security->xss_clean($row->c_email);  
 			
-				 
-			
-		
 				 $data[] = $sub_array;  
 			}  
 			$output = array(  
@@ -284,6 +265,7 @@
 				 "data"                    =>     $data  
 			);  
 			echo json_encode($output);  
+		}  
 	   }  
 
 
