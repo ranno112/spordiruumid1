@@ -130,7 +130,7 @@
 			 $this->db->join('bookings', 'bookingTimes.bookingID = bookings.id' , 'left');
 			 $this->db->join('rooms', 'bookingTimes.roomID = rooms.id' , 'left');
 			 $this->db->join('buildings', 'rooms.buildingID = buildings.id' , 'left');
-			 $this->db->where('buildingID',  $this->session->userdata('building'));
+			 $this->db->where('buildingID', ''. $this->session->userdata('building').'');
 			 $this->db->where_not_in('public_info', "Suletud");
 
 			 $this->db->from($this->table);
@@ -163,7 +163,8 @@
 			 else  
 			 {  
 				
-				  $this->db->order_by('public_info', 'ASC');  }
+				  $this->db->order_by('public_info', 'ASC'); 
+				 }
 				  
 		
 		
