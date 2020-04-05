@@ -5,12 +5,12 @@
         {
             parent::__construct();
             $this->load->model('region_model');
-			if ($this->session->userdata('roleID')!='1'){
+			if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')!='1'){
+				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
 				redirect('');
 			}
 		}
-		
-
+	
 		public function view($slug=FALSE){
 			$data['regions'] = $this->region_model->getAllRegions();
 			$this->load->view('templates/header');
@@ -18,16 +18,13 @@
 			$this->load->view('templates/footer');
 		}	
 
-
 		public function edit($slug){
 
-				$data['region'] = $this->region_model->get_region($slug);
-				$this->load->view('templates/header');
-				$this->load->view('pages/editRegion', $data);
-				$this->load->view('templates/footer');
-			}
-
-
+			$data['region'] = $this->region_model->get_region($slug);
+			$this->load->view('templates/header');
+			$this->load->view('pages/editRegion', $data);
+			$this->load->view('templates/footer');
+		}
 
 		public function delete(){
 			$id=$this->input->post('regionID');
@@ -37,13 +34,12 @@
 			redirect('region/view');
 		}
 
-
 		public function update(){
 		
 			$data = array(
-					'regionName' => $this->input->post('region'),
-					'regionID' => $this->input->post('regionID'),
-				);
+				'regionName' => $this->input->post('region'),
+				'regionID' => $this->input->post('regionID'),
+			);
 			$this->region_model->update_region($data);
 
 			// Set message
@@ -51,7 +47,6 @@
 		
 			redirect('region/view');
 		}
-
 
 		public function register(){
 			
@@ -69,12 +64,4 @@
 				redirect('region/view/'.$this->session->userdata['building']);
 			}
 		}
-
-
-
-
-
-
-
-
 	}
