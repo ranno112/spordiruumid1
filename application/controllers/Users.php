@@ -182,18 +182,20 @@
 		}
 
 		public function index(){
-			$data['title'] = 'Users';
+			if (!empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+			
+				$data['title'] = 'Users';
 			$data['manageUsers'] = $this->user_model->get_users();
-		
 	
-
-
 			$this->load->view('templates/header');
 			$this->load->view('pages/manageUsers', $data);
 			$this->load->view('templates/footer');
-
 		
-
+			}else{
+				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+				redirect('');
+			}
+		
 
 		}
 
