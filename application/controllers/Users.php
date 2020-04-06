@@ -66,37 +66,59 @@
 
 	// Register user by admin
 		public function registerByAdmin(){
-		
-			 $this->form_validation->set_rules('email', 'Email', 'required');
-			 $this->form_validation->set_rules('buildingID', 'Asutuse ID', 'integer|required');
-			 $this->form_validation->set_rules('role', 'Roll', 'integer|required');
-			 $this->form_validation->set_rules('status', 'Staatus', 'integer|required');
-			
-			if($this->form_validation->run() === FALSE){
-				$this->session->set_flashdata('errors', 'Sisetamisel läks midagi valesti. Palun proovi uuesti.');
-				redirect('users/addRightsToUser');
-				
-			} else {
-				// Encrypt password
-              //  $enc_password = md5($this->input->post('password'));
-			  $data = array(
-				'email' => $this->input->post('email'),
-				'buildingID' => $this->input->post('buildingID'),
-				'roleID' => $this->input->post('role'),
-				'status' => $this->input->post('status'),
-			  ); 
-				$emailIsInDB=$this->user_model->check_email_exists($this->input->post('email'));
-				if(!$emailIsInDB){
-					//register username and rights
-					$this->user_model->insert_user_in_DB_and_give_rights($data);
-					$this->session->set_flashdata('message', 'User is no in the DB');
-				}else{
-					$this->session->set_flashdata('message', 'Need to check if user has already rights');
+			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2'){
+				$this->form_validation->set_rules('email', 'Email', 'required');
+				$this->form_validation->set_rules('buildingID', 'Asutuse ID', 'integer|required');
+				$this->form_validation->set_rules('role', 'Roll', 'integer|required');
+				$this->form_validation->set_rules('status', 'Staatus', 'integer|required');
+			   
+			   if($this->form_validation->run() === FALSE ){
+				   $this->session->set_flashdata('errors', 'Sisetamisel läks midagi valesti. Palun proovi uuesti.');
+				   redirect('users/addRightsToUser');
+				   
+			   } else if($this->input->post('buildingID')=='0'){
+				   $this->session->set_flashdata('errors', 'Asutus valimata!');
+				   redirect('users/addRightsToUser');
+			   }
+			   else		
+			   {
+				$buildingID=$this->input->post('buildingID');
+				if($this->session->userdata('roleID')==='2'){
+				$buildingID=$this->session->userdata('building');
 				}
-			
-			//	$this->session->set_flashdata('user_registered', 'Kasutajale õigused lisatud');
-				redirect('manageUsers');
+				print_r($buildingID);
+				 $data = array(
+				   'email' => $this->input->post('email'),
+				   'buildingID' => $buildingID,
+				   'roleID' => $this->input->post('role'),
+				   'status' => $this->input->post('status'),
+				 ); 
+				   $emailIsInDB=$this->user_model->check_email_exists($this->input->post('email'));
+				   if(!$emailIsInDB){
+					   //register username and rights
+					   $this->user_model->insert_user_in_DB_and_give_rights($data);
+					   $this->session->set_flashdata('success', 'Kasutajale lisati õigused, kuid see kasutaja pole veel süsteemi sisse loginud. Palun teavitage teda, et ta teeks endale konto sama e-mailiga või logiks sisse läbi G-maili või Facebooki konto');
+				   }else if($emailIsInDB['roleID']=='1' || $emailIsInDB['roleID']=='2' || $emailIsInDB['roleID']=='3'){
+					   print_r($emailIsInDB['roleID']);
+					   $this->session->set_flashdata('errors', 'Kasutajal ei saa olla mitu ligipääsu erinevatele asutustele');
+				   }
+				   else if($emailIsInDB['roleID']=='4'){
+					   print_r($this->input->post());
+					   $userID=$emailIsInDB['userID'];
+					   $this->user_model->update_user($data,$userID);
+					   $this->session->set_flashdata('user_registered', 'Kasutajale õigused lisatud');
+					}
+				   $this->session->set_flashdata('message', 'Need to check if user has already rights');
+			   
+				   redirect('manageUsers');
+			   }
+
 			}
+			else{
+				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+				redirect('');
+			}
+			
 		}
 
 		// Log in user
@@ -254,7 +276,16 @@
 
 		public function update(){
 			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
-				$this->user_model->update_user();
+				$data = array(
+					'userName' => $this->input->post('name'),
+					'email' => $this->input->post('email'),
+					'status' => $this->input->post('status'),
+					'userPhone' => $this->input->post('phone'),
+					'roleID' => $this->input->post('roleID'),
+					'buildingID' => $this->input->post('buildingID'),
+				);
+				$userID=$this->input->post('id');
+				$this->user_model->update_user($data,$userID);
 				// Set message
 				$this->session->set_flashdata('post_updated', 'Uuendasid kasutajat');
 				redirect('manageUsers');

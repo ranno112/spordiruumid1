@@ -59,11 +59,12 @@
 		  }
 		// Check email exists
 		public function check_email_exists($email){
+			$this->db->select('roleID, userID');  
 			$query = $this->db->get_where('users', array('email' => $email));
 			if(empty($query->row_array())){
 				return false;
 			} else {
-				return true;
+				return $query->row_array();
 			}
 		}
 
@@ -106,17 +107,10 @@
 
 
 	
-		public function update_user(){
+		public function update_user($data, $userID){
 			// $slug = url_title($this->input->post('title'));
-			$data = array(
-				'userName' => $this->input->post('name'),
-				'email' => $this->input->post('email'),
-				'status' => $this->input->post('status'),
-				'userPhone' => $this->input->post('phone'),
-				'roleID' => $this->input->post('roleID'),
-				'buildingID' => $this->input->post('buildingID'),
-			);
-			$this->db->where('userID', $this->input->post('id'));
+		
+			$this->db->where('userID',$userID);
 			return $this->db->update('users', $data);
 		}
 

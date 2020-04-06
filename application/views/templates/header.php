@@ -100,7 +100,7 @@ Under the GPL license, you may use Scheduler and this project without charge. Yo
                 $(".alert").fadeTo(500, 0).slideUp(500, function(){
                     $(this).remove(); 
                 });
-            }, 5000);});
+            }, 8000);});
  </script>
 
 
@@ -117,8 +117,8 @@ Under the GPL license, you may use Scheduler and this project without charge. Yo
         <?php echo '<p class="alert alert-success text-center">'.$this->session->flashdata('user_loggedout').'</p>'; ?>
       <?php endif; ?>
 
-      <?php if($this->session->flashdata('category_deleted')): ?>
-        <?php echo '<p class="alert alert-success text-center">'.$this->session->flashdata('category_deleted').'</p>'; ?>
+      <?php if($this->session->flashdata('success')): ?>
+        <?php echo '<p class="alert alert-success text-center">'.$this->session->flashdata('success').'</p>'; ?>
       <?php endif; ?>
 
       <?php if($this->session->flashdata('post_created')): ?>
