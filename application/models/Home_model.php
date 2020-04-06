@@ -47,6 +47,9 @@ class Home_model extends CI_Model
 
     function fetch_building($state_id)
     {
+		if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'){
+			$this->db->where('roomActive','1');
+			}
         $this->db->where('buildingID', $state_id);
         $this->db->order_by('id', 'ASC');
         $query = $this->db->get('rooms');

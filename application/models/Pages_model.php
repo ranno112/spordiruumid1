@@ -17,7 +17,9 @@ class Pages_model extends CI_Model
     }
 	function getAllRooms($roomid)
     {
-      
+		if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'){
+			$this->db->where('roomActive','1');
+			}
         $this->db->where('rooms.id', $roomid);
 		$this->db->join('buildings', 'rooms.buildingID = buildings.id' , 'left');
 		$this->db->join('regions', 'buildings.regionID = regions.regionID' , 'left');

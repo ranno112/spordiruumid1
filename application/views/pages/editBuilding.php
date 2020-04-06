@@ -50,7 +50,7 @@
 
                 <h4 class="mt-5 txt-xl px-5 mx-5 pb-3">Ruumid</h4>
                 <div class="form-label-group py-0 px-5 mx-5" id="saalid">
-                    <label class="txt-regular txt-lg">Aktiivsed ruumid</label>
+                    <label class="txt-regular txt-lg">Nähtavad ruumid <b data-tooltip="Aktiivsed ruumid on nähtavad kõigile"><img id="tool" class="mr-5" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="3%"></b></label>
                     <?php foreach ($editBuildings as $value) { 
 									
                       if ($value['roomActive'] == 1) { 
@@ -65,7 +65,7 @@
                       }}; ?>
                 </div>
                 <div class="form-label-group py-0 px-5 mx-5">
-                    <label class="txt-regular txt-lg">Mitteaktiivsed ruumid</label>
+                    <label class="txt-regular txt-lg">Peidetud ruumid <b data-tooltip="Peidetud ruumid on nähtavad ainult asutuse kasutajatele"><img id="tool" class="mr-5" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="3%"></b></label>
                     <?php foreach ($editBuildings as $key => $value) { 
                       if ($value['roomActive'] == '0') { 
 												echo('<div class="d-flex mb-3 p-0 justify-content-between">

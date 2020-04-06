@@ -476,7 +476,7 @@
 					}
 				
 				swal({
-					title:  "Kas salvestan? ",
+					title:  "Kas salvestada? ",
 					buttons: {
 					cancel: "Ära salvesta",
 					Salvesta: true,
@@ -537,7 +537,7 @@
 				
 				swal({
 
-					title: "Kas teen dublikaadi?",
+					title: "Kas salvestada lisaaega?",
 					buttons: [
 						'Ei',
 						'Jah'
@@ -570,8 +570,8 @@
 
 
 					swal({
-					title:  "Kas salvestan uut asukohta? ",
-					text: "*Kui soovid teha dublikaadi, siis hoia lohistamise ajal SHIFT klahvi all",
+					title:  "Kas salvestada? ",
+					text: "*Lisaaja salvestamiseks hoia lohistamise ajal SHIFT klahvi all",
 					buttons: {
 					cancel: "Ära salvesta",
 					Salvesta: true,
