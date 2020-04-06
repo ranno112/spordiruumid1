@@ -6,6 +6,8 @@ Olen Annemarii Hunt ning olen Tallinna Ülikooli Haapsalu Kolledži rakendusinfo
 
 Rakenduse näol on tegemist kohaliku omavalitsuste spordiga seotud allasutuste spordiruumide kalendrisüsteemi rakendusega. Rakendus on edasi arendatud valikpraktika projektist https://github.com/Viiskorda/maag.
 
+Demo keskkonnaga saad tutvuda lingil https://www.spordiruumid.ee/.
+
 Oma serverisse laadimiseks on vaja muuta application/config kaustas kaks faili: config.php ning database.php:
 ```
 config.php //tuleb määrata URL $config['base_url']
