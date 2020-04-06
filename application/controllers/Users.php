@@ -9,10 +9,25 @@
 		}
 		
 
+		public function index(){
+			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+			
+			$data['title'] = 'Users';
+			$data['manageUsers'] = $this->user_model->get_users();
+	
+			$this->load->view('templates/header');
+			$this->load->view('pages/manageUsers', $this->security->xss_clean($data));
+			$this->load->view('templates/footer');
+		
+			}else{
+				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+				redirect('');
+			}
+		}
 
 
 		public function registerSelf(){
-			$data['title'] = 'Sign Up';
+		
 			$this->form_validation->set_rules('name', 'Name', 'required');
             $this->form_validation->set_rules('phone', 'Phone');
 			$this->form_validation->set_rules('email', 'Email', 'required|callback_check_email_exists');
@@ -22,7 +37,7 @@
 			if($this->form_validation->run() === FALSE){
               
 				$this->load->view('templates/header');
-				$this->load->view('pages/register', $this->security->xss_clean($data));
+				$this->load->view('pages/register');
                 $this->load->view('templates/footer');
                 
 			} else {
@@ -86,7 +101,7 @@
 				if($this->session->userdata('roleID')==='2'){
 				$buildingID=$this->session->userdata('building');
 				}
-				print_r($buildingID);
+			
 				 $data = array(
 				   'email' => $this->input->post('email'),
 				   'buildingID' => $buildingID,
@@ -123,63 +138,62 @@
 
 		// Log in user
 		public function login(){
-            $data['title'] = 'Sign In';
+            $inputEmail= $this->input->post('email');
            
-			$this->form_validation->set_rules('email', 'Email', 'required');
+			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
             $this->form_validation->set_rules('password', 'Password', 'required');
             
 			if($this->form_validation->run() === FALSE){
-             
-				$this->load->view('templates/header');
-				$this->load->view('login', $data);
-				$this->load->view('templates/footer');
+				$this->session->set_flashdata("emailIsNotCorrect", form_error('email', '<small class="text-danger">','</small>')); // tekst '{field} ei ole korrektselt sisestatud' tuleb failist form_validation_lang.php
+				$this->session->set_flashdata('email', $inputEmail);
+				$this->session->set_flashdata('errors', 'Proovi uuesti');
+				redirect('login');
 			} else {
              
-				// Get email
-				$email = $this->input->post('email');
+			
 				// Get and encrypt the password
                // $password = md5($this->input->post('password'));
-                $password = $this->input->post('password');
-               // var_dump($this->user_model->login($email, $password));
-				
+                            	
 				// Login user
-			
-					$email    = $this->input->post('email',TRUE);
-					//$password = md5($this->input->post('password',TRUE));
-					$password = $this->input->post('password',TRUE);
-					$validate = $this->user_model->validate($email,$password);
-					if($validate->num_rows() > 0){
-						$data  = $validate->row_array();
-						$name  = $data['userName'];
-						$phone  = $data['userPhone'];
-						$building  = $data['buildingID'];
-						$email = $data['email'];
-						$userID = $data['userID'];
-						$roleID = $data['roleID'];
-						$room = $data['id'];
-						$sesdata = array(
-							'userName'  => $name,
-							'phone'  => $phone,
-							'room'  => $room,
-							'email'     => $email,
-							'userID'  => $userID,
-							'building'     => $building,
-							'roleID'     => $roleID,
-							'session_id' => TRUE
-						);
-						$this->session->set_userdata($sesdata);
-						// access login for admin
-						if($roleID === '1'){
-							redirect('');
-				 
-						// access login for staff
-						}elseif($roleID === '2'){
-							redirect('');
-				 
-						// access login for author
-						}else{
-							redirect('');
-						}
+				$email    = $this->input->post('email',TRUE);
+				//$password = md5($this->input->post('password',TRUE));
+				$password = $this->input->post('password',TRUE);
+
+				$validate = $this->user_model->validate($email, $password);
+				if($validate->num_rows() > 0){
+					$data  = $validate->row_array();
+					$name  = $data['userName'];
+					$phone  = $data['userPhone'];
+					$building  = $data['buildingID'];
+					$email = $data['email'];
+					$userID = $data['userID'];
+					$roleID = $data['roleID'];
+					$room = $data['id'];
+
+					$sesdata = array(
+						'userName'  => $name,
+						'phone'  => $phone,
+						'room'  => $room,
+						'email'     => $email,
+						'userID'  => $userID,
+						'building'     => $building,
+						'roleID'     => $roleID,
+						'session_id' => TRUE
+					);
+					$this->session->set_userdata($sesdata);
+					$this->session->set_flashdata('success', 'Oled edukalt sisse logitud');
+					// access login for admin
+					if($roleID === '1'){
+						redirect('');
+				
+					// access login for staff
+					}else if($roleID === '2'){
+						redirect('');
+				
+					// access login for author
+					}else{
+						redirect('');
+					}
 					
 				} else {
 					// Set message
@@ -212,21 +226,6 @@
 			}
 		}
 
-		public function index(){
-			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
-			
-				$data['title'] = 'Users';
-			$data['manageUsers'] = $this->user_model->get_users();
-	
-			$this->load->view('templates/header');
-			$this->load->view('pages/manageUsers', $data);
-			$this->load->view('templates/footer');
-		
-			}else{
-				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
-				redirect('');
-			}
-		}
 
 
 		public function addRightsToUser(){

@@ -50,7 +50,7 @@
 			return $this->db->insert('users', $data);
 		}
 		// Log user in
-		function validate($email,$password){
+		function validate($email, $password){
 			$this->db->where('email',$email);
 			$this->db->where('pw_hash',$password);
 			$this->db->join('rooms', 'users.buildingID = rooms.buildingID' , 'left');

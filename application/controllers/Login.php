@@ -107,6 +107,28 @@ class Login extends CI_Controller{
 	}
 	else
 	{
+		$getUserData = $this->login_model->get_user_info($userData['email']);
+		if($getUserData->num_rows() > 0){
+		$data  = $getUserData->row_array();
+		$name  = $data['userName'];
+		$phone  = $data['userPhone'];
+		$building  = $data['buildingID'];
+		$email = $data['email'];
+		$userID = $data['userID'];
+		$roleID = $data['roleID'];
+		$room = $data['id'];
+		}
+		$sesdata = array(
+			'userName'  => $name,
+			'phone'  => $phone,
+			'room'  => $room,
+			'email'     => $email,
+			'userID'  => $userID,
+			'building'     => $building,
+			'roleID'     => $roleID,
+			'session_id' => TRUE
+		);
+		$this->session->set_userdata($sesdata);
 		print_r($data);
 		$this->load->view('templates/header');
 		$this->load->view('pages/fblogin', $data);
@@ -130,6 +152,7 @@ class Login extends CI_Controller{
 	function login()
 	{
 	 include_once APPPATH . "libraries/vendor/autoload.php";
+	 $user_data=array();
 	// $data=array();
 	 $google_client = new Google_Client();
  	 $google_client->setClientId('840873810053-5dbvqpg2qjpd0ir5a11o3k7srljqdbbu.apps.googleusercontent.com'); //Define your ClientID
@@ -141,7 +164,7 @@ class Login extends CI_Controller{
 	 if(isset($_GET["code"]))
 	 {
 		$token = $google_client->fetchAccessTokenWithAuthCode($_GET["code"]);
- 
+		
 		if(!isset($token["error"]))
 		{
 		 $google_client->setAccessToken($token['access_token']);
@@ -186,7 +209,34 @@ class Login extends CI_Controller{
 	 }
 	 else
 	 {
+		
+		$getUserData = $this->login_model->get_user_info($user_data['email']);
+		print_r($getUserData);
+		if($getUserData->num_rows() > 0){
+		$data  = $getUserData->row_array();
+		$name  = $data['userName'];
+		$phone  = $data['userPhone'];
+		$building  = $data['buildingID'];
+		$email = $data['email'];
+		$userID = $data['userID'];
+		$roleID = $data['roleID'];
+		$room = $data['id'];
+	}
+		$sesdata = array(
+			'userName'  => $name,
+			'phone'  => $phone,
+			'room'  => $room,
+			'email'     => $email,
+			'userID'  => $userID,
+			'building'     => $building,
+			'roleID'     => $roleID,
+			'session_id' => TRUE
+		);
+		$this->session->set_userdata($sesdata);
+	
+		$this->load->view('templates/header');
 		$this->load->view('pages/logingoogle', $data);
+   		$this->load->view('templates/footer');
 	 }
 	}
 // Google OAuth finish

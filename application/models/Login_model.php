@@ -72,4 +72,13 @@ class Login_model extends CI_Model{
         return $userID?$userID:FALSE;
     }
 	//Model for Facebook end
+
+
+	function get_user_info($email){
+		$this->db->where('email',$email);
+		$this->db->join('rooms', 'users.buildingID = rooms.buildingID' , 'left');
+		$result = $this->db->get('users',1);
+		return $result;
+		}
+
 }

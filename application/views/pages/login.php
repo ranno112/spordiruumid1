@@ -13,8 +13,8 @@
 			<?php echo form_open('users/login'); ?>
 				<div class="m-15">
 					<div class="form-label-group py-0 pl-0">
-                        <label for="contact">Email</label>
-                        <input type="text" type="email" name="email" class="form-control" required autofocus>
+                        <label for="contact">Email <?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?></label>
+                        <input  type="email" name="email" class="form-control" required autofocus value="<?php if($this->session->flashdata('email')){  echo $this->session->flashdata('email');} ?>">
 					</div>
 					<div class="form-label-group pt-1 pb-4 pl-0">
                         <label for="contact">Parool</label>
