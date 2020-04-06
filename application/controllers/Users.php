@@ -66,26 +66,35 @@
 
 	// Register user by admin
 		public function registerByAdmin(){
-			$data['title'] = 'Sign Up';
-			$this->form_validation->set_rules('name', 'Name', 'required');
-          //  $this->form_validation->set_rules('phone', 'Phone');
-			$this->form_validation->set_rules('email', 'Email', 'required|callback_check_email_exists');
-			$this->form_validation->set_rules('password', 'Password', 'required');
-            $this->form_validation->set_rules('password2', 'Confirm Password', 'matches[password]');
-            
+		
+			 $this->form_validation->set_rules('email', 'Email', 'required');
+			 $this->form_validation->set_rules('buildingID', 'Asutuse ID', 'integer|required');
+			 $this->form_validation->set_rules('role', 'Roll', 'integer|required');
+			 $this->form_validation->set_rules('status', 'Staatus', 'integer|required');
+			
 			if($this->form_validation->run() === FALSE){
-              
-				$this->load->view('templates/header');
-				$this->load->view('pages/register', $data);
-                $this->load->view('templates/footer');
-                
+				$this->session->set_flashdata('errors', 'Sisetamisel läks midagi valesti. Palun proovi uuesti.');
+				redirect('users/addRightsToUser');
+				
 			} else {
 				// Encrypt password
               //  $enc_password = md5($this->input->post('password'));
-                $enc_password = $this->input->post('password');
-				$this->user_model->register($enc_password);
-				// Set message
-				$this->session->set_flashdata('user_registered', 'Kasutaja lisatud');
+			  $data = array(
+				'email' => $this->input->post('email'),
+				'buildingID' => $this->input->post('buildingID'),
+				'roleID' => $this->input->post('role'),
+				'status' => $this->input->post('status'),
+			  ); 
+				$emailIsInDB=$this->user_model->check_email_exists($this->input->post('email'));
+				if(!$emailIsInDB){
+					//register username and rights
+					$this->user_model->insert_user_in_DB_and_give_rights($data);
+					$this->session->set_flashdata('message', 'User is no in the DB');
+				}else{
+					$this->session->set_flashdata('message', 'Need to check if user has already rights');
+				}
+			
+			//	$this->session->set_flashdata('user_registered', 'Kasutajale õigused lisatud');
 				redirect('manageUsers');
 			}
 		}
@@ -195,8 +204,20 @@
 				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
 				redirect('');
 			}
-		
+		}
 
+
+		public function addRightsToUser(){
+			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+			$data['buildings'] = $this->user_model->getAllBuildings();
+			$this->load->view('templates/header');
+			$this->load->view('pages/createUser', $data);
+			$this->load->view('templates/footer');
+		
+			}else{
+				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+				redirect('');
+			}
 		}
 
 

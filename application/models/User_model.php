@@ -61,12 +61,16 @@
 		public function check_email_exists($email){
 			$query = $this->db->get_where('users', array('email' => $email));
 			if(empty($query->row_array())){
-				return true;
-			} else {
 				return false;
+			} else {
+				return true;
 			}
 		}
 
+
+		public function insert_user_in_DB_and_give_rights($data){
+			return $this->db->insert('users', $data);
+		}
 
 		public function get_users($slug = FALSE){
 			if($slug === FALSE){
