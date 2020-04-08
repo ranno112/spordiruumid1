@@ -62,14 +62,14 @@
 				$data=$this->input->post();
 				 $this->db->group_start();
 				 $this->db->like("startTime", $data["search"]["value"]);  
-				  $this->db->or_like("LOWER(roomName)", strtolower($data["search"]["value"]));  
-				  $this->db->or_like("LOWER(public_info)", strtolower($data["search"]["value"]));  
-				  $this->db->or_like("LOWER(workout)", strtolower($data["search"]["value"]));  
+				  $this->db->or_like("LOWER(roomName)", $data["search"]["value"]);  
+				  $this->db->or_like("LOWER(public_info)", $data["search"]["value"]);  
+				  $this->db->or_like("LOWER(workout)", $data["search"]["value"]);  
 				  $this->db->or_like("created_at", $data["search"]["value"]);  
-				  $this->db->or_like("LOWER(comment)", strtolower($data["search"]["value"]));  
-				  $this->db->or_like("LOWER(c_name)", strtolower($data["search"]["value"]));  
+				  $this->db->or_like("LOWER(comment)", $data["search"]["value"]);  
+				  $this->db->or_like("LOWER(c_name)", $data["search"]["value"]);  
 				  $this->db->or_like("LOWER(c_phone)", $data["search"]["value"]);  
-				  $this->db->or_like("LOWER(c_email)", strtolower($data["search"]["value"]));  
+				  $this->db->or_like("LOWER(c_email)", $data["search"]["value"]);  
 				  $this->db->group_end();
 				//  $this->db->order_by('startTime', 'ASC');  
 				
