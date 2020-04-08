@@ -4,8 +4,9 @@ GPLv3
 Under the GPL license, you may use Scheduler and this project without charge. You may even modify its source code and redistribute it under the same license. However, there is one big caveat. Any project that leverages Scheduler must be open source!
 -->
 <!doctype html>
-<html>
+<html lang="en">
 <head>
+
     <meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	

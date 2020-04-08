@@ -41,6 +41,7 @@
 		var $order_column = array("created_at", "roomID",  null, "startTime", null, null,  null,"approved","public_info", "workout", "comment","c_name","c_phone","c_email","takes_place");   
 		function make_query()  
 		{  
+			$data=$this->input->post();
 			 $this->db->select($this->select_column);  
 			
 			 $this->db->join('bookings', 'bookingTimes.bookingID = bookings.id' , 'left');
@@ -49,40 +50,40 @@
 			 $this->db->join('buildings', 'rooms.buildingID = buildings.id' , 'left');
 			 $this->db->where('buildingID',  $this->session->userdata('building'));
 			 $this->db->from($this->table);
-			 if(isset($_POST["is_date_search"])){
+			 if(isset($data["is_date_search"])){
 			
-				$this->db->where('DATE(startTime) >=', date('Y-m-d H:i:s',strtotime($_POST["start_date"])));
-				$this->db->where('DATE(startTime) <=', date('Y-m-d H:i:s',strtotime($_POST["end_date"])));
+				$this->db->where('DATE(startTime) >=', date('Y-m-d H:i:s',strtotime($data["start_date"])));
+				$this->db->where('DATE(startTime) <=', date('Y-m-d H:i:s',strtotime($data["end_date"])));
 				
 			//	print_r( $this->db->get("bookingTimes"));
 			 }
 			
-			 if(isset($_POST["search"]["value"]))  
+			 if(isset($data["search"]["value"]))  
 			 {  
-				$data=$this->input->post();
+				
 				 $this->db->group_start();
 				 $this->db->like("startTime", $data["search"]["value"]);  
-				  $this->db->or_like("LOWER(roomName)", $data["search"]["value"]);  
-				  $this->db->or_like("LOWER(public_info)", $data["search"]["value"]);  
-				  $this->db->or_like("LOWER(workout)", $data["search"]["value"]);  
+				  $this->db->or_like("LOWER(roomName)", mb_strtolower($data["search"]["value"]));  
+				  $this->db->or_like("LOWER(public_info)", mb_strtolower($data["search"]["value"]));  
+				  $this->db->or_like("LOWER(workout)", mb_strtolower($data["search"]["value"]));  
 				  $this->db->or_like("created_at", $data["search"]["value"]);  
-				  $this->db->or_like("LOWER(comment)", $data["search"]["value"]);  
-				  $this->db->or_like("LOWER(c_name)", $data["search"]["value"]);  
+				  $this->db->or_like("LOWER(comment)", mb_strtolower($data["search"]["value"]));  
+				  $this->db->or_like("LOWER(c_name)", mb_strtolower($data["search"]["value"]));  
 				  $this->db->or_like("LOWER(c_phone)", $data["search"]["value"]);  
-				  $this->db->or_like("LOWER(c_email)", $data["search"]["value"]);  
+				  $this->db->or_like("LOWER(c_email)", mb_strtolower($data["search"]["value"]));  
 				  $this->db->group_end();
 				//  $this->db->order_by('startTime', 'ASC');  
 				
 			 }  
 			
 			 
-			 if(isset($_POST["order"]))  
+			 if(isset($data["order"]))  
 			 {  
-				  $this->db->order_by($this->order_column[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);  
+				  $this->db->order_by($this->order_column[$data['order']['0']['column']], $data['order']['0']['dir']);  
 			 }  
 			 else  
 			 {  
-				if(isset($_POST["orderBy"]))  
+				if(isset($data["orderBy"]))  
 				{  
 				   $this->db->order_by('timeID', 'DESC');    
 				} 
@@ -91,14 +92,14 @@
 				  
 			 }  
 		
-			
+			//print_r($this->db->last_query());
 		}  
 		function make_datatables(){  
 			 $this->make_query();  
-			 
-			 if($_POST["length"] != -1)  
+			 $data=$this->input->post();
+			 if($data["length"] != -1)  
 			 {  
-				  $this->db->limit($_POST['length'], $_POST['start']);  
+				  $this->db->limit($data['length'], $data['start']);  
 			 }  
 			 
 			 $query = $this->db->get();  
@@ -116,11 +117,11 @@
 
 			
 			$this->make_query(); 
-		
-			if(isset($_POST["is_date_search"])){
+			$data=$this->input->post();
+			if(isset($data["is_date_search"])){
 			
-				$this->db->where('DATE(startTime) >=', date('Y-m-d H:i:s',strtotime($_POST["start_date"])));
-				$this->db->where('DATE(startTime) <=', date('Y-m-d H:i:s',strtotime($_POST["end_date"])));
+				$this->db->where('DATE(startTime) >=', date('Y-m-d H:i:s',strtotime($data["start_date"])));
+				$this->db->where('DATE(startTime) <=', date('Y-m-d H:i:s',strtotime($data["end_date"])));
 				
 			
 			 }

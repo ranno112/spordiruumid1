@@ -10,7 +10,7 @@
 		
 		function fetch_allbookings(){  
 			$weekdays=array('Pühapäev','Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev');
-			$this->load->model("allbookings_model");  
+		//	print_r($this->input->post());
 			$fetch_data = $this->allbookings_model->make_datatables();  
 			$data = array(); 
 			$ApprovedData=""; 
