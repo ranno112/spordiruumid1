@@ -40,7 +40,7 @@
 			$this->db->where('id',$buildingID);
 			$query = $this->db->get('buildings');
 			return $query->result_array();
-			//row_array()
+		
 		}
 
 
@@ -85,11 +85,12 @@
 
 		public function get_users($slug = FALSE){
 			if($slug === FALSE){
+				$this->db->order_by('roleID');
 				$this->db->order_by('users.userName');
-			$this->db->join('buildings', 'users.buildingID = buildings.id' , 'left');
-			$this->db->join('userRoles', 'users.roleID = userRoles.id' , 'left');
-			$query = $this->db->get('users');
-			return $query->result_array();
+				$this->db->join('buildings', 'users.buildingID = buildings.id' , 'left');
+				$this->db->join('userRoles', 'users.roleID = userRoles.id' , 'left');
+				$query = $this->db->get('users');
+				return $query->result_array();
 			}
 			$this->db->join('buildings', 'users.buildingID = buildings.id' , 'left');
 			$this->db->join('userRoles', 'users.roleID = userRoles.id' , 'left');

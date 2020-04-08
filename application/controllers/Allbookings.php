@@ -65,8 +65,7 @@
 		
 			if(null!==$this->session->userdata('building')){
 				$data['unapprovedBookings'] = $this->allbookings_model->getUnapprovedBookings($this->session->userdata('building'), $this->session->userdata('room'));
-				
-				}
+			}
 			$data['xssData'] = $this->security->xss_clean($data);
 			$this->load->view('templates/header', $this->security->xss_clean($data));
 			$this->load->view('pages/allBookings', $this->security->xss_clean($data));

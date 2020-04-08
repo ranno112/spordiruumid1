@@ -58,6 +58,16 @@ class Home_model extends CI_Model
             $output .= '<option  data-value="' . $row->id . '" value="' . $row->roomName . '">'.$row->roomName.'</option>';
         }
         return $output;
-    }
+	}
+	
+	
+
+	function chech_if_has_request($email){
+		$this->db->select("requestFromBuilding");
+		$this->db->where('email',$email );
+		$query = $this->db->get('users');
+		return $query->row_array();
+	}
+
 }
 

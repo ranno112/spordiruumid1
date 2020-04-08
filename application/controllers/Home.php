@@ -31,6 +31,8 @@ class Home extends CI_Controller
 		  //  show_404();
 		}
 
+		$data['requestFromBuilding']=$this->home_model->chech_if_has_request($this->session->userdata('email'));
+	
 		$data['title'] = ucfirst($page); // Capitalize the first letter
 
 		$data['regions'] = $this->home_model->getAllRegions();

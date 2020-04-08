@@ -114,6 +114,7 @@
 					'buildingID' => $buildingID,
 					'roleID' => $role,
 					'status' => $this->input->post('status'),
+					'requestFromBuilding' => '1',
 					); 
 
 				   $emailIsInDB=$this->user_model->check_email_exists($this->input->post('email'));
@@ -291,12 +292,11 @@
 
 
 		public function update(){
-			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' ){
 				$data = array(
-					'userName' => $this->input->post('name'),
+				
 					'email' => $this->input->post('email'),
 					'status' => $this->input->post('status'),
-					'userPhone' => $this->input->post('phone'),
 					'roleID' => $this->input->post('roleID'),
 					'buildingID' => $this->input->post('buildingID'),
 				);
@@ -305,6 +305,10 @@
 				// Set message
 				$this->session->set_flashdata('post_updated', 'Uuendasid kasutajat');
 				redirect('manageUsers');
+			}
+			else{
+				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+				redirect('');
 			}
 		}
 

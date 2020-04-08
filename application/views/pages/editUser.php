@@ -53,17 +53,17 @@
                         
                        
 						<select id="roleID" name="roleID" class="form-control arrow">
-                            <?php if($this->session->userdata('roleID')==='2' && $post['roleID']!=1):?>
+                            <?php if($this->session->userdata('roleID')==='2' && $post['roleID']!='1'):?>
                                     <option value="2" <?php if ($post['roleID']==2) echo ' selected'?>>Juht</option>
                                     <option value="3" <?php if ($post['roleID']==3) echo ' selected'?>>Haldur</option>
-                                    <option value="4" <?php if ($post['roleID']==4) echo ' selected'?>> <?php if ($post['roleID']==4) echo $post['role'] ?></option>
+                                    <option value="4" <?php if ($post['roleID']==4) echo ' selected'?>> <?php if ($post['roleID']==4) {echo $post['role'];}else echo 'Võta õigused ära' ?></option>
 							<?php endif;?>
 
                             <?php if($this->session->userdata('roleID')=='1'):?>
                                 <option value="1" <?php if ($post['roleID']==1) echo ' selected'?>>Admin</option>
                                 <option value="2" <?php if ($post['roleID']==2) echo ' selected'?>>Juht</option>
                                 <option value="3" <?php if ($post['roleID']==3) echo ' selected'?>>Haldur</option>
-								<option value="4" <?php if ($post['roleID']==4) echo ' selected'?>> <?php if ($post['roleID']==4) echo $post['role'] ?></option>
+								<option value="4" <?php if ($post['roleID']==4) echo ' selected'?>> <?php if ($post['roleID']==4)  {echo $post['role'];}else echo 'Võta õigused ära' ?></option>
 							<?php endif;?>
 							
 
@@ -83,16 +83,7 @@
                     </div>
                 </div>
 
-                <h4 class="mt-4 txt-xl">Kasutaja info</h4>
-                <div class="form-label-group mt-3">
-                    <label for="name">Nimi</label>
-                    <input id="name" name="name" type="text" class="form-control" value="<?php echo $post['userName']; ?>">
-                </div>
-                <div class="form-label-group mt-3">
-                    <label for="phone">Telefon</label>
-                    <input id="phone" name="phone" type="text" class="form-control" value="<?php echo $post['userPhone']; ?>">
-                </div>
-
+			<br/>
                 <div class="d-flex justify-content-end mt-4 mb-5">
                     <a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="<?php echo base_url(); ?>manageUsers">Katkesta</a>
                     <button type="submit" class="btn btn-custom text-white txt-xl">Salvesta muudatused</button>
