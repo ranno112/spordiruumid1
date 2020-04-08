@@ -134,7 +134,7 @@
 
 		function make_query()  
 		{    $this->db->distinct();
-	
+			$data=$this->input->post();
 			 $this->db->select($this->select_column);  
 			 $this->db->join('bookings', 'bookingTimes.bookingID = bookings.id' , 'left');
 			 $this->db->join('rooms', 'bookingTimes.roomID = rooms.id' , 'left');
@@ -146,9 +146,9 @@
 	
 		
 			
-			 if(isset($_POST["search"]["value"]))  
+			 if(isset($data["search"]["value"]))  
 			 {  
-				$data=$this->input->post();
+			
 				 $this->db->group_start();
 				 $this->db->like("startTime", $data["search"]["value"]);  
 				  $this->db->or_like("LOWER(roomName)", mb_strtolower($data["search"]["value"]));  
@@ -165,9 +165,9 @@
 			 }  
 			
 			 
-			 if(isset($_POST["order"]))  
+			 if(isset($data["order"]))  
 			 {  
-				  $this->db->order_by($this->order_column[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);  
+				  $this->db->order_by($this->order_column[$data['order']['0']['column']], $data['order']['0']['dir']);  
 			 }  
 			 else  
 			 {  
@@ -181,10 +181,10 @@
 		}  
 		function make_datatables(){  
 			 $this->make_query();  
-			 
-			 if($_POST["length"] != -1)  
+			 $data=$this->input->post();
+			 if($data["length"] != -1)  
 			 {  
-				  $this->db->limit($_POST['length'], $_POST['start']);  
+				  $this->db->limit($data['length'], $data['start']);  
 			 }  
 			 
 			 $query = $this->db->get();  
@@ -203,10 +203,11 @@
 
 			 $this->make_query(); 
 			 $this->db->distinct();
-			 if(isset($_POST["is_date_search"])){
+			 $data=$this->input->post();
+			 if(isset($data["is_date_search"])){
 			 
-				 $this->db->where('DATE(startTime) >=', date('Y-m-d H:i:s',strtotime($_POST["start_date"])));
-				 $this->db->where('DATE(startTime) <=', date('Y-m-d H:i:s',strtotime($_POST["end_date"])));
+				 $this->db->where('DATE(startTime) >=', date('Y-m-d H:i:s',strtotime($data["start_date"])));
+				 $this->db->where('DATE(startTime) <=', date('Y-m-d H:i:s',strtotime($data["end_date"])));
 			 
 			  }
 			 
