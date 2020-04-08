@@ -15,8 +15,8 @@
 					<h4 class="pt-2 txt-xl px-5 mx-5">Annan juurdepääsu</h4>
 					<div class="d-flex p-0 mt-4 px-5 mx-5">
 						<div class="form-label-group col-6 py-0 pl-0 pr-5">
-							<label>E-mail*</label>
-							<input type="email" class="form-control" name="email" placeholder="E-mail" required>
+							<label>E-mail* <?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?></label>
+							<input type="email" class="form-control" name="email" placeholder="E-mail" required value="<?php if($this->session->flashdata('email')){  echo $this->session->flashdata('email');} ?>">
 						</div>
 					
 						<div class="form-label-group col-6 p-0 pl-5">

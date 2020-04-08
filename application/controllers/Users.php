@@ -82,13 +82,16 @@
 	// Register user by admin
 		public function registerByAdmin(){
 			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2'){
-				$this->form_validation->set_rules('email', 'Email', 'required');
+				$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
 				$this->form_validation->set_rules('buildingID', 'Asutuse ID', 'integer|required');
 				$this->form_validation->set_rules('role', 'Roll', 'integer|required');
 				$this->form_validation->set_rules('status', 'Staatus', 'integer|required');
 			   
 			   if($this->form_validation->run() === FALSE ){
 				   $this->session->set_flashdata('errors', 'Sisetamisel läks midagi valesti. Palun proovi uuesti.');
+				   $this->session->set_flashdata("emailIsNotCorrect", form_error('email', '<small class="text-danger">','</small>'));
+				   $inputEmail= $this->input->post('email');
+				   $this->session->set_flashdata('email', $inputEmail);
 				   redirect('users/addRightsToUser');
 				   
 			   } else if($this->input->post('buildingID')=='0' && $this->input->post('role')!='1'){
@@ -140,13 +143,13 @@
 
 		// Log in user
 		public function login(){
-            $inputEmail= $this->input->post('email');
-           
+			
 			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
             $this->form_validation->set_rules('password', 'Password', 'required');
             
 			if($this->form_validation->run() === FALSE){
 				$this->session->set_flashdata("emailIsNotCorrect", form_error('email', '<small class="text-danger">','</small>')); // tekst '{field} ei ole korrektselt sisestatud' tuleb failist form_validation_lang.php
+				$inputEmail= $this->input->post('email');
 				$this->session->set_flashdata('email', $inputEmail);
 				$this->session->set_flashdata('errors', 'Proovi uuesti');
 				redirect('login');
@@ -234,7 +237,7 @@
 			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
 			$data['buildings'] = $this->user_model->getAllBuildings();
 			$this->load->view('templates/header');
-			$this->load->view('pages/createUser', $data);
+			$this->load->view('pages/createUser',  $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
 		
 			}else{
@@ -259,18 +262,30 @@
 
 
 		public function edit($slug){
-			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
-				$data['manageUsers'] = $this->user_model->get_users();
+			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2'){
+			
 				$data['post'] = $this->user_model->get_users($slug);
 				$data['buildings'] = $this->user_model->getAllBuildings();
+
+				if ($this->session->userdata('roleID')==='2'){
+					$data['buildings'] = $this->user_model->get_one_building_data($this->session->userdata('building'));
+					if($data['post']['roleID']==="1" || $data['post']['buildingID']!=$this->session->userdata('building')){
+						$this->session->set_flashdata('message', 'Sul ei ole õigusi muuta neid kasutajaid');
+						redirect('manageUsers');
+					}
+				}
 			
 				if(empty($data['post'])){
 					show_404();
 				}
-				$data['title'] = 'Edit Post';
+			
 				$this->load->view('templates/header');
-				$this->load->view('pages/editUser', $data);
+				$this->load->view('pages/editUser', $this->security->xss_clean($data));
 				$this->load->view('templates/footer');
+			}
+			else{
+				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+				redirect('');
 			}
 		}
 

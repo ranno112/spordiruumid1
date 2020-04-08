@@ -1,5 +1,5 @@
 <div class="container text-darkblue">
-    <form id="change" class="mt-5 container-md" method="post" action="<?php echo base_url(); ?>users/update">
+	<?php echo form_open('users/update', array('id' => 'change','class' => 'mt-5 container-md')); ?>
         <div class="form-bg">
 		<?php print_r($buildings);?>
             <div class="mx-auto" style="width: 44%;">
@@ -20,20 +20,19 @@
                 </div>
 			
 				
-                <div class="d-flex justify-content-between p-0 m-0">
-                    <div class="form-label-group mt-3 pr-5">
+				<div class="row">
+                    <div class="col">
                         <label for="building">Asutus</label>
                            
 						<?php if($this->session->userdata('roleID')==='2' && $post['roleID']!=1):?>
                                 <select id="buildingID" name="buildingID" class="form-control arrow">
-								<option value="0" <?php if ($post['buildingID']==0) echo ' selected'?>>Pole asutust</option>
 								<option value="<?php echo $post['buildingID'];?>" <?php if ($post['buildingID']!=0) echo ' selected'?>><?php echo $post['name']; ?></option>
                                     </select>
                              <?php endif;?>
     
                             <?php if($this->session->userdata('roleID')=='1'):?>
                                 <select id="buildingID" name="buildingID" class="form-control arrow">
-								   <option value="0" <?php if ($post['buildingID']==0) echo ' selected'?>>Pole asutust</option>
+								   <option value="0" <?php if ($post['buildingID']==0) echo ' selected'?>>Vali asutus</option>
 								   <?php foreach($buildings as $each){ ?>
 									   <option value="<?php echo $each['id'];?>" <?php if ($post['buildingID']==$each['id']) echo ' selected'?>><?php echo $each['name']; ?></option>
 								   <?php }?>
@@ -46,29 +45,31 @@
 
 					</div>
 					
-                    <div class="form-label-group mt-3 pl-5">
+                     <div class="col">
                         <label for="role">Roll</label>
                       
-                       
+                      
                         <input type="text" class="d-none" name="role" id="role" value="<?php echo $post['roleID']; ?>">
                         
                        
+						<select id="roleID" name="roleID" class="form-control arrow">
                             <?php if($this->session->userdata('roleID')==='2' && $post['roleID']!=1):?>
-                                <select id="roleID" name="roleID" class="form-control arrow">
                                     <option value="2" <?php if ($post['roleID']==2) echo ' selected'?>>Juht</option>
                                     <option value="3" <?php if ($post['roleID']==3) echo ' selected'?>>Haldur</option>
-                                    <option value="4" <?php if ($post['roleID']==4) echo ' selected'?>>Tavakasutaja</option>
-                                    </select>
-                             <?php endif;?>
-    
+                                    <option value="4" <?php if ($post['roleID']==4) echo ' selected'?>> <?php if ($post['roleID']==4) echo $post['role'] ?></option>
+							<?php endif;?>
+
                             <?php if($this->session->userdata('roleID')=='1'):?>
-                                <select id="roleID" name="roleID" class="form-control arrow">
                                 <option value="1" <?php if ($post['roleID']==1) echo ' selected'?>>Admin</option>
                                 <option value="2" <?php if ($post['roleID']==2) echo ' selected'?>>Juht</option>
                                 <option value="3" <?php if ($post['roleID']==3) echo ' selected'?>>Haldur</option>
-                                <option value="4" <?php if ($post['roleID']==4) echo ' selected'?>>Tavakasutaja</option>
-                                </select>
-                            <?php endif;?>
+								<option value="4" <?php if ($post['roleID']==4) echo ' selected'?>> <?php if ($post['roleID']==4) echo $post['role'] ?></option>
+							<?php endif;?>
+							
+
+						</select>
+    
+                            
                             
                      
                       
@@ -103,5 +104,5 @@
 
             </div>
         </div>
-    </form>
+		<?php echo form_close(); ?>
 </div>

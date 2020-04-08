@@ -72,14 +72,12 @@
                     <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['role']; ?> &nbsp; &nbsp;</td>
                     <td class="p-1 text-darkblue border-bottom-light"><?php if( $singleUser['status']==1){ echo "Aktiivne";} else {echo "Mitteakviivne";} ?></td>
                     <td class="d-flex justify-content-end p-1 pr-3">
+					<?php if($this->session->userdata('roleID')==='2'):?>
                         <form class="cat-delete" action="users/edit/<?php echo $singleUser['userID']; ?>" method="POST">
                             <button type="submit" class="btn btn-second btn-width text-white text-center py-1 px-2 txt-strong ">Muuda</button>
-                        </form>
-                        <?php if($this->session->userdata('roleID')==='1'):?>
-                        <form class="cat-delete pl-1" action="users/delete/<?php echo $singleUser['userID']; ?>" method="POST">
-                            <button type="submit" class="btn btn-delete btn-width text-white text-center py-1 px-2 txt-strong ">Kustuta</button>
-                        </form>
-                        <?php endif;?>
+						</form>
+						<?php endif;?>
+                     
                     </td>
                 </tr>                
             <?php ;}  endforeach; ?>

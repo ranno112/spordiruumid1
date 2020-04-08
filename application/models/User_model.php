@@ -34,6 +34,16 @@
 			return $query->result_array();
 		}
 
+		public function get_one_building_data($buildingID)
+		{
+			$this->db->select('name, id');  
+			$this->db->where('id',$buildingID);
+			$query = $this->db->get('buildings');
+			return $query->result_array();
+			//row_array()
+		}
+
+
 
 		public function register($enc_password){
 			// User data array
