@@ -7,8 +7,7 @@
                 <h4 class="mt-5 txt-xl">Konto info</h4>
                 <div class="form-label-group mt-4">
                     <label for="publicInfo">E-mail</label>
-                    <p class="txt-strong" name="email"><?php echo $post['email']; ?></p>
-                    <input name="email" type="text" class="d-none" value="<?php echo $post['email']; ?>">
+               	<input name="email" type="text"  class="form-control arrow" disabled value="<?php echo $post['email']; ?>">
                 </div>
 
                 <div class="form-label-group mt-3">

@@ -293,12 +293,25 @@
 
 		public function update(){
 			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' ){
+
+
+
+				$buildingID=$this->input->post('buildingID');
+				if($this->input->post('roleID')=='1' || $this->input->post('roleID')=='4'){
+					$buildingID='0';
+				}
+			
+				if( $this->session->userdata('roleID')==='2'){
+					$buildingID=$this->session->userdata('building');
+					if($this->input->post('roleID')=='1'){
+						$this->session->set_flashdata('errors', 'Sul ei ole õigust panna kasutajatele Linnavalitsuse adminni õigusi');
+						redirect('');
+					}
+				}
 				$data = array(
-				
-					'email' => $this->input->post('email'),
 					'status' => $this->input->post('status'),
 					'roleID' => $this->input->post('roleID'),
-					'buildingID' => $this->input->post('buildingID'),
+					'buildingID' => $buildingID,
 				);
 				$userID=$this->input->post('id');
 				$this->user_model->update_user($data,$userID);
