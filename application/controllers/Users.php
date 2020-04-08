@@ -91,40 +91,42 @@
 				   $this->session->set_flashdata('errors', 'Sisetamisel läks midagi valesti. Palun proovi uuesti.');
 				   redirect('users/addRightsToUser');
 				   
-			   } else if($this->input->post('buildingID')=='0'){
+			   } else if($this->input->post('buildingID')=='0' && $this->input->post('role')!='1'){
 				   $this->session->set_flashdata('errors', 'Asutus valimata!');
 				   redirect('users/addRightsToUser');
 			   }
 			   else		
 			   {
-				$buildingID=$this->input->post('buildingID');
-				if($this->session->userdata('roleID')==='2'){
-				$buildingID=$this->session->userdata('building');
-				}
-			
-				 $data = array(
-				   'email' => $this->input->post('email'),
-				   'buildingID' => $buildingID,
-				   'roleID' => $this->input->post('role'),
-				   'status' => $this->input->post('status'),
-				 ); 
+					$buildingID=$this->input->post('buildingID');
+					$role=$this->input->post('role');
+					if($this->session->userdata('roleID')==='2'){
+						$buildingID=$this->session->userdata('building');
+					}
+					if($this->session->userdata('roleID')==='2' && $this->input->post('role')==='1'){
+						$this->session->set_flashdata('errors', 'Saa ei saa määrata adminni õigusi');
+						redirect('users/addRightsToUser');
+					}
+					$data = array(
+					'email' => $this->input->post('email'),
+					'buildingID' => $buildingID,
+					'roleID' => $role,
+					'status' => $this->input->post('status'),
+					); 
+
 				   $emailIsInDB=$this->user_model->check_email_exists($this->input->post('email'));
 				   if(!$emailIsInDB){
 					   //register username and rights
 					   $this->user_model->insert_user_in_DB_and_give_rights($data);
 					   $this->session->set_flashdata('success', 'Kasutajale lisati õigused, kuid see kasutaja pole veel süsteemi sisse loginud. Palun teavitage teda, et ta teeks endale konto sama e-mailiga või logiks sisse läbi G-maili või Facebooki konto');
 				   }else if($emailIsInDB['roleID']=='1' || $emailIsInDB['roleID']=='2' || $emailIsInDB['roleID']=='3'){
-					   print_r($emailIsInDB['roleID']);
 					   $this->session->set_flashdata('errors', 'Kasutajal ei saa olla mitu ligipääsu erinevatele asutustele');
 				   }
 				   else if($emailIsInDB['roleID']=='4'){
-					   print_r($this->input->post());
 					   $userID=$emailIsInDB['userID'];
 					   $this->user_model->update_user($data,$userID);
 					   $this->session->set_flashdata('user_registered', 'Kasutajale õigused lisatud');
 					}
-				   $this->session->set_flashdata('message', 'Need to check if user has already rights');
-			   
+				 
 				   redirect('manageUsers');
 			   }
 

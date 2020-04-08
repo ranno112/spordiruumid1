@@ -46,7 +46,9 @@
 						<div class="form-label-group col-6 py-0 pl-0 pr-5">
 							<label>Roll*</label>
 							<select id="role" name="role" class="form-control arrow">
+							<?php if($this->session->userdata('roleID')==='1'):?>
 								<option value="1">Admin</option>
+								<?php endif;?>
 								<option value="2">Juht</option>
 								<option value="3" selected>Haldur</option>
 							</select>
