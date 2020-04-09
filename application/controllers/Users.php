@@ -299,25 +299,15 @@
 		public function update(){
 			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' ){
 
-				$this->form_validation->set_rules('id', 'Asutuse ID', 'integer|required');
-				$this->form_validation->set_rules('roleID', 'Roll', 'integer|required');
-				$this->form_validation->set_rules('status', 'Staatus', 'integer|required');
-				$this->form_validation->set_rules('buildingID', 'Ruumi ID', 'integer|required');
-
-				if($this->form_validation->run() === FALSE){
-				
-					$this->session->set_flashdata('errors', 'Midagi läks valesti');
-					redirect('users/edit/'.$this->input->post('id'));
-				} 
-
 				$buildingID=$this->input->post('buildingID');
 				$requestFromBuilding='1';
-			
+				$userID=$this->input->post('id');
+
 				if($this->session->userdata('roleID')==='2'){
 					$buildingID=$this->session->userdata('building');
 					if($this->input->post('roleID')=='1'){
 						$this->session->set_flashdata('errors', 'Sul ei ole õigust panna kasutajatele Linnavalitsuse adminni õigusi');
-						redirect('');
+						redirect('manageUsers');
 					}
 				}
 
@@ -327,9 +317,29 @@
 				}
 
 				if( $buildingID=='0' && ($this->input->post('roleID')==='2' || $this->input->post('roleID')==='3') ){
+					$this->session->set_flashdata('role',$this->input->post('roleID'));
 					$this->session->set_flashdata('errors', 'Asutus valimata');
-					redirect('users/edit/'.$this->input->post('id'));
+					redirect('users/edit/'.$userID);
 				}
+
+				$this->form_validation->set_rules('id', 'Asutuse ID', 'integer|required');
+				$this->form_validation->set_rules('roleID', 'Roll', 'integer|required');
+				$this->form_validation->set_rules('status', 'Staatus', 'integer|required');
+				$this->form_validation->set_rules('buildingID', 'Ruumi ID', 'integer|required');
+
+				if($this->form_validation->run() === FALSE){
+				
+					$this->session->set_flashdata('errors', 'Midagi läks valesti');
+					redirect('users/edit/'.$userID);
+				} 
+
+				// if user was already in one buildingID and we want to change roleID from 2 to 3 or 3 to 2, then requestFromBuilding has to be 0
+				$ifUserIsAlreadyInBuildingAndWeWantToChangeroleID2or3=$this->user_model->check_if_user_has_already_rights_in_building($userID);
+				print_r($ifUserIsAlreadyInBuildingAndWeWantToChangeroleID2or3);
+				if($ifUserIsAlreadyInBuildingAndWeWantToChangeroleID2or3['buildingID']==$buildingID){
+					$requestFromBuilding='0';
+				}
+				
 
 				$data = array(
 					'status' => $this->input->post('status'),
@@ -337,7 +347,7 @@
 					'buildingID' => $buildingID,
 					'requestFromBuilding' => $requestFromBuilding,
 				);
-				$userID=$this->input->post('id');
+				
 				$this->user_model->update_user($data,$userID);
 				// Set message
 				$this->session->set_flashdata('post_updated', 'Uuendasid kasutajat');

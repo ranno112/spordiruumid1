@@ -215,16 +215,13 @@
 		}  
 
 
+		function check_if_user_has_already_rights_in_building($userID){
 
-
-
-
-
-
-
-
-
-
-
+			$this->db->select('buildingID');  
+			$this->db->where('userID',$userID);
+			$query = $this->db->get('users');
+			return $query->row_array();
+		
+		}
 
 	}

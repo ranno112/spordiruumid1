@@ -58,27 +58,26 @@
                                     <option value="4" <?php if ($post['roleID']==4) echo ' selected'?>> <?php if ($post['roleID']==4) {echo $post['role'];}else echo 'Võta õigused ära' ?></option>
 							<?php endif;?>
 
-                            <?php if($this->session->userdata('roleID')=='1'):?>
+                            <?php if(!$this->session->flashdata('role') && $this->session->userdata('roleID')=='1'):?>
                                 <option value="1" <?php if ($post['roleID']==1) echo ' selected'?>>Admin</option>
                                 <option value="2" <?php if ($post['roleID']==2) echo ' selected'?>>Juht</option>
                                 <option value="3" <?php if ($post['roleID']==3) echo ' selected'?>>Haldur</option>
 								<option value="4" <?php if ($post['roleID']==4) echo ' selected'?>> <?php if ($post['roleID']==4)  {echo $post['role'];}else echo 'Võta õigused ära' ?></option>
 							<?php endif;?>
-							
+							<?php if($this->session->flashdata('role') && $this->session->userdata('roleID')=='1'):?>
+                                <option value="1" <?php if ($this->session->userdata('role')=='1') echo ' selected'?>>Admin</option>
+                                <option value="2" <?php if ($this->session->userdata('role')=='2') echo ' selected'?>>Juht</option>
+                                <option value="3" <?php if ($this->session->userdata('role')=='3') echo ' selected'?>>Haldur</option>
+								<option value="4" <?php if ($this->session->userdata('role')=='4') echo ' selected'?>> <?php if ($post['roleID']==4)  {echo $post['role'];}else echo 'Võta õigused ära' ?></option>
+							<?php endif;?>
 
 						</select>
-    
-                            
-                            
-                     
-                      
+					  
                         <?php if($post['roleID']==1 && $this->session->userdata('roleID')!=='1'):?>
                         <p id="role" class="txt-strong"><?php echo $post['role']; ?></p>
                         <?php endif;?>
 
-
-
-
+					
                     </div>
                 </div>
 
