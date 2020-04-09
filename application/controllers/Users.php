@@ -102,9 +102,14 @@
 			   {
 					$buildingID=$this->input->post('buildingID');
 					$role=$this->input->post('role');
+					$requestFromBuilding='1';
 					if($this->session->userdata('roleID')==='2'){
 						$buildingID=$this->session->userdata('building');
 					}
+					if($role==='1' || $role==='4' ){
+						$requestFromBuilding='0';
+					}
+
 					if($this->session->userdata('roleID')==='2' && $this->input->post('role')==='1'){
 						$this->session->set_flashdata('errors', 'Saa ei saa määrata adminni õigusi');
 						redirect('users/addRightsToUser');
@@ -114,7 +119,7 @@
 					'buildingID' => $buildingID,
 					'roleID' => $role,
 					'status' => $this->input->post('status'),
-					'requestFromBuilding' => '1',
+					'requestFromBuilding' => $requestFromBuilding,
 					); 
 
 				   $emailIsInDB=$this->user_model->check_email_exists($this->input->post('email'));
@@ -294,24 +299,43 @@
 		public function update(){
 			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' ){
 
+				$this->form_validation->set_rules('id', 'Asutuse ID', 'integer|required');
+				$this->form_validation->set_rules('roleID', 'Roll', 'integer|required');
+				$this->form_validation->set_rules('status', 'Staatus', 'integer|required');
+				$this->form_validation->set_rules('buildingID', 'Ruumi ID', 'integer|required');
 
+				if($this->form_validation->run() === FALSE){
+				
+					$this->session->set_flashdata('errors', 'Midagi läks valesti');
+					redirect('users/edit/'.$this->input->post('id'));
+				} 
 
 				$buildingID=$this->input->post('buildingID');
-				if($this->input->post('roleID')=='1' || $this->input->post('roleID')=='4'){
-					$buildingID='0';
-				}
+				$requestFromBuilding='1';
 			
-				if( $this->session->userdata('roleID')==='2'){
+				if($this->session->userdata('roleID')==='2'){
 					$buildingID=$this->session->userdata('building');
 					if($this->input->post('roleID')=='1'){
 						$this->session->set_flashdata('errors', 'Sul ei ole õigust panna kasutajatele Linnavalitsuse adminni õigusi');
 						redirect('');
 					}
 				}
+
+				if($this->input->post('roleID')==='1' || $this->input->post('roleID')==='4' ){
+					$requestFromBuilding='0';
+					$buildingID='0';
+				}
+
+				if( $buildingID=='0' && ($this->input->post('roleID')==='2' || $this->input->post('roleID')==='3') ){
+					$this->session->set_flashdata('errors', 'Asutus valimata');
+					redirect('users/edit/'.$this->input->post('id'));
+				}
+
 				$data = array(
 					'status' => $this->input->post('status'),
 					'roleID' => $this->input->post('roleID'),
 					'buildingID' => $buildingID,
+					'requestFromBuilding' => $requestFromBuilding,
 				);
 				$userID=$this->input->post('id');
 				$this->user_model->update_user($data,$userID);
@@ -324,6 +348,7 @@
 				redirect('');
 			}
 		}
+
 
 		//for DataTables
 		function fetch_allbookingsInfo(){  
