@@ -6,29 +6,17 @@
         }
 
 		public function get_profile($slug = FALSE){
-			if($slug === FALSE){
-				echo "pole SLUGI";
-			//$this->db->order_by('buildings.id');
-			//$this->db->join('rooms', ' buildings.id = rooms.buildingID' , 'left');
-			
-			$query = $this->db->get('users');
-			return $query->result_array();
-			} else {
 			
 			$this->db->join('buildings', ' buildings.id = users.buildingID' , 'left');
 			$query = $this->db->get_where('users', array('userID' => $slug));
 			return $query->result_array();
 		
-		}}
+		}
 
 
-		public function update_profile(){
+		public function update_profile($data){
 		
-			$data = array(
-				'userName' => $this->input->post('name'),
-				'userPhone' => $this->input->post('phone'),
-				
-			);
+			
 			$this->db->where('userID', $this->session->userdata['userID']);
 
 			//siia tuleb parooliga seonduv

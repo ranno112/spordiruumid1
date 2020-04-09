@@ -11,7 +11,7 @@
 						<li class="nav-item"></li><li class="nav-item"></li>
 					</ul>
 				</div>
-				<form id="change" method="post" action="<?php echo base_url(); ?>profile/updateProfile">
+				<?php echo form_open('profile/updateProfile', array('id' => 'change')); ?>
 				<?php foreach ($editProfile as $value) {?>
 					<h4 class="pt-2 txt-xl px-5 mx-5">Konto info</h4>
 
