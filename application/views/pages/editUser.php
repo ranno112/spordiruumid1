@@ -1,8 +1,7 @@
 <div class="container text-darkblue">
 	<?php echo form_open('users/update', array('id' => 'change','class' => 'mt-5 container-md')); ?>
         <div class="form-bg">
-		<?php print_r($buildings);?>
-            <div class="mx-auto" style="width: 44%;">
+	        <div class="mx-auto" style="width: 44%;">
                 
                 <h4 class="mt-5 txt-xl">Konto info</h4>
                 <div class="form-label-group mt-4">
