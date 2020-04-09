@@ -57,15 +57,14 @@
 					<h4 class="mt-5 txt-xl px-5 mx-5">Kasutaja info</h4>
 					<div class="d-flex p-0 mt-4 px-5 mx-5">
 						<div class="form-label-group col-6 py-0 pl-0 pr-5">
-							<label>Nimi*</label>
-							<input type="text" class="form-control" name="name" value="<?php echo $value['userName'];?>">
+							<label>Nimi* <?php if($this->session->flashdata('validationErrorMessageForName')){  echo $this->session->flashdata('validationErrorMessageForName');} ?></label>
+							<input type="text" class="form-control" name="name" value="<?php if(!empty($this->session->flashdata('key')['name'])){ echo $this->session->flashdata('key')['name'];} else {echo $value['userName'];}?>">
 						</div>
 						<div class="form-label-group col-6 p-0 pl-5">
-							<label>Telefoni number*</label>
-							<input type="number" class="form-control" name="phone" value="<?php echo $value['userPhone'];?>">
+							<label>Telefoni number* <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?></label>
+							<input type="text" class="form-control" name="phone" value="<?php if(!empty($this->session->flashdata('key')['phone'])){ echo $this->session->flashdata('key')['phone'];} else {echo $value['userPhone'];}?>">
 						</div>
 					</div>
-
 					<h4 class="mt-5 txt-xl px-5 mx-5">Muuda parooli</h4>
 					<div class="d-flex p-0 mt-4 px-5 mx-5">
 						<div class="form-label-group col-6 py-0 pl-0 pr-5">

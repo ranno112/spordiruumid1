@@ -57,7 +57,7 @@
 						</div>
 						<div class="form-label-group col-6 p-0 pl-5">
 							<label>Telefoni number*</label>
-							<input type="number" class="form-control" name="phone" value="<?php echo $value['userPhone'];?>" disabled>
+							<input type="text" class="form-control" name="phone" value="<?php echo $value['userPhone'];?>" disabled>
 						</div>
 					</div>
 
