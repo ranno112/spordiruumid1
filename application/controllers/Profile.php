@@ -44,6 +44,47 @@ class Profile extends CI_Controller
         $this->load->view('templates/footer');
     }	}
 
+	public function acceptTheRequest(){
+		$data = array();
+		$this->form_validation->set_rules('giveaccess', 'Ligipääs', 'integer|max_length[1]');
+		if($this->form_validation->run() === FALSE ){
+			$this->session->set_flashdata('message','Proovi uuesti');
+			redirect('profile/view/'.$this->session->userdata['userID']);
+		}
+
+
+		$desicion=$this->input->post('giveaccess');
+		$buildingID='';
+		if($desicion=='1'){
+			$data = array(
+				'requestFromBuilding' =>'0',
+				'buildingID' => '0',
+				'roleID' => '4'
+			);
+			$this->profile_model->update_profile($data);
+			$this->session->unset_userdata('session_id');
+			$this->session->sess_destroy();
+			$this->session->set_flashdata('user_loggedout', 'Turvalisuse huvides teid logiti välja');
+		//	redirect('');
+		}else{
+			$data = array(
+				'requestFromBuilding' =>'0',
+			);
+			$building=$this->profile_model->get_my_buildingID($data);
+			$sesdata = array(
+				'building'     => $building['buildingID'],
+			);
+			$this->session->set_userdata($sesdata);
+		}
+
+		$this->profile_model->update_profile($data);
+		$this->session->set_flashdata('post_updated', 'Vastus salvestatud ning juurdepääs asutuse andmetele on tagatud');
+		redirect('profile/view/'.$this->session->userdata['userID']);
+
+	
+
+	}
+
 
 
     public function updateProfile(){

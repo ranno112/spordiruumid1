@@ -175,11 +175,12 @@
 					$data  = $validate->row_array();
 					$name  = $data['userName'];
 					$phone  = $data['userPhone'];
-					$building  = $data['buildingID'];
+
 					$email = $data['email'];
 					$userID = $data['userID'];
 					$roleID = $data['roleID'];
 					$room = $data['id'];
+
 
 					$sesdata = array(
 						'userName'  => $name,
@@ -187,19 +188,25 @@
 						'room'  => $room,
 						'email'     => $email,
 						'userID'  => $userID,
-						'building'     => $building,
 						'roleID'     => $roleID,
 						'session_id' => TRUE
 					);
+
+					if( $data['requestFromBuilding']=='0'){
+						$building  = $data['buildingID'];
+						$sesdata['building']=$building;
+					}
+
 					$this->session->set_userdata($sesdata);
 					$this->session->set_flashdata('success', 'Oled edukalt sisse logitud');
 					// access login for admin
 					if($roleID === '1'){
 						redirect('');
-				
+					
 					// access login for staff
-					}else if($roleID === '2'){
-						redirect('');
+					}else if(!array_key_exists('building',$this->session->userdata())){
+						$this->session->set_flashdata('success', 'Teile on määratud eriõigused. Palun aktsepteerige need või lükake tagasi.');
+						redirect('profile/view/'.$this->session->userdata['userID']);
 				
 					// access login for author
 					}else{

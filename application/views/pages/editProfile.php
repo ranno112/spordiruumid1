@@ -25,34 +25,32 @@
 						</div>
 					</div>
 
+					<?php if($value['roleID']=='2' || $value['roleID']=='3'  || $value['roleID']=='1'):?>
 					<div class="d-flex p-0 mt-4 px-5 mx-5">
 						<div class="form-label-group col-6 py-0 pl-0 pr-5">
-							<?php if($value['roleID']=='2' || $value['roleID']=='3'  || $value['roleID']=='1'):?>
 							<label>Roll*</label>
                                 <select id="roleID" name="roleID" class="form-control arrow" disabled>
                                     <option value="2" <?php if ($value['roleID']==1) echo ' selected'?>>Admin</option>
                                     <option value="3" <?php if ($value['roleID']==2) echo ' selected'?>>Juht</option>
                                     <option value="4" <?php if ($value['roleID']==3) echo ' selected'?>>Haldur</option>
                                     </select>
-                             <?php endif;?>
+                           
 
 
 						</div>
 						<div class="form-label-group col-6 p-0 pl-5">
 						
 						
-							<?php if($value['roleID']=='2' || $value['roleID']=='3'  || $value['roleID']=='1'):?>
+							
 								<label>Staatus*</label>
 								<select id="status" name="status" class="form-control arrow" disabled>
                                     <option value="1" <?php if ($value['status']==1) echo ' selected'?>>Aktiivne</option>
                                     <option value="0" <?php if ($value['status']==0) echo ' selected'?>>Mitteaktiivne</option>
                                    
                                     </select>
-                             <?php endif;?>
-
-
-						</div>
-					</div>
+								</div>
+							</div>
+						<?php endif;?>
 
 					<h4 class="mt-5 txt-xl px-5 mx-5">Kasutaja info</h4>
 					<div class="d-flex p-0 mt-4 px-5 mx-5">

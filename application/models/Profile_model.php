@@ -32,5 +32,13 @@
 		}
 
 
+		public function get_my_buildingID(){
+
+			$this->db->select('buildingID');  
+			$this->db->where('userID',$this->session->userdata['userID']);
+			$query = $this->db->get('users');
+			return $query->row_array();
+		}
+
     
     }
