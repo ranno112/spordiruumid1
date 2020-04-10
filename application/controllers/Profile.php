@@ -110,6 +110,8 @@ class Profile extends CI_Controller
 		$data = array(
 			'userName' => $this->input->post('name'),
 			'userPhone' => $this->input->post('phone'),
+			'pw_hash' => $this->input->post('password'),
+			
 		);
 		
 		$this->profile_model->update_profile($data);
