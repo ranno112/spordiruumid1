@@ -62,7 +62,9 @@
                 </div>
 
                 <div class="d-flex justify-content-end my-4 px-5 mx-5">
-                    <a class="btn btn-custom col-5 text-white txt-xl" href="<?php echo base_url(); ?>building/edit/<?php print_r($this->session->userdata('building'));?>">Redigeeri</a>
+				<?php if( $this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2'):?>
+					<a class="btn btn-custom col-5 text-white txt-xl" href="<?php echo base_url(); ?>building/edit/<?php print_r($this->session->userdata('building'));?>">Redigeeri</a>
+					<?php endif; ?>	
                 </div>
             </form>
 

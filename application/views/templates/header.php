@@ -67,7 +67,7 @@ Under the GPL license, you may use Scheduler and this project without charge. Yo
 													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>building/view/">Asutused</a></li>
 													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>region/view/">Piirkonnad</a></li>
 											<?php endif; ?>
-											<?php if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='1'):?>
+											<?php if( $this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' ||$this->session->userdata('roleID')==='3'):?>
 													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>manageUsers">Kasutajad</a></li>
 											<?php endif; ?>
 											<?php if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'):?>

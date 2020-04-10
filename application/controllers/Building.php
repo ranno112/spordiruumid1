@@ -30,13 +30,17 @@
 			else if ($this->session->userdata['building']!=$slug){
 
 				redirect('building/view/'.$this->session->userdata['building']);
-			}else{
+			}else if ($this->session->userdata('roleID')==='2'){
 			$data['regions'] = $this->building_model->getAllRegions();
 			$data['editBuildings'] = $this->building_model->get_building($slug);
 			$this->load->view('templates/header');
 			$this->load->view('pages/editBuilding', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
-		}	}
+		}	else{
+			$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+			redirect('');
+		}
+	}
 
 
 		

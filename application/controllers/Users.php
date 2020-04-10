@@ -247,7 +247,7 @@
 
 
 		public function addRightsToUser(){
-			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
+			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2'){
 			$data['buildings'] = $this->user_model->getAllBuildings();
 			$this->load->view('templates/header');
 			$this->load->view('pages/createUser',  $this->security->xss_clean($data));
@@ -255,7 +255,7 @@
 		
 			}else{
 				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
-				redirect('');
+				redirect('manageUsers');
 			}
 		}
 
