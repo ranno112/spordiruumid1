@@ -77,7 +77,17 @@
 				return $query->row_array();
 			}
 		}
-
+		
+		public function check_email_and_password_exists($email){
+			$this->db->select('roleID, userID');  
+			$this->db->where('pw_hash !=','');
+			$query = $this->db->get_where('users', array('email' => $email));
+			if(empty($query->row_array())){
+				return false;
+			} else {
+				return $query->row_array();
+			}
+		}
 
 		public function insert_user_in_DB_and_give_rights($data){
 			return $this->db->insert('users', $data);
