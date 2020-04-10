@@ -36,11 +36,11 @@
 			$this->load->view('templates/header');
 			$this->load->view('pages/editBuilding', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
-		}	else{
+			}else{
 			$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
 			redirect('');
+			}
 		}
-	}
 
 
 		
@@ -55,42 +55,47 @@
 			$this->load->view('templates/header');
 			$this->load->view('pages/viewBuilding', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
-		}	}
+			}	
+		}
 
 		public function delete(){
 			// Check login
 			if ($this->session->userdata('roleID')==='1'){
-			$this->form_validation->set_rules('buildingID', 'Asutus', 'integer|required');
-			if($this->form_validation->run() === FALSE ){
-			$this->session->set_flashdata('errors', 'Ei tohi süsteemi kompromiteerida');
-			redirect('');
-			}
-			$buildingID=$this->input->post('buildingID');
-			$allRoomsID=$this->building_model->get_all_roomsID_from_one_building($buildingID);
-			print_r($allRoomsID);
-			if(empty($allRoomsID)){
+				$this->form_validation->set_rules('buildingID', 'Asutus', 'integer|required');
+				if($this->form_validation->run() === FALSE ){
+				$this->session->set_flashdata('errors', 'Ei tohi süsteemi kompromiteerida');
+				redirect('');
+				}
+				$buildingID=$this->input->post('buildingID');
+				$allRoomsID=$this->building_model->get_all_roomsID_from_one_building($buildingID);
+				print_r($allRoomsID);
+				if(empty($allRoomsID)){
+					$this->building_model->delete_building($buildingID);
+					$this->session->set_flashdata('building_deleted', 'Asutus kustutatud');
+					redirect('building/view/'.$this->session->userdata['building']);
+				}
+				foreach ($allRoomsID as $id)
+				{
+					echo $this->building_model->check_if_room_has_reservations_only_in_past($id->id);
+					if(!$this->building_model->check_if_room_has_reservations_only_in_past($id->id)){
+					$this->session->set_flashdata('message', 'Kahjuks ei saa asutust kustutada, kuna selles on broneeringud alates eelmisest aastast');
+					redirect('building/view/'.$this->session->userdata['building']);	
+					};	
+				}
+
 				$this->building_model->delete_building($buildingID);
 				$this->session->set_flashdata('building_deleted', 'Asutus kustutatud');
 				redirect('building/view/'.$this->session->userdata['building']);
 			}
-			foreach ($allRoomsID as $id)
-			{
-				echo $this->building_model->check_if_room_has_reservations_only_in_past($id->id);
-				if(!$this->building_model->check_if_room_has_reservations_only_in_past($id->id)){
-				$this->session->set_flashdata('message', 'Kahjuks ei saa asutust kustutada, kuna selles on broneeringud alates eelmisest aastast');
-				redirect('building/view/'.$this->session->userdata['building']);	
-				};	
+			else{
+				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+				redirect('');
 			}
-
-			$this->building_model->delete_building($buildingID);
-			$this->session->set_flashdata('building_deleted', 'Asutus kustutatud');
-			redirect('building/view/'.$this->session->userdata['building']);
-		}
 		}
 
 	
 		public function deleteRoom(){
-		
+			if($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2'){
 			$this->form_validation->set_rules('roomID', 'Ruum', 'integer|required');
 			if($this->form_validation->run() === FALSE ){
 			$this->session->set_flashdata('errors', 'Ei tohi süsteemi kompromiteerida');
@@ -101,7 +106,7 @@
 			if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
 			$isAllowedOrNot=$this->building_model->checkIfRoomIsBookable($id);
 			if(empty($isAllowedOrNot)){
-					echo json_encode('Sa ei saa kustutada võõraid ruume!',JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+				echo json_encode('Sa ei saa kustutada võõraid ruume!',JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
 			};
 			}
 			
@@ -118,11 +123,12 @@
 				echo json_encode('');
 		//	redirect('building/edit/'.$this->session->userdata['building']);
 			}
-			
+		}
 		}
 
 
 		public function roomStatus(){
+			if($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2'){
 			$this->form_validation->set_rules('roomID', 'Ruum', 'integer|required');
 			$this->form_validation->set_rules('roomStatus', 'Ruum', 'integer|required');
 			if($this->form_validation->run() === FALSE ){
@@ -142,7 +148,7 @@
 				);
 				$this->building_model->update_room($data, $id);
 			
-			
+			}
 		}
 
 
@@ -180,105 +186,107 @@
 	
 
 		public function update(){
-			
-			$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars');
-			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
-			$this->form_validation->set_rules('notifyEmail', 'Teavitamise E-mail', 'trim|htmlspecialchars|valid_email');
-			$this->form_validation->set_rules('price_url', 'URL', 'valid_url');
-			$this->form_validation->set_rules('place', 'Regiooni ID', 'integer');
-			$this->form_validation->set_rules('room[]', 'Ruumi nimetus', 'trim|htmlspecialchars');
-			$this->form_validation->set_rules('color[]', 'Ruumi värv', 'trim|htmlspecialchars|callback_check_color');
-			$this->form_validation->set_rules('additionalRoom[]', 'Ruumi värv', 'trim|htmlspecialchars');
-			$this->form_validation->set_rules('colorForNewRoom[]', 'Ruumi värv', 'trim|htmlspecialchars|callback_check_color');
-			$this->form_validation->set_rules('id', 'Asutuse ID', 'integer');
-			if($this->form_validation->run() === FALSE){
-              
-				$this->session->set_flashdata('errors','Sisestatud andmetega on midagi korrast ära. Palun proovi uuesti.');
-				redirect('building/view/');
-			}
-			$data = array(
-				//	'name' => $this->input->post('building'),
-					'contact_email' => $this->input->post('email'),
-					'phone' => $this->input->post('phone'),
-					'notify_email' => $this->input->post('notifyEmail'),
-					'price_url' => $this->input->post('price_url'),
-					'regionID' => $this->input->post('place'),
+			if($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2'){
+				$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars');
+				$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
+				$this->form_validation->set_rules('notifyEmail', 'Teavitamise E-mail', 'trim|htmlspecialchars|valid_email');
+				$this->form_validation->set_rules('price_url', 'URL', 'valid_url');
+				$this->form_validation->set_rules('place', 'Regiooni ID', 'integer');
+				$this->form_validation->set_rules('room[]', 'Ruumi nimetus', 'trim|htmlspecialchars');
+				$this->form_validation->set_rules('color[]', 'Ruumi värv', 'trim|htmlspecialchars|callback_check_color');
+				$this->form_validation->set_rules('additionalRoom[]', 'Ruumi värv', 'trim|htmlspecialchars');
+				$this->form_validation->set_rules('colorForNewRoom[]', 'Ruumi värv', 'trim|htmlspecialchars|callback_check_color');
+				$this->form_validation->set_rules('id', 'Asutuse ID', 'integer');
+				if($this->form_validation->run() === FALSE){
+				
+					$this->session->set_flashdata('errors','Sisestatud andmetega on midagi korrast ära. Palun proovi uuesti.');
+					redirect('building/view/');
+				}
+				$data = array(
+					//	'name' => $this->input->post('building'),
+						'contact_email' => $this->input->post('email'),
+						'phone' => $this->input->post('phone'),
+						'notify_email' => $this->input->post('notifyEmail'),
+						'price_url' => $this->input->post('price_url'),
+						'regionID' => $this->input->post('place'),
+						
+						
+					);
+				$this->building_model->update_building($data);
+
+				for($i = 0; $i < count($this->input->post('room')); $i++)
+				{
+				
+					if( $this->input->post('room')[$i]!==null){
 					
+					$data2[] = array(
+							'roomName' => $this->input->post('room')[$i],
+							'roomColor' => $this->input->post('color')[$i],
+							// 'activeRoom' => 1,
+									
+					);
+				
+					print_r($this->input->post('roomID')[$i]);
 					
-				);
-			$this->building_model->update_building($data);
+					$this->building_model->update_room($data2[$i], $this->input->post('roomID')[$i] );
+					}
+				}
 
-			for($i = 0; $i < count($this->input->post('room')); $i++)
-			{
-			
-				if( $this->input->post('room')[$i]!==null){
-				
-				$data2[] = array(
-						'roomName' => $this->input->post('room')[$i],
-						 'roomColor' => $this->input->post('color')[$i],
-						// 'activeRoom' => 1,
-								
-				);
-			
-				print_r($this->input->post('roomID')[$i]);
-				
-				$this->building_model->update_room($data2[$i], $this->input->post('roomID')[$i] );
-			}
-		}
+				if(!empty($this->input->post('additionalRoom'))){
 
-			if(!empty($this->input->post('additionalRoom'))){
-
-		
-			for($t = 0; $t <= count($this->input->post('additionalRoom')); $t++)
-			{
-				if( $this->input->post('additionalRoom')[$t]!==null){
-				
-				$data3[] = array(
-						'roomName' => $this->input->post('additionalRoom')[$t],
-						'roomColor' => $this->input->post('colorForNewRoom')[$t],
-						'buildingID' => $this->input->post('id'),
-					//	'activeRoom' => 1,
-								
-				);
-				$this->building_model->createNewRoom($data3[$t]);
-			}
-		}
-	}
 			
-			$this->session->set_flashdata('post_updated', 'Uuendasid asutuse infot');
-			redirect('building/view/'.$this->session->userdata['building']);
+					for($t = 0; $t <= count($this->input->post('additionalRoom')); $t++)
+					{
+						if( $this->input->post('additionalRoom')[$t]!==null){
+						
+						$data3[] = array(
+								'roomName' => $this->input->post('additionalRoom')[$t],
+								'roomColor' => $this->input->post('colorForNewRoom')[$t],
+								'buildingID' => $this->input->post('id'),
+							//	'activeRoom' => 1,
+										
+						);
+						$this->building_model->createNewRoom($data3[$t]);
+						}
+					}
+				}
+				
+				$this->session->set_flashdata('post_updated', 'Uuendasid asutuse infot');
+				redirect('building/view/'.$this->session->userdata['building']);
+			}	
 		}
 
 
 		public function register(){
-			$this->form_validation->set_rules('name', 'Name', 'required|trim|htmlspecialchars');
-			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
-			$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars');
-			//$this->form_validation->set_rules('notifyEmail', 'Teavitamise E-mail', 'trim|htmlspecialchars|valid_email');
-			$this->form_validation->set_rules('place', 'Regiooni ID', 'integer');
-			$this->form_validation->set_rules('price_url', 'URL', 'valid_url');
-		
-			$data['regions'] = $this->building_model->getAllRegions();
-			if($this->form_validation->run() === FALSE){
-              
-				$this->load->view('templates/header');
-				$this->load->view('pages/createBuilding');
-                $this->load->view('templates/footer');
-                
-			} else {
-				$data = array(
-					'name' => $this->input->post('name'),
-					'contact_email' => $this->input->post('email'),
-					'phone' => $this->input->post('phone'),
-				//	'notify_email' => $this->input->post('notifyEmail'),
-					'regionID' => $this->input->post('place'),
-					'price_url' => $this->input->post('price_url'),				
-				);
-				$this->building_model->registerBuilding($data);
-				$this->session->set_flashdata('user_registered', 'Asutus lisatud');
-				redirect('building/view/'.$this->session->userdata['building']);
+			if($this->session->userdata('roleID')==='1'){
+				$this->form_validation->set_rules('name', 'Name', 'required|trim|htmlspecialchars');
+				$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
+				$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars');
+				//$this->form_validation->set_rules('notifyEmail', 'Teavitamise E-mail', 'trim|htmlspecialchars|valid_email');
+				$this->form_validation->set_rules('place', 'Regiooni ID', 'integer');
+				$this->form_validation->set_rules('price_url', 'URL', 'valid_url');
+			
+				$data['regions'] = $this->building_model->getAllRegions();
+				if($this->form_validation->run() === FALSE){
+				
+					$this->load->view('templates/header');
+					$this->load->view('pages/createBuilding');
+					$this->load->view('templates/footer');
+					
+				} else {
+					$data = array(
+						'name' => $this->input->post('name'),
+						'contact_email' => $this->input->post('email'),
+						'phone' => $this->input->post('phone'),
+					//	'notify_email' => $this->input->post('notifyEmail'),
+						'regionID' => $this->input->post('place'),
+						'price_url' => $this->input->post('price_url'),				
+					);
+					$this->building_model->registerBuilding($data);
+					$this->session->set_flashdata('user_registered', 'Asutus lisatud');
+					redirect('building/view/'.$this->session->userdata['building']);
+				}
 			}
 		}
-
 
 	}
