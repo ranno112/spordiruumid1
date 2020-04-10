@@ -16,15 +16,25 @@
 			$data = array(
 				'userName' => $this->input->post('name'),
 				'email' => $this->input->post('email'),
-			
 				'userPhone' => $this->input->post('phone'),
-			
-               'pw_hash' => $enc_password,
-         
+		       'pw_hash' => $enc_password,
 			);
 			// Insert user
 			return $this->db->insert('users', $data);
 		}
+
+		public function update_user_himself($enc_password){
+			// $slug = url_title($this->input->post('title'));
+			$data = array(
+				'userName' => $this->input->post('name'),
+				'email' => $this->input->post('email'),
+				'userPhone' => $this->input->post('phone'),
+		       'pw_hash' => $enc_password,
+			);
+			$this->db->where('email', $this->input->post('email'));
+			return $this->db->update('users', $data);
+		}
+
 
 
 		public function getAllBuildings()
@@ -88,6 +98,20 @@
 				return $query->row_array();
 			}
 		}
+
+		public function user_is_in_db($email){
+			$this->db->select('userID');  
+			$this->db->where('pw_hash','');
+			$this->db->where('email',$email);
+			$query = $this->db->get('users');
+			print_r($email);
+			if(empty($query->result_array())){
+				return false;
+			} else {
+				return true;
+			}
+		}
+
 
 		public function insert_user_in_DB_and_give_rights($data){
 			return $this->db->insert('users', $data);

@@ -28,9 +28,9 @@
 
 		public function registerSelf(){
 		
-			$this->form_validation->set_rules('name', 'Name', 'required');
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
             $this->form_validation->set_rules('phone', 'Phone');
-			$this->form_validation->set_rules('email', 'Email', 'required|callback_check_email_and_password_exists');
+			$this->form_validation->set_rules('email', 'Email', 'trim|required|callback_check_email_and_password_exists');
 			$this->form_validation->set_rules('password', 'Password', 'required');
             $this->form_validation->set_rules('password2', 'Confirm Password', 'matches[password]');
 			
@@ -45,10 +45,25 @@
 				// Encrypt password
               //  $enc_password = md5($this->input->post('password'));
                 $enc_password = $this->input->post('password');
-				$this->user_model->registerSelfDB($enc_password);
+
+				$newEntryNotUpdate=$this->user_model->user_is_in_db($this->input->post('email'));
+			
+				if($newEntryNotUpdate){
+					echo 'update user!: ';
+					print_r($newEntryNotUpdate);
+					$this->session->set_flashdata('user_registered', 'Lõid endale kasutaja ja nüüs saad sisse logida');
+					$this->user_model->update_user_himself($enc_password);
+					redirect('login');
+					
+				}else{
+					$this->session->set_flashdata('user_registered', 'You are now registered and can log in');
+					$this->user_model->registerSelfDB($enc_password);
+					redirect('');
+				}
+				
 				// Set message
-				$this->session->set_flashdata('user_registered', 'You are now registered and can log in');
-				redirect('');
+			
+			//	redirect('');
 			}
 		}
 
@@ -251,6 +266,7 @@
 				$this->form_validation->set_message('check_email_exists', 'That email is taken. Please choose a different one');
 				return false;
 			} else {
+				$this->form_validation->set_message('check_email_exists', 'Kasutajat peaks saama registreeridˇa');
 				return true;
 			}
 		}
