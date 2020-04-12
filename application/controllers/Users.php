@@ -27,16 +27,20 @@
 
 
 		public function registerSelf(){
-		
-			$this->form_validation->set_rules('name', 'Name', 'trim|required');
-            $this->form_validation->set_rules('phone', 'Phone');
-			$this->form_validation->set_rules('email', 'Email', 'trim|required|callback_check_email_and_password_exists');
-			$this->form_validation->set_rules('password', 'Password', 'required');
-            $this->form_validation->set_rules('password2', 'Confirm Password', 'matches[password]');
+			$this->load->helper(array('form', 'url'));
+
+			$this->load->library('form_validation');
+			$this->form_validation->set_rules('name', 'Nimi', 'trim|required|htmlspecialchars|callback_contactPerson_check');
+			$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_phoneNumber_check');
+			$this->form_validation->set_rules('email', 'E-mail', 'trim|required|callback_check_email_and_password_exists|valid_email');
+			$this->form_validation->set_rules('password', 'Parool', 'required|min_length[7]');
+            $this->form_validation->set_rules('password2', 'Parool uuesti', 'matches[password]');
 			
-			$data=$this->input->post();
+			$data['postdata']=$this->input->post();
 			if($this->form_validation->run() === FALSE){
-				print_r($data);
+				$this->session->set_flashdata("password", form_error('password', '<small class="text-danger">','</small>')); // tekst '{field} ei ole korrektselt sisestatud' tuleb failist form_validation_lang.php
+				$this->form_validation->set_message("matches", 'TESRES'); // tekst '{field} ei ole korrektselt sisestatud' tuleb failist form_validation_lang.php
+			
 				$this->load->view('templates/header');
 				$this->load->view('pages/register',$data);
                 $this->load->view('templates/footer');
@@ -169,9 +173,9 @@
 			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
             $this->form_validation->set_rules('password', 'Password', 'required');
             
+			$inputEmail= $this->input->post('email');
 			if($this->form_validation->run() === FALSE){
 				$this->session->set_flashdata("emailIsNotCorrect", form_error('email', '<small class="text-danger">','</small>')); // tekst '{field} ei ole korrektselt sisestatud' tuleb failist form_validation_lang.php
-				$inputEmail= $this->input->post('email');
 				$this->session->set_flashdata('email', $inputEmail);
 				$this->session->set_flashdata('errors', 'Proovi uuesti');
 				redirect('login');
@@ -231,7 +235,8 @@
 					
 				} else {
 					// Set message
-					$this->session->set_flashdata('login_failed', 'Login is invalid');
+					$this->session->set_flashdata('email', $inputEmail);
+					$this->session->set_flashdata('login_failed', 'Kasutajanimi või parool ei sobi');
 					redirect('login');
 				}		
 			}
@@ -255,7 +260,7 @@
 			if($this->user_model->check_email_exists($email)){
 				return true;
 			} else {
-				$this->form_validation->set_message('check_email_exists', 'That email is taken. Please choose a different one');
+				$this->session->set_flashdata('emailIsNotCorrect', 'That email is taken. Please choose a different one');
 				return false;
 			}
 		}
@@ -263,10 +268,10 @@
 
 		public function check_email_and_password_exists($email){
 			if($this->user_model->check_email_and_password_exists($email)){
-				$this->form_validation->set_message('check_email_exists', 'That email is taken. Please choose a different one');
+				$this->form_validation->set_message('check_email_and_password_exists', 'See e-mail on juba võetud');
 				return false;
 			} else {
-				$this->form_validation->set_message('check_email_exists', 'Kasutajat peaks saama registreeridˇa');
+			
 				return true;
 			}
 		}
@@ -425,10 +430,41 @@
 
 
 
+	   public function phoneNumber_check($str= '')
+	   {
+		   if ($str == '')
+			   {
+				   return TRUE;
+			   }
+		   else if(!preg_match('/^\+?[\d\s]+$/', $str))
+			   {
+					$this->form_validation->set_message('phoneNumber_check', 'Numbri formaat ei sobi');
+					return FALSE;
+			   }
+			   else
+			   {
+					   return TRUE;
+			   }
+	   }
 
 
-
-
+	   public function contactPerson_check($str= '')
+	   {
+			   if ($str == '')
+			   {
+				   $this->form_validation->set_message('contactPerson_check', '{field} on kohustuslik');
+				   return FALSE;
+			   }
+			   else if(!preg_match("/^[A-Za-z0-9\x{00C0}-\x{00FF} ][A-Za-z0-9\x{00C0}-\x{00FF}\'\-\.\,]+([\ A-Za-z0-9\x{00C0}-\x{00FF}][A-Za-z0-9\x{00C0}-\x{00FF}\'\-]+)*/u", $str) && $this->input->post('type')!='4'){
+			 	   $this->form_validation->set_message('contactPerson_check', 'Sellised märgid ei ole lubatud');
+				   return FALSE;
+			   }
+   
+			   else
+			   {
+				  return TRUE;
+			   }
+	   }
 
 
 

@@ -42,7 +42,9 @@ class Profile extends CI_Controller
         $this->load->view('templates/header');
         $this->load->view('pages/editProfile', $this->security->xss_clean($data));
         $this->load->view('templates/footer');
-    }	}
+		
+	}	
+	}
 
 	public function acceptTheRequest(){
 		$data = array();
@@ -92,9 +94,12 @@ class Profile extends CI_Controller
 
 		$this->form_validation->set_rules('name', 'Nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
 		$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
+		$this->form_validation->set_rules('password', 'Parool', 'min_length[7]');
+		$this->form_validation->set_rules('password2', 'Parool uuesti', 'matches[password]');
 
 		if($this->form_validation->run() === FALSE ){
-
+			$this->session->set_flashdata("password", form_error('password', '<small class="text-danger">','</small>'));
+			$this->session->set_flashdata("password2", form_error('password2', '<small class="text-danger">','</small>'));
 			$this->session->set_flashdata('key',$this->security->xss_clean($postData));
 			redirect('profile/edit/'.$this->session->userdata['userID']);
 
@@ -106,13 +111,17 @@ class Profile extends CI_Controller
         // if(!$this->session->buildingdata('logged_in')){
         // 	redirect('buildings/login');
 		// }
-
+		if($this->input->post('password')==''){
+			$data = array(
+				'userName' => $this->input->post('name'),
+				'userPhone' => $this->input->post('phone'),
+			);
+		} else {
 		$data = array(
 			'userName' => $this->input->post('name'),
 			'userPhone' => $this->input->post('phone'),
 			'pw_hash' => $this->input->post('password'),
-			
-		);
+			);}
 		
 		$this->profile_model->update_profile($data);
         // Set message

@@ -66,11 +66,12 @@
 					<h4 class="mt-5 txt-xl px-5 mx-5">Muuda parooli</h4>
 					<div class="d-flex p-0 mt-4 px-5 mx-5">
 						<div class="form-label-group col-6 py-0 pl-0 pr-5">
-							<label>Uus parool*</label>
-							<input id="pw" type="password" class="form-control" name="password" placeholder="Salasõna">
+							<label>Uus parool <?php if($this->session->flashdata('password')){  echo $this->session->flashdata('password');} ?></label>
+							<input id="password-field" type="password" class="form-control" name="password" placeholder="Salasõna">
+							<i id="login-icon" toggle="#password-field" class="far fa-eye-slash field-icon toggle-password">&#128065;</i>
 						</div>
 						<div class="form-label-group col-6 p-0 pl-5">
-							<label>Uus parool uuesti*</label>
+							<label>Uus parool uuesti <?php if($this->session->flashdata('password2')){  echo $this->session->flashdata('password2');} ?></label>
 							<input type="password" class="form-control" name="password2" placeholder="Korda salasõna">
 						</div>
 					</div>
@@ -85,3 +86,15 @@
 		</div>
 	</div>
 </div>
+
+<script>
+$(".toggle-password").click(function() {
+	$(this).toggleClass("fa-eye fa-eye-slash");
+	var input = $($(this).attr("toggle"));
+	if (input.attr("type") == "password") {
+	input.attr("type", "text");
+	} else {
+	input.attr("type", "password");
+	}
+});
+</script>
