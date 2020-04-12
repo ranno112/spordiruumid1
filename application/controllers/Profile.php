@@ -80,7 +80,7 @@ class Profile extends CI_Controller
 		}
 
 		$this->profile_model->update_profile($data);
-		$this->session->set_flashdata('post_updated', 'Vastus salvestatud ning juurdepääs asutuse andmetele on tagatud');
+		$this->session->set_flashdata('post_updated', 'Vastus salvestatud ning juurdepääs asutuse andmetele on tagatud.');
 		redirect('profile/view/'.$this->session->userdata['userID']);
 
 	

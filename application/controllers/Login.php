@@ -124,11 +124,21 @@ class Login extends CI_Controller{
 			'room'  => $room,
 			'email'     => $email,
 			'userID'  => $userID,
-			'building'     => $building,
 			'roleID'     => $roleID,
 			'session_id' => TRUE
 		);
+
+		if( $data['requestFromBuilding']=='0'){
+			$building  = $data['buildingID'];
+			$sesdata['building']=$building;
+		}
 		$this->session->set_userdata($sesdata);
+			if(!array_key_exists('building',$this->session->userdata())){
+				$this->session->set_flashdata('success', 'Teile on määratud eriõigused. Palun aktsepteerige need või lükake tagasi.');
+				redirect('profile/view/'.$this->session->userdata['userID']);
+		
+			// access login for author
+			}
 		print_r($data);
 		$this->load->view('templates/header');
 		$this->load->view('pages/fblogin', $data);
@@ -221,18 +231,28 @@ class Login extends CI_Controller{
 		$userID = $data['userID'];
 		$roleID = $data['roleID'];
 		$room = $data['id'];
-	}
+		}
 		$sesdata = array(
 			'userName'  => $name,
 			'phone'  => $phone,
 			'room'  => $room,
 			'email'     => $email,
 			'userID'  => $userID,
-			'building'     => $building,
 			'roleID'     => $roleID,
 			'session_id' => TRUE
 		);
+
+		if( $data['requestFromBuilding']=='0'){
+			$building  = $data['buildingID'];
+			$sesdata['building']=$building;
+		}
 		$this->session->set_userdata($sesdata);
+			if(!array_key_exists('building',$this->session->userdata())){
+				$this->session->set_flashdata('success', 'Teile on määratud eriõigused. Palun aktsepteerige need või lükake tagasi.');
+				redirect('profile/view/'.$this->session->userdata['userID']);
+		
+			// access login for author
+			}
 	
 		$this->load->view('templates/header');
 		$this->load->view('pages/logingoogle', $data);
