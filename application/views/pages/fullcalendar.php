@@ -622,6 +622,7 @@
 		
 
 			eventClick: function(event) {
+				if (displayOrNot == 2 || displayOrNot == 3){
 				counter = 0;
 				var hasVersions=false;
 				$.ajax({
@@ -805,7 +806,7 @@
 
 				});
 
-
+			}
 			}
 
 
