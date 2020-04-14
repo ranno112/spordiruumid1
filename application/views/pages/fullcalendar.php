@@ -85,7 +85,7 @@
 					<div class="col-2 p-0 bg-blue info-label text-white px-3 py-2">
 						<p class="txt-strong">Broneerimiseks kirjuta või helista:</p>
 						<p><?php echo $rooms['notify_email'].', '. $rooms['phone']; ?></p>
-						<p><?php echo $rooms['price_url']; ?></p>
+						<a  class="text-light" href="<?php echo $rooms['price_url']; ?>"  target="_blank"><?php echo $rooms['price_url']; ?></a>
 					<?php }; ?>
 					</div>
 
