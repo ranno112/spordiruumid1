@@ -41,7 +41,7 @@
     vertical-align: middle;
     margin: 0;
     padding-top: 10px;
-    padding-bottom: 5px;
+  /*  padding-bottom: 5px;*/
     border-top: 1px solid rgba(11, 57, 84,0.3);
     border-left: 1px solid rgba(11, 57, 84,0.3);
     border-right: 1px solid rgba(11, 57, 84,0.3);
@@ -150,12 +150,15 @@
 	top: -7%;
 }
 
-.fc-center h2 {
-	float:left;
-    width: 310px;
-    margin: 0;
-    padding: 0;
-}
+
+@media only screen and (min-width: 600px) {
+	.fc-center h2 {
+		float:left;
+		width: 310px;
+		margin: 0;
+		padding: 0;
+	}
+  }
 
 .fc-prev-button {
 	float:left;
