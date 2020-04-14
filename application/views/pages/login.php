@@ -1,6 +1,6 @@
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/et_EE/sdk.js#xfbml=1&version=v6.0&appId=320472512246850&autoLogAppEvents=1"></script>
- 
+<script src="https://www.google.com/recaptcha/api.js"></script>
 <div class="container">
 	<div class="container-sm h-100 mx-auto">
 		<div class="vert-center form-bg">
@@ -23,12 +23,14 @@
 						<input id="password-field" type="password" class="form-control" name="password">
 						<i id="login-icon" toggle="#password-field" class="far fa-eye-slash field-icon toggle-password"></i>
 					</div>
-
+					<div class="form-label-group pt-1 pb-4 pl-0 text-center">
+					<?php if($this->session->flashdata('recaptcha_response')){  echo $this->session->flashdata('recaptcha_response');} ?>
+					<div class="g-recaptcha" data-sitekey="6LcgVOkUAAAAAKrjmR8GQJhCYz0peICvFVdvscpu"></div>
+					</div>
 					<div class="form-label-group pt-1 pb-4 pl-0 text-center">
 						<button type="submit" class="mx-auto btn-width-lg btn btn-custom txt-lg text-white btn-block mb-2">Logi sisse</button>
 						<a class="link-deco align-self-center mt-2 pb-0" href="#">Unustasid parooli?</a>
 					</div>
-				
 				</div>
 			<?php echo form_close(); ?>
 			

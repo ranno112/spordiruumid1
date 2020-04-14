@@ -167,17 +167,49 @@
 			
 		}
 
+
+		public function recaptcha($str='')
+		{
+		  $google_url="https://www.google.com/recaptcha/api/siteverify";
+		  $secret='6LcgVOkUAAAAAHr2Ze8jyESv0RaQhmRYqDI_uWrQ';
+		  $ip=$_SERVER['REMOTE_ADDR'];
+		  $url=$google_url."?secret=".$secret."&response=".$str."&remoteip=".$ip;
+		  $curl = curl_init();
+		  curl_setopt($curl, CURLOPT_URL, $url);
+		  curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		  curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+		  curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.16) Gecko/20110319 Firefox/3.6.16");
+		  $res = curl_exec($curl);
+		  curl_close($curl);
+		  $res= json_decode($res, true);
+		  //reCaptcha success check
+		  if($res['success'])
+		  {
+			return TRUE;
+		  }
+		  else
+		  {
+			$this->form_validation->set_message('recaptcha', 'reCAPTCHA arvas, et sa oled robot. Palun proovi uuesti.');
+			return FALSE;
+		  }
+		}
+
+		
+
+
 		// Log in user
 		public function login(){
 			
 			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
-            $this->form_validation->set_rules('password', 'Password', 'required');
+			$this->form_validation->set_rules('password', 'Password', 'required');
+			$this->form_validation->set_rules('g-recaptcha-response','Captcha','callback_recaptcha');
             
 			$inputEmail= $this->input->post('email');
 			if($this->form_validation->run() === FALSE){
 				$this->session->set_flashdata("emailIsNotCorrect", form_error('email', '<small class="text-danger">','</small>')); // tekst '{field} ei ole korrektselt sisestatud' tuleb failist form_validation_lang.php
 				$this->session->set_flashdata('email', $inputEmail);
 				$this->session->set_flashdata('errors', 'Proovi uuesti');
+				$this->session->set_flashdata("recaptcha_response", form_error('g-recaptcha-response', '<small class="text-danger">','</small>')); // tekst '{field} ei ole korrektselt sisestatud' tuleb failist form_validation_lang.php
 				redirect('login');
 			} else {
              
