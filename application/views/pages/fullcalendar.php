@@ -65,7 +65,7 @@
 
 
 		<?php if ($this->session->userdata('roleID') === '2' || $this->session->userdata('roleID') === '3') { ?>
-			<div class="col-2 mr-auto p-0">
+			<div class="col-3 mr-auto p-0">
 				<a class="btn btn-custom text-white text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss" href="<?php echo base_url(); ?>booking/create/<?php echo ($this->input->get('roomId')); ?>">
 					<p class="m-0 txt-lg txt-strong text-center">Uus broneering</p>
 				</a>
@@ -76,7 +76,7 @@
 						<p class="m-0 txt-lg txt-strong text-center">Esita päring</p>
 					</a> -->
 
-					<div class="col-2 p-0 bg-blue info-label text-white px-3 py-2">
+					<div class="col-lg-3 p-0 col-md-12 bg-blue info-label text-white px-3 py-2">
 						<p class="txt-strong">Broneerimiseks kirjuta või helista:</p>
 						<p><?php echo $rooms['notify_email'].', '. $rooms['phone']; ?></p>
 						<a  class="text-light" href="<?php echo $rooms['price_url']; ?>"  target="_blank"><?php echo $rooms['price_url']; ?></a>
@@ -317,6 +317,17 @@
 	var counter = 0;
 	$(document).ready(function() {
 
+		function createDateTime(time, given_date) {
+				var splitted = time.split(':');
+				if (splitted.length != 2) return undefined;
+
+				var date = new Date(given_date);
+				date.setHours(parseInt(splitted[0], 10));
+				date.setMinutes(parseInt(splitted[1], 10));
+				date.setSeconds(0);
+				return date;
+			}
+
 		var copyKey = false;
 		$(document).keydown(function (e) {
 			copyKey = e.shiftKey;
@@ -528,6 +539,25 @@
 			
 			eventDrop: function(event) {
 			
+			var checkIfIsAfter8 = new Date($.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss"));
+			var checkIfIsBefore22 = new Date($.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss"));
+			var startDate = createDateTime("8:00", new Date($.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss")) );
+			var endDate = createDateTime("22:00", new Date($.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss")) );	
+			var isBetween = startDate <= checkIfIsAfter8 && checkIfIsAfter8 <= endDate;
+			var isBetween2 = startDate <= checkIfIsBefore22 && checkIfIsBefore22 <= endDate;
+			
+			console.log(isBetween&&isBetween2);
+			if(!(isBetween&&isBetween2)){
+					swal({
+						icon: 'info',
+						title: "Trenn peab jääma vahemikku 08:00-22:00!",
+						
+					})
+					calendar.fullCalendar('refetchEvents');
+					return;
+					
+			}
+			
 			var eClone = {
 					start: $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss"),
 					end: $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss"),
@@ -569,13 +599,8 @@
 		
 			
 			}else{
-			
-			
-					
-
-
-
-					swal({
+		
+				swal({
 					title:  "Kas salvestada? ",
 					text: "*Lisaaja salvestamiseks hoia lohistamise ajal SHIFT klahvi all",
 					buttons: {
@@ -649,10 +674,17 @@
 							$('#versionTable > tbody:last-child').append('<tr id=""><th colspan="3">Muudatusi pole </th></tr>');
 						}
 						else{
-						$('#versionTable > tbody:last-child').append('<tr id=""><th colspan="3"> Aeg </th><th> &nbsp; Kes? </th><th>&nbsp;  Põhjus </th><th>&nbsp;  Muudatus </th></tr>');
+						$('#versionTable > tbody:last-child').append('<tr id=""><th colspan="3"> Endine aeg </th><th> &nbsp; Kes? </th><th>&nbsp;  Põhjus </th><th>&nbsp;  Muudatus </th></tr>');
 						jQuery.each(toJSjson, function(i, val) {
 						$("#" + i).append(document.createTextNode(" - " + val));
+						
+						if(toJSjson[i].startTime==null){
+							$('#versionTable > tbody:last-child').append(' <tr> <td> &nbsp;&nbsp;&nbsp;  </td> <td> </td><td>   </td><td> &nbsp;' +  toJSjson[i].nameWhoChanged + '  </td><td> &nbsp;' +  toJSjson[i].reason + '  </td> <td> &nbsp;' +   moment(toJSjson[i].whenChanged).format('DD.MM.YYYY HH:mm') + '  </td> </tr>');
+					
+						}else{
+
 						$('#versionTable > tbody:last-child').append(' <tr> <td> '+days[moment(toJSjson[i].startTime).day()] +',&nbsp;'+  moment(toJSjson[i].startTime).format('DD.MM.YYYY') + '&nbsp;&nbsp;  </td> <td> ' +   moment(toJSjson[i].startTime).format('HH:mm') + '-</td><td> ' +  moment(toJSjson[i].endTime).format('HH:mm') + '  </td><td> &nbsp;' +  toJSjson[i].nameWhoChanged + '  </td><td> &nbsp;' +  toJSjson[i].reason + '  </td> <td> &nbsp;' +   moment(toJSjson[i].whenChanged).format('DD.MM.YYYY HH:mm') + '  </td> </tr>');
+						}
 					
 						});
 					}

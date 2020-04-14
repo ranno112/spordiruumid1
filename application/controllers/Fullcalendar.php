@@ -175,6 +175,15 @@ class Fullcalendar extends CI_Controller {
 						);
 
 					$this->fullcalendar_model->update_event($data, $this->input->post('timeID'));
+
+					$dataForVersioning = array(
+						'timeID'	=>	$this->input->post('timeID'),
+						'nameWhoChanged'		=> $this->session->userdata('userName'),
+						'reason'	=> ($this->input->post('approved')=='1')?'Kinnitatud':'Kinnitus maha',
+					
+						);
+
+					$this->fullcalendar_model->insert_version($dataForVersioning);
 				}	
 			}	
 		}
@@ -193,6 +202,15 @@ class Fullcalendar extends CI_Controller {
 						);
 
 					$this->fullcalendar_model->update_event($data, $this->input->post('timeID'));
+
+					$dataForVersioning = array(
+						'timeID'	=>	$this->input->post('timeID'),
+						'nameWhoChanged'		=> $this->session->userdata('userName'),
+						'reason'	=> ($this->input->post('takesPlace')=='1')?'Toimub':'Ei toimu',
+					
+						);
+
+					$this->fullcalendar_model->insert_version($dataForVersioning);
 				}
 			}
 		}
