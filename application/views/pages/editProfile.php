@@ -63,7 +63,7 @@
 							<input type="text" class="form-control" name="phone" value="<?php if(!empty($this->session->flashdata('key')['phone'])){ echo $this->session->flashdata('key')['phone'];} else {echo $value['userPhone'];}?>">
 						</div>
 					</div>
-					<h4 class="mt-5 txt-xl px-5 mx-5">Muuda parooli</h4>
+					<h4 class="mt-5 txt-xl px-5 mx-5">Muuda parool</h4>
 					<div class="d-flex p-0 mt-4 px-5 mx-5">
 						<div class="form-label-group col-6 py-0 pl-0 pr-5">
 							<label>Uus parool <?php if($this->session->flashdata('password')){  echo $this->session->flashdata('password');} ?></label>

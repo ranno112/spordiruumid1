@@ -14,45 +14,6 @@ class Login extends CI_Controller{
     $this->load->view('pages/login',$data);
     $this->load->view('templates/footer');
   }
- 
-  function auth(){
-    $email    = $this->input->post('email',TRUE);
-    //$password = md5($this->input->post('password',TRUE));
-    $password = $this->input->post('password',TRUE);
-    $validate = $this->login_model->validate($email,$password);
-    if($validate->num_rows() > 0){
-        $data  = $validate->row_array();
-        $name  = $data['name'];
-        $email = $data['email'];
-        $roleID = $data['roleID'];
-        $building = $data['buildingID'];
-        $sesdata = array(
-            'username'  => $name,
-            'email'     => $email,
-            'roleID'     => $roleID,
-            'buildingID' => $building,
-            'session_id' => TRUE
-        );
-        $this->session->set_userdata($sesdata);
-        // access login for admin
-        if($roleID === '1'){
-            redirect('page');
- 
-        // access login for staff
-        }elseif($roleID === '2'){
-            redirect('page/staff');
- 
-        // access login for author
-        }else{
-            redirect('page/author');
-        }
-    }else{
-        echo $this->session->set_flashdata('msg','Username or Password is Wrong');
-        redirect('login');
-	}
-	
-	}
-	
 
 
 
@@ -139,10 +100,15 @@ class Login extends CI_Controller{
 		
 			// access login for author
 			}
-		print_r($data);
+	//	print_r($data);
 		$this->load->view('templates/header');
 		$this->load->view('pages/fblogin', $data);
 		$this->load->view('templates/footer');
+		$this->session->unset_userdata('fb_access_token'); 
+		$this->session->unset_userdata('fb_expire'); 
+		$this->session->unset_userdata('login_oauth_uid');
+		$this->session->set_flashdata('success', 'Oled edukalt sisse logitud');
+		redirect('');
 	}
 	// Load login/profile view 
 	
@@ -198,7 +164,7 @@ class Login extends CI_Controller{
 		 {
 			//insert data
 			$user_data = array(
-			 'login_oauth_uid' => $data['id'],
+		//	 'login_oauth_uid' => $data['id'],
 			 'userName'  => $data['given_name'].' '.$data['family_name'],
 			 'email'  => $data['email'],
 			 'created_at'  => $current_datetime
@@ -256,10 +222,16 @@ class Login extends CI_Controller{
 	
 		$this->load->view('templates/header');
 		$this->load->view('pages/logingoogle', $data);
-   		$this->load->view('templates/footer');
+		$this->load->view('templates/footer');
+		   
+		$this->session->unset_userdata('access_token'); 
+		$this->session->set_flashdata('success', 'Oled edukalt sisse logitud');
+		redirect('');
 	 }
 	}
 // Google OAuth finish
+
+
 
  
   function logout(){

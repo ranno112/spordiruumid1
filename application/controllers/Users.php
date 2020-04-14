@@ -167,7 +167,8 @@
 			
 		}
 
-
+	// recaptcha code source
+	// http://avenir.ro/integrating-googles-recaptcha-in-codeigniters-form-validation-the-callback-way/
 		public function recaptcha($str='')
 		{
 		  $google_url="https://www.google.com/recaptcha/api/siteverify";
