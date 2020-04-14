@@ -9,6 +9,10 @@ class Booking extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'  || $this->session->userdata('roleID')==='1'){
+			$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+			redirect('');
+		}
 		$this->load->model('booking_model');
 	}
 

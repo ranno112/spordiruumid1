@@ -70,10 +70,15 @@
 				</a>
 				<a id="allCalenderLink" class="text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss" href="<?php echo base_url(); ?>/allbookings/weekView/?date=">Kõik ruumid</a>
 			<?php  } elseif ($this->session->userdata('session_id') === TRUE) { ?>
-				<div class="col-2 mr-auto p-0">
+				<!-- <div class="col-2 mr-auto p-0">
 					<a class="btn btn-custom text-white text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss" href="<?php echo base_url(); ?>booking/create/<?php echo ($this->input->get('roomId')); ?>">
 						<p class="m-0 txt-lg txt-strong text-center">Esita päring</p>
-					</a>
+					</a> -->
+
+					<div class="col-2 p-0 bg-blue info-label text-white px-3 py-2">
+						<p class="txt-strong">Broneerimiseks kirjuta või helista:</p>
+						<p><?php echo $rooms['notify_email'].', '. $rooms['phone']; ?></p>
+						<p><?php echo $rooms['price_url']; ?></p>
 				<?php }; ?>
 
 				<?php if (!$this->session->userdata('session_id')) { ?>
