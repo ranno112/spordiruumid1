@@ -539,8 +539,8 @@
 			
 			eventDrop: function(event) {
 			
-			var checkIfIsAfter8 = moment(event.start).toDate();
-			var checkIfIsBefore22 = moment(event.end).toDate();
+			var checkIfIsAfter8 = moment(event.start).subtract(3,'hour').toDate();
+			var checkIfIsBefore22 = moment(event.end).subtract(3,'hour').toDate();
 			var startDate = createDateTime("8:00", moment(event.start).toDate() );
 			var endDate = createDateTime("22:00", moment(event.start).toDate() );	
 			var isBetween = startDate <= checkIfIsAfter8 && checkIfIsAfter8 <= endDate;
