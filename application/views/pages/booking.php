@@ -13,7 +13,7 @@
 // print_r($allBookingInfo); 
 $conflictDates=$this->session->flashdata('conflictDates');
 if(!empty($conflictDates)){// print_r($conflictDates);
-	echo count($conflictDates);
+//	echo count($conflictDates);
 }?>
     		
 <div class="modal" id="myModal" tabindex="-1" role="dialog">

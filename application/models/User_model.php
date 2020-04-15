@@ -70,13 +70,21 @@
 			return $this->db->insert('users', $data);
 		}
 		// Log user in
-		function validate($email, $password){
+		function validate($email){
 			$this->db->where('email',$email);
-			$this->db->where('pw_hash',$password);
 			$this->db->join('rooms', 'users.buildingID = rooms.buildingID' , 'left');
 			$result = $this->db->get('users',1);
 			return $result;
 		  }
+
+		  function get_hash($email){
+			$this->db->select('pw_hash');  
+			$this->db->where('email',$email);
+			$result = $this->db->get('users');
+			return $result->row_array();
+
+		  }
+		  
 		// Check email exists
 		public function check_email_exists($email){
 			$this->db->select('roleID, userID');  

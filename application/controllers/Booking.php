@@ -257,7 +257,7 @@ class Booking extends CI_Controller {
 							'endTime' => $end_data,
 							'approved' => $takesPlace,
 							'bookingID' => $id,
-							'bookingTimeColor' => $this->input->post('color')[$t]
+							'bookingTimeColor' => $colorToSave
 						);
 					}
 					}

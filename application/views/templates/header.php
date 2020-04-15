@@ -60,8 +60,8 @@ Under the GPL license, you may use Scheduler and this project without charge. Yo
 									<?php if(array_key_exists('building',$this->session->userdata())){?>
 											<?php if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'):?>
 													<!-- <li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="#"><strong>Kõik ruumid</strong></a></li> -->
-													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $this->session->userdata('room');?>"><strong>Kalender</strong> </a></li>
-													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>allbookings/"><strong>Broneeringud</strong> 	<?php if(isset($unapprovedBookings)){echo '<span class="badge badge-danger">'.$unapprovedBookings.'</span>';}; ?></a></li>
+													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $this->session->userdata('room');?>">Kalender </a></li>
+													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>allbookings/">Broneeringud 	<?php if(isset($unapprovedBookings)){echo '<span class="badge badge-danger">'.$unapprovedBookings.'</span>';}; ?></a></li>
 											<?php endif; ?>
 											<?php if($this->session->userdata('roleID')==='1'):?>
 													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>building/view/">Asutused</a></li>

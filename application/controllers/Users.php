@@ -48,7 +48,7 @@
 			} else {
 				// Encrypt password
               //  $enc_password = md5($this->input->post('password'));
-                $enc_password = $this->input->post('password');
+                $enc_password =  password_hash($this->input->post('password'), PASSWORD_DEFAULT);
 
 				$newEntryNotUpdate=$this->user_model->user_is_in_db($this->input->post('email'));
 			
@@ -222,9 +222,12 @@
 				$email    = $this->input->post('email',TRUE);
 				//$password = md5($this->input->post('password',TRUE));
 				$password = $this->input->post('password',TRUE);
-
-				$validate = $this->user_model->validate($email, $password);
-				if($validate->num_rows() > 0){
+				$getpasswordhash = $this->user_model->get_hash($email)['pw_hash'];
+			
+			
+				$validate = $this->user_model->validate($email);
+				print_r(password_verify($password, $getpasswordhash));
+				if(password_verify($password, $getpasswordhash)=='1'){
 					$data  = $validate->row_array();
 					$name  = $data['userName'];
 					$phone  = $data['userPhone'];
