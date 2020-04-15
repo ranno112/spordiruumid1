@@ -241,6 +241,10 @@ class Booking extends CI_Controller {
 						if($counter==1){
 							$dateToRedirect= $start_data;
 						}
+						$colorToSave=$this->input->post('color')[$t];
+						if($colorToSave==''){
+							$colorToSave='#ffffff';
+						}
 						$insert_data2[] = array(
 							'roomID' => $this->input->post('sportrooms'),
 							'startTime' => $start_data,

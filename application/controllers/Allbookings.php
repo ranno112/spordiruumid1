@@ -64,7 +64,7 @@
 			$data['manageUsers'] = $this->allbookings_model->get_bookings();
 		
 			if(null!==$this->session->userdata('building')){
-				$data['unapprovedBookings'] = $this->allbookings_model->getUnapprovedBookings($this->session->userdata('building'), $this->session->userdata('room'));
+				$data['unapprovedBookings'] = $this->allbookings_model->getUnapprovedBookings($this->session->userdata('building'));
 			}
 			$data['xssData'] = $this->security->xss_clean($data);
 			$this->load->view('templates/header', $this->security->xss_clean($data));
