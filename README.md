@@ -52,7 +52,8 @@ CREATE TABLE `users` (
   `pw_hash` varchar(255) NOT NULL,
   `session_id` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL
+  `updated_at` datetime NOT NULL,
+	`requestFromBuilding` tinyint default '0',
    PRIMARY KEY (userID)
 );
 
