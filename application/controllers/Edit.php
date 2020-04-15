@@ -209,6 +209,7 @@ class Edit extends CI_Controller {
 			// echo '<br>';
 			// print_r($this->security->xss_clean($data['allPostData']));
 			// echo '<br>';
+			
 			foreach ($this->input->post('timesIdArray') as $id) {
 				$bookingDataWhichUserWantsToChange[]=$this->edit_model->get_allbookingtimes($this->input->post('BookingID'),$id);
 				if(!$this->checkIfIsAllowedToUpdate($id)){
@@ -224,7 +225,7 @@ class Edit extends CI_Controller {
 
 
 			if($this->input->post('isPeriodic')){
-		
+				$bookingDataWhichUserWantsToChange=array();
 				$whichWeekDaynumberToSearch=date('N', strtotime($data['bookingData']['startTime']));
 				$getAlltimeIDToChange=$this->edit_model->get_lastDate($whichWeekDaynumberToSearch, $data['bookingData']['bookingID'],$data['bookingData']['startTime']);
 				foreach ($getAlltimeIDToChange as $id) {
@@ -238,6 +239,7 @@ class Edit extends CI_Controller {
 
 			}
 			$conflictTimes=$this->getAllConflictData($allEventsForConflictCheck,$bookingDataWhichUserWantsToChange);
+		
 			$data['conflictTimes']= $conflictTimes;
 
 
