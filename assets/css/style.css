@@ -502,7 +502,7 @@
 
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     .form-label-group>label {
-      display: none;
+      /* display: none; */
     }
     .form-label-group input:-ms-input-placeholder {
       color: rgb(154, 153, 153);

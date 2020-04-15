@@ -498,14 +498,14 @@
 					cancel: "Ära salvesta",
 					Salvesta: true,
 				},
-					}).then((value) => {
+					}).then(function(value){
 						if(value){
 							swal({
 					title: "Muudatus on salvestatud",
 					text: "Soovi korral kirjuta põhjendus",
 					content: "input",
 					buttons: "Salvesta"
-					}).then((value2) => {
+					}).then(function(value2) {
 			
 				$.ajax({
 						url:"<?php echo base_url(); ?>fullcalendar/updateEvent",
@@ -607,14 +607,14 @@
 					cancel: "Ära salvesta",
 					Salvesta: true,
 				},
-					}).then((value) => {
+					}).then(function(value) {
 					if(value){
 						swal({
 						title: "Muudatus on salvestatud",
 						text: "Soovi korral kirjuta põhjendus",
 						content: "input",
 						buttons: "Salvesta"
-					}).then((value2) => {
+					}).then(function(value2) {
 			
 						$.ajax({
 								url:"<?php echo base_url(); ?>fullcalendar/updateEvent",

@@ -91,7 +91,7 @@
 	var isIE = !!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g);
 
 		if(isIE){
-		alert("Spordiruumi kalender ei toeta Internet Explorerit. Tänapäeval on palju paremaid veebilehitsejaid mida kasutada. Parima kogemuse saamiseks palume kasutada näiteks Chrome, Edge või Firefoxi."); 
+		//alert("Spordiruumi kalender ei toeta Internet Explorerit. Tänapäeval on palju paremaid veebilehitsejaid mida kasutada. Parima kogemuse saamiseks palume kasutada näiteks Chrome, Edge või Firefoxi."); 
        
 		document.getElementById("demo").innerHTML = "INTERNET EXPLORER POLE TOETATUD! PALUN VALI TEINE BRAUSER";
  
