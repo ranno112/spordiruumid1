@@ -356,8 +356,6 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 		};
 
 
-
-
 		//   var eventToModificate = "<?php echo base_url(); ?>edit/load2/<?php echo $_POST['BookingID']; ?>";
 		var resConflicts = [];
 		var res2Conflicts = [];
@@ -373,23 +371,12 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 		$.post("<?php echo base_url(); ?>edit/load2/<?php echo $allPostData['BookingID']; ?>",
 			function(data) {
 				var res = $.parseJSON(data);
-				console.log(res);
+			//	console.log(res);
 			
 				
 				var days = ['P', 'E', 'T', 'K', 'N', 'R', 'L'];
 				var weekDays= ['Pühapäev', 'Esmaspäev', 'Teisipäev', 'Kolmapäev', 'Neljapäev', 'Reede', 'Laupäev'];
 				var conflicts = "";
-
-
-
-				function isBetween(checkDateTime, startDateTime, endDateTime) {
-
-					return (checkDateTime >= startDateTime && checkDateTime <= endDateTime);
-
-				}
-
-
-
 
 				//   console.log(datafrom);
 				for (var i = 0, l = res.length; i < l; i++) {
@@ -470,7 +457,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 					//   console.log(start+' '+end);
 
 					var eventColor=obj.color;
-					console.log(eventColor);
+				//	console.log(eventColor);
 					if(!eventColor){
 						eventColor='#ffffff';
 					}
@@ -478,6 +465,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 				
 
 					var n = datafrom.indexOf(BTimesid)!== -1;
+			//		console.log(n);
 					
 
 					//    console.log(BTimesid);
@@ -537,33 +525,30 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 				}
 
 
-				var conflictTimes=<?php echo $conflictTimes; ?>
-
-
+				var conflictTimes=<?php echo $conflictTimes; ?>;
+				
 				conflicts = conflictTimes;
 
 				for (var i = 0, l = conflicts.length; i < l; i++) {
 					var conflicts2 = conflicts[i];
 					// console.log(conflicts2.start+" - "+conflicts2.end + " "+ i);
-				
 					var startDateTime =  moment(conflicts2.start.substring(0, 16)).toDate(); //yyyy-mm-dd hh:tt
 					var endDateTime =  moment(conflicts2.start.substring(0, 16)).toDate();
 					var timeIDofConflict = conflicts2.timeID;
 					var titleIDofConflict = conflicts2.title;
-
-
 					
-				//	console.log(roomID);
+					
+					
+					//	console.log(roomID);
 					//   console.log(timeIDofConflict); 
-
+					
 					// iga selle aja kohta tuleb kontrollida ajaxi aega"
 					for (var t = 0; t < resConflicts.length; t++) {
-
 						var checkDateTime = moment(resConflicts[t]).toDate(); //magic date
 						var checkDateTime2 = moment(res2Conflicts[t]).toDate(); //magic date
 						
 						if (ConflictID[t] !== timeIDofConflict) {
-							if (isBetween(startDateTime, checkDateTime, checkDateTime2) || isBetween(endDateTime, checkDateTime, checkDateTime2) || isBetween(checkDateTime, startDateTime, endDateTime) || isBetween(checkDateTime2, startDateTime, endDateTime)) {
+						
 								//   console.log(checkDateTime +" - "+ checkDateTime2 + " nende vastu "+ startDateTime+ " " +endDateTime);// 
 								//   console.log("tingumus on täidetud " + resConflicts[t] + " või "+res2Conflicts[t]);
 								$('#myTable #' + ConflictID[t]).after("<tr class='m-0 p-0'><td colspan='5' class='conflict txt-regular'><img src='<?php echo base_url(); ?>assets/img/warning.svg'> Kattuv aeg: " + moment(conflicts2.start).format('HH:mm') /*conflicts2.start.substring(0, 16) */ + "–" + moment(conflicts2.end).format('HH:mm') + " " /*conflicts2.end.substring(0, 16)*/ + titleIDofConflict + "</td></tr>");
@@ -572,7 +557,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 						
 								$('#myTable #' + ConflictID[t]).find('.clock.form-control, .datePicker.form-control').css('border', '1px solid #9E3253')
 
-							}
+						
 						}
 
 					

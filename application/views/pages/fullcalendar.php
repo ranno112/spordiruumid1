@@ -785,11 +785,11 @@
 
 				var nameOfWeek=days[moment(eventToCheck[i].start._i).day()];
 				var start_date = new Date(eventToCheck[i].start._i);
-				var st_monthIndex = start_date.getUTCMonth() + 1;
+				var st_monthIndex = moment(eventToCheck[i].start._i).toDate().getUTCMonth() + 1;
 
 				if (monthCheckbox != st_monthIndex) {
-
-				$('#myTable > tbody:last-child').append('<tr id="monthRow' + start_date.getUTCMonth() + '"><th><label><input type="checkbox"  id="selectMonth[' + start_date.getUTCMonth() + ']" value="1"></label> ' + monthNamesForModal[start_date.getUTCMonth()] + ' </th></tr>');
+					console.log(st_monthIndex);
+				$('#myTable > tbody:last-child').append('<tr id="monthRow' + start_date.getUTCMonth() + '"><th><label><input type="checkbox"  id="selectMonth[' + start_date.getUTCMonth() + ']" value="1"></label> ' + monthNamesForModal[moment(eventToCheck[i].start._i).toDate().getUTCMonth()] + ' </th></tr>');
 				}
 				monthCheckbox = st_monthIndex;
 				var isSelected=false;
