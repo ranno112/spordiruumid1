@@ -92,7 +92,7 @@ Bugs and feature request are tracked on [GitHub](https://github.com/Seldaek/mono
 
 ### Author
 
-Jordi Boggiano - <j.boggiano@seld.be> - <http://twitter.com/seldaek><br />
+Jordi Boggiano - <j.boggiano@seld.be> - <http://twitter.com/seldaek><br/>
 See also the list of [contributors](https://github.com/Seldaek/monolog/contributors) who participated in this project.
 
 ### License

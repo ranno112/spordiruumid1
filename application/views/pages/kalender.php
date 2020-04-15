@@ -87,7 +87,7 @@
 				<div id="calendar-container">
 					<div id='calendar'></div>
 				</div>
-				<br />
+				<br/>
 
 				<!-- KALENDER CONTAINERIS END -->
 			</div>

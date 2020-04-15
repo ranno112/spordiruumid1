@@ -82,7 +82,7 @@ There are two main types of response - items and collections of items. Each can 
 
 ```php 
 foreach ($results as $item) {
-  echo $item['volumeInfo']['title'], "<br /> \n";
+  echo $item['volumeInfo']['title'], "<br/> \n";
 }
 ```     
 

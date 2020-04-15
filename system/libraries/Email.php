@@ -2404,11 +2404,11 @@ class CI_Email {
 
 		if (sscanf($msg, 'lang:%s', $line) !== 1 OR FALSE === ($line = $CI->lang->line($line)))
 		{
-			$this->_debug_msg[] = str_replace('%s', $val, $msg).'<br />';
+			$this->_debug_msg[] = str_replace('%s', $val, $msg).'<br/>';
 		}
 		else
 		{
-			$this->_debug_msg[] = str_replace('%s', $val, $line).'<br />';
+			$this->_debug_msg[] = str_replace('%s', $val, $line).'<br/>';
 		}
 	}
 

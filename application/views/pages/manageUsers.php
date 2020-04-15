@@ -124,7 +124,7 @@
          
     
 	
-                <br />  
+                <br/>  
                 <table id="user_data" class="table table-striped">  
 				 
                      <thead>  

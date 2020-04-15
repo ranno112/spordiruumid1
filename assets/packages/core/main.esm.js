@@ -2907,7 +2907,7 @@ function htmlEscape(s) {
         .replace(/>/g, '&gt;')
         .replace(/'/g, '&#039;')
         .replace(/"/g, '&quot;')
-        .replace(/\n/g, '<br />');
+        .replace(/\n/g, '<br/>');
 }
 // Given a hash of CSS properties, returns a string of CSS.
 // Uses property names as-is (no camel-case conversion). Will not make statements for null/undefined values.

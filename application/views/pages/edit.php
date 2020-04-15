@@ -93,7 +93,7 @@
 											<td id="alates" class="text-white txt-regular td-width-s p-1 pl-3">Alates</td>
 											<td id="kuni" class="text-white txt-regular td-width-s p-1 pl-3">Kuni</td>
 											<td id="color" class="text-white txt-regular td-width-s p-1 pl-3">Värv</td>
-										</tr><br />
+										</tr> <br/>
 										<!-- Genereerib automaatselt -->
 									</tbody>
 								</table>
@@ -111,9 +111,9 @@
 							<div class="form-label-group pb-2 px-0">
 								<label>Lisainfo</label>
 								<textarea class="form-control" id="additional" name="additionalComment" rows="3"><?php if(!empty($allPostData['additionalComment'])){echo $allPostData['additionalComment'];}else {echo $bookingData['comment'];}?></textarea>
-							</br>
+								<br/>
 								<label>Muutmise põhjus</label>
-								<input class="form-control" id="reason" name="reason" rows="3"></input>
+								<input class="form-control" id="reason" name="reason" rows="3">
 							</div>
 						</div>
 						<input class="d-none" type="hidden" name="BookingID" id="BookingID" value="<?php echo $_POST['BookingID']; ?>">
@@ -244,7 +244,7 @@
 											<td id="blank" class="text-white txt-regular td-width-m p-1">Värv</td>
 											<td id="blank" colspan=3 class="text-white txt-regular td-width-m p-1"></td>
 										
-										</tr><br />
+										</tr> <br/>
 										<!-- Genereerib automaatselt -->
 									</tbody>
 								</table>
@@ -261,9 +261,9 @@
 							<div class="form-label-group pb-2 px-0">
 								<label>Lisainfo</label>
 								<textarea class="form-control" id="additionalPeriod" name="additionalCommentPeriod" rows="3"><?php if(!empty($allPostData['additionalCommentPeriod'])){echo $allPostData['additionalCommentPeriod'];}else {echo $bookingData['comment'];}?></textarea>
-								</br>
+								<br/>
 								<label>Muutmise põhjus</label>
-								<input class="form-control" id="reason" name="reason" rows="3"></input>
+								<input class="form-control" id="reason" name="reason" rows="3">
 							</div>
 						</div>
 						
@@ -388,12 +388,6 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 
 				}
 
-				function toDate(str) {
-
-					var [yyyy, MM, dd, hh, mm] = str.split(/[- :]/g);
-					return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
-				};
-
 
 
 
@@ -483,7 +477,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 				
 				
 
-					var n = datafrom.includes(BTimesid);
+					var n = datafrom.indexOf(BTimesid)!== -1;
 					
 
 					//    console.log(BTimesid);
@@ -551,9 +545,9 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 				for (var i = 0, l = conflicts.length; i < l; i++) {
 					var conflicts2 = conflicts[i];
 					// console.log(conflicts2.start+" - "+conflicts2.end + " "+ i);
-
-					var startDateTime = toDate(conflicts2.start.substring(0, 16)); //yyyy-mm-dd hh:tt
-					var endDateTime = toDate(conflicts2.end.substring(0, 16));
+				
+					var startDateTime =  moment(conflicts2.start.substring(0, 16)).toDate(); //yyyy-mm-dd hh:tt
+					var endDateTime =  moment(conflicts2.start.substring(0, 16)).toDate();
 					var timeIDofConflict = conflicts2.timeID;
 					var titleIDofConflict = conflicts2.title;
 
@@ -565,9 +559,9 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 					// iga selle aja kohta tuleb kontrollida ajaxi aega"
 					for (var t = 0; t < resConflicts.length; t++) {
 
-						var checkDateTime = toDate(resConflicts[t]); //magic date
-						var checkDateTime2 = toDate(res2Conflicts[t]); //magic date
-
+						var checkDateTime = moment(resConflicts[t]).toDate(); //magic date
+						var checkDateTime2 = moment(res2Conflicts[t]).toDate(); //magic date
+						
 						if (ConflictID[t] !== timeIDofConflict) {
 							if (isBetween(startDateTime, checkDateTime, checkDateTime2) || isBetween(endDateTime, checkDateTime, checkDateTime2) || isBetween(checkDateTime, startDateTime, endDateTime) || isBetween(checkDateTime2, startDateTime, endDateTime)) {
 								//   console.log(checkDateTime +" - "+ checkDateTime2 + " nende vastu "+ startDateTime+ " " +endDateTime);// 

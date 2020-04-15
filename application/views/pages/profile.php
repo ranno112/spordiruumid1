@@ -33,9 +33,9 @@
 				<div class="d-flex p-0 mt-4 px-5 mx-5">
 					<button type="submit" class="btn btn-success txt-xl">Salvesta</button>	
 				</div>
-				</br>	
+				<br/>
 				<hr>
-				</br>
+				<br/>
 				</form>
 				<?php }?>
 				

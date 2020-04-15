@@ -148,14 +148,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 				</select>
 			</div>
 
-			<br />
+			<br/>
 			<div class="form-group">
 				<select name="state" id="state" class="form-control input-lg">
 					<option value="">Select State</option>
 				</select>
 			</div>
 
-			<br />
+			<br/>
 			<div class="form-group">
 				<select name="citys" id="citys" class="form-control input-lg">
 					<option value="">Select City</option>

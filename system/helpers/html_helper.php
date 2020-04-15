@@ -388,7 +388,7 @@ if ( ! function_exists('br'))
 	 */
 	function br($count = 1)
 	{
-		return str_repeat('<br />', $count);
+		return str_repeat('<br/>', $count);
 	}
 }
 

@@ -858,9 +858,9 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
 	function toDate(str) {
 
-var [yyyy, MM, dd, hh, mm] = str.split(/[- :]/g);
-return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
-};
+	var [yyyy, MM, dd, hh, mm] = str.split(/[- :]/g);
+	return new Date(`${MM}/${dd}/${yyyy} ${hh}:${mm}`);
+	};
 
     //find all weekday matches
 	function getDates(startDate, stopDate) {

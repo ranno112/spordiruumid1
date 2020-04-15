@@ -35,7 +35,7 @@
          
     
 	
-                <br />  
+                <br/>  
                 <table id="user_data" class="table  compact table-striped">  
 				 
                      <thead>  

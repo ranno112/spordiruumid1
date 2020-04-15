@@ -11,9 +11,9 @@
  </head>
  <body>
   <div class="container">
-   <br />
+   <br/>
    <h2 align="center">Login using Google Account with Codeigniter</h2>
-   <br />
+   <br/>
    <div class="panel panel-default">
    <?php
    if(!isset($login_button))

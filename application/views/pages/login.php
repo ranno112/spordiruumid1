@@ -57,7 +57,7 @@
 	<a href="<?php echo $facebook['authURL']; ?>"><img src="<?php echo base_url('assets/img/facebook.png'); ?>"  width="54%"></a>
 </div>
 
-</br>
+<br/>
 		</div>
 	</div>
 </div>
