@@ -539,14 +539,13 @@
 			
 			eventDrop: function(event) {
 			
-			var checkIfIsAfter8 = new Date($.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss"));
-			var checkIfIsBefore22 = new Date($.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss"));
-			var startDate = createDateTime("8:00", new Date($.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss")) );
-			var endDate = createDateTime("22:00", new Date($.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss")) );	
+			var checkIfIsAfter8 = moment(event.start).toDate();
+			var checkIfIsBefore22 = moment(event.end).toDate();
+			var startDate = createDateTime("8:00", moment(event.start).toDate() );
+			var endDate = createDateTime("22:00", moment(event.start).toDate() );	
 			var isBetween = startDate <= checkIfIsAfter8 && checkIfIsAfter8 <= endDate;
 			var isBetween2 = startDate <= checkIfIsBefore22 && checkIfIsBefore22 <= endDate;
 			
-			console.log(isBetween&&isBetween2);
 			if(!(isBetween&&isBetween2)){
 					swal({
 						icon: 'info',
