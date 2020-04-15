@@ -53,7 +53,7 @@ CREATE TABLE `users` (
   `session_id` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL,
-	`requestFromBuilding` tinyint default '0',
+  `requestFromBuilding` tinyint default '0',
    PRIMARY KEY (userID)
 );
 
@@ -93,7 +93,8 @@ CREATE TABLE `bookingTimeVersions` (
   `endTime` timestamp NULL DEFAULT NULL,
   `nameWhoChanged` varchar(30) DEFAULT NULL,
   `reason` varchar(255) DEFAULT NULL,
-  `whenChanged` timestamp NOT NULL DEFAULT current_timestamp()
+  `whenChanged` timestamp NOT NULL DEFAULT current_timestamp(), 
+   PRIMARY KEY (versionID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `buildings` (
