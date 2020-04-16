@@ -372,15 +372,22 @@
 			// aspectRatio: 2.2,
 			allDaySlot: false,
 			firstDay: 1,
-
-			dayNames: ['Pühapäev', 'Esmaspäev', 'Teisipäev', 'Kolmapäev', 'Neljapäev', 'Reede', 'Laupäev'],
+			dayNames: ['P', 'E', 'T', 'K', 'N', 'R', 'L'],
+		//	dayNames: ['Pühapäev', 'Esmaspäev', 'Teisipäev', 'Kolmapäev', 'Neljapäev', 'Reede', 'Laupäev'],
+		//	dayNamesShort: ['P', 'E', 'T', 'K', 'N', 'R', 'L'],
+			windowResize: function(view) {
+				if ($(window).width() < 768){
+					dayNames: ['P', 'E', 'T', 'K', 'N', 'R', 'L'];
+				}
+			},
 			dayNamesShort: ['P', 'E', 'T', 'K', 'N', 'R', 'L'],
 			monthNames: ['jaanuar', 'veebruar', 'märts', 'aprill', 'mai', 'juuni', 'juuli', 'august', 'september', 'oktoober', 'november', 'detsember'],
-			monthNamesShort: ['jaan', 'veebr', 'märts', 'apr', 'mai', 'juuni', 'juuli', 'aug', 'sept', 'okt', 'nov', 'dets'],
+		//	monthNamesShort: ['jaan', 'veebr', 'märts', 'apr', 'mai', 'juuni', 'juuli', 'aug', 'sept', 'okt', 'nov', 'dets'],
+			monthNamesShort: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
 			views: {
 				week: { // name of view
 					titleFormat: 'D. MMMM YYYY',
-					columnFormat: "dddd, D. MMM"
+					columnFormat: "dddd, D.MMM"
 					// other view-specific options here
 				}
 
