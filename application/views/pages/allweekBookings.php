@@ -115,10 +115,16 @@ foreach($rooms as $value){
           arg.date,
           arg.resource ? arg.resource.id : '(no resource)'
         );
-      }
-    });
+      },
+
+    }
+	
+		);
+
 
     calendar1.render();
+
+		
  var removedResources=[];
  var removedResources2=[];
  var removedAll=true;
@@ -157,6 +163,20 @@ foreach($rooms as $value){
 	
 		window.location.href="<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $this->session->userdata('room');?>&date="+moment(calendar1.getDate()).format("DD.MM.YYYY");
 		} );
+
+		$(window).resize(function() {
+			if(window.innerWidth < 800){
+				console.log('sdf');
+				calendar1.changeView('resourceTimeGridDay');
+			}
+		 else	if(window.innerWidth < 1400){
+				console.log('sdf');
+				calendar1.changeView('resourceTimeGridFourDay');
+			} else {
+				calendar1.changeView('resourceTimeGridWeek');
+			}
+		});
+		
 
 
   });
