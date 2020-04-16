@@ -97,11 +97,7 @@
 
  <head>  
   
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
-     
-      <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>  
-      <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>            
-      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />  
+ <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>          
    <style>  
          
       </style>  
@@ -129,16 +125,11 @@
 				 
                      <thead>  
                           <tr>  
-
-				
-                         
-                    <th class="py-2 txt-strong text-darkblue" scope="col">Klubi</th>
-          
-					<th class="py-2 txt-strong text-darkblue" scope="col">Kontaktisik</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col">Telefon</th>
-					<th class="py-2 txt-strong text-darkblue" scope="col">e-mail</th>
-			
-				              
+							<th class="py-2 txt-strong text-darkblue" scope="col">Klubi</th>
+							<th class="py-2 txt-strong text-darkblue" scope="col">Kontaktisik</th>
+							<th class="py-2 txt-strong text-darkblue" scope="col">Telefon</th>
+							<th class="py-2 txt-strong text-darkblue" scope="col">e-mail</th>
+			  
                           </tr>  
                      </thead>  
                 </table>  
