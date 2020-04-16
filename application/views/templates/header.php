@@ -87,11 +87,11 @@ Under the GPL license, you may use Scheduler and this project without charge. Yo
 												<li class="nav-item"><a class="nav-link text-white p-0" href="<?php echo base_url(); ?>users/logout" ><u>Logi välja</u></a></li>
 										</ul>
                   <?php endif; ?>
-                </div>
                 <?php if(!$this->session->userdata('session_id')) : ?>
       
                 <a class="nav-link text-white p-0" href="<?php echo base_url(); ?>login"><u>Logi sisse</u></a>
                 <?php endif; ?>
+                </div>
 
             </div>
         </nav>
