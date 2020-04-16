@@ -7,10 +7,10 @@
 <div class="container">
 	<div class="row pt-2" id="widthToggle">
 		
-		<form class="row  d-flex flex-row col-sm-12 col-lg-9 p-0" action="fullcalendar" method="get">
+		<form class="row  d-flex flex-row col-sm-12  col-xl-8 col-lg-7 p-0" action="fullcalendar" method="get">
 
 			<?php if ($this->session->userdata('roleID') != '2' && $this->session->userdata('roleID') != '3') : ?>
-				<div class="form-label-group col-sm-5 col-lg-2 p-0 mr-2">
+				<div class="form-label-group col-sm-5 col-lg-3 p-0 mr-2">
 
 					<label for="region">Piirkond</label>
 					<input id="region" list="regions" class="form-control arrow" type="text" value="<?php echo $rooms['regionName']; ?>">
@@ -23,7 +23,7 @@
 					<input type="hidden" id="roomId" name="roomId" value="roomId" />
 				</div>
 
-				<div class="form-label-group col-sm-5 col-lg-2 p-0 mr-2">
+				<div class="form-label-group col-sm-5 col-lg-3 p-0 mr-2">
 					<label for="sport_facility">Asutus</label>
 					<input id="sport_facility" list="asutus" class="form-control arrow" value="<?php echo $rooms['name']; ?> ">
 					<datalist id="asutus">
@@ -39,7 +39,7 @@
 			<?php endif; ?>
 
 
-			<div class="form-label-group col-sm-5 col-lg-2 p-0 mr-2">
+			<div class="form-label-group col-sm-5 col-lg-3 p-0 mr-2">
 				<label for="room">Ruum</label>
 				<input id="room" list="saal" class="form-control arrow" value="<?php echo $rooms['roomName']; ?>">
 				<datalist id="saal">
@@ -65,17 +65,19 @@
 
 
 		<?php if ($this->session->userdata('roleID') === '2' || $this->session->userdata('roleID') === '3') { ?>
-			<div class="col-3 mr-auto p-0">
-				<a class="btn btn-custom text-white text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss" href="<?php echo base_url(); ?>booking/create/<?php echo ($this->input->get('roomId')); ?>">
+			<div class="col-sm-8  col-lg-5 col-xl-4 mr-auto p-0">
+				<div class="col-1  col-sm-12 col-xl-2">	</div>
+				<a id="allCalenderLink" class="text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss" href="<?php echo base_url(); ?>/allbookings/weekView/?date=">Kõik ruumid</a>
+				<a class="col-12 col-lg-6 col-sm-8 btn btn-custom text-white text-center py-2 px-sm-2 px-lg-4 px-md-4 float-right pluss" href="<?php echo base_url(); ?>booking/create/<?php echo ($this->input->get('roomId')); ?>">
 					<p class="m-0 txt-lg txt-strong text-center">Uus broneering</p>
 				</a>
-				<a id="allCalenderLink" class="text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss" href="<?php echo base_url(); ?>/allbookings/weekView/?date=">Kõik ruumid</a>
 			<?php  } elseif ($this->session->userdata('session_id') === TRUE) { ?>
 				<!-- <div class="col-2 mr-auto p-0">
 					<a class="btn btn-custom text-white text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss" href="<?php echo base_url(); ?>booking/create/<?php echo ($this->input->get('roomId')); ?>">
 						<p class="m-0 txt-lg txt-strong text-center">Esita päring</p>
 					</a> -->
 
+					<div class="col-1  col-sm-2 col-xl-1">	</div>
 					<div class="col-lg-3 p-0 col-md-12 bg-blue info-label text-white px-3 py-2">
 						<p class="txt-strong">Broneerimiseks kirjuta või helista:</p>
 						<p><?php echo $rooms['notify_email'].', '. $rooms['phone']; ?></p>
@@ -83,6 +85,7 @@
 				<?php }; ?>
 
 				<?php if (!$this->session->userdata('session_id')) { ?>
+					<div class="col-1  col-sm-2 col-xl-1">	</div>
 					<div class="col-lg-3 p-0 col-md-12 bg-blue info-label text-white px-3 py-2">
 						<p class="txt-strong">Broneerimiseks kirjuta või helista:</p>
 						<p><?php echo $rooms['notify_email'].', '. $rooms['phone']; ?></p>
