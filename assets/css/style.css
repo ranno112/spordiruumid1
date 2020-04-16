@@ -878,3 +878,6 @@ height:0px;
   border-radius: 5px 5px 5px 0px;
 }
 
+.pull-left{
+	float: left !important;
+	}

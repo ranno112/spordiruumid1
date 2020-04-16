@@ -1,42 +1,30 @@
 
  <head>  
   
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>  
-      <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>  
-      <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>            
-      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />  
-   <style>  
-         
-      </style>  
+      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>   -->
+      <!-- <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>   -->
+      <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>            
+      <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" />   -->
+
  </head>  
 
- 
-      <div class="container box">  
-	 <div style="max-width: 1800px;  margin: auto;">
-	 
-<br>
 
-	 <div class="form-row">
+      <div class="container">  
 	
-    <div class="col-md-2">
-   
-    <input type="date" name="start_date" id="start_date" class="form-control" value="<?php echo date('Y-m-01'); ?>" />
-    </div>
-    <div class="col-md-2">
-   
-    <input type="date" name="end_date" id="end_date" class="form-control" value="<?php echo date('Y-m-t'); ?>" />
-    </div>
-    <div>
-  <div class="col-md-2">
-	  
-      <input type="button" name="search" id="search" value="Filtreeri" class="btn btn-info" />
-	</div>	</div>
-	</div>
-         
-    
 	
-                <br/>  
-                <table id="user_data" class="table  compact table-striped">  
+	 	
+		<br>
+		<div class="row ">
+			<div class="col-6 col-md-3 col-xl-2">Alates  <input type="date" name="start_date" id="start_date" class="form-control" value="<?php echo date('Y-m-01'); ?>" /></div>  
+			<div class="col-6 col-md-3 col-xl-2"> Kuni <input type="date" name="end_date" id="end_date" class="form-control" value="<?php echo date('Y-m-t'); ?>" /></div>
+			<div class="col-6 col-md-3 col-xl-2 mt-4">
+				<input type="button" name="search" id="search" value="Filtreeri" class="btn btn-info text-white" />
+			</div>
+		</div>
+	
+		
+		      <br/>  
+                <table id="user_data" class="table  compact table-striped"> 
 				 
                      <thead>  
                           <tr>  
@@ -62,11 +50,12 @@
                               
                           </tr>  
                      </thead>  
-                </table>  
-           </div>  
-      </div>  
+			 </table>  
+		
+		
+			
  
-
+ </div>
  <script type="text/javascript" language="javascript" >  
  $(document).ready(function(){  
       var dataTable = $('#user_data').DataTable({  
@@ -156,6 +145,31 @@ $('#search').click(function(){
    alert("Both Date is Required");
   }
  }); 
+
+  $('.dataTables_length ').parent().removeClass('col-md-6');
+ $('.dataTables_length ').parent().removeClass('col-sm-12');
+ $('.dataTables_filter ').parent().removeClass('col-md-6');
+ $('.dataTables_filter ').parent().removeClass('col-sm-12');
+ $('.dataTables_length').parent().addClass('col-1');
+ $('.dataTables_length').parent().addClass('col-md-3');
+ $('.dataTables_length').parent().addClass('col-sm-6');
+ $('.dataTables_length').parent().addClass('col-xl-2');
+ $('.dataTables_filter').addClass('col-12');
+ $('.dataTables_filter').parent().addClass('col-3');
+ $('.dataTables_filter').parent().addClass('col-md-4');
+ $('.dataTables_filter').parent().addClass('col-sm-6');
+ $('.dataTables_filter').parent().addClass('col-xl-2');
+ $('#user_data').DataTable();
+  $('#user_data_wrapper').find('label').each(function () {
+    $(this).parent().append($(this).children());
+  });
+  $('#user_data_wrapper .dataTables_filter').find('input').each(function () {
+    const $this = $(this);
+    $this.attr("placeholder", "");
+    $this.removeClass('form-control-sm');
+  });
+
+
 
 
 
