@@ -193,7 +193,22 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 					
 
                         <div class="d-flex justify-content-end mt-5 px-5 mx-5">
-                          	<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#" onClick="history.go(-1); return false;">Katkesta</a>
+							
+							  <a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="<?php echo base_url()?>fullcalendar?roomId=<?php foreach ($rooms as $each) {
+									
+									if(!empty($data['sportrooms'])){ 
+									if($data['sportrooms']== $each->id){ 
+										echo $each->id;
+									
+									}
+								}
+									   else 
+										   if( $this->uri->segment(3)== $each->id){
+												echo $each->id;
+											}
+										} ?>&date=<?php if(isset($data['workoutDate'])){ echo $data['workoutDate'][0];} else if(isset($_GET["startDate"])){echo $_GET["startDate"];}else{ echo date("d.m.yy");}?>" >Katkesta</a>
+							
+							
 							<input class="btn btn-custom col-3 text-white txt-xl" type="submit"  id="checkForOnceConflicts" value="Broneeri">
 						
 						<button id="loadingTemporarlyButtonOnce" class="d-none btn btn-custom text-white txt-xl" type="button" disabled>
