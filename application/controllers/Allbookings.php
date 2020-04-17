@@ -4,15 +4,16 @@
         public function __construct()
         {
 			parent::__construct();
-			if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'  || $this->session->userdata('roleID')==='1'){
-				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
-				redirect('');
-			}
+		
             $this->load->model('allbookings_model');
     
 		}
 		
 		function fetch_allbookings(){  
+			if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'  || $this->session->userdata('roleID')==='1'){
+				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+				redirect('');
+			}
 			$weekdays=array('Pühapäev','Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev');
 		//	print_r($this->input->post());
 			$fetch_data = $this->allbookings_model->make_datatables();  
@@ -63,7 +64,10 @@
 
 
 		public function index(){
-		
+			if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'  || $this->session->userdata('roleID')==='1'){
+				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+				redirect('');
+			}
 			$data['weekdays']=array('Pühapäev','Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev');
 			$data['manageUsers'] = $this->allbookings_model->get_bookings();
 		
@@ -79,6 +83,10 @@
 		}
 
 		public function weekView(){
+			if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'  || $this->session->userdata('roleID')==='1'){
+				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+				redirect('');
+			}
 			$data['weekdays']=array('Pühapäev','Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev');
 			$data['manageUsers'] = $this->allbookings_model->get_bookings();
 
@@ -92,6 +100,10 @@
 
 		function load($buildingID)
 		{
+			if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'  || $this->session->userdata('roleID')==='1'){
+				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+				redirect('');
+			}
 			$event_data = $this->allbookings_model->fetch_all_event($buildingID);
 			foreach($event_data->result_array() as $row)
 				
@@ -121,6 +133,7 @@
 
 		function loadRooms($buildingID)
 		{
+			
 			$event_data = $this->allbookings_model->fetch_all_rooms($buildingID);
 			foreach($event_data->result_array() as $row)
 				

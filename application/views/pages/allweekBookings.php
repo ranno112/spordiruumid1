@@ -84,10 +84,15 @@ foreach($rooms as $value){
         },
         resourceTimeGridDay: {
           type: 'resourceTimeGridDay',
-        
           buttonText: 'Päev',
-					
-        }
+		 },
+		 timeGridWeek: {
+          buttonText: 'Nädal 2',
+		 },
+		 dayGridMonth: {
+          buttonText: 'Kuu',
+		 }
+      
       },
 
 
@@ -129,6 +134,7 @@ foreach($rooms as $value){
  var removedResources2=[];
  var removedAll=true;
  var phpRoomInfo='<?php echo $array;?>';
+ console.log(phpRoomInfo);
 
     $('input[type="checkbox"]').change(function()
       {
