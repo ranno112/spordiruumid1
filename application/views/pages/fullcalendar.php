@@ -1100,7 +1100,7 @@
 								//alert('Ei toimunud');
 							},
 							error: function(returnval) {
-								alert('Midagi läks valesti');
+								alert('Midagi läks valesti ja tulemust ei salvestatud');
 								$(".message").text(returnval + " failure");
 								$(".message").fadeIn("slow");
 								$(".message").delay(2000).fadeOut(1000);
