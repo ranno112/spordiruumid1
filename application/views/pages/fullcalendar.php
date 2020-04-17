@@ -1161,7 +1161,12 @@
 
 
 			} else {
-				alert("Sa ei märgistanud ühtegi ruutu");
+				swal({
+						icon: 'info',
+						title: "Sa ei märgistanud ühtegi ruutu!",
+						buttons: "Sain aru"
+						
+					})
 				event.preventDefault();
 			}
 		});
@@ -1169,7 +1174,16 @@
 	
 
 		$("#changePeriodTimes").on('click', function(event) {
-			if ($('.abc:checked').length <2) {
+			if ($('.abc:checked').length <1) {
+				swal({
+						icon: 'info',
+						title: "Sa ei märgistanud ühtegi ruutu!",
+						buttons: "Sain aru"
+						
+					})
+				event.preventDefault();
+			}
+			else if ($('.abc:checked').length <2) {
 				var timesIdArray = [];
 				var id = '';
 
@@ -1201,7 +1215,13 @@
 
 
 			} else {
-				alert("Palun vali ainult üks nädalapäev mida muuta soovid");
+				swal({
+						icon: 'info',
+						title: "Palun vali ainult üks nädalapäev",
+						buttons: "Sain aru"
+						
+					})
+			
 				event.preventDefault();
 			}
 		});
