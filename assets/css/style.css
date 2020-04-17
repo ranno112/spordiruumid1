@@ -746,7 +746,7 @@ height:0px;
     color: white;
   } */
 
-  label input {
+  label input[type='checkbox']{
     display: none; /* Hide the default checkbox */
   }
   
