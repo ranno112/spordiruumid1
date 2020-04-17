@@ -955,7 +955,13 @@
 
 		
 			} else {
-				alert("Sa ei valinud midagi mida kustutada");
+			
+				swal({
+						icon: 'info',
+						title: "Sa ei valinud midagi mida kustutada!",
+						buttons: "Sain aru"
+						
+					})
 				event.preventDefault();
 			}
 
