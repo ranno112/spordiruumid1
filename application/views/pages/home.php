@@ -2,7 +2,7 @@
 
 <!-- <a href="<?php echo site_url('login/logout');?>">Sign Out</a> -->
 
-						<p id="demo"></p>
+				
 
 <div class="container-fluid">
     <div class="d-flex">
@@ -44,7 +44,8 @@
                                 ?>
                             </datalist>
                         </div>
-                        <?php endif;?>
+						<?php endif;?>
+						<h5 id="demo"></h5>
                         <div class="form-label-group">
                             <label for="room">Ruum</label>
                             <input id="room" list="saal" class="form-control arrow" required> 
@@ -84,16 +85,22 @@
 
 
 <!-- <script src='https://unpkg.com/v-calendar@next'></script> -->
-
+<?php 
+$display=false;
+   if($this->session->userdata('roleID')=='2' or $this->session->userdata('roleID')=='3'){
+	$display=true;
+   }
+?>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/datepicker.js"></script>
 <script>
 
 	var isIE = !!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g);
-
-		if(isIE){
+   		let display='<?php echo $display;?>';
+		   console.log(display);
+		if(isIE && display){
 		//alert("Spordiruumi kalender ei toeta Internet Explorerit. Tänapäeval on palju paremaid veebilehitsejaid mida kasutada. Parima kogemuse saamiseks palume kasutada näiteks Chrome, Edge või Firefoxi."); 
        
-		document.getElementById("demo").innerHTML = "INTERNET EXPLORER POLE TOETATUD! PALUN VALI TEINE BRAUSER";
+		document.getElementById("demo").innerHTML = "Tähelepanu! INTERNET EXPLORER pole täielikult toetatud ning osad funktsionaalsused ei pruugi töötada. Parima kogemuse saamiseks palun vali teine veebilehitseja";
  
 		}
 	
