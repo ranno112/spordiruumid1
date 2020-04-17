@@ -15,7 +15,7 @@ $conflictDates=$this->session->flashdata('conflictDates');
 if(!empty($conflictDates)){// print_r($conflictDates);
 //	echo count($conflictDates);
 }?>
-		 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 		 	
 <div class="modal" id="myModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -564,7 +564,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 		var dateFormat = moment('<?php echo ($this->input->get('startDate')); ?>', "DD-MM-YYYY");
 		var selectedWeekDay = new Date(dateFormat);
 		
-		console.log(days[selectedWeekDay.getDay()]);
+	//	console.log(days[selectedWeekDay.getDay()]);
 	// 	if(days.includes(days[selectedWeekDay.getDay()])){
 	// 	var list = $("#periodicWeekDay.form-control.col-5.arrow");
     //     var list2 =$("input:contains('closedWeekDay'):last");
@@ -576,7 +576,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 	// 		}
 	// };
         var checkingDate = '<?php if(isset($data['Ending'])){echo $data['Ending'];}else {echo '';}?>';
-        console.log("kuupäev on "+checkingDate);
+    //    console.log("kuupäev on "+checkingDate);
         var dateToShow='';
 		if('<?php if(isset($data['Ending'])){echo $data['Ending'];}else {echo '';}?>'){
 			window.history.replaceState("", "",'<?php echo base_url(); ?>booking/create/<?php echo $this->uri->segment(3);// . "?startDate=".$data['startingFrom'] .'&start='.$data['timesStart'][0].'&end='.$data['timeTo'][0]; ?>');
@@ -696,7 +696,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
         var AddButton1 = $("#AddMoreFileBoxPeriod"); //Add button ID
 
         var y = InputsWrapper1.children().length; //initlal text box count
-		console.log(y);
+	
         
         $("#AddMoreFileBoxPeriod").click(function(e) {
             //max input box allowed
@@ -803,6 +803,29 @@ if(!empty($conflictDates)){// print_r($conflictDates);
     $(".nav a").on("click", function() { // TAB'i active klassi toggle
         $(".nav a").removeClass("active");
         $(this).addClass("active");
+	
+		if($(this).prop('hash')=='#mitmekordne')
+		{
+			$("#suletud").removeClass("active");
+			$("#hooajaline").removeClass("active");
+			$("#mitmekordne").addClass("active");
+			
+		}
+		if($(this).prop('hash')=='#hooajaline')
+		{
+			$("#suletud").removeClass("active");
+			$("#mitmekordne").removeClass("active");
+			$("#hooajaline").addClass("active");
+			
+		}
+		if($(this).prop('hash')=='#suletud')
+		{
+			$("#hooajaline").removeClass("active");
+			$("#mitmekordne").removeClass("active");
+			$("#suletud").addClass("active");
+		
+		}
+
     });
 
 
@@ -834,7 +857,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 		dateArray.push( obj );
 
 	});
-	console.log(dateArray);
+//	console.log(dateArray);
     return dateArray;
 	}
 	
@@ -893,7 +916,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 	
     var stopDate = moment(stopDate);
     maximumToCheck= weekdSelectedToArray.length;
-        console.log("maximumToCheck"+maximumToCheck);
+    //    console.log("maximumToCheck"+maximumToCheck);
 	weekdSelectedToArray.forEach(function (item, index) {
 
         var checkHowMuchConflicts=0;
@@ -921,7 +944,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
    
 }
 });
-    console.log(dateArray);
+//    console.log(dateArray);
     return dateArray;
 	}
 
@@ -941,7 +964,7 @@ function hasJsonStructure(str) {
 	
 var allConflictsFromBE=JSON.stringify(<?php echo json_encode($conflictDates);?>);
 
-console.log(allConflictsFromBE);
+
 if(hasJsonStructure(allConflictsFromBE)){
 	//console.log(allConflictsFromBE);
 
@@ -969,7 +992,7 @@ $( "#checkForConflicts" ).click(function() {
 		var endingDate = $('#periodEnd').val();
     	var endingDateConverted = moment(endingDate, "DD.MM.YYYY").format("YYYY-MM-DD");
         var getDateArray=getDates(startingDateConverted, endingDateConverted);
-		console.log("konfliktide kontrollitav on " +(getDateArray).length);
+	//	console.log("konfliktide kontrollitav on " +(getDateArray).length);
 		
 		if((getDateArray.length)>300){
 		
@@ -988,7 +1011,7 @@ $( "#checkForConflicts" ).click(function() {
 	
 
 	var whichFormToSubmit='<?php echo $data['type']; ?>';
-	console.log(whichFormToSubmit+"nr on");
+//	console.log(whichFormToSubmit+"nr on");
 $( "#submitWithConflicts" ).click(function() {
 	
 	if (whichFormToSubmit==1){
