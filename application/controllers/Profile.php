@@ -94,7 +94,7 @@ class Profile extends CI_Controller
 
 		$this->form_validation->set_rules('name', 'Nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
 		$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
-		$this->form_validation->set_rules('password', 'Parool', 'min_length[7]');
+		$this->form_validation->set_rules('password', 'Parool', 'min_length[5]');
 		$this->form_validation->set_rules('password2', 'Parool uuesti', 'matches[password]');
 
 		if($this->form_validation->run() === FALSE ){

@@ -99,7 +99,7 @@
 		// 	}
 		// }
 
-	// Register user by admin
+	// Register user by gov admin
 		public function registerByAdmin(){
 			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2'){
 				$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');

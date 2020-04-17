@@ -47,10 +47,10 @@
 							<label>Roll*</label>
 							<select id="role" name="role" class="form-control arrow">
 							<?php if($this->session->userdata('roleID')==='1'):?>
-								<option value="1">Admin</option>
+								<option value="1">Linnavalitsuse administraator</option>
 								<?php endif;?>
-								<option value="2">Juht</option>
-								<option value="3" selected>Haldur</option>
+								<option value="2">Peaadministraator</option>
+								<option value="3" selected>Administraator</option>
 							</select>
 						</div>
 						<div class="form-label-group col-6 p-0 pl-5">

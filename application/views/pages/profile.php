@@ -59,9 +59,9 @@
 						<div class="form-label-group col-6 py-0 pl-0 pr-5">
 								<label>Roll*</label>
 									<select id="roleID" name="roleID" class="form-control arrow" disabled>
-										<option value="2" <?php if ($value['roleID']==1) echo ' selected'?>>Admin</option>
-										<option value="3" <?php if ($value['roleID']==2) echo ' selected'?>>Juht</option>
-										<option value="4" <?php if ($value['roleID']==3) echo ' selected'?>>Haldur</option>
+										<option value="2" <?php if ($value['roleID']==1) echo ' selected'?>>Linnavalitsuse administraator</option>
+										<option value="3" <?php if ($value['roleID']==2) echo ' selected'?>>Peaadministraator</option>
+										<option value="4" <?php if ($value['roleID']==3) echo ' selected'?>>Administraator</option>
 									</select>
 						</div>
 						<div class="form-label-group col-6 p-0 pl-5">

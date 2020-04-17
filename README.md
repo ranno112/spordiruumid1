@@ -138,8 +138,8 @@ CREATE TABLE `userRoles` (
 );
 
 INSERT INTO `userRoles` (`id`, `role`) VALUES
-(1, 'Admin'),
-(2, 'Juht'),
-(3, 'Haldur'),
+(1, 'Linnavalitsuse administraator'),
+(2, 'Peaadministraator'),
+(3, 'Administraator'),
 (4, 'Tavakasutaja');
 ```
