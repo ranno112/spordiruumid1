@@ -489,8 +489,8 @@
 			
 		
 			eventResize: function(event) {
-				console.log(event.end._i);
-				console.log( $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss"));
+			//	console.log(event.end._i);
+			//	console.log( $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss"));
 
 				if(!(moment($.fullCalendar.formatDate(event.start, "Y-MM-DD")).isSame($.fullCalendar.formatDate(event.end, "Y-MM-DD")))){
 					swal({
@@ -595,7 +595,7 @@
 						data:eClone,
 						success:function()
 						{
-							console.log( eClone);
+							//console.log( eClone);
 							calendar.fullCalendar('refetchEvents');
 						
 						}
@@ -673,7 +673,7 @@
 					},
 					success: function(data) {
 						var toJSjson=JSON.parse(data);
-						console.log(toJSjson.length);
+					//	console.log(toJSjson.length);
 						if(toJSjson.length>0){
 							hasVersions=true;
 						}
@@ -797,7 +797,7 @@
 				var st_monthIndex = moment(eventToCheck[i].start._i).toDate().getUTCMonth() + 1;
 
 				if (monthCheckbox != st_monthIndex) {
-					console.log(st_monthIndex);
+				//	console.log(st_monthIndex);
 				$('#myTable > tbody:last-child').append('<tr id="monthRow' + start_date.getUTCMonth() + '"><th><label><input type="checkbox"  id="selectMonth[' + start_date.getUTCMonth() + ']" value="1"></label> ' + monthNamesForModal[moment(eventToCheck[i].start._i).toDate().getUTCMonth()] + ' </th></tr>');
 				}
 				monthCheckbox = st_monthIndex;
@@ -866,56 +866,65 @@
 					return $('#room').val();
 					}).data('value');
 			if ($('.abc:checked').length == $('.abc').length) {
-				if (confirm("Oled kindel kustutada KÕIK ajad?")) {
-					event.preventDefault();
-				} else {
-					return false;
-				}
-				var id = $('input:checkbox:checked').parents("tbody").attr('id');
+
+				swal({
+					title:  "Oled kindel kustutada kogu broneeringu?",
+					buttons: {
+					cancel: "Ei",
+					Jah: true,
+				},
+					}).then(function(value){
+						if(value){
+							var id = $('input:checkbox:checked').parents("tbody").attr('id');
 			
-				$.ajax({
-					url: "<?php echo base_url(); ?>fullcalendar/deleteAllConnectedBookings",
-					type: "POST",
-					data: {
-						bookingID: id,
-						selectedRoomID:selectedRoomID
-					},
-					success: function() {
-						calendar.fullCalendar('refetchEvents');
+			$.ajax({
+				url: "<?php echo base_url(); ?>fullcalendar/deleteAllConnectedBookings",
+				type: "POST",
+				data: {
+					bookingID: id,
+					selectedRoomID:selectedRoomID
+				},
+				success: function() {
+					calendar.fullCalendar('refetchEvents');
 
-						jQuery('input:checkbox:checked').parents("tr").remove();
-						$("#lefty").modal("hide");
-						$('#calendar-container').css({
-							'margin-left': '0'
-						});
-						$('#widthToggle').css({
-							'margin-left': '0'
-						});
-						//  alert('Event Removed');
-					},
-					error: function(returnval) {
-						$(".message").text(returnval + " failure");
-						$(".message").fadeIn("slow");
-						$(".message").delay(2000).fadeOut(1000);
-					}
-				});
+					jQuery('input:checkbox:checked').parents("tr").remove();
+					$("#lefty").modal("hide");
+					$('#calendar-container').css({
+						'margin-left': '0'
+					});
+					$('#widthToggle').css({
+						'margin-left': '0'
+					});
+					//  alert('Event Removed');
+				},
+				error: function(returnval) {
+					$(".message").text(returnval + " failure");
+					$(".message").fadeIn("slow");
+					$(".message").delay(2000).fadeOut(1000);
+				}
+			});
+					}	})
 
+					event.preventDefault();
 
 
 			} else if ($('.abc:checked').length < $('.abc').length && $('.abc:checked').length > 0) {
-				if (confirm("Oled kindel, et soovid kustutada?" + $('.abc:checked'))) {
 				
-					event.preventDefault();
-				} else {
-					return false;
-				}
-				var countTimes=$('#myTable tr:has(td)').length-$('.abc:checked').length;
+				swal({
+					title:  "Oled kindel, et soovid kustutada valitud ajad?",
+					buttons: {
+					cancel: "Ei",
+					Jah: true,
+				},
+					}).then(function(value){
+						if(value){
+							var countTimes=$('#myTable tr:has(td)').length-$('.abc:checked').length;
 				$('#countNr').text('Kõik ajad (' +countTimes + ')');
 
 				$("input:checkbox").each(function() {
 					var $this = $(this);
 			
-					console.log(selectedRoomID);
+				//	console.log(selectedRoomID);
 				
 					if ($this.is(":checked")) {
 						var id = $this.attr("id");
@@ -940,6 +949,11 @@
 						});
 					}
 				});
+
+						}	})
+						event.preventDefault();
+
+		
 			} else {
 				alert("Sa ei valinud midagi mida kustutada");
 				event.preventDefault();
@@ -952,17 +966,22 @@
 
 		$("#approveCheck").click(function(event) {
 			if ($('.abc:checked').length <= $('.abc').length && $('.abc:checked').length > 0) {
-				if (confirm("Kinnatan valitud?")) {
-					event.preventDefault();
-				} else {
-					return false;
-				}
+				
+				swal({
+					title:  "Muudan kinnitamise olekut?",
+					buttons: {
+					cancel: "Ei",
+					Jah: true,
+				},
+					}).then(function(value){
+						if(value){
 
-				$("input:checkbox").each(function() {
+					$("input:checkbox").each(function() {
 					var $this = $(this);
 
 					if ($this.is(":checked")) {
 						var id = $this.attr("id");
+					
 					
 						var approvedOrNot = $this.parents("tr").children("td:nth-child(3)");
 					
@@ -990,9 +1009,9 @@
 								calendar.fullCalendar('refetchEvents');
 								//siia tule teha panna kinnitatud olekuks modalis  
 								if (approvedOrNotToDB == 1) {
-									jQuery('input:checkbox:checked').parents("tr").children("td:nth-child(3)").html("&nbsp;&nbsp;&nbsp;Kinnitatud");
+									$this.parents("tr").children("td:nth-child(3)").html("&nbsp;&nbsp;&nbsp;Kinnitatud");
 								} else {
-									jQuery('input:checkbox:checked').parents("tr").children("td:nth-child(3)").html("&nbsp;&nbsp;&nbsp;Kinnitamata");
+									$this.parents("tr").children("td:nth-child(3)").html("&nbsp;&nbsp;&nbsp;Kinnitamata");
 								}
 
 								// alert('Kinnitatud');
@@ -1005,23 +1024,20 @@
 						});
 					}
 				});
+
+
+						}	})
+
+					event.preventDefault();
+		
 			} else {
-				swal("Sa ei valinud midagi mida kinnitada");
 			
-			swal({
-				title: "Good job",
-				text: "You clicked the button!",
-				buttons: [
-					'NO',
-					'YES'
-				],
-				}).then(function(isConfirm) {
-				if (isConfirm) {
-					location.reload();
-				} else {
-					//if no clicked => do something else
-				}
-				});
+				swal({
+						icon: 'info',
+						title: "Sa ei valinud midagi mida kinnitada!",
+						buttons: "Sain aru"
+						
+					})
 				event.preventDefault();
 			}
 
@@ -1031,17 +1047,21 @@
 
 		$("#takesPlaceCheck").submit(function(event) {
 			if ($('.abc:checked').length <= $('.abc').length && $('.abc:checked').length > 0) {
-				if (confirm("Valitud trennid ei toimunud?")) {
-					event.preventDefault();
-				} else {
-					return false;
-				}
+			
 
-				$("input:checkbox").each(function() {
+				swal({
+					title:  "Muudan trennide toimumise staatust?",
+					buttons: {
+					cancel: "Katkesta",
+					Jah: true,
+				},
+					}).then(function(value){
+						if(value){
+							$("input:checkbox").each(function() {
 					var $this = $(this);
 
 					var approvedOrNot = $this.parents("tr").children("td:nth-child(4)");
-				console.log(approvedOrNot.text());
+			
 					var approvedOrNotToDB;
 					if ($.trim(approvedOrNot.text()) == "XXX") {
 						approvedOrNotToDB = 1;
@@ -1066,9 +1086,9 @@
 							success: function() {
 								calendar.fullCalendar('refetchEvents');
 								if (approvedOrNotToDB == 0) {
-									jQuery('input:checkbox:checked').parents("tr").children("td:nth-child(4)").html("&nbsp;Ei toimunud");
+									$this.parents("tr").children("td:nth-child(4)").html("&nbsp;XXX");
 								} else {
-									jQuery('input:checkbox:checked').parents("tr").children("td:nth-child(4)").html("&nbsp;&nbsp;&nbsp;");
+									$this.parents("tr").children("td:nth-child(4)").html("&nbsp;&nbsp;&nbsp;");
 								}
 								//  $('input:checkbox:checked').parents("tr").children("td:contains('Ei toimunud')").html("");
 								//alert('Ei toimunud');
@@ -1082,8 +1102,18 @@
 						});
 					}
 				});
+
+						}	})
+						event.preventDefault();
+
+	
 			} else {
-				alert("Sa ei märgistanud ühtegi ruutu");
+				swal({
+						icon: 'info',
+						title: "Sa ei märgistanud ühtegi ruutu!",
+						buttons: "Sain aru"
+						
+					})
 				event.preventDefault();
 			}
 
