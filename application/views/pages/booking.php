@@ -15,7 +15,8 @@ $conflictDates=$this->session->flashdata('conflictDates');
 if(!empty($conflictDates)){// print_r($conflictDates);
 //	echo count($conflictDates);
 }?>
-    		
+		 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		 	
 <div class="modal" id="myModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
