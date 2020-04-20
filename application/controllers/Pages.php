@@ -20,7 +20,7 @@ class Pages extends CI_Controller
                 $data['rooms'] = $this->pages_model->getAllRooms($roomid);
                 $data['sportPlaces'] = $this->pages_model->getAllBuildings();
 		$data['sportPlacesToChoose'] = $this->pages_model->getAllBuildingRooms();
-		$data['unapprovedBookings'] = $this->pages_model->getUnapprovedBookings($this->session->userdata('building'));
+	//	$data['unapprovedBookings'] = $this->pages_model->getUnapprovedBookings($this->session->userdata('building'));
 		
 		
 		
@@ -35,12 +35,18 @@ class Pages extends CI_Controller
                         redirect('');
                         };
                 };
-               
-                $data['regions'] = $this->pages_model->getAllRegions();
+	   
+	       if($page=='fullcalendar'){
+		$data['regions'] = $this->pages_model->getAllRegions();
                 //print_r($data['rooms']);
                 $this->load->view('templates/header', $data);
                 $this->load->view('pages/' . $page, $data);
                 $this->load->view('templates/footer', $data);
+	       }
+	       else{
+		redirect('');
+	       }
+                
         }
 
 
