@@ -1,12 +1,14 @@
 # Spordiruumide broneerimissüsteem
 
-Tere tulemast minu õputöö projekti GitHubi repositooriumile!
+Tere tulemast minu lõputöö projekti GitHubi repositooriumisse!
 
-Olen Annemarii Hunt ning olen Tallinna Ülikooli Haapsalu Kolledži rakendusinformaatika III kursuse tudeng. Kirjutasin lõputööd teemal "spordiasutuste saalide veebikalendri prototüübi edasiarendus pärnu linnavalitsuse näitel" ning samal ajal ehitasin rakendust.
+Olen Annemarii Hunt ning olen Tallinna Ülikooli Haapsalu Kolledži rakendusinformaatika III kursuse tudeng. Kirjutasin lõputööd teemal "spordiasutuste ruumide veebikalendri prototüübi edasiarendus pärnu linnavalitsuse näitel" ning samal ajal ehitasin rakendust.
 
 Rakenduse näol on tegemist kohaliku omavalitsuste spordiga seotud allasutuste spordiruumide kalendrisüsteemi rakendusega. Rakendus on edasi arendatud valikpraktika projektist https://github.com/Viiskorda/maag.
 
 Demo keskkonnaga saad tutvuda lingil https://www.spordiruumid.ee/.
+
+Käesolev töö on GNU v3 litsentsi all ning kõigile huvilistele vabalt kättesaadav. Täpsemalt loe litsentsitingimusi lintsentsifailist.
 
 Oma serverisse laadimiseks on vaja muuta application/config kaustas kaks faili: config.php ning database.php:
 ```
