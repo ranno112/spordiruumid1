@@ -15,8 +15,8 @@
 	 	
 		<br>
 		<div class="row ">
-			<div class="col-6 col-md-3 col-xl-2">Alates  <input type="date" name="start_date" id="start_date" class="form-control" value="<?php echo date('Y-m-01'); ?>" /></div>  
-			<div class="col-6 col-md-3 col-xl-2"> Kuni <input type="date" name="end_date" id="end_date" class="form-control" value="<?php echo date('Y-m-t'); ?>" /></div>
+			<div class="col-12 col-sm-3 col-xl-2">Alates  <input type="date" name="start_date" id="start_date" class="form-control" value="<?php echo date('Y-m-01'); ?>" /></div>  
+			<div class="col-12 col-sm-3 col-xl-2"> Kuni <input type="date" name="end_date" id="end_date" class="form-control" value="<?php echo date('Y-m-t'); ?>" /></div>
 			<div class="col-6 col-md-3 col-xl-2 mt-4">
 				<input type="button" name="search" id="search" value="Filtreeri" class="btn btn-info text-white" />
 			</div>
@@ -150,12 +150,12 @@ $('#search').click(function(){
  $('.dataTables_length ').parent().removeClass('col-sm-12');
  $('.dataTables_filter ').parent().removeClass('col-md-6');
  $('.dataTables_filter ').parent().removeClass('col-sm-12');
- $('.dataTables_length').parent().addClass('col-1');
+ $('.dataTables_length').parent().addClass('col-5');
  $('.dataTables_length').parent().addClass('col-md-3');
  $('.dataTables_length').parent().addClass('col-sm-6');
  $('.dataTables_length').parent().addClass('col-xl-2');
  $('.dataTables_filter').addClass('col-12');
- $('.dataTables_filter').parent().addClass('col-3');
+ $('.dataTables_filter').parent().addClass('col-12');
  $('.dataTables_filter').parent().addClass('col-md-4');
  $('.dataTables_filter').parent().addClass('col-sm-6');
  $('.dataTables_filter').parent().addClass('col-xl-2');
