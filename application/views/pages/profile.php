@@ -100,7 +100,7 @@
 					</div> -->
 					<div class="d-flex justify-content-end px-5 mx-5 my-5">
 						<?php if ($editProfile[0]['requestFromBuilding']!=1){?>
-                        <a class="btn btn-custom col-5 text-white txt-xl" href="<?php echo base_url(); ?>profile/edit/<?php echo $this->session->userdata['userID']?>">Redigeeri</a>
+                        <a class="btn btn-custom col-md-5 text-white txt-xl" href="<?php echo base_url(); ?>profile/edit/<?php echo $this->session->userdata['userID']?>">Redigeeri</a>
 						<?php }?>
 					</div>
 				

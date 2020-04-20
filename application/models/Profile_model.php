@@ -40,5 +40,13 @@
 			return $query->row_array();
 		}
 
-    
+	
+		function get_hash($email){
+			$this->db->select('pw_hash');  
+			$this->db->where('email',$email);
+			$result = $this->db->get('users');
+			return $result->row_array();
+
+		  }
+
     }
