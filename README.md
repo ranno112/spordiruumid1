@@ -32,6 +32,13 @@ $google_client->setClientSecret('selle_asemele_kleebi_salajane_võti'); //Kirjut
 $google_client->setRedirectUri('http://localhost/spordiruumid/login/login'); //Vajadusel muuda suunamise universaalset ressursiidentifikaatorit (Redirect Uri), näiteks localhost asemel kirjuta domeeninimi.
 ```
 
+Facebooki sisse logimist saad tööle panna config kaustast facebook.php nimelisest failist 
+```
+$config['facebook_app_id']                = 'facebook_app_id'; //asenda oma võtmega
+$config['facebook_app_secret']            = 'facebook_app_secret'; //asenda oma võtmega
+$config['facebook_login_redirect_url']    = 'login/fblogin'; // Facebook konsoolis seadete all "Valid OAuth Redirect URIs"
+$config['facebook_logout_redirect_url']   = 'login/logout';
+```
 
 Rakenduse tööle saamiseks tuleb luua SQL tabelid:
 ```sql
