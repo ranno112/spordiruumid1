@@ -18,7 +18,7 @@
 
         <div class="col-md-6 col-lg-4">
             <div class="d-flex align-items-center">
-                <div class="col-7"  id="form-container">
+                <div class="col-7 mb-5"  id="form-container">
                     <form action="fullcalendar" method="get">
                     <?php if($this->session->userdata('roleID')!='2'&&$this->session->userdata('roleID')!='3'):?>
                         <div class="form-label-group">

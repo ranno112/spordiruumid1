@@ -323,7 +323,7 @@
     fill: black;
   }
 
-  footer a::before {
+  footer span a::before {
     position: absolute;
     display:inline-block;
     content: '';
