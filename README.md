@@ -8,7 +8,7 @@ Rakenduse näol on tegemist kohaliku omavalitsuste spordiga seotud allasutuste s
 
 Demo keskkonnaga saad tutvuda lingil https://www.spordiruumid.ee/.
 
-Käesolev töö on GNU v3 litsentsi all ning kõigile huvilistele vabalt kättesaadav. Täpsemalt loe litsentsitingimusi lintsentsifailist.
+Käesolev töö on GNU v3 litsentsi all ning kõigile huvilistele vabalt kättesaadav. Täpsemalt loe litsentsitingimusi litsentsifailist.
 
 Oma serverisse laadimiseks on vaja muuta application/config kaustas kaks faili: config.php ning database.php:
 ```
