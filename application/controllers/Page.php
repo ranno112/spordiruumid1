@@ -8,7 +8,7 @@ class Page extends CI_Controller{
   }
  
   function index(){
-    //Allowing akses to admin only
+    //Allowing akses to gov admin only
       if($this->session->userdata('roleID')==='1'){
           $this->load->view('dashboard_view');
       }else{

@@ -7,7 +7,7 @@
 
             <div class="d-flex mb-5">
                 <ul class="nav nav-tabs nav-justified col-12 bg-grey p-0">
-                    <li class="nav-item p-0"><a class="nav-link link txt-lg single-tab active pl-5" data-toggle="tab"><?php foreach ($editBuildings as $value) {echo $value['name'];break;}?> sätted</a></li>
+                    <li class="nav-item p-0"><a class="nav-link link txt-lg single-tab active pl-12" data-toggle="tab"><?php foreach ($editBuildings as $value) {echo $value['name'];break;}?> sätted</a></li>
                     <li class="nav-item p-0"></li><li class="nav-item p-0"></li>
                 </ul>
             </div>
@@ -15,8 +15,8 @@
             <form id="change" method="post" action="<?php echo base_url(); ?>building/update">
 
 				<h4 class="pt-2 txt-xl px-5 mx-5">Asutuse info</h4>
-				<div class="d-flex p-0 mt-4 px-5 mx-5">
-                    <div class="form-label-group col-6 py-0 pl-0 pr-5">
+				<div class="d-flex p-0 mt-4 px-md-5 mx-5">
+                    <div class="form-label-group col-12 col-md-6 py-0 pl-0 pr-5">
 										<label for="status">Piirkond</label>
                     <select id="place" name="place" class="form-control arrow" disabled>
 										<?php foreach($regions as $region) {?>
@@ -25,23 +25,23 @@
                     </select>
                     </div>
                 </div>
-                <div class="d-flex p-0 mt-4 px-5 mx-5">
-                    <div class="form-label-group col-6 py-0 pl-0 pr-5">
+                <div class="row d-flex p-0 mt-4 px-md-5 mx-5">
+                    <div class="form-label-group col-12 col-md-6 py-0 pl-0 pr-5">
                         <label>Kontakt email*</label>
                         <input class="form-control" id="contact_email" type="email" name="contact_email" value="<?php foreach ($editBuildings as $value) {echo $value['contact_email'];break;}?>" disabled>
                     </div>
-                    <div class="form-label-group col-6 p-0 pl-5">
+                    <div class="form-label-group col-12 col-md-6 p-0 pl-0 pl-md-5  pr-5 pr-md-0">
                         <label>Päringute email*</label>
                         <input class="form-control" id="notify_email" type="email" name="notify_email" value="<?php foreach ($editBuildings as $value) {echo $value['notify_email'];break;}?>" disabled>
                     </div>
                 </div>
 
-                <div class="d-flex p-0 mt-4 px-5 mx-5">
-                    <div class="form-label-group col-6 py-0 pl-0 pr-5">
+                <div class="row d-flex p-0 mt-4 px-md-5 mx-5">
+                    <div class="form-label-group col-12 col-md-6 py-0 pl-0 pr-5">
                         <label>Telefoni number*</label>
                         <input class="form-control" id="phone" type="number" name="phone" value="<?php foreach ($editBuildings as $value) {echo $value['phone'];break;}?>" disabled>
                     </div>
-                    <div class="form-label-group col-6 p-0 pl-5">
+                    <div class="form-label-group col-12 col-md-6 p-0 pl-0 pl-md-5  pr-5 pr-md-0">
                         <label>Hinnakirja link (url)</label>
                         <input class="form-control" id="price_url" type="text" name="price_url" value="<?php foreach ($editBuildings as $value) {echo $value['price_url'];break;}?>" disabled>
                     </div>
