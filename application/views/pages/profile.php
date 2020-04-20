@@ -48,10 +48,12 @@
 							<label>E-mail*</label>
 							<input type="email" class="form-control" name="email" value="<?php echo $value['email'];?>" disabled>
 						</div>
+						<?php if(isset($this->session->userdata['buildingID'])){?>
 						<div class="form-label-group col-12 col-md-6 p-0 pl-0 pl-md-5  pr-5 pr-md-0">
 							<label>Asutus</label>
 							<input type="text" class="form-control" name="buildingID" id="buildingID" value="<?php echo $value['name'];?>" disabled>
 						</div>
+						<?php	};?>
 					</div>
 
 					<?php if($value['roleID']=='2' || $value['roleID']=='3'  || $value['roleID']=='1'):?>

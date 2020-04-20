@@ -7,7 +7,7 @@ class Profile extends CI_Controller
     {
         parent::__construct();
 		$this->load->model('profile_model');
-		if (empty($this->session->userdata('roleID'))){
+		if (empty($this->session->userdata('userID'))){
 			$this->session->set_flashdata('errors', 'Sa pole sisse logitud');
 			redirect('');
 		}
