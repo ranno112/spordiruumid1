@@ -14,8 +14,9 @@
 			
 			$data['title'] = 'Users';
 			$data['manageUsers'] = $this->user_model->get_users();
-	
-			$this->load->view('templates/header');
+			$data['unapprovedBookings'] = $this->user_model->getUnapprovedBookings($this->session->userdata('building'));
+			
+			$this->load->view('templates/header', $this->security->xss_clean($data));
 			$this->load->view('pages/manageUsers', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
 		

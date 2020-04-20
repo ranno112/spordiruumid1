@@ -8,6 +8,7 @@ class Home extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		
 		$this->load->model('home_model');
 	}
 	
@@ -16,7 +17,7 @@ class Home extends CI_Controller
 		$data['rooms'] = $this->fullcalendar_model->getAllRooms();
 		$data['regions'] = $this->fullcalendar_model->getAllRegions();
 		$data['buildings'] = $this->fullcalendar_model->getAllBuildings();
-
+	
 		
 		$this->load->view('templates/header',$data);
 		$this->load->view('pages/fullcalendar',$data);
@@ -30,7 +31,7 @@ class Home extends CI_Controller
 			redirect('');
 		  //  show_404();
 		}
-
+		$data['unapprovedBookings'] = $this->home_model->getUnapprovedBookings($this->session->userdata('building'));
 		$data['requestFromBuilding']=$this->home_model->chech_if_has_request($this->session->userdata('email'));
 	
 		$data['title'] = ucfirst($page); // Capitalize the first letter

@@ -20,10 +20,10 @@ class Profile extends CI_Controller
 
             redirect('profile/view/'.$this->session->userdata['userID']);
         }else{
-
+		$data['unapprovedBookings'] = $this->profile_model->getUnapprovedBookings($this->session->userdata('building'));
         $data['editProfile'] = $this->profile_model->get_profile($slug);
     //	var_dump($slug);
-        $this->load->view('templates/header');
+        $this->load->view('templates/header', $this->security->xss_clean($data));
         $this->load->view('pages/profile', $this->security->xss_clean($data));
         $this->load->view('templates/footer');
     }	}

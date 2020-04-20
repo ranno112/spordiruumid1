@@ -52,7 +52,8 @@
 			$data['regions'] = $this->building_model->getAllRegions();
 			$data['editAllBuildings'] = $this->building_model->get_building();
 			$data['editAllRooms'] = $this->building_model->get_rooms();
-			$this->load->view('templates/header');
+			$data['unapprovedBookings'] = $this->building_model->getUnapprovedBookings($this->session->userdata('building'));
+			$this->load->view('templates/header', $this->security->xss_clean($data));
 			$this->load->view('pages/viewBuilding', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
 			}	
