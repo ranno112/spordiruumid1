@@ -11,9 +11,11 @@ class Error_404 extends CI_Controller {
 
   public function index(){
  
-    $this->output->set_status_header('404'); 
-    $this->load->view('templates/header');
-    $this->load->view('pages/404');
+		$this->output->set_status_header('404'); 
+		$data['menu'] = '404'; // Capitalize the first letter
+		$data['unapprovedBookings'] = "";
+    $this->load->view('templates/header', $data);
+    $this->load->view('pages/404', $data);
     $this->load->view('templates/footer');
  
   }
