@@ -13,6 +13,12 @@
 		}
 		
 
+		function menu(){
+			$data['menu'] = 'building'; // Capitalize the first letter
+			$data['unapprovedBookings'] = $this->building_model->getUnapprovedBookings($this->session->userdata('building'));
+			return $data;
+			}
+
 		// public function createRoom(){
 			
 		// 	$this->building_model->createNewRoom();
@@ -20,9 +26,10 @@
 
 		public function edit($slug){
 			if ($this->session->userdata('roleID')==='1'){
+				$data=$this->menu();
 				$data['regions'] = $this->building_model->getAllRegions();
 				$data['editBuildings'] = $this->building_model->get_building($slug);
-				$this->load->view('templates/header');
+				$this->load->view('templates/header', $this->security->xss_clean($data));
 				$this->load->view('pages/editBuilding', $this->security->xss_clean($data));
 				$this->load->view('templates/footer');
 			}
@@ -31,9 +38,10 @@
 
 				redirect('building/view/'.$this->session->userdata['building']);
 			}else if ($this->session->userdata('roleID')==='2'){
+			$data=$this->menu();
 			$data['regions'] = $this->building_model->getAllRegions();
 			$data['editBuildings'] = $this->building_model->get_building($slug);
-			$this->load->view('templates/header');
+			$this->load->view('templates/header', $this->security->xss_clean($data));
 			$this->load->view('pages/editBuilding', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
 			}else{
@@ -48,6 +56,7 @@
 			if ($this->session->userdata['building']!=$slug){
 			redirect('building/view/'.$this->session->userdata['building']);
 			}else{
+			$data=$this->menu();
 			$data['editBuildings'] = $this->building_model->get_building($slug);
 			$data['regions'] = $this->building_model->getAllRegions();
 			$data['editAllBuildings'] = $this->building_model->get_building();
@@ -269,7 +278,6 @@
 			
 				$data['regions'] = $this->building_model->getAllRegions();
 				if($this->form_validation->run() === FALSE){
-				
 					$this->load->view('templates/header');
 					$this->load->view('pages/createBuilding');
 					$this->load->view('templates/footer');

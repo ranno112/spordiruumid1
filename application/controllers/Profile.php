@@ -12,7 +12,14 @@ class Profile extends CI_Controller
 			redirect('');
 		}
        
-    }
+	}
+	
+	function menu(){
+		$data['menu'] = 'profile'; // Capitalize the first letter
+		$data['unapprovedBookings'] = $this->profile_model->getUnapprovedBookings($this->session->userdata('building'));
+		return $data;
+	}
+	
 
 	public function view($slug=FALSE){
    
@@ -20,7 +27,7 @@ class Profile extends CI_Controller
 
             redirect('profile/view/'.$this->session->userdata['userID']);
         }else{
-		$data['unapprovedBookings'] = $this->profile_model->getUnapprovedBookings($this->session->userdata('building'));
+		$data=$this->menu();
         $data['editProfile'] = $this->profile_model->get_profile($slug);
     //	var_dump($slug);
         $this->load->view('templates/header', $this->security->xss_clean($data));
@@ -36,10 +43,10 @@ class Profile extends CI_Controller
 
             redirect('profile/edit/'.$this->session->userdata['userID']);
         }else{
-
+		$data=$this->menu();
         $data['editProfile'] = $this->profile_model->get_profile($slug);
     //	var_dump($slug);
-        $this->load->view('templates/header');
+        $this->load->view('templates/header', $this->security->xss_clean($data));
         $this->load->view('pages/editProfile', $this->security->xss_clean($data));
         $this->load->view('templates/footer');
 		

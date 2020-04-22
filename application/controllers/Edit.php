@@ -12,6 +12,12 @@ class Edit extends CI_Controller {
 		
     }
 
+	function menu(){
+		$data['menu'] = 'calendar'; // Capitalize the first letter
+		$data['unapprovedBookings'] = $this->edit_model->getUnapprovedBookings($this->session->userdata('building'));
+		return $data;
+		}
+
 	// function insertAdditionalDateTime()
 	// {
 		
@@ -203,8 +209,9 @@ class Edit extends CI_Controller {
 	public function index()
 	{
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
-
+			$data=$this->menu();
 			$data['allPostData']=$this->input->post();
+			
 			// print_r($data['allPostData']);
 			// echo '<br>';
 			// print_r($this->security->xss_clean($data['allPostData']));
@@ -241,9 +248,9 @@ class Edit extends CI_Controller {
 			$conflictTimes=$this->getAllConflictData($allEventsForConflictCheck,$bookingDataWhichUserWantsToChange);
 		
 			$data['conflictTimes']= $conflictTimes;
-
-
-			$this->load->view('templates/header');
+			
+			
+			$this->load->view('templates/header',$this->security->xss_clean($data));
 			$this->load->view('pages/edit',$this->security->xss_clean($data));//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
 			$this->load->view('templates/footer');
 

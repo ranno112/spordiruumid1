@@ -9,6 +9,12 @@
     
 		}
 		
+		function menu(){
+			$data['menu'] = 'allbookings'; // Capitalize the first letter
+			$data['unapprovedBookings'] = $this->allbookings_model->getUnapprovedBookings($this->session->userdata('building'));
+			return $data;
+			}
+
 		function fetch_allbookings(){  
 			if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'  || $this->session->userdata('roleID')==='1'){
 				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
@@ -70,7 +76,7 @@
 			}
 			$data['weekdays']=array('Pühapäev','Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev');
 			$data['manageUsers'] = $this->allbookings_model->get_bookings();
-		
+			$data=$this->menu();
 			if(null!==$this->session->userdata('building')){
 				$data['unapprovedBookings'] = $this->allbookings_model->getUnapprovedBookings($this->session->userdata('building'));
 			}
@@ -89,10 +95,10 @@
 			}
 			$data['weekdays']=array('Pühapäev','Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev');
 			$data['manageUsers'] = $this->allbookings_model->get_bookings();
-
+			$data=$this->menu();
 			$data['rooms']=$this->allbookings_model->fetch_all_rooms_for_checkbox($this->session->userdata('building'));
 			
-			$this->load->view('templates/header');
+			$this->load->view('templates/header', $this->security->xss_clean($data));
 			$this->load->view('pages/allweekBookings', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
 		}

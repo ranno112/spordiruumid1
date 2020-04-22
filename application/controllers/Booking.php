@@ -16,17 +16,23 @@ class Booking extends CI_Controller {
 		$this->load->model('booking_model');
 	}
 
+	function menu(){
+		$data['menu'] = 'calendar'; // Capitalize the first letter
+		$data['unapprovedBookings'] = $this->booking_model->getUnapprovedBookings($this->session->userdata('building'));
+		return $data;
+	}
+
 	public function create($slug)
 	{	
 		
 		if($this->session->userdata('session_id')===TRUE){
-	
+		$data=$this->menu();
 		$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
 		$data['rooms'] = $this->booking_model->getAllRooms();
 		$data['buildings'] = $this->booking_model->getAllBuildings();
 		$data['allBookingInfo'] = $this->booking_model->getAllBookings();
 	
-		$this->load->view('templates/header');
+		$this->load->view('templates/header',$data);
 		$this->load->view('pages/booking', $data);//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
 		$this->load->view('templates/footer');
 
@@ -105,7 +111,7 @@ class Booking extends CI_Controller {
 		$postData = $this->input->post();
 	
 		if( $this->session->userdata('session_id')===TRUE){
-
+			$data=$this->menu();
 			$data['rooms'] = $this->booking_model->getAllRooms();
 			$data['buildings'] = $this->booking_model->getAllBuildings();
 			$data['allBookingInfo'] = $this->booking_model->getAllBookings();
@@ -230,7 +236,7 @@ class Booking extends CI_Controller {
 									 
 						
 						
-						   $this->load->view('templates/header');
+						   $this->load->view('templates/header', $data);
 						   $this->load->view('pages/booking', $data);
 						   $this->load->view('templates/footer');
 					  
@@ -306,7 +312,7 @@ class Booking extends CI_Controller {
 			$this->session->set_flashdata('key',$this->security->xss_clean($postData));
 			   $this->session->set_flashdata('conflictDates',$insert_data3);
 			   
-			   $this->load->view('templates/header');
+			   $this->load->view('templates/header', $data);
 			   $this->load->view('pages/booking', $data);
 			   $this->load->view('templates/footer');
 
@@ -338,6 +344,7 @@ class Booking extends CI_Controller {
 	public function createOnce()
 	{
 		if( $this->session->userdata('session_id')===TRUE){
+			$data=$this->menu();
 			$postData = $this->input->post();
 			$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
 			$data['allBookingInfo'] = $this->booking_model->getAllBookings();
@@ -414,7 +421,7 @@ class Booking extends CI_Controller {
 				
 					} 
 	
-					$this->load->view('templates/header');
+					$this->load->view('templates/header', $data);
 					$this->load->view('pages/booking', $data);
 					$this->load->view('templates/footer');
 				
@@ -471,7 +478,7 @@ class Booking extends CI_Controller {
 			$this->session->set_flashdata('key',$this->security->xss_clean($postData));
 			$this->session->set_flashdata('conflictDates', $this->security->xss_clean($insert_data3));
 			
-			$this->load->view('templates/header');
+			$this->load->view('templates/header', $data);
 			$this->load->view('pages/booking', $data);
 			$this->load->view('templates/footer');
 

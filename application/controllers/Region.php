@@ -11,18 +11,25 @@
 			}
 		}
 	
+		function menu(){
+			$data['menu'] = 'region'; // Capitalize the first letter
+			$data['unapprovedBookings'] = $this->region_model->getUnapprovedBookings($this->session->userdata('building'));
+			return $data;
+			}
+
 		public function view($slug=FALSE){
+			$data=$this->menu();
 			$data['regions'] = $this->region_model->getAllRegions();
-			$this->load->view('templates/header');
-			$this->load->view('pages/viewRegion', $data);
+			$this->load->view('templates/header', $this->security->xss_clean($data));
+			$this->load->view('pages/viewRegion', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
 		}	
 
 		public function edit($slug){
-
+			$data=$this->menu();
 			$data['region'] = $this->region_model->get_region($slug);
-			$this->load->view('templates/header');
-			$this->load->view('pages/editRegion', $data);
+			$this->load->view('templates/header', $this->security->xss_clean($data));
+			$this->load->view('pages/editRegion', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
 		}
 

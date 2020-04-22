@@ -8,11 +8,17 @@
     
 		}
 		
+		function menu(){
+			$data['menu'] = 'users'; // Capitalize the first letter
+			$data['unapprovedBookings'] = $this->user_model->getUnapprovedBookings($this->session->userdata('building'));
+			return $data;
+		}
 
+			
 		public function index(){
 			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
 			
-			$data['title'] = 'Users';
+			$data=$this->menu();
 			$data['manageUsers'] = $this->user_model->get_users();
 			$data['unapprovedBookings'] = $this->user_model->getUnapprovedBookings($this->session->userdata('building'));
 			
@@ -43,7 +49,7 @@
 				$this->form_validation->set_message("matches", 'TESRES'); // tekst '{field} ei ole korrektselt sisestatud' tuleb failist form_validation_lang.php
 			
 				$this->load->view('templates/header');
-				$this->load->view('pages/register',$data);
+				$this->load->view('pages/register', $this->security->xss_clean($data));
                 $this->load->view('templates/footer');
                 
 			} else {
@@ -316,8 +322,9 @@
 
 		public function addRightsToUser(){
 			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2'){
+			$data=$this->menu();
 			$data['buildings'] = $this->user_model->getAllBuildings();
-			$this->load->view('templates/header');
+			$this->load->view('templates/header', $this->security->xss_clean($data));
 			$this->load->view('pages/createUser',  $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
 		
@@ -344,7 +351,7 @@
 
 		public function edit($slug){
 			if ($this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2'){
-			
+				$data=$this->menu();
 				$data['post'] = $this->user_model->get_users($slug);
 				$data['buildings'] = $this->user_model->getAllBuildings();
 
@@ -360,7 +367,7 @@
 					show_404();
 				}
 			
-				$this->load->view('templates/header');
+				$this->load->view('templates/header', $this->security->xss_clean($data));
 				$this->load->view('pages/editUser', $this->security->xss_clean($data));
 				$this->load->view('templates/footer');
 			}

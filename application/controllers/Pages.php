@@ -7,21 +7,26 @@ class Pages extends CI_Controller
 		$this->load->model('pages_model');
 	}
 
+	function menu(){
+	$data['menu'] = 'calendar'; // Capitalize the first letter
+	$data['unapprovedBookings'] = $this->pages_model->getUnapprovedBookings($this->session->userdata('building'));
+	return $data;
+	}
+
+
         public function view($page = 'home')
         {
                 if (!file_exists(APPPATH . 'views/pages/' . $page . '.php')) {
                         // Whoops, we don't have a page for that!
                         redirect('');
                       //  show_404();
-                }
-              
-                $data['title'] = ucfirst($page); // Capitalize the first letter
+		}
+		$data=$this->menu();
+	        $data['title'] = ucfirst($page); // Capitalize the first letter
                 $roomid=$this->input->get('roomId');
                 $data['rooms'] = $this->pages_model->getAllRooms($roomid);
                 $data['sportPlaces'] = $this->pages_model->getAllBuildings();
 		$data['sportPlacesToChoose'] = $this->pages_model->getAllBuildingRooms();
-	//	$data['unapprovedBookings'] = $this->pages_model->getUnapprovedBookings($this->session->userdata('building'));
-		
 		
 		
                // $data['allBookingInfo'] = $this->pages_model->getAllBookings();

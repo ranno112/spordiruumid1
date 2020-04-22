@@ -61,22 +61,22 @@ Under the GPL license, you may use Scheduler and this project without charge. Yo
 									<?php if(array_key_exists('building',$this->session->userdata())){?>
 											<?php if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'):?>
 													<!-- <li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="#"><strong>Kõik ruumid</strong></a></li> -->
-													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $this->session->userdata('room');?>">Kalender </a></li>
-													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>allbookings/">Broneeringud 	<?php if(isset($unapprovedBookings)){echo '<span class="badge badge-danger">'.$unapprovedBookings.'</span>';}; ?></a></li>
+													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $this->session->userdata('room');?>"> 	<?php if($menu=='calendar'){echo ' <strong><u>Kalender</u></strong>';} else {echo 'Kalender';} ?>  </a></li>
+													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>allbookings/"> <?php if($menu=='allbookings'){echo ' <strong><u>Broneeringud</u></strong>';} else {echo 'Broneeringud';} ?>  	<?php if(isset($unapprovedBookings)){echo '<span class="badge badge-danger">'.$unapprovedBookings.'</span>';}; ?></a></li>
 											<?php endif; ?>
 											<?php if($this->session->userdata('roleID')==='1'):?>
-													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>building/view/">Asutused</a></li>
-													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>region/view/">Piirkonnad</a></li>
+													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>building/view/"><?php if($menu=='building'){echo ' <strong><u>Asutused</u></strong>';} else {echo 'Asutused';} ?></a></li>
+													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>region/view/"><?php if($menu=='region'){echo ' <strong><u>Piirkonnad</u></strong>';} else {echo 'Piirkonnad';} ?> </a></li>
 											<?php endif; ?>
 											<?php if( $this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2' ||$this->session->userdata('roleID')==='3'):?>
-													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>manageUsers">Kasutajad</a></li>
+													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>manageUsers"><?php if($menu=='users'){echo ' <strong><u>Kasutajad</u></strong>';} else {echo 'Kasutajad';} ?></a></li>
 											<?php endif; ?>
 											<?php if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'):?>
-													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>building/view/<?php  print_r($this->session->userdata['building']);  ?>">Asutuse sätted</a></li>
+													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>building/view/<?php  print_r($this->session->userdata['building']);  ?>"><?php if($menu=='building'){echo ' <strong><u>Asutuse sätted</u></strong>';} else {echo 'Asutuse sätted';} ?></a></li>
 											<?php endif; ?>
 										
 									<?php ;}  if(!empty($this->session->userdata('userID'))){?>
-												<li class="nav-item"><a class="nav-link text-white py-0" href="<?php echo base_url(); ?>profile/view/<?php echo $this->session->userdata('userID');?>"><?php echo $this->session->userdata('userName');?> profiil 	<?php if(isset($requestFromBuilding)){if($requestFromBuilding['requestFromBuilding']=='1'){echo '<span class="badge badge-danger">1</span>';}} ?></a></li>
+												<li class="nav-item"><a class="nav-link text-white py-0" href="<?php echo base_url(); ?>profile/view/<?php echo $this->session->userdata('userID');?>"> <?php if($menu=='profile'){echo ' <strong><u>'.$this->session->userdata('userName').' profiil</u></strong>';} else {echo ''.$this->session->userdata('userName').' profiil';} ?>  	<?php if(isset($requestFromBuilding)){if($requestFromBuilding['requestFromBuilding']=='1'){echo '<span class="badge badge-danger">1</span>';}} ?></a></li>
 									<?php ;}?>
 
 									</ul>

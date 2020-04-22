@@ -12,8 +12,16 @@ class Home extends CI_Controller
 		$this->load->model('home_model');
 	}
 	
+
+	function menu(){
+		$data['menu'] = 'home'; // Capitalize the first letter
+		$data['unapprovedBookings'] = $this->home_model->getUnapprovedBookings($this->session->userdata('building'));
+		return $data;
+		}
+
 	function index()
 	{//	$data['title'] = "Hello Everyone!";
+		$data=$this->menu();
 		$data['rooms'] = $this->fullcalendar_model->getAllRooms();
 		$data['regions'] = $this->fullcalendar_model->getAllRegions();
 		$data['buildings'] = $this->fullcalendar_model->getAllBuildings();
@@ -31,6 +39,7 @@ class Home extends CI_Controller
 			redirect('');
 		  //  show_404();
 		}
+		$data=$this->menu();
 		$data['unapprovedBookings'] = $this->home_model->getUnapprovedBookings($this->session->userdata('building'));
 		$data['requestFromBuilding']=$this->home_model->chech_if_has_request($this->session->userdata('email'));
 	
