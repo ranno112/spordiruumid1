@@ -96,6 +96,7 @@
 			$data['weekdays']=array('Pühapäev','Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev');
 			$data['manageUsers'] = $this->allbookings_model->get_bookings();
 			$data=$this->menu();
+			$data['menu'] = 'calendar'; // Capitalize the first letter
 			$data['rooms']=$this->allbookings_model->fetch_all_rooms_for_checkbox($this->session->userdata('building'));
 			
 			$this->load->view('templates/header', $this->security->xss_clean($data));

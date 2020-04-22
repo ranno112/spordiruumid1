@@ -7,11 +7,18 @@ class Login extends CI_Controller{
     $this->load->model('login_model');
   }
  
+  function menu(){
+	$data['menu'] = 'allbookings'; // Capitalize the first letter
+	$data['unapprovedBookings'] = $this->login_model->getUnapprovedBookings($this->session->userdata('building'));
+	return $data;
+	}
+
   function index(){
+	$data=$this->menu();
 	$data['google']=$this->login();
 	$data['facebook']=$this->fblogin();
-    $this->load->view('templates/header');
-    $this->load->view('pages/login',$data);
+    $this->load->view('templates/header', $this->security->xss_clean($data));
+    $this->load->view('pages/login', $this->security->xss_clean($data));
     $this->load->view('templates/footer');
   }
 
