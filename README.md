@@ -15,7 +15,11 @@ Oma serverisse laadimiseks on vaja muuta application/config kaustas kaks faili: 
 config.php //tuleb määrata URL $config['base_url']
 database.php //tuleb määrata 'hostname', 'username', ning 'password'.
 ```
-reCAPTCHA toimimiseks vaja muuta kahte rida kahes failis. Võta lahti Users.php ning sisesta oma salajane võti järgmisele reale
+reCAPTCHA v2 välja lülitamiseks kommenteeri välja User.php kontrollerist järgmine rida:
+```
+$this->form_validation->set_rules('g-recaptcha-response','Captcha','callback_recaptcha');
+```
+reCAPTCHA toimimiseks vaja muuta kahte rida kahes failis. Võta lahti kontroller Users.php ning sisesta oma salajane võti järgmisele reale
 ```
   $secret='selle_asemele_kleebi_salajane_võti';
 ```
@@ -24,7 +28,7 @@ Seejärel võta lahti vaade login.php ning sisesta oma avalik võti
 <div class="g-recaptcha" data-sitekey="selle_asemele_kleebi_avalik_võti"></div>
 ```
 
-Kui soovid jätta võtta kasutusele sisse logimine Google kontoga, siis tuleb minna kontrollerisse nimega Login.php ning järgmistesse ridadesse panema oma Google poolt genereeritud OAuth 2.0 genereeritud id ja salajane võti.
+Kui soovid võtta kasutusele sisse logimine Google kontoga, siis tuleb minna kontrollerisse nimega Login.php ning järgmistesse ridadesse panema oma Google poolt genereeritud OAuth 2.0 genereeritud id ja salajane võti.
 
 ```
 $google_client->setClientId('selle_asemele_kleebi_clientID'); //Kirjuta oma ClientID	 
