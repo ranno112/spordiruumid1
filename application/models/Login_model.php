@@ -17,7 +17,7 @@ class Login_model extends CI_Model{
 	// Model for Google OAuth begin
 	function is_already_register($id)
 	{
-	 $this->db->where('login_oauth_uid', $id);
+	 $this->db->where('email', $id);
 	 $query = $this->db->get('users');
 	 if($query->num_rows() > 0)
 	 {

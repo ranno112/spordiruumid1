@@ -112,11 +112,16 @@ class Profile extends CI_Controller
 
 		
 
+		//check if users password is set
+		
+
         // Check login
         // if(!$this->session->buildingdata('logged_in')){
         // 	redirect('buildings/login');
 		// }
-		if($this->input->post('passwordnow')=='' && $this->input->post('password')=='' ){
+
+		
+		if($this->input->post('passwordnow')=='' && $this->input->post('password')==''){
 			$data = array(
 				'userName' => $this->input->post('name'),
 				'userPhone' => $this->input->post('phone'),
@@ -127,7 +132,7 @@ class Profile extends CI_Controller
 			$getpasswordhash = $this->profile_model->get_hash($this->session->userdata('email'));
 			print_r($getpasswordhash['pw_hash'] );
 			print_r(password_verify($this->input->post('passwordnow'), $getpasswordhash['pw_hash']));
-			if(password_verify($this->input->post('passwordnow'), $getpasswordhash['pw_hash'])=='1'){
+			if(password_verify($this->input->post('passwordnow'), $getpasswordhash['pw_hash'])=='1' || $this->session->userdata('oauth')){
 				$this->form_validation->set_rules('password', 'Parool', 'required|min_length[5]');
 				$this->form_validation->set_rules('password2', 'Parool uuesti', 'required|matches[password]');
 		

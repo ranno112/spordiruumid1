@@ -86,7 +86,8 @@ class Login extends CI_Controller{
 			'email'     => $email,
 			'userID'  => $userID,
 			'roleID'     => $roleID,
-			'session_id' => TRUE
+			'session_id' => TRUE,
+			'oauth'  => true,
 		);
 
 		if( $data['requestFromBuilding']=='0'){
@@ -148,8 +149,8 @@ class Login extends CI_Controller{
  		 $google_service = new Google_Service_Oauth2($google_client);
  		 $data = $google_service->userinfo->get();
  		 $current_datetime = date('Y-m-d H:i:s');
- 
-		 if($this->login_model->is_already_register($data['id']))
+		
+		 if($this->login_model->is_already_register($data['email']))
 		 {
 			//update data
 			$user_data = array(
@@ -205,7 +206,8 @@ class Login extends CI_Controller{
 			'email'     => $email,
 			'userID'  => $userID,
 			'roleID'     => $roleID,
-			'session_id' => TRUE
+			'session_id' => TRUE,
+			'oauth'  => true,
 		);
 
 		if( $data['requestFromBuilding']=='0'){
