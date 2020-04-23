@@ -35,14 +35,14 @@ $google_client->setClientId('selle_asemele_kleebi_clientID'); //Kirjuta oma Clie
 $google_client->setClientSecret('selle_asemele_kleebi_salajane_võti'); //Kirjuta oma Client Secret Key
 $google_client->setRedirectUri('http://localhost/spordiruumid/login/login'); //Vajadusel muuda suunamise universaalset ressursiidentifikaatorit (Redirect Uri), näiteks localhost asemel kirjuta domeeninimi.
 ```
-
-Facebooki sisse logimist saad tööle panna config kaustast facebook.php nimelisest failist 
+Facebooki oAuth v2 kasutamiseks registreeri API ning "Facebook For Developers" konsoolist leia registreeritud rakenduse seadetes "OAuth Redirect URIs" ning kirjuta sinna "sinu_domeen/login/fblogin". Seejärel kui oled API võtmed genereerinud tuleb need sisestada config kaustas facebook.php nimelise faili 
 ```
 $config['facebook_app_id']                = 'facebook_app_id'; //asenda oma võtmega
 $config['facebook_app_secret']            = 'facebook_app_secret'; //asenda oma võtmega
 $config['facebook_login_redirect_url']    = 'login/fblogin'; // Facebook konsoolis seadete all "Valid OAuth Redirect URIs"
 $config['facebook_logout_redirect_url']   = 'login/logout';
 ```
+Täpsemad juhised oAuth v2 seadistamiseks leiad [Facebooki]: https://www.youtube.com/watch?v=1xCt3cBQ8bQ ja [Google]: https://www.webslesson.info/2020/03/google-login-integration-in-codeigniter.html juhenditest
 
 Rakenduse tööle saamiseks tuleb luua SQL tabelid:
 ```sql
