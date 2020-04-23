@@ -83,7 +83,7 @@ CREATE TABLE `users` (
 );
 
 INSERT INTO `users` (`userID`, `login_oauth_uid`, `roleID`, `buildingID`, `email`, `status`, `userName`, `userPhone`, `pw_hash`, `session_id`, `created_at`, `updated_at`) VALUES
-(1, '', 1, 0, 'admin@admin.ee', 1, 'Admin', '12345', 'admin', '', '2020-03-02 09:00:46', '0000-00-00 00:00:00');
+(1, '', 1, 0, 'admin@admin.ee', 1, 'Admin', '12345', '$2y$10$L9ptq3zKFXK447U.m4g48emDTNx2W4C7aQeahRUJsHcuq1sneb/eW', '', '2020-03-02 09:00:46', '0000-00-00 00:00:00');
 
 CREATE TABLE `bookingTypes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
