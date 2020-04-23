@@ -28,7 +28,7 @@ Seejärel võta lahti vaade login.php ning sisesta oma avalik võti
 <div class="g-recaptcha" data-sitekey="selle_asemele_kleebi_avalik_võti"></div>
 ```
 
-Kui soovid võtta kasutusele sisse logimine Google kontoga, siis tuleb minna kontrollerisse nimega Login.php ning järgmistesse ridadesse panema oma Google poolt genereeritud OAuth 2.0 genereeritud id ja salajane võti.
+Kui soovid võtta kasutusele sisse logimine Google kontoga, siis Google arendajate konsoolis tuleb määrata Redirect URL "https://sinu_domeen/login/login", genereerida API võtmed, seejärel tuleb minna kontrollerisse nimega Login.php ning järgmistesse ridadesse panema oma Google poolt genereeritud OAuth 2.0 genereeritud id ja salajane võti.
 
 ```
 $google_client->setClientId('selle_asemele_kleebi_clientID'); //Kirjuta oma ClientID	 
