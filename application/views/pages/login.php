@@ -29,7 +29,7 @@
 					</div>
 					<div class="form-label-group pt-1 pb-4 pl-0 text-center">
 						<button type="submit" class="mx-auto btn-width-lg btn btn-custom txt-lg text-white btn-block mb-2">Logi sisse</button>
-						<a class="link-deco align-self-center mt-2 pb-0" href="#">Unustasid parooli?</a>
+						<a class="link-deco align-self-center mt-2 pb-0" href="<?php echo base_url();?>users/registerSelf">Pole kontot?</a>
 					</div>
 				</div>
 			<?php echo form_close(); ?>
