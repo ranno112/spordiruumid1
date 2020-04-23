@@ -15,7 +15,7 @@ Oma serverisse laadimiseks on vaja muuta application/config kaustas kaks faili: 
 config.php //tuleb määrata URL $config['base_url']
 database.php //tuleb määrata 'hostname', 'username', ning 'password'.
 ```
-reCAPTCHA v2 välja lülitamiseks kommenteeri välja User.php kontrollerist järgmine rida:
+Kui sa ei soovi võtta kasutusele reCAPTCHA v2, siis selle välja lülitamiseks kommenteeri välja User.php kontrollerist järgmine rida:
 ```
 $this->form_validation->set_rules('g-recaptcha-response','Captcha','callback_recaptcha');
 ```
@@ -27,24 +27,26 @@ Seejärel võta lahti vaade login.php ning sisesta oma avalik võti
 ```
 <div class="g-recaptcha" data-sitekey="selle_asemele_kleebi_avalik_võti"></div>
 ```
+Täpsemad juhised reCaptcha seadistamise kohta leiad [siit](http://avenir.ro/integrating-googles-recaptcha-in-codeigniters-form-validation-the-callback-way/). reCAPTCHA registreerimiseks mine aadressile https://www.google.com/recaptcha/intro/index.html.
 
-Kui soovid võtta kasutusele sisse logimine Google kontoga, siis tuleb minna kontrollerisse nimega Login.php ning järgmistesse ridadesse panema oma Google poolt genereeritud OAuth 2.0 genereeritud id ja salajane võti.
+Kui soovid võtta kasutusele sisse logimine Google kontoga kasutades oAuth v2, siis Google arendajate konsoolis tuleb määrata Redirect URL "https://sinu_domeen/login/login", genereerida API võtmed, seejärel tuleb minna kontrollerisse nimega Login.php ning järgmistesse ridadesse panema oma Google poolt genereeritud OAuth 2.0 genereeritud id ja salajane võti.
 
 ```
 $google_client->setClientId('selle_asemele_kleebi_clientID'); //Kirjuta oma ClientID	 
 $google_client->setClientSecret('selle_asemele_kleebi_salajane_võti'); //Kirjuta oma Client Secret Key
 $google_client->setRedirectUri('http://localhost/spordiruumid/login/login'); //Vajadusel muuda suunamise universaalset ressursiidentifikaatorit (Redirect Uri), näiteks localhost asemel kirjuta domeeninimi.
 ```
-
-Facebooki sisse logimist saad tööle panna config kaustast facebook.php nimelisest failist 
+Facebooki oAuth v2 kasutamiseks registreeri API ning "Facebook For Developers" konsoolist leia registreeritud rakenduse seadetes "OAuth Redirect URIs" ning kirjuta sinna "sinu_domeen/login/fblogin". Seejärel kui oled API võtmed genereerinud tuleb need sisestada config kaustas facebook.php nimelise faili 
 ```
 $config['facebook_app_id']                = 'facebook_app_id'; //asenda oma võtmega
 $config['facebook_app_secret']            = 'facebook_app_secret'; //asenda oma võtmega
 $config['facebook_login_redirect_url']    = 'login/fblogin'; // Facebook konsoolis seadete all "Valid OAuth Redirect URIs"
 $config['facebook_logout_redirect_url']   = 'login/logout';
 ```
+Täpsemad juhised oAuth v2 seadistamiseks leiad [siit](https://www.youtube.com/watch?v=1xCt3cBQ8bQ "Facebooki kohta") ja [siit](https://www.webslesson.info/2020/03/google-login-integration-in-codeigniter.html "Google kohta").
 
-Rakenduse tööle saamiseks tuleb luua SQL tabelid:
+
+Rakenduse tööle saamiseks tuleb luua MySQL tabelid:
 ```sql
 CREATE TABLE `bookings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -81,7 +83,7 @@ CREATE TABLE `users` (
 );
 
 INSERT INTO `users` (`userID`, `login_oauth_uid`, `roleID`, `buildingID`, `email`, `status`, `userName`, `userPhone`, `pw_hash`, `session_id`, `created_at`, `updated_at`) VALUES
-(1, '', 1, 0, 'admin@admin.ee', 1, 'Admin', '12345', 'admin', '', '2020-03-02 09:00:46', '0000-00-00 00:00:00');
+(1, '', 1, 0, 'admin@admin.ee', 1, 'Admin', '12345', '$2y$10$L9ptq3zKFXK447U.m4g48emDTNx2W4C7aQeahRUJsHcuq1sneb/eW', '', '2020-03-02 09:00:46', '0000-00-00 00:00:00');
 
 CREATE TABLE `bookingTypes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
