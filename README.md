@@ -42,7 +42,7 @@ $config['facebook_app_secret']            = 'facebook_app_secret'; //asenda oma 
 $config['facebook_login_redirect_url']    = 'login/fblogin'; // Facebook konsoolis seadete all "Valid OAuth Redirect URIs"
 $config['facebook_logout_redirect_url']   = 'login/logout';
 ```
-Täpsemad juhised oAuth v2 seadistamiseks leiad [Facebooki](https://www.youtube.com/watch?v=1xCt3cBQ8bQ) ja [Google](https://www.webslesson.info/2020/03/google-login-integration-in-codeigniter.html) juhenditest
+Täpsemad juhised oAuth v2 seadistamiseks leiad [siit](https://www.youtube.com/watch?v=1xCt3cBQ8bQ "Facebooki kohta") ja [siit](https://www.webslesson.info/2020/03/google-login-integration-in-codeigniter.html "Google kohta") juhenditest
 
 
 Rakenduse tööle saamiseks tuleb luua SQL tabelid:
