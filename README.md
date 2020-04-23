@@ -45,7 +45,7 @@ $config['facebook_logout_redirect_url']   = 'login/logout';
 Täpsemad juhised oAuth v2 seadistamiseks leiad [siit](https://www.youtube.com/watch?v=1xCt3cBQ8bQ "Facebooki kohta") ja [siit](https://www.webslesson.info/2020/03/google-login-integration-in-codeigniter.html "Google kohta").
 
 
-Rakenduse tööle saamiseks tuleb luua SQL tabelid:
+Rakenduse tööle saamiseks tuleb luua MySQL tabelid:
 ```sql
 CREATE TABLE `bookings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
