@@ -42,6 +42,21 @@ class Home_model extends CI_Model
 		}
 		$query = $this->db->get('rooms');
         return $query->result();
+	}
+	
+	function getRoomsFromRegion($country_id)
+    {
+		$this->db->select("rooms.id, rooms.roomName");
+        $this->db->where('buildings.regionID', $country_id);
+	//	$this->db->order_by('id', 'ASC');
+		$this->db->join('buildings', 'rooms.buildingID = buildings.id' , 'left');
+		$this->db->join('regions', 'buildings.id = regions.regionID' , 'left');
+        $query = $this->db->get('rooms');
+        $output = '<option value="">Select Asutus</option>';
+        foreach ($query->result() as $row) {
+            $output .= '<option  data-value="' . $row->id . '" value="' . $row->roomName . '">'.$row->roomName.'</option>';
+		}
+	    return $output;
     }
 
 

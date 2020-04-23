@@ -64,6 +64,14 @@ class Home extends CI_Controller
 	 }
 	}
 
+	function fetch_rooms_from_region()
+	{
+	 if($this->input->post('country_id'))
+	 {
+	  echo $this->home_model->getRoomsFromRegion($this->input->post('country_id'));
+	 }
+	}
+
 
 	function fetch_building()
 	{

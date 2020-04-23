@@ -13,7 +13,7 @@
 				<div class="form-label-group col-sm-5 col-lg-3 p-0 mr-2">
 
 					<label for="region">Piirkond</label>
-					<input id="region" list="regions" class="form-control arrow" type="text" value="<?php echo $rooms['regionName']; ?>">
+					<input id="region" list="regions" class="form-control arrow" type="text" value="<?php echo $rooms['regionName'];?>"  autocomplete="off">
 					<datalist id="regions">
 						<?php foreach ($regions as $row) {
 							echo '<option  data-value="' . $row->regionID . '" value="' . $row->regionName . '"></option>';
@@ -25,7 +25,7 @@
 
 				<div class="form-label-group col-sm-5 col-lg-3 p-0 mr-2">
 					<label for="sport_facility">Asutus</label>
-					<input id="sport_facility" list="asutus" class="form-control arrow" value="<?php echo $rooms['name']; ?> ">
+					<input id="sport_facility" list="asutus" class="form-control arrow" value="<?php echo $rooms['name']; ?>"  autocomplete="off">
 					<datalist id="asutus">
 						<?php foreach ($sportPlaces as $each) {
 							if ($rooms['regionID'] == $each->regionID) {
@@ -41,7 +41,7 @@
 
 			<div class="form-label-group col-sm-5 col-lg-3 p-0 mr-2">
 				<label for="room">Ruum</label>
-				<input id="room" list="saal" class="form-control arrow" value="<?php echo $rooms['roomName']; ?>">
+				<input id="room" list="saal" class="form-control arrow" value="<?php echo $rooms['roomName'];?>"  autocomplete="off">
 				<datalist id="saal">
 					<?php foreach ($sportPlacesToChoose as $each) {
 						if ($this->session->userdata('roleID') == '2' or $this->session->userdata('roleID') == '3') {
@@ -1277,6 +1277,17 @@
 						$('#asutus').html(data).appendTo("#asutus");
 					}
 				});
+				$.ajax({
+                    url: "<?php echo base_url(); ?>home/fetch_rooms_from_region",
+                    method: "POST",
+                    data: {
+                        country_id: country_id
+                    },
+                    success: function(data) {
+						$('#saal').html(data).appendTo("#saal");
+                     
+                    }
+                });
 			} else {
 			
 				$('#room').val('');
