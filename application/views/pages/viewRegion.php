@@ -2,7 +2,7 @@
 <div class="container">
 	<div class="row justify-content-center">
 	
-		<div class="col-3">
+		<div class="col-12 col-sm-8 col-md-6 col-xl-4">
 		<div class="table-container mt-3">
 				<div class="mb-2 pb-5">
 					<a class="btn btn-custom text-white text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss cursor-pointer" onclick="location.href='<?php echo base_url();?>createRegion'">

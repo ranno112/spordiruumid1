@@ -1,15 +1,15 @@
 <div class="container text-darkblue">
 	<?php echo form_open('users/update', array('id' => 'change','class' => 'mt-5 container-md')); ?>
         <div class="form-bg">
-	        <div class="mx-auto" style="width: 44%;">
+	        <div class="mx-auto" style="width: 60%;">
                 
                 <h4 class="mt-5 txt-xl">Konto info</h4>
-                <div class="form-label-group mt-4">
+                <div class="col-12 my-4">
                     <label for="publicInfo">E-mail</label>
                	<input name="email" type="text"  class="form-control arrow" disabled value="<?php echo $post['email']; ?>">
                 </div>
 
-                <div class="form-label-group mt-3">
+                <div class="col-12 my-4">
                     <label for="status">Staatus</label>
                     <select id="status" name="status" class="form-control arrow">
                         <option value="1" <?php if ($post['status']==1) echo ' selected'?>>Aktiivne</option>
@@ -19,7 +19,7 @@
 			
 				
 				<div class="row">
-                    <div class="col">
+                    <div class="col-12 col-md-6">
                         <label for="building">Asutus</label>
                            
 						<?php if($this->session->userdata('roleID')==='2' && $post['roleID']!=1):?>
@@ -43,7 +43,7 @@
 
 					</div>
 					
-                     <div class="col">
+                     <div class="col-12 col-md-6">
                         <label for="role">Roll</label>
                       
                       
@@ -81,7 +81,7 @@
                 </div>
 
 			<br/>
-                <div class="d-flex justify-content-end mt-4 mb-5">
+                <div class="row d-flex justify-content-end mt-4 mb-5">
                     <a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="<?php echo base_url(); ?>manageUsers">Katkesta</a>
                     <button type="submit" class="btn btn-custom text-white txt-xl">Salvesta muudatused</button>
                 </div>

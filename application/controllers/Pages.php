@@ -41,7 +41,7 @@ class Pages extends CI_Controller
                         };
                 };
 	   
-	       if($page=='fullcalendar'||$page=='createBuilding'){
+	       if($page=='fullcalendar'||$page=='createBuilding'||$page=='createRegion'){
 		$data['regions'] = $this->pages_model->getAllRegions();
                 //print_r($data['rooms']);
                 $this->load->view('templates/header', $data);
