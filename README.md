@@ -15,6 +15,11 @@ Oma serverisse laadimiseks on vaja muuta application/config kaustas kaks faili: 
 config.php //tuleb määrata URL $config['base_url']
 database.php //tuleb määrata 'hostname', 'username', ning 'password'.
 ```
+Tootmiskeskkonda üles laadimiseks soovitav on sisse lülitada turvalist sessiooni config.php failist:
+```
+$config['cookie_secure']	= TRUE;
+```
+
 Kui sa ei soovi võtta kasutusele reCAPTCHA v2, siis selle välja lülitamiseks kommenteeri välja User.php kontrollerist järgmine rida:
 ```
 $this->form_validation->set_rules('g-recaptcha-response','Captcha','callback_recaptcha');
