@@ -60,8 +60,7 @@ class Booking extends CI_Controller {
 	}
 	public function contactPerson_check($str= '')
 	{
-			if ($str == '' && $this->input->post('type')!='4')
-			{
+			if ($str == '' && $this->input->post('type')!='4'){
 				$this->session->set_flashdata('validationErrorMessageContactPerson', "<small class='text-danger'>See väli on kohustuslik</small>");
 				return FALSE;
 			}
@@ -70,8 +69,7 @@ class Booking extends CI_Controller {
 				return FALSE;
 			}
 
-			else
-			{
+			else{
 					return TRUE;
 			}
 	}
@@ -117,7 +115,9 @@ class Booking extends CI_Controller {
 			$data['allBookingInfo'] = $this->booking_model->getAllBookings();
 			
 			$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
+
 			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactPerson_check');
+
 			$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
 			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
 			$this->form_validation->set_rules('workoutType', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars');
