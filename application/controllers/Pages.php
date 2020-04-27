@@ -41,7 +41,7 @@ class Pages extends CI_Controller
                         };
                 };
 	   
-	       if($page=='fullcalendar'){
+	       if($page=='fullcalendar' ||$page=='privacypolicy'){
 		$data['regions'] = $this->pages_model->getAllRegions();
                 //print_r($data['rooms']);
                 $this->load->view('templates/header', $data);
