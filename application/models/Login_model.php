@@ -94,4 +94,12 @@ class Login_model extends CI_Model{
 			return $query;
 		}
 
+		function update_last_login($email){
+			$data = array(
+				'last_login' => date('Y-m-d H:i:s')
+			);
+			$this->db->where('email',$email);
+			return $this->db->update('users', $data);
+		}
+
 }

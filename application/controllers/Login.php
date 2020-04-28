@@ -116,6 +116,7 @@ class Login extends CI_Controller{
 		$this->session->unset_userdata('fb_expire'); 
 		$this->session->unset_userdata('login_oauth_uid');
 		$this->session->set_flashdata('success', 'Oled edukalt sisse logitud');
+		$this->login_model->update_last_login($email);
 		redirect('');
 	}
 	// Load login/profile view 
@@ -221,6 +222,7 @@ class Login extends CI_Controller{
 			$building  = $data['buildingID'];
 			$sesdata['building']=$building;
 		}
+		$this->login_model->update_last_login($email);
 		$this->session->set_userdata($sesdata);
 			if(!array_key_exists('building',$this->session->userdata())){
 				$this->session->set_flashdata('success', 'Teile on määratud eriõigused. Palun aktsepteerige need või lükake tagasi.');
@@ -235,6 +237,7 @@ class Login extends CI_Controller{
 		   
 		$this->session->unset_userdata('access_token'); 
 		$this->session->set_flashdata('success', 'Oled edukalt sisse logitud');
+		
 		redirect('');
 	 }
 	}

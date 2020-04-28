@@ -259,7 +259,7 @@
 						$building  = $data['buildingID'];
 						$sesdata['building']=$building;
 					}
-
+					$this->user_model->update_last_login($email);
 					$this->session->set_userdata($sesdata);
 					$this->session->set_flashdata('success', 'Oled edukalt sisse logitud');
 					// access login for admin
