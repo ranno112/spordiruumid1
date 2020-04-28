@@ -8,7 +8,7 @@ Rakenduse näol on tegemist kohaliku omavalitsuste spordiga seotud allasutuste s
 
 Demo keskkonnaga saad tutvuda lingil https://www.spordiruumid.ee/.
 
-Käesolev töö on GNU v3 litsentsi all ning kõigile huvilistele vabalt kättesaadav. Täpsemalt loe litsentsitingimusi litsentsifailist. Rakendus kasutab FullCalendar Premium moodulit erilitsentsi all, seega igasugune rakenduse funktsionaalsuse lisamine või muutmine peab olema lähtekoodina avalik. Täpsem info https://fullcalendar.io/license/premium. Isiklikul eesmärgil koodi muutmisel ja rakenduse kasutamisel te ei pea lähtekoodi avaldama.
+Käesolev töö on GNU v3 litsentsi all ning kõigile huvilistele vabalt kättesaadav. Rakendus kasutab FullCalendar Premium moodulit erilitsentsi all, seega igasugune rakenduse funktsionaalsuse lisamine või muutmine peab olema lähtekoodina avalik. Täpsem info https://fullcalendar.io/license/premium. Isiklikul eesmärgil koodi muutmisel ja rakenduse kasutamisel te ei pea lähtekoodi avaldama.  Täpsemalt loe litsentsitingimusi litsentsifailist https://github.com/Viiskorda/spordiruumid/blob/master/LICENSE.
 
 Oma serverisse laadimiseks on vaja muuta application/config kaustas kaks faili: config.php ning database.php:
 ```
