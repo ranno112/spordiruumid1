@@ -83,6 +83,7 @@ CREATE TABLE `users` (
   `session_id` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL,
+	`last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `requestFromBuilding` tinyint default '0',
    PRIMARY KEY (userID)
 );
