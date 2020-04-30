@@ -15,7 +15,7 @@
 			
 				<?php if ($editProfile[0]['requestFromBuilding']==1){?>
 				<?php echo form_open('profile/acceptTheRequest'); ?>
-				<h4 class="pt-2 txt-xl px-5 mx-5">Teile on antud <?php if($this->session->userdata['roleID']=='2'){echo "peaadministraatori";}else{echo 'administraatori';};?> õigused asutuses <?php echo $editProfile[0]['name'];?>. Õiguste nõustumisega annate juurdepääsu teiste asutuse kasutajatele teie nimele ja telefoni numbrile.
+				<h4 class="pt-2 txt-xl px-5 mx-5">Teid on määratud <?php if($this->session->userdata['roleID']=='2'){echo "peaadministraatoriks";}else{echo 'administraatoriks';};?> asutuses <?php echo $editProfile[0]['name'];?>. Rolli kinnitamisel annate loa juurdepääsuks teistele asutusega seotud kasutajatele teie nimele ja telefoni numbrile. 
 				</h4>
 				
 				<div class="d-flex p-0 mt-4 px-5 mx-5">
@@ -23,7 +23,7 @@
 						<label>Tee valik</label>
 					
 						<select id="giveaccess" name="giveaccess" class="form-control arrow" >
-                                    <option value="0"> Võtan <?php if($this->session->userdata['roleID']=='2'){echo "peaadministraatori";}else{echo 'administraatori';};?> õigused vastu</option>
+                                    <option value="0"> Kinnitan <?php if($this->session->userdata['roleID']=='2'){echo "peaadministraatori";}else{echo 'administraatori';};?> rolli</option>
                                     <option value="1" >Lükkan pakkumise tagasi</option>
                          </select>
 					
