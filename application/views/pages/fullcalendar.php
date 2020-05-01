@@ -280,7 +280,7 @@
 									<input type="hidden" id="dontShow" name="dontShow" value="1">
 									<input type="hidden" id="BookingID" name="BookingID" value="">
 									<input type="hidden" id="isPeriodic" name="isPeriodic" value="0">
-									<input type="submit" id="changeTimes" class="btn btn-info text-white txt-strong btn-width-lg" value="Muuda valitud">
+									<input type="submit" id="changeTimes" class="btn btn-info text-white txt-strong btn-width-lg mb-2" value="Muuda valitud">
 									<input type="submit" id="changePeriodTimes" class="btn btn-info text-white txt-strong btn-width-lg" value="Muuda hooajaliselt">
 								</form>
 
