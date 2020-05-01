@@ -550,7 +550,7 @@
     top:37px;
 		position: fixed;
 		margin: auto;
-		width: 500px;
+		/* width: 500px; */
 		height: 100%;
 		-webkit-transform: translate3d(0%, 0, 0);
 		-ms-transform: translate3d(0%, 0, 0);
