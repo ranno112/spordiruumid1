@@ -269,27 +269,28 @@
 								<input type="hidden" name="eventid" id="event_id" value="0" />
 							</div>
 
-							<div class="modal-footer d-block m-0 py-2 text-center">
+							<div class="modal-footer d-block m-0  text-sm-center">
 
-								<form id="approveCheck" class="m-0">
+								<form id="approveCheck" class="m-0 row justify-content-sm-center">
 
-									<input type="submit" class="btn btn-custom text-white txt-strong btn-width-lg example1" value="Kinnita">
+									<input type="submit" class="btn btn-custom text-white txt-strong btn-width-lg example1 m-1 col-5" value="Kinnita">
 								</form>
 
-								<form id="change" method="post" action="<?php echo base_url(); ?>edit/index" class="m-0 pt-2">
+								<form id="change" method="post" action="<?php echo base_url(); ?>edit/index" class="row justify-content-sm-center m-0 ">
 									<input type="hidden" id="dontShow" name="dontShow" value="1">
 									<input type="hidden" id="BookingID" name="BookingID" value="">
 									<input type="hidden" id="isPeriodic" name="isPeriodic" value="0">
-									<input type="submit" id="changeTimes" class="btn btn-info text-white txt-strong btn-width-lg  mb-2" value="Muuda valitud">
-									<input type="submit" id="changePeriodTimes" class="btn btn-info text-white txt-strong btn-width-lg mb-2" value="Muuda hooajaliselt">
+									<input type="submit" id="changeTimes" class="btn btn-info text-white txt-strong btn-width-lg m-1 col-5" value="Muuda valitud">
+									<div class="w-100 d-none d-block d-sm-none" ></div>
+									<input type="submit" id="changePeriodTimes" class="btn btn-info text-white txt-strong btn-width-lg m-1 col-5" value="Muuda hooajaliselt">
 								</form>
 
-								<form id="delete" class="m-0 ">
-									<input type="submit" class="btn btn-delete text-white txt-strong btn-width-lg" value="Kustuta" id="deleteChecked" name="deleteChecked">
+								<form id="delete" class="m-0 row justify-content-sm-center ">
+									<input type="submit" class="btn btn-delete text-white txt-strong btn-width-lg  m-1 col-5" value="Kustuta" id="deleteChecked" name="deleteChecked">
 								</form>
 
-								<form id="takesPlaceCheck" class="m-0 pt-2">
-									<input type="submit" class="btn btn-second text-white txt-strong btn-width-lg" value="Ei toimunud">
+								<form id="takesPlaceCheck" class="m-0 row justify-content-sm-center">
+									<input type="submit" class="btn btn-second text-white txt-strong btn-width-lg  m-1 col-5" value="Ei toimunud">
 								</form>
 							</div>
 
