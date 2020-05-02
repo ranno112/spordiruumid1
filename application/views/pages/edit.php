@@ -122,7 +122,7 @@
 
 						<div class="row d-flex justify-content-end mt-5 px-md-5 mx-md-5">
 							<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#" onClick="history.go(-1); return false;">Katkesta</a>
-							<input type="submit" id="changeTimes" class="btn btn-custom col-12 col-sm-3 text-white txt-xl" value="Salvesta muudatused">
+							<input type="submit" id="changeTimes" class="btn btn-custom col-12 col-sm-4 text-white txt-xl" value="Salvesta muudatused">
 						</div>
 
 					</form>
@@ -275,7 +275,7 @@
 
 						<div class="row d-flex justify-content-end mt-5 px-md-5 mx-md-5">
 							<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#" onClick="history.go(-1); return false;">Katkesta</a>
-							<input type="submit" id="changePeriodTimes" class="btn btn-custom col-12 col-sm-3 text-white txt-xl" value="Salvesta muudatused">
+							<input type="submit" id="changePeriodTimes" class="btn btn-custom col-12 col-sm-4 text-white txt-xl" value="Salvesta muudatused">
 						</div>
 
 					</form>
