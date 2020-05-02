@@ -1,6 +1,6 @@
 <div class="container">
     <div class="table-container mt-3">
-        <div class="mb-2 pb-5">
+       <div class="mb-2 pb-5">
 		<?php if( $this->session->userdata('roleID')==='1' || $this->session->userdata('roleID')==='2'):?>
 			<a class="btn btn-custom text-white text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss cursor-pointer" onclick="location.href='<?php echo base_url(); ?>users/addRightsToUser';">
                 <p class="m-0 txt-lg txt-strong text-center cursor-pointer">Lisa asutuse kasutaja</p>
@@ -9,7 +9,7 @@
         </div>
 		<?php if( $this->session->userdata('roleID')==='1'){?>
 			<h4	>	Asutuste kasutajad</h4>
-        <table class="table-borderless table-users mt-3">
+        <table class="table-borderless table-responsive-md table-users mt-3">
             <thead class="bg-grey border-bottom ">
                 <tr>
 				<th class="pl-3 py-2 txt-strong text-darkblue" scope="col">Email</th>
@@ -50,7 +50,7 @@
 
 		<?php if( $this->session->userdata('roleID')==='2'|| $this->session->userdata('roleID')==='3'){?>
 			<h4	>	Asutuse kasutajad</h4>
-			<table class="table-borderless table-users mt-3">
+			<table class="table-borderless table-responsive-md table-users mt-3">
             <thead class="bg-grey border-bottom ">
                 <tr>
                     <th class="pl-3 py-2 txt-strong text-darkblue" scope="col">Email</th>
@@ -98,9 +98,7 @@
  <head>  
   
  <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>          
-   <style>  
-         
-      </style>  
+ 
  </head>  
  
 
@@ -172,7 +170,7 @@
            },  
 		
           
-          
+           responsive: true
       });  
 
 

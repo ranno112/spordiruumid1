@@ -84,7 +84,7 @@
             </a>
         </div>
 		<h4	>	Asutused</h4>
-        <table class="table-borderless table-users mt-3">
+        <table class="table-borderless table-responsive-md table-users mt-3">
             <thead class="bg-grey border-bottom ">
             <tr>
 				<th class="pl-3 py-2 txt-strong text-darkblue" scope="col">Asutuse nimi</th>
