@@ -169,8 +169,9 @@
 			
            },  
 		
-          
-           responsive: true
+		//    "scrollX": true,
+           responsive: true,
+		   fixedHeader: true
       });  
 
 

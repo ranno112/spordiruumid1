@@ -126,7 +126,19 @@ foreach($rooms as $value){
 	
 		);
 
+		if(window.innerWidth < 800){
+				console.log('sdf');
+				calendar1.changeView('resourceTimeGridDay');
+				
+			}
+		 else	if(window.innerWidth < 1400){
+				console.log('sdf');
+				calendar1.changeView('resourceTimeGridFourDay');
+			} else {
+				calendar1.changeView('resourceTimeGridWeek');
+			}
 
+			calendar1.setOption('height', 951);
     calendar1.render();
 
 		
@@ -171,19 +183,7 @@ foreach($rooms as $value){
 		} );
 
 	
-			if(window.innerWidth < 800){
-				console.log('sdf');
-				calendar1.changeView('resourceTimeGridDay');
-				
-			}
-		 else	if(window.innerWidth < 1400){
-				console.log('sdf');
-				calendar1.changeView('resourceTimeGridFourDay');
-			} else {
-				calendar1.changeView('resourceTimeGridWeek');
-			}
-
-			calendar1.setOption('height', 951);
+	
 			
 
 

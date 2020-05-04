@@ -3,10 +3,10 @@
   
       <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>   -->
       <!-- <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>   -->
-	 <link href="	 https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet">
+
 
       <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-	 <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>           
+      
       <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" />   -->
 
  </head>  
@@ -39,8 +39,8 @@
 							   <th>Alates</th>  
                                <th>Kuni</th>  
                                <th>Kestus</th>  
-					<th class="py-2 txt-strong text-darkblue" scope="col">Kinnitatud</th>
-                    <th class="py-2 txt-strong text-darkblue" scope="col">Klubi</th>
+					<th  data-priority="1" class="py-2 txt-strong text-darkblue" scope="col">Kinnitatud</th>
+                    <th data-priority="2" class="py-2 txt-strong text-darkblue" scope="col">Klubi</th>
                     <th class="py-2 txt-strong text-darkblue" scope="col">Trenn</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">Kommentaar</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">Kontaktisik</th>
@@ -92,7 +92,10 @@
                      "orderable":false,  
                 },  
            ], 
-		 responsive: true 
+		 responsive: true ,
+		// "scrollX": true,
+		 fixedHeader: true,
+		 colReorder: true
       });  
 
 	
@@ -129,7 +132,10 @@ function fetch_data(is_date_search, start_date, end_date)
                      "orderable":false,  
                 },  
            ],  
-		 responsive: true
+		 responsive: true,
+		// "scrollX": true,
+		 fixedHeader: true,
+		 colReorder: true
   });
  }
 

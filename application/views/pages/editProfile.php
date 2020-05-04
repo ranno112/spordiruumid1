@@ -12,9 +12,9 @@
 				</div>
 				<?php echo form_open('profile/updateProfile', array('id' => 'change')); ?>
 				<?php foreach ($editProfile as $value) {?>
-					<h4 class="pt-2 txt-xl px-5 mx-5">Konto info</h4>
+					<h4 class="pt-2 txt-xl px-5 mx-md-5">Konto info</h4>
 
-					<div class="row d-flex p-0 mt-4 px-5 mx-5">
+					<div class="row d-flex p-0 mt-4 px-5 mx-md-5">
 						<div class="form-label-group col-12 col-md-6 py-0 pl-0 pr-5">
 							<label>E-mail*</label>
 							<input type="email" class="form-control"  value="<?php echo $value['email'];?>" disabled>
@@ -28,7 +28,7 @@
 					</div>
 
 					<?php if($value['roleID']=='2' || $value['roleID']=='3'  || $value['roleID']=='1'):?>
-					<div class="row d-flex p-0 mt-4 px-5 mx-5">
+					<div class="row d-flex p-0 mt-4 px-5 mx-md-5">
 						<div class="form-label-group col-12 col-md-6 py-0 pl-0 pr-5">
 							<label>Roll*</label>
                                 <select id="roleID" name="roleID" class="form-control arrow" disabled>
@@ -54,8 +54,8 @@
 							</div>
 						<?php endif;?>
 
-					<h4 class="mt-5 txt-xl px-5 mx-5">Kasutaja info</h4>
-					<div class="row d-flex p-0 mt-4 px-5 mx-5">
+					<h4 class="mt-5 txt-xl px-5 mx-md-5">Kasutaja info</h4>
+					<div class="row d-flex p-0 mt-4 px-5 mx-md-5">
 						<div class="form-label-group col-12 col-md-6 py-0 pl-0 pr-5">
 							<label>Nimi* <?php if($this->session->flashdata('validationErrorMessageForName')){  echo $this->session->flashdata('validationErrorMessageForName');} ?></label>
 							<input type="text" class="form-control" name="name" value="<?php if(!empty($this->session->flashdata('key')['name'])){ echo $this->session->flashdata('key')['name'];} else {echo $value['userName'];}?>">
@@ -65,11 +65,11 @@
 							<input type="text" class="form-control" name="phone" value="<?php if(!empty($this->session->flashdata('key')['phone'])){ echo $this->session->flashdata('key')['phone'];} else {echo $value['userPhone'];}?>">
 						</div>
 					</div>
-					<div class="tab-content mt-5 txt-xl px-5 mx-5" >
+					<div class="tab-content mt-5 txt-xl px-5 mx-md-5" >
 					<button id="hidepasswordinputs" type="button" class="btn  txt-xl btn-info">Muuda parool</button>
 					</div>
 					<div id="hide">
-						<div class="row d-flex p-0 mt-4 px-5 mx-5">
+						<div class="row d-flex p-0 mt-4 px-5 mx-md-5">
 							<div class="form-label-group col-12 col-md-6 py-0 pl-0 pr-5">
 								<label>Sisesta kehtiv parool <?php if($this->session->flashdata('passwordnow')){  echo '<small class="text-danger">'.$this->session->flashdata('passwordnow').'</small>';} ?></label>
 								<input id="passwordnow" type="password" class="form-control" name="passwordnow" placeholder="Salasõna" value="<?php if(!empty($this->session->flashdata('key')['passwordnow'])){ echo $this->session->flashdata('key')['passwordnow'];} ?>">
@@ -77,7 +77,7 @@
 							</div>
 					
 						</div>
-						<div class="row d-flex p-0 mt-4 px-5 mx-5">
+						<div class="row d-flex p-0 mt-4 px-5 mx-md-5">
 							<div class="form-label-group col-12 col-md-6 py-0 pl-0 pr-5">
 								<label>Uus parool <?php if($this->session->flashdata('password')){  echo $this->session->flashdata('password');} ?></label>
 								<input id="newpassword" type="password" class="form-control" name="password" placeholder="Salasõna">
@@ -91,7 +91,7 @@
 						</div>
 					</div>
 
-					<div class="row d-flex justify-content-end my-5 px-5 mx-5">
+					<div class="row d-flex justify-content-end my-5 px-5 mx-md-5">
                         <a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="<?php echo base_url(); ?>profile/view/<?php echo $this->session->userdata('userID');?>">Katkesta</a>
                         <button type="submit" class="btn btn-custom col-md-5 text-white txt-xl">Salvesta muudatused</button>
                     </div>
