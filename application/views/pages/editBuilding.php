@@ -50,7 +50,7 @@
 
                 <h4 class="mt-5 txt-xl px-5 mx-5 pb-3">Ruumid</h4>
                 <div class="form-label-group py-0 px-5 mx-5" id="saalid">
-                    <label class="txt-regular txt-lg">Nähtavad ruumid <b data-tooltip="Aktiivsed ruumid on nähtavad kõigile"><img id="tool" class="mr-5" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="3%"></b></label>
+                    <label class="txt-regular txt-lg">Nähtavad ruumid <b data-tooltip="Kõik kasutajad näevad"><img id="tool" class="mr-5" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="3%"></b></label>
                     <?php foreach ($editBuildings as $value) { 
 									
                       if ($value['roomActive'] == 1) { 
@@ -58,21 +58,21 @@
 												<input class="d-none" type="hidden" name="roomID[]" value="'.$value['id'].'"> 
 												<input class="form-control col-6" id="activeRoom[]" type="text" name="room[]" value="' . $value['roomName'] .'">
 												<input name="color[]" type="color" value="'. $value["roomColor"] .'">
-												<input type="button" id="activeOrPassive'.$value['id'].'" data-id="'.$value['id'].'" class="btn btn-custom btn-width-92 text-white text-center py-1 px-2 txt-strong" value="Aktiivne"> 
+												<input type="button" id="activeOrPassive'.$value['id'].'" data-id="'.$value['id'].'" class="btn btn-custom btn-width-92 text-white text-center py-1 px-2 txt-strong" value="Nähtav"> 
 
 												<input data-id="'.$value['id'].'" class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta">
 												</div>'); 
                       }}; ?>
                 </div>
                 <div class="form-label-group py-0 px-5 mx-5">
-                    <label class="txt-regular txt-lg">Peidetud ruumid <b data-tooltip="Peidetud ruumid on nähtavad ainult asutuse kasutajatele"><img id="tool" class="mr-5" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="3%"></b></label>
+                    <label class="txt-regular txt-lg">Peidetud ruumid <b data-tooltip="Nähtavad ainult asutuse kasutajatele"><img id="tool" class="mr-5" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="3%"></b></label>
                     <?php foreach ($editBuildings as $key => $value) { 
                       if ($value['roomActive'] == '0') { 
 												echo('<div class="row d-flex mb-3 p-0 justify-content-between">
 												<input class="d-none" type="hidden" name="roomID[]" value="'.$value['id'].'"> 
 												<input class="form-control col-6" id="inactiveRoom[]" type="text" name="room[]" value="' . $value['roomName'] .'">
 												<input name="color[]" type="color" value="'. $value["roomColor"] .'">
-												<input type="button" id="activeOrPassive' . $value['id']. '" data-id="'.$value['id'].'" class="btn btn-inactive btn-width-92 text-white text-center py-1 px-2 txt-strong" value="Mitteaktiivne">
+												<input type="button" id="activeOrPassive' . $value['id']. '" data-id="'.$value['id'].'" class="btn btn-inactive btn-width-92 text-white text-center py-1 px-2 txt-strong" value="Peidus">
 												<input data-id="'.$value['id'].'" class="btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta">
 												 </div>');
                       }}; ?>
@@ -100,7 +100,7 @@
 $( document ).ready(function() {
 	var counter=1;
    $('#lisaSaal').on('click', function() {
-    $('#saalid').append('<div class="d-flex mb-3 p-0 justify-content-between"><input class="form-control col-6" id="activeRoom[]" type="text" name="additionalRoom[]" value=""><input name="colorForNewRoom[]" type="color" value="#cbe9fe"><input type="button" id="activeOrPassive<?php echo($value["id"]); ?>" class="btn btn-custom btn-width-md text-white text-center py-1 px-2 txt-strong" value="Aktiivne">	<input data-id="<?php echo $value['id']; ?>" id="additionalRoom'+counter+'" class="abc btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta"></div>');
+    $('#saalid').append('<div class="d-flex mb-3 p-0 justify-content-between"><input class="form-control col-6" id="activeRoom[]" type="text" name="additionalRoom[]" value=""><input name="colorForNewRoom[]" type="color" value="#cbe9fe"><input type="button" id="activeOrPassive<?php echo($value["id"]); ?>" class="btn btn-custom btn-width-md text-white text-center py-1 px-2 txt-strong" value="Nähtav">	<input data-id="<?php echo $value['id']; ?>" id="additionalRoom'+counter+'" class="abc btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta"></div>');
 	counter++;
   });
 
@@ -144,15 +144,15 @@ $( document ).ready(function() {
 	console.log($(this).data("id"));
 	console.log($(this).val());
 	var roomStatus=1;
-	if($(this).val()=="Aktiivne"){
-		$(this).val("Mitteaktiivne");
+	if($(this).val()=="Nähtav"){
+		$(this).val("Peidus");
 		$(this).removeClass("btn-custom");
 		$(this).addClass("btn-inactive");
 		roomStatus=0;
 		
 	} 
 	else{
-		$(this).val("Aktiivne");
+		$(this).val("Nähtav");
 		$(this).removeClass("btn-inactive");
 		$(this).addClass("btn-custom");
 		roomStatus=1;

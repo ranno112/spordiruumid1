@@ -1,8 +1,9 @@
 <a id="allCalenderLink" class=" text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss" href="<?php echo base_url(); ?>/fullcalendar?roomId=<?php echo $this->session->userdata('room');?>">Tagasi töökalendrisse</a>
-<div class="d-flex justify-content-center">
-	<div class="spinner-grow text-primary" role="status">
-		<span class="sr-only">Loading...</span>
-	</div> 
+<div id="spinner" class="sticky-top d-flex justify-content-center">
+
+<div class="spinner-grow text-primary" role="status">
+	<span class="sr-only">Loading...</span>
+</div> 
 </div>
 <br>
 <?php
@@ -15,6 +16,7 @@ foreach($rooms as $value){
 	echo  '<input type="checkbox" id="addOrRemoveRoom'.$value['id'].'" name="vehicle" value="'.$value['id'].'" checked>
   <label for="vehicle1"> '.$value['roomName'].'</label>'
 	;}?>
+
 
 <div id='calendar1'></div>
 
