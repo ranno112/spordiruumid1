@@ -67,7 +67,8 @@ CREATE TABLE `bookings` (
   `event_in` datetime DEFAULT NULL,
   `event_out` datetime DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-   PRIMARY KEY (id)
+   PRIMARY KEY (id),
+   CONSTRAINT `bookingtypes` FOREIGN KEY (`typeID`) REFERENCES `bookingtypes` (`id`)
 );
 
 CREATE TABLE `users` (
@@ -85,7 +86,8 @@ CREATE TABLE `users` (
   `updated_at` datetime NOT NULL,
 	`last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `requestFromBuilding` tinyint default '0',
-   PRIMARY KEY (userID)
+   PRIMARY KEY (userID),
+   CONSTRAINT `userroles` FOREIGN KEY (`roleID`) REFERENCES `userroles` (`id`)
 );
 
 INSERT INTO `users` (`userID`, `login_oauth_uid`, `roleID`, `buildingID`, `email`, `status`, `userName`, `userPhone`, `pw_hash`, `session_id`, `created_at`, `updated_at`) VALUES
@@ -114,7 +116,8 @@ CREATE TABLE `bookingTimes` (
   `endTime` datetime NOT NULL,
   `bookingTimeColor` char(50) DEFAULT '#ffffff',
   `hasChanged` tinyint(1) NOT NULL DEFAULT 0,
-   PRIMARY KEY (timeID)
+   PRIMARY KEY (timeID),
+   CONSTRAINT `booking` FOREIGN KEY (`bookingID`) REFERENCES `bookings` (`id`)
 );
 
 CREATE TABLE `bookingTimeVersions` (
@@ -125,7 +128,8 @@ CREATE TABLE `bookingTimeVersions` (
   `nameWhoChanged` varchar(30) DEFAULT NULL,
   `reason` varchar(255) DEFAULT NULL,
   `whenChanged` timestamp NOT NULL DEFAULT current_timestamp(), 
-   PRIMARY KEY (versionID)
+   PRIMARY KEY (versionID),
+   CONSTRAINT `timeid` FOREIGN KEY (`timeID`) REFERENCES `bookingtimes` (`timeID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `buildings` (
@@ -136,7 +140,8 @@ CREATE TABLE `buildings` (
   `contact_email` varchar(255) NOT NULL,
   `notify_email` varchar(255) NOT NULL,
   `price_url` varchar(255) NOT NULL,
-   PRIMARY KEY (id)
+   PRIMARY KEY (id),
+   CONSTRAINT `regionid` FOREIGN KEY (`regionID`) REFERENCES `regions` (`regionID`)
 );
 
 CREATE TABLE `regions` (
@@ -159,7 +164,8 @@ CREATE TABLE `rooms` (
   `roomName` varchar(255) NOT NULL,
   `roomActive` tinyint(1) NOT NULL DEFAULT '1',
   `roomColor` char(50) DEFAULT '#ffffff',
-   PRIMARY KEY (id)
+   PRIMARY KEY (id),
+   CONSTRAINT `buildingidrooms` FOREIGN KEY (`buildingID`) REFERENCES `buildings` (`id`)
 );
 
 CREATE TABLE `userRoles` (
