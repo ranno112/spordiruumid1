@@ -46,6 +46,12 @@
 			return true;
 		}
 
+		public function check_if_region_has_buildings($id){
+			$this->db->where('regionID', $id);
+			$query = $this->db->get('buildings');
+			return $query->num_rows();
+		}
+
 		function getUnapprovedBookings($buildingID )
 		{
 			$this->db->select("roomID, approved, startTime, id, buildingID");

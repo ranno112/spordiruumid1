@@ -35,6 +35,12 @@
 
 		public function delete(){
 			$id=$this->input->post('regionID');
+			$count =$this->region_model->check_if_region_has_buildings($id);
+			if($count>0){
+				$this->session->set_flashdata('errors', 'Ei saa kustutada, kuna piirkonnas on asutusi');
+				redirect('region/view');
+			}
+
 			$this->region_model->delete_region($id);
 			// Set message
 			$this->session->set_flashdata('building_deleted', 'Piirkond on kustutatud');
