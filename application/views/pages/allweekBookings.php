@@ -1,6 +1,9 @@
 <a id="allCalenderLink" class=" text-center py-2 px-sm-2 px-lg-5 px-md-4 float-right pluss" href="<?php echo base_url(); ?>/fullcalendar?roomId=<?php echo $this->session->userdata('room');?>">Tagasi töökalendrisse</a>
-
-
+<div class="d-flex justify-content-center">
+	<div class="spinner-grow text-primary" role="status">
+		<span class="sr-only">Loading...</span>
+	</div> 
+</div>
 <br>
 <?php
 $json = file_get_contents(base_url().'allbookings/loadRooms/'.$this->session->userdata['building']);
@@ -14,7 +17,7 @@ foreach($rooms as $value){
 	;}?>
 
 <div id='calendar1'></div>
-		
+
 
 <!-- <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css" rel="stylesheet" type="text/css" />
 <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.print.css " rel="stylesheet" type="text/css" media="print" /> -->
@@ -35,6 +38,7 @@ foreach($rooms as $value){
 <script>
 
   document.addEventListener('DOMContentLoaded', function() {
+	
 			const urlParams = new URLSearchParams(window.location.search);
 			var theUrlDate=urlParams.get('date');
 			if(!theUrlDate){
@@ -121,7 +125,13 @@ foreach($rooms as $value){
           arg.resource ? arg.resource.id : '(no resource)'
         );
       },
-
+	  loading: function (bool) {
+      // alert('events are being rendered'); // Add your script to show loading
+	  if(!bool){
+		$(".spinner-grow").hide();
+	  }
+    },
+  
     }
 	
 		);
