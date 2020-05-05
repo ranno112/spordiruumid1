@@ -93,7 +93,7 @@
 					};	
 				}
 				if(!empty($allRoomsID)){
-					$this->session->set_flashdata('message', 'Ennem tuleb kustutada ruumid, seejärel saab kustutada asutus');
+					$this->session->set_flashdata('message', 'Ennem tuleb kustutada ruumid, seejärel saab asutust kustutada');
 					redirect('building/view/'.$this->session->userdata['building']);	
 				}
 
