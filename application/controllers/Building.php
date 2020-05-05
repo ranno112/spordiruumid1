@@ -92,6 +92,10 @@
 					redirect('building/view/'.$this->session->userdata['building']);	
 					};	
 				}
+				if(!empty($allRoomsID)){
+					$this->session->set_flashdata('message', 'Ennem tuleb kustutada ruumid, seejärel saab kustutada asutus');
+					redirect('building/view/'.$this->session->userdata['building']);	
+				}
 
 				$this->building_model->delete_building($buildingID);
 				$this->session->set_flashdata('building_deleted', 'Asutus kustutatud');
