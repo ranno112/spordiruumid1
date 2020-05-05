@@ -335,9 +335,10 @@
 		}
 
 
-		public function delete($id){
+		public function delete(){
 			// Only admins allowed to make changes
 			if ( $this->session->userdata('roleID')==='1'){
+				$id=$this->input->post('userID');
 				$this->user_model->delete_user($id);
 			
 				$this->session->set_flashdata('user_deleted', 'Your user has been deleted');

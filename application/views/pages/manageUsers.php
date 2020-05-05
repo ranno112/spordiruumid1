@@ -35,7 +35,8 @@
                             <button type="submit" class="btn btn-second btn-width-mg text-white text-center py-1 px-2 txt-strong ">Halda õigusi</button>
                         </form>
                         <?php if($this->session->userdata('roleID')==='1'):?>
-                        <form class="cat-delete pl-1" action="users/delete/<?php echo $singleUser['userID']; ?>" method="POST">
+						<form class="cat-delete pl-1" action="users/delete" method="POST">
+							<input type="hidden" name="userID" value="<?php echo $singleUser['userID']; ?>" />
                             <button type="submit" class="btn btn-delete btn-width text-white text-center py-1 px-2 txt-strong ">Kustuta</button>
                         </form>
                         <?php endif;?>
