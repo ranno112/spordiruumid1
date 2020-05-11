@@ -2,9 +2,9 @@
 
 Tere tulemast minu lõputöö projekti GitHubi repositooriumisse!
 
-Olen Annemarii Hunt ning olen Tallinna Ülikooli Haapsalu Kolledži rakendusinformaatika III kursuse tudeng. Kirjutasin lõputööd teemal "spordiasutuste ruumide veebikalendri prototüübi edasiarendus pärnu linnavalitsuse näitel" ning samal ajal ehitasin rakendust.
+Olen Annemarii Hunt ning olen Tallinna Ülikooli Haapsalu Kolledži rakendusinformaatika III kursuse tudeng. Kirjutasin lõputööd teemal "Spordiruumide veebikalendri prototüübi edasiarendus Pärnu Linnavalitsuse näitel" ning samal ajal ehitasin rakendust.
 
-Rakenduse näol on tegemist kohaliku omavalitsuste spordiga seotud allasutuste spordiruumide kalendrisüsteemi rakendusega. Rakendus on edasi arendatud valikpraktika projektist https://github.com/Viiskorda/maag.
+Rakenduse näol on tegemist kohaliku omavalitsuse spordiga seotud allasutuste spordiruumide kalendrisüsteemi rakendusega. Rakendus on edasi arendatud valikpraktika projektist https://github.com/Viiskorda/maag.
 
 Demo keskkonnaga saad tutvuda lingil https://www.spordiruumid.ee/.
 
