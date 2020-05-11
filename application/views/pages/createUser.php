@@ -53,13 +53,13 @@
 								<option value="3" selected>Administraator</option>
 							</select>
 						</div>
-						<div class="form-label-group col-12 col-md-6 py-0 pl-0 pr-md-5">
+						<!-- <div class="form-label-group col-12 col-md-6 py-0 pl-0 pr-md-5">
 							<label>Staatus*</label>
 							<select id="status" name="status" class="form-control arrow" required>
 								<option value="1" selected>Aktiivne</option>
 								<option value="0">Mitteaktiivne</option>
 							</select>
-						</div>
+						</div> -->
 					</div>
 
 				

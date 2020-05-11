@@ -9,13 +9,13 @@
                	<input name="email" type="text"  class="form-control arrow" disabled value="<?php echo $post['email']; ?>">
                 </div>
 
-                <div class="col-12 my-4">
+                <!-- <div class="col-12 my-4">
                     <label for="status">Staatus</label>
                     <select id="status" name="status" class="form-control arrow">
                         <option value="1" <?php if ($post['status']==1) echo ' selected'?>>Aktiivne</option>
                         <option value="0" <?php if ($post['status']==0) echo ' selected'?>>Mitteaktiivne</option>
                     </select>
-                </div>
+                </div> -->
 			
 				
 				<div class="row">

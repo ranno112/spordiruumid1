@@ -40,7 +40,7 @@
 
 
 						</div>
-						<div class="form-label-group col-12 col-md-6 p-0 pl-0 pl-md-5  pr-5 pr-md-0">
+						<!-- <div class="form-label-group col-12 col-md-6 p-0 pl-0 pl-md-5  pr-5 pr-md-0">
 						
 						
 							
@@ -50,7 +50,7 @@
                                     <option value="0" <?php if ($value['status']==0) echo ' selected'?>>Mitteaktiivne</option>
                                    
                                     </select>
-								</div>
+								</div> -->
 							</div>
 						<?php endif;?>
 

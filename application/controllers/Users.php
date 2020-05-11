@@ -112,7 +112,7 @@
 				$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
 				$this->form_validation->set_rules('buildingID', 'Asutuse ID', 'integer|required');
 				$this->form_validation->set_rules('role', 'Roll', 'integer|required');
-				$this->form_validation->set_rules('status', 'Staatus', 'integer|required');
+				$this->form_validation->set_rules('status', 'Staatus', 'integer');
 			   
 			   if($this->form_validation->run() === FALSE ){
 				   $this->session->set_flashdata('errors', 'Sisetamisel läks midagi valesti. Palun proovi uuesti.');
@@ -145,7 +145,7 @@
 					'email' => $this->input->post('email'),
 					'buildingID' => $buildingID,
 					'roleID' => $role,
-					'status' => $this->input->post('status'),
+				//	'status' => $this->input->post('status'),
 					'requestFromBuilding' => $requestFromBuilding,
 					); 
 
@@ -407,7 +407,7 @@
 
 				$this->form_validation->set_rules('id', 'Asutuse ID', 'integer|required');
 				$this->form_validation->set_rules('roleID', 'Roll', 'integer|required');
-				$this->form_validation->set_rules('status', 'Staatus', 'integer|required');
+				$this->form_validation->set_rules('status', 'Staatus', 'integer');
 				$this->form_validation->set_rules('buildingID', 'Ruumi ID', 'integer|required');
 
 				if($this->form_validation->run() === FALSE){

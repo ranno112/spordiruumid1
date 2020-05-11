@@ -66,14 +66,14 @@
 										<option value="4" <?php if ($value['roleID']==3) echo ' selected'?>>Administraator</option>
 									</select>
 						</div>
-						<div class="form-label-group col-12 col-md-6 p-0 pl-0 pl-md-5  pr-5 pr-md-0">
+						<!-- <div class="form-label-group col-12 col-md-6 p-0 pl-0 pl-md-5  pr-5 pr-md-0">
 							
 								<label>Staatus*</label>
 								<select id="status" name="status" class="form-control arrow" disabled>
                                     <option value="1" <?php if ($value['status']==1) echo ' selected'?>>Aktiivne</option>
                                     <option value="0" <?php if ($value['status']==0) echo ' selected'?>>Mitteaktiivne</option>
                                 </select>
-							</div>
+							</div> -->
 						</div>
 						<?php endif;?>
 
