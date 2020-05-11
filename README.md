@@ -10,7 +10,7 @@ Demo keskkonnaga saad tutvuda lingil https://www.spordiruumid.ee/.
 
 Käesolev töö on GNU v3 litsentsi all ning kõigile huvilistele vabalt kättesaadav. Rakendus kasutab FullCalendar Scheduler moodulit erilitsentsi all, seega igasugune rakenduse funktsionaalsuse lisamine või muutmine peab olema lähtekoodina avalik. Täpsem info https://fullcalendar.io/license/premium. Isiklikul eesmärgil koodi muutmisel ja rakenduse kasutamisel sa ei pea lähtekoodi avaldama.  Täpsemalt loe litsentsitingimusi litsentsifailist https://github.com/Viiskorda/spordiruumid/blob/master/LICENSE.
 
-Oma serverisse laadimiseks on vaja muuta application/config kaustas kaks faili: config.php ning database.php:
+Oma serveris rakenduse tööle saamiseks on vaja muuta application/config kaustas kaks faili: config.php ning database.php:
 ```
 config.php //tuleb määrata URL $config['base_url']
 database.php //tuleb määrata 'hostname', 'username', ning 'password'.
@@ -19,7 +19,14 @@ Tootmiskeskkonda üles laadimiseks soovitav on sisse lülitada turvalist sessioo
 ```
 $config['cookie_secure']	= TRUE;
 ```
-
+Juurkaustas index.php failis seadista toomtmiskeskkond:
+```
+define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+```
+Lisaks soovitan sisse lülitada PHP veateadete kirjutamist logifaili. Veendu, et kataloog /logs oleks süsteemi poolt kirjutatav. Logimise kirjutamiseks seadista application/config/config.php failis:
+```
+$config['log_threshold'] = 0;
+```
 Kui sa ei soovi võtta kasutusele reCAPTCHA v2, siis selle välja lülitamiseks kommenteeri välja User.php kontrollerist järgmine rida:
 ```
 $this->form_validation->set_rules('g-recaptcha-response','Captcha','callback_recaptcha');
