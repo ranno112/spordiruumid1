@@ -1,5 +1,5 @@
 <?php if(!isset($rooms)){
-			$this->session->set_flashdata('access_deniedToUrl', 'Sellist ruumi enam ei eksisteeri. Teid suunati avalehele');
+			$this->session->set_flashdata('access_deniedToUrl', 'Sellist ruumi ei eksisteeri. Teid suunati avalehele');
 			redirect('');
 		}
 	

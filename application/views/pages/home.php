@@ -38,19 +38,30 @@
                             <label for="sport_facility">Asutus</label>
                             <input id="sport_facility" list="asutus" class="form-control arrow" autocomplete="off">
                             <datalist id="asutus">
-                                <?php foreach ($buildings as $each) {
+								<?php 	if(empty($buildings)){
+										echo '<option data-value="' . $each->id . '"> Ükski asutus pole süsteemiga liitunud </option>';	
+									}
+								foreach ($buildings as $each) {
                                     echo '<option data-value="' . $each->id . '" value="' . $each->name . '"></option>';
                                 }
                                 ?>
                             </datalist>
                         </div>
 						<?php endif;?>
-						<h5 id="demo"></h5>
+						<h5 id="demo">
+						<?php 	if(empty($buildings)){
+										echo 'Ükski asutus pole süsteemiga liitunud';	
+									}
+                                ?>
+						</h5>
                         <div class="form-label-group">
                             <label for="room">Ruum</label>
                             <input id="room" list="saal" class="form-control arrow" required autocomplete="off"> 
                             <datalist id="saal">
-                                <?php foreach ($rooms as $each) {
+							
+                                <?php 	if(empty($rooms)){
+										echo '<option data-value="' . $each->id . '"> Süsteemi pole veel ruume sisestatud </option>';	
+									} foreach ($rooms as $each) {
 
                                 if($this->session->userdata('roleID')=='2' or $this->session->userdata('roleID')=='3'){
                                     if($this->session->userdata('building')==$each->buildingID){
@@ -60,7 +71,8 @@
                                 }
                                     else{
                                         echo '<option data-value="' . $each->id . '">' . $each->roomName . '</option>';
-                                    } 
+									} 
+								
 
                                 }
                                 ?>
