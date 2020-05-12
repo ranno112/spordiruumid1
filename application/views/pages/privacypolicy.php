@@ -3,7 +3,7 @@
 	<div class="container-md mx-auto mt-5">
 		<div class="row">
 			<div class="col-12">
-				<h3>Spordiruumide veebikalendri privaatsuspoliitika ja küpsiste kasutamise. </h3></br>
+				<h3>Spordiruumide veebikalendri privaatsuspoliitika ja küpsiste kasutamise teavitus. </h3></br>
 				<p> Pärnu Linnavalitsus töötleb isikuandmeid seaduse ja nende alusel antud õigusaktidega kohalikule omavalitsusele ja tema allasutusele pandud ülesannete täitmisel ja täitmiseks.
 					Isikuandmete töötlemisel lähtume Euroopa Parlamendi ja Nõukogu Määrusest (EL) 2016/679, isikuandmete kaitse seadusest, muudest andmekaitset reguleerivatest õigusaktidest ning Andmekaitse Inspektsiooni juhistest.
 				</p></br>
