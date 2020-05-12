@@ -75,7 +75,7 @@ class Fullcalendar extends CI_Controller {
 
 		}
 		if(!isset($data)){
-			$data="Sorry, no data for you";
+			//$data="Sorry, no data for you";
 		}
 		echo json_encode($data);
 	}

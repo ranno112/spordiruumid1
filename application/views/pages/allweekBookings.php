@@ -46,7 +46,7 @@ foreach($rooms as $value){
 			if(!theUrlDate){
 				theUrlDate= moment(new Date()).format("DD.MM.YYYY");
 			}
-			console.log(theUrlDate);
+			//console.log(theUrlDate);
 			var dateConvert = new Date(theUrlDate.replace( /(\d{2}).(\d{2}).(\d{4})/, "$2/$1/$3"))
 	
 	
@@ -113,19 +113,19 @@ foreach($rooms as $value){
     }
     ],
       select: function(arg) {
-        console.log(
-          'select',
-          arg.startStr,
-          arg.endStr,
-          arg.resource ? arg.resource.id : '(no resource)'
-        );
+        // console.log(
+        //   'select',
+        //   arg.startStr,
+        //   arg.endStr,
+        //   arg.resource ? arg.resource.id : '(no resource)'
+        // );
       },
       dateClick: function(arg) {
-        console.log(
-          'dateClick',
-          arg.date,
-          arg.resource ? arg.resource.id : '(no resource)'
-        );
+        // console.log(
+        //   'dateClick',
+        //   arg.date,
+        //   arg.resource ? arg.resource.id : '(no resource)'
+        // );
       },
 	  loading: function (bool) {
       // alert('events are being rendered'); // Add your script to show loading
@@ -139,12 +139,12 @@ foreach($rooms as $value){
 		);
 
 		if(window.innerWidth < 800){
-				console.log('sdf');
+			
 				calendar1.changeView('resourceTimeGridDay');
 				
 			}
 		 else	if(window.innerWidth < 1400){
-				console.log('sdf');
+			
 				calendar1.changeView('resourceTimeGridFourDay');
 			} else {
 				calendar1.changeView('resourceTimeGridWeek');
@@ -158,12 +158,12 @@ foreach($rooms as $value){
  var removedResources2=[];
  var removedAll=true;
  var phpRoomInfo='<?php echo $array;?>';
- console.log(phpRoomInfo);
+// console.log(phpRoomInfo);
 
     $('input[type="checkbox"]').change(function()
       {
 				var json = JSON.parse(phpRoomInfo);
-			console.log(json[0].id);
+		//	console.log(json[0].id);
 		
 			if($(this).is(':checked')){
 
@@ -174,7 +174,7 @@ foreach($rooms as $value){
 								break;
 						}
 				}
-			console.log(found);
+		//	console.log(found);
 			calendar1.addResource( json[found]);
 					index = removedResources.indexOf($(this).val());
 				removedResources=[];

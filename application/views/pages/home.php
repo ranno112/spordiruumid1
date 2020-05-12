@@ -107,7 +107,7 @@ $display=false;
 
 	var isIE = !!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g);
    		let display='<?php echo $display;?>';
-		   console.log(display);
+		//   console.log(display);
 		if(isIE && display){
 		//alert("Spordiruumi kalender ei toeta Internet Explorerit. Tänapäeval on palju paremaid veebilehitsejaid mida kasutada. Parima kogemuse saamiseks palume kasutada näiteks Chrome, Edge või Firefoxi."); 
        
@@ -160,9 +160,9 @@ $display=false;
         $('#state').change(function() {
             var value = $('#state').val();
             var state_id = $('#state [value="' + value + '"]').data('value');
-            console.log("stateid is " + state_id);
+          //  console.log("stateid is " + state_id);
             if (state_id != '') {
-                console.log("data");
+             
                 $.ajax({
                     url: "<?php echo base_url(); ?>home/fetch_building",
                     method: "POST",
@@ -170,7 +170,7 @@ $display=false;
                         state_id: state_id
                     },
                     success: function(data) {
-                        console.log("data is " + data);
+                     //   console.log("data is " + data);
                         $('#citys').html(data);
                         $('#saal').html(data).appendTo("#saal");
                     },
@@ -214,7 +214,7 @@ $display=false;
                     return ($(this).val() === val);
                 });
             if (match.length > 0) {
-                console.log("match");
+             
                 var value = $('#region').val();
                 var country_id = $('#regions [value="' + value + '"]').data('value');
                 $.ajax({
@@ -224,7 +224,7 @@ $display=false;
                         country_id: country_id
                     },
                     success: function(data) {
-                        console.log("data on " + data);
+                      //  console.log("data on " + data);
                         $("#asutus").empty();
                         $("#room").empty();
                         $('#asutus').html(data).appendTo("#asutus");
@@ -242,7 +242,7 @@ $display=false;
                     }
                 });
             } else {
-                console.log("dismatch");
+            //    console.log("dismatch");
                 $('#room').val('');
                 $('#sport_facility').val('');
 
@@ -257,10 +257,10 @@ $display=false;
                     return ($(this).val() === val);
                 });
             if (match.length > 0) {
-                console.log("match");
+             
                 var value = $('#sport_facility').val();
                 var state_id = $('#asutus [value="' + value + '"]').data('value');
-                console.log(state_id);
+       //         console.log(state_id);
                 $.ajax({
                     url: "<?php echo base_url(); ?>home/fetch_building",
                     method: "POST",
@@ -268,14 +268,14 @@ $display=false;
                         state_id: state_id
                     },
                     success: function(data) {
-                        console.log("data on " + data);
+                  //      console.log("data on " + data);
                         $('#room').val('');
                         $("#saal").empty();
                         $('#saal').html(data).appendTo("#saal");
                     }
                 });
             } else {
-                console.log("dismatch");
+         //       console.log("dismatch");
                 $('#room').val('');
             }
         });

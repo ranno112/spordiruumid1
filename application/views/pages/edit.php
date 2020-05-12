@@ -374,7 +374,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 		$.post("<?php echo base_url(); ?>edit/load2/<?php echo $allPostData['BookingID']; ?>",
 			function(data) {
 				var res = $.parseJSON(data);
-				console.log(res);
+			
 			
 				
 				var days = ['P', 'E', 'T', 'K', 'N', 'R', 'L'];
@@ -462,7 +462,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 					//   console.log(start+' '+end);
 
 					var eventColor=obj.color;
-					console.log(eventColor);
+				
 					if(!eventColor){
 						eventColor='#ffffff';
 					}
@@ -470,7 +470,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 				
 
 					var n = datafrom.indexOf(BTimesid)!== -1;
-					console.log(n);
+				
 					
 
 					//    console.log(BTimesid);
@@ -492,7 +492,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 						
 							//kui ajad klapivad, siis pane muutmisvaatesse
 							if(startPeriodTime==moment(start).format("HH:mm")&&endPeriodTime==moment(end).format("HH:mm")){
-							console.log("aeg klapib");
+						
 
 							$('#myTablePeriod > tbody').append(' <tr id="' + BTimesid + '"> <td class="td-width-l"><b>' + days[new Date(start).getDay()] + '</b>,&nbsp;' + moment(start).format("DD.MM.YYYY") + '</td><td class="td-width-s pl-3">&nbsp;&nbsp;' + moment(start).format("HH:mm") + '&#8209;' + moment(end).format("HH:mm") + '</td>'+
 							'<td class="td-width-m pl-3"> <input type="color" id="periodWorkoutColor"  name="color" value="' + eventColor + '" disabled ></td><td class="td-width-s pl-3"></td><td class="td-width-s pl-3"><input class="d-none" type="hidden" name="timesIdArray[]"  value="' +BTimesid +'"></td>  <td class="td-width-s pl-3" >	<input class="d-none" type="hidden" name="bookingtimesFrom[' + counter + ']"  value="' + moment(start).format("DD.MM.YYYY") +'"></td></tr>');
@@ -533,8 +533,8 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 				var conflictTimes=<?php echo $conflictTimes; ?>;
 				
 				conflicts = conflictTimes;
-				console.log(conflictTimes);
-				console.log(res);
+				// console.log(conflictTimes);
+				// console.log(res);
 				for (var i = 0, l = conflicts.length; i < l; i++) {
 					var conflicts2 = conflicts[i];
 					// console.log(conflicts2.start+" - "+conflicts2.end + " "+ i);
@@ -610,7 +610,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 
 		$("#changeTimes").on('click', function(event) {
 			var bookingID = '<?= $_POST['BookingID'] ?>';
-			console.log(bookingID);
+		//	console.log(bookingID);
 			var datafrom = ['<?= implode("', '", $arr2) ?>'];
 			var myForm = document.getElementById('change');
 
@@ -641,7 +641,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 
 		$("#changePeriodTimes").on('click', function(event) {
 			var bookingID = '<?= $_POST['BookingID'] ?>';
-			console.log(bookingID);
+		//	console.log(bookingID);
 		
 			var myForm = document.getElementById('changePeriod');
 			var hiddenInput = document.createElement('input');

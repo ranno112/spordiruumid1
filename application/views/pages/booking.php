@@ -720,7 +720,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                 $(this).parent('div').remove(); //remove text box
                 x--; //decrement textbox
                 $("#AddMoreFileId").show();
-                console.log(x);
+               // console.log(x);
                 return x;
             }
             return false;
