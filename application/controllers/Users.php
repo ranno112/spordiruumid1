@@ -47,7 +47,7 @@
 			if($this->form_validation->run() === FALSE){
 				$this->session->set_flashdata("password", form_error('password', '<small class="text-danger">','</small>')); // tekst '{field} ei ole korrektselt sisestatud' tuleb failist form_validation_lang.php
 				$this->form_validation->set_message("matches", 'TESRES'); // tekst '{field} ei ole korrektselt sisestatud' tuleb failist form_validation_lang.php
-				$data=$this->menu();
+				$this->menu();
 				$this->load->view('templates/header', $this->security->xss_clean($data));
 				$this->load->view('pages/register', $this->security->xss_clean($data));
                 $this->load->view('templates/footer');
