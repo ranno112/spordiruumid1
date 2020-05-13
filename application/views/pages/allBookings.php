@@ -35,11 +35,11 @@
 					 <th >Päringu aeg</th>  
                                <th >Ruumi nimi</th>  
 							   <th>Nädalapäev</th>  
-							   <th>Kuupäev</th>  
+							   <th  data-priority="3">Kuupäev</th>  
 							   <th>Alates</th>  
                                <th>Kuni</th>  
                                <th>Kestus</th>  
-					<th  data-priority="1" class="py-2 txt-strong text-darkblue" scope="col">Kinnitatud</th>
+					<th data-priority="1" class="py-2 txt-strong text-darkblue" scope="col">Kinnitatud</th>
                     <th data-priority="2" class="py-2 txt-strong text-darkblue" scope="col">Klubi</th>
                     <th class="py-2 txt-strong text-darkblue" scope="col">Trenn</th>
 					<th class="py-2 txt-strong text-darkblue" scope="col">Kommentaar</th>
@@ -88,7 +88,7 @@
 		
            "columnDefs":[  
                 {  
-                     "targets":[2, 4,5,6, 15],  
+                     "targets":[2, 4, 5, 6, 15],  
                      "orderable":false,  
                 },  
            ], 
@@ -128,7 +128,7 @@ function fetch_data(is_date_search, start_date, end_date)
    },
    "columnDefs":[  
                 {  
-                     "targets":[2, 4,5,6, 15],  
+                     "targets":[2, 4, 5, 6, 15],  
                      "orderable":false,  
                 },  
            ],  
@@ -137,6 +137,31 @@ function fetch_data(is_date_search, start_date, end_date)
 		 fixedHeader: true,
 		 colReorder: true
   });
+
+ $('.dataTables_length').parent().removeClass('col-md-6');
+ $('.dataTables_length').parent().removeClass('col-sm-12');
+ $('.dataTables_filter').parent().removeClass('col-md-6');
+ $('.dataTables_filter').parent().removeClass('col-sm-12');
+ $('.dataTables_length').parent().addClass('col-5');
+ $('.dataTables_length').parent().addClass('col-md-3');
+ $('.dataTables_length').parent().addClass('col-sm-6');
+ $('.dataTables_length').parent().addClass('col-xl-2');
+ $('.dataTables_filter').addClass('col-12');
+ $('.dataTables_filter').parent().addClass('col-12');
+ $('.dataTables_filter').parent().addClass('col-md-4');
+ $('.dataTables_filter').parent().addClass('col-sm-6');
+ $('.dataTables_filter').parent().addClass('col-xl-2');
+ $('#user_data').DataTable();
+  $('#user_data_wrapper').find('label').each(function () {
+    $(this).parent().append($(this).children());
+  });
+  $('#user_data_wrapper .dataTables_filter').find('input').each(function () {
+    const $this = $(this);
+    $this.attr("placeholder", "");
+    $this.removeClass('form-control-sm');
+  });
+
+
  }
 
 
@@ -157,10 +182,10 @@ $('#search').click(function(){
   }
  }); 
 
-  $('.dataTables_length ').parent().removeClass('col-md-6');
- $('.dataTables_length ').parent().removeClass('col-sm-12');
- $('.dataTables_filter ').parent().removeClass('col-md-6');
- $('.dataTables_filter ').parent().removeClass('col-sm-12');
+ $('.dataTables_length').parent().removeClass('col-md-6');
+ $('.dataTables_length').parent().removeClass('col-sm-12');
+ $('.dataTables_filter').parent().removeClass('col-md-6');
+ $('.dataTables_filter').parent().removeClass('col-sm-12');
  $('.dataTables_length').parent().addClass('col-5');
  $('.dataTables_length').parent().addClass('col-md-3');
  $('.dataTables_length').parent().addClass('col-sm-6');

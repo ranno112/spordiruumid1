@@ -60,3 +60,4 @@ $route['login'] = 'login/index';
 
 // $route['default_controller'] = 'pages/view';
 $route['(:any)'] = 'pages/view/$1';
+$route['assets'] = 'pages/view/$1';
