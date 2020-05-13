@@ -31,7 +31,7 @@
                         <input class="form-control" id="contact_email" type="email" name="contact_email" value="<?php foreach ($editBuildings as $value) {echo $value['contact_email'];break;}?>" disabled>
                     </div>
                     <div class="form-label-group col-12 col-md-6 p-0 pl-0 pl-md-5  pr-5 pr-md-0">
-                        <label>Päringute email*</label>
+                        <label>Teavituste email</label>
                         <input class="form-control" id="notify_email" type="email" name="notify_email" value="<?php foreach ($editBuildings as $value) {echo $value['notify_email'];break;}?>" disabled>
                     </div>
                 </div>
