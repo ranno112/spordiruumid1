@@ -13,7 +13,7 @@
             </div>
 			<div class="col-md-4  d-flex align-items-end flex-column bd-highlight mb-3">
 		
-			<a href="https://github.com/Viiskorda/spordiruumid/" target="_blank">	&copy; 2020 Annemarii Hunt	</a>
+			<a href="https://github.com/Viiskorda/spordiruumid/" target="_blank">	<img id="tool" class="mb-1" style="opacity: 0.4;" src="<?php echo base_url(); ?>assets/img/copyleft_small.png" > 2020 Annemarii Hunt	</a>
 			<a href="<?php echo base_url(); ?>privacypolicy/" >	Privaatsuspoliitika	</a>
 			</div>
         </div>
