@@ -100,7 +100,7 @@
 $( document ).ready(function() {
 	var counter=1;
    $('#lisaSaal').on('click', function() {
-    $('#saalid').append('<div class="d-flex mb-3 p-0 justify-content-between"><input class="form-control col-6" id="activeRoom[]" type="text" name="additionalRoom[]" value=""><input name="colorForNewRoom[]" type="color" value="#cbe9fe"><input type="button" id="activeOrPassive<?php echo($value["id"]); ?>" class="btn btn-custom btn-width-92 text-white text-center py-1 px-2 txt-strong" disabled value="Nähtav">	<input data-id="<?php echo $value['id']; ?>" id="additionalRoom'+counter+'" class="abc btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta"></div>');
+    $('#saalid').append('<div class="d-flex mb-3 p-0 justify-content-between"><input class="form-control col-6" id="activeRoom[]" type="text" name="additionalRoom[]" value=""><input name="colorForNewRoom[]" type="color" value="#cbe9fe"><input type="button" id="activeOrPassive<?php echo($value["id"]); ?>" class="addedRoom btn btn-custom btn-width-92 text-white text-center py-1 px-2 txt-strong" value="Nähtav">	<input class="d-none" type="hidden" name="newRoomStatus[]" value="1"> 	<input data-id="<?php echo $value['id']; ?>" id="additionalRoom'+counter+'" class="abc btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta"></div>');
 	counter++;
   });
 
@@ -138,11 +138,29 @@ $( document ).ready(function() {
 
  
   
-
+  $(document).on('click', '.addedRoom', function() { 
+	
+		var newRoomStatus=1;
+	if($(this).val()=="Nähtav"){
+		$(this).val("Peidus");
+		$(this).next().val('0');
+		$(this).removeClass("btn-custom");
+		$(this).addClass("btn-inactive");
+		newRoomStatus=0;
+		
+	} 
+	else{
+		$(this).val("Nähtav");
+		$(this).next().val('1');
+		$(this).removeClass("btn-inactive");
+		$(this).addClass("btn-custom");
+		newRoomStatus=1;
+	}
+	});
 
   $('input[id^="activeOrPassive"]').on("click", function() {
-	console.log($(this).data("id"));
-	console.log($(this).val());
+	// console.log($(this).data("id"));
+	// console.log($(this).val());
 	var roomStatus=1;
 	if($(this).val()=="Nähtav"){
 		$(this).val("Peidus");

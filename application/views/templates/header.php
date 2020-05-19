@@ -47,7 +47,6 @@ Under the GPL license, you may use Scheduler and this project without charge. Yo
 </head>
 
 <body>
-
 <!-- Navigation -->
     <header>
         <nav class="navbar navbar-expand-md p-0 nav-bg">
@@ -70,10 +69,12 @@ Under the GPL license, you may use Scheduler and this project without charge. Yo
 								
 									<?php if(array_key_exists('building',$this->session->userdata())){?>
 											<?php if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'):?>
+											<?php	if($this->session->userdata('room')){?>
 													<!-- <li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="#"><strong>Kõik ruumid</strong></a></li> -->
 													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $this->session->userdata('room');?>"> 	<?php if($menu=='calendar'){echo ' <strong><u>Kalender</u></strong>';} else {echo 'Kalender';} ?>  </a></li>
 													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>allbookings/"> <?php if($menu=='allbookings'){echo ' <strong><u>Broneeringud</u></strong>';} else {echo 'Broneeringud';} ?>  	<?php if(isset($unapprovedBookings)){ if($unapprovedBookings!=0){echo '<span class="badge badge-danger">'.$unapprovedBookings.'</span>';}}; ?></a></li>
-											<?php endif; ?>
+											<?php } ?>
+													<?php endif; ?>
 											<?php if($this->session->userdata('roleID')==='1'):?>
 													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>building/view/"><?php if($menu=='building'){echo ' <strong><u>Asutused</u></strong>';} else {echo 'Asutused';} ?></a></li>
 													<li class="nav-item"><a class="nav-link text-white py-0 pr-lg-5 pr-md-2 pr-sm-1 mr-lg-0 mr-md-0 mr-sm-0" href="<?php echo base_url(); ?>region/view/"><?php if($menu=='region'){echo ' <strong><u>Piirkonnad</u></strong>';} else {echo 'Piirkonnad';} ?> </a></li>
@@ -186,4 +187,4 @@ Under the GPL license, you may use Scheduler and this project without charge. Yo
 			<div id="textMessageToUser" ></div>
 
 
-		<?php //print_r($this->session->userdata);?>
+		<?php //print_r($this->session->userdata());?>

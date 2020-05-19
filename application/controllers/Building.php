@@ -228,9 +228,12 @@
 					);
 				$this->building_model->update_building($data);
 
+				if(count($this->input->post('room'))==0){
+					$this->session->unset_userdata('room');
+				}
 				for($i = 0; $i < count($this->input->post('room')); $i++)
 				{
-				
+					
 					if( $this->input->post('room')[$i]!==null){
 					
 					$data2[] = array(
@@ -247,8 +250,6 @@
 				}
 
 				if(!empty($this->input->post('additionalRoom'))){
-
-			
 					for($t = 0; $t <= count($this->input->post('additionalRoom')); $t++)
 					{
 						if( $this->input->post('additionalRoom')[$t]!==null){
@@ -257,10 +258,16 @@
 								'roomName' => $this->input->post('additionalRoom')[$t],
 								'roomColor' => $this->input->post('colorForNewRoom')[$t],
 								'buildingID' => $this->input->post('id'),
-							//	'activeRoom' => 1,
+								'roomActive' =>  $this->input->post('newRoomStatus')[$t],
 										
 						);
-						$this->building_model->createNewRoom($data3[$t]);
+						$newRoomID=$this->building_model->createNewRoom($data3[$t]);
+						if($this->session->userdata('room')==''){
+							$sesdata = array(
+								'room'     => $newRoomID,
+							);
+							$this->session->set_userdata($sesdata);
+						}
 						}
 					}
 				}

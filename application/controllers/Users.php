@@ -242,13 +242,13 @@
 					$email = $data['email'];
 					$userID = $data['userID'];
 					$roleID = $data['roleID'];
-					$room = $data['id'];
+					//$room = $data['id'];
 
 
 					$sesdata = array(
 						'userName'  => $name,
 						'phone'  => $phone,
-						'room'  => $room,
+					//	'room'  => $room,
 						'email'     => $email,
 						'userID'  => $userID,
 						'roleID'     => $roleID,
@@ -258,6 +258,7 @@
 					if( $data['requestFromBuilding']=='0'){
 						$building  = $data['buildingID'];
 						$sesdata['building']=$building;
+						$sesdata['room']=$this->user_model->getRoomID($building);
 					}
 					$this->user_model->update_last_login($email);
 					$this->session->set_userdata($sesdata);

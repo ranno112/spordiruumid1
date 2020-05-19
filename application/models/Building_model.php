@@ -123,7 +123,8 @@
 		public function createNewRoom($data){
 			
 			// Insert room
-			return $this->db->insert('rooms', $data);
+			$this->db->insert('rooms', $data);
+			return $this->db->insert_id();
 		
 		}
 

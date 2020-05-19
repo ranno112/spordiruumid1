@@ -72,9 +72,16 @@
 		// Log user in
 		function validate($email){
 			$this->db->where('email',$email);
-			$this->db->join('rooms', 'users.buildingID = rooms.buildingID' , 'left');
+		//	$this->db->join('rooms', 'users.buildingID = rooms.buildingID' , 'left');
 			$result = $this->db->get('users',1);
 			return $result;
+		  }
+
+		  function getRoomID($buildingID){
+			$this->db->select('id');  
+			$this->db->where('buildingID',$buildingID);
+			$result = $this->db->get('rooms');
+			return $result->row_array();
 		  }
 
 		  function get_hash($email){
