@@ -42,7 +42,7 @@ Under the GPL license, you may use Scheduler and this project without charge. Yo
 		<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>    
 		<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/fh-3.1.6/datatables.min.js"></script>
 		<script src="	https://cdn.datatables.net/colreorder/1.5.2/js/dataTables.colReorder.min.js  "></script>  
-	<?php header('Set-Cookie: cross-site-cookie=name; SameSite=None; Secure'); ?>
+
 	
 </head>
 
