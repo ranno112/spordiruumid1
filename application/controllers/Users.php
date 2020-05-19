@@ -258,7 +258,7 @@
 					if( $data['requestFromBuilding']=='0'){
 						$building  = $data['buildingID'];
 						$sesdata['building']=$building;
-						$sesdata['room']=$this->user_model->getRoomID($building);
+						$sesdata['room']=$this->user_model->getRoomID($building)['id'];
 					}
 					$this->user_model->update_last_login($email);
 					$this->session->set_userdata($sesdata);

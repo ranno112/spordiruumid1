@@ -84,12 +84,12 @@ class Login extends CI_Controller{
 		$email = $data['email'];
 		$userID = $data['userID'];
 		$roleID = $data['roleID'];
-		$room = $data['id'];
+	//	$room = $data['id'];
 		}
 		$sesdata = array(
 			'userName'  => $name,
 			'phone'  => $phone,
-			'room'  => $room,
+		//	'room'  => $room,
 			'email'     => $email,
 			'userID'  => $userID,
 			'roleID'     => $roleID,
@@ -100,6 +100,7 @@ class Login extends CI_Controller{
 		if( $data['requestFromBuilding']=='0'){
 			$building  = $data['buildingID'];
 			$sesdata['building']=$building;
+			$sesdata['room']=$this->login_model->getRoomID($building)['id'];
 		}
 		$this->session->set_userdata($sesdata);
 			if(!array_key_exists('building',$this->session->userdata())){
@@ -205,12 +206,12 @@ class Login extends CI_Controller{
 		$email = $data['email'];
 		$userID = $data['userID'];
 		$roleID = $data['roleID'];
-		$room = $data['id'];
+	//	$room = $data['id'];
 		}
 		$sesdata = array(
 			'userName'  => $name,
 			'phone'  => $phone,
-			'room'  => $room,
+		//	'room'  => $room,
 			'email'     => $email,
 			'userID'  => $userID,
 			'roleID'     => $roleID,
@@ -221,6 +222,7 @@ class Login extends CI_Controller{
 		if( $data['requestFromBuilding']=='0'){
 			$building  = $data['buildingID'];
 			$sesdata['building']=$building;
+			$sesdata['room']=$this->login_model->getRoomID($building)['id'];
 		}
 		$this->login_model->update_last_login($email);
 		$this->session->set_userdata($sesdata);
