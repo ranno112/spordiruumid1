@@ -105,7 +105,7 @@
 					<td class="pl-3 p-1 text-darkblue border-bottom-light"><?php echo $singleBuilding['name']; ?></td>
 					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleBuilding['regionName']; ?></td>
                     <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleBuilding['contact_email']; ?></td>
-                    <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleBuilding['notify_email']; ?></td>
+                    <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleBuilding['phone']; ?></td>
                     <!-- <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleBuilding['phone']; ?></td> -->
                     <td class="p-1 text-darkblue border-bottom-light"> <?php 
                       foreach ($editAllRooms as $value) {
