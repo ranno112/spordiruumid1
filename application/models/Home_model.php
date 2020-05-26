@@ -34,7 +34,9 @@ class Home_model extends CI_Model
         $this->db->select("name, buildings.id");
 		$this->db->distinct();
 		$this->db->join('rooms', 'buildings.id  = rooms.buildingID' , 'left');
-		$this->db->where('roomActive','1');
+		if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'){
+			$this->db->where('roomActive','1');
+			}
         $query = $this->db->get('buildings');
         $output = '<option value="">Select Asutus</option>';
         foreach ($query->result() as $row) {
@@ -54,15 +56,23 @@ class Home_model extends CI_Model
 	
 	function getRoomsFromRegion($country_id)
     {
-		$this->db->select("rooms.id, rooms.roomName");
+		$this->db->select("rooms.id, rooms.roomName,roomActive");
         $this->db->where('buildings.regionID', $country_id);
 	//	$this->db->order_by('id', 'ASC');
 		$this->db->join('buildings', 'rooms.buildingID = buildings.id' , 'left');
 		$this->db->join('regions', 'buildings.id = regions.regionID' , 'left');
+		if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'){
+			$this->db->where('roomActive','1');
+			}
         $query = $this->db->get('rooms');
         $output = '<option value="">Select Asutus</option>';
         foreach ($query->result() as $row) {
-            $output .= '<option  data-value="' . $row->id . '" value="' . $row->roomName . '">'.$row->roomName.'</option>';
+			if($row->roomActive==0){
+				$output .= '<option  data-value="' . $row->id . '" value="' . $row->roomName . ' (peidetud)"></option>';
+			}
+			else{
+				$output .= '<option  data-value="' . $row->id . '" value="' . $row->roomName . '">'.$row->roomName.'</option>';
+			}
 		}
 	    return $output;
     }
@@ -78,8 +88,13 @@ class Home_model extends CI_Model
         $query = $this->db->get('rooms');
         $output = '<option value="">Select room</option>';
         foreach ($query->result() as $row) {
-            $output .= '<option  data-value="' . $row->id . '" value="' . $row->roomName . '">'.$row->roomName.'</option>';
-        }
+			if($row->roomActive==0){
+				$output .= '<option  data-value="' . $row->id . '" value="' . $row->roomName . ' (peidetud)"></option>';
+			}
+			else{
+				$output .= '<option  data-value="' . $row->id . '" value="' . $row->roomName . '">'.$row->roomName.'</option>';
+			}
+		}
         return $output;
 	}
 	
