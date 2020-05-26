@@ -82,6 +82,7 @@ class Profile extends CI_Controller
 			$building=$this->profile_model->get_my_buildingID($data);
 			$sesdata = array(
 				'building'     => $building['buildingID'],
+				'room'=> $this->profile_model->getRoomID($building['buildingID'])['id']
 			);
 			$this->session->set_userdata($sesdata);
 		}

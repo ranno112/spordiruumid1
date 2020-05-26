@@ -31,7 +31,13 @@
 			return $this->db->update('users', $data);
 		}
 
-
+		
+		function getRoomID($buildingID){
+			$this->db->select('id');  
+			$this->db->where('buildingID',$buildingID);
+			$result = $this->db->get('rooms');
+			return $result->row_array();
+		  }
 		public function get_my_buildingID(){
 
 			$this->db->select('buildingID');  
