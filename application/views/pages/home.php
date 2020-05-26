@@ -64,7 +64,7 @@
 
                                 if($this->session->userdata('roleID')=='2' or $this->session->userdata('roleID')=='3'){
                                     if($this->session->userdata('building')==$each->buildingID){
-										echo '<option data-value="' . $each->id . '">' . $each->roomName . '</option>';
+									
 										if ($each->roomActive==0){
 											echo '<option data-value="' . $each->id . '">' . $each->roomName . ' (peidetud)</option>';
 										}else{
