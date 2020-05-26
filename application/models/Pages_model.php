@@ -42,7 +42,9 @@ class Pages_model extends CI_Model
 		$this->db->select("name, buildings.id, regionID");
 		$this->db->distinct();
 		$this->db->join('rooms', 'buildings.id  = rooms.buildingID' , 'left');
-		$this->db->where('roomActive','1');
+		if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'){
+			$this->db->where('roomActive','1');
+		}
         $query = $this->db->get('buildings');
         return $query->result();
     }
