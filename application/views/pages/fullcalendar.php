@@ -2,7 +2,7 @@
 			$this->session->set_flashdata('access_deniedToUrl', 'Sellist ruumi ei eksisteeri. Teid suunati avalehele');
 			redirect('');
 		}
-	
+
 		?>
 <div class="container">
 	<div class="row pt-2" id="widthToggle">
@@ -46,10 +46,18 @@
 					<?php foreach ($sportPlacesToChoose as $each) {
 						if ($this->session->userdata('roleID') == '2' or $this->session->userdata('roleID') == '3') {
 							if ($this->session->userdata('building') == $each->buildingID) {
+								if ($each->roomActive==0){
+									echo '<option data-value="' . $each->id . '" value="' . $each->roomName . ' (peidetud)"></option>';
+								}else{
 								echo '<option data-value="' . $each->id . '" value="' . $each->roomName . '"></option>';
 							}
+							}
 						} elseif ($rooms['id'] == $each->buildingID) {
+							if ($each->roomActive==0){
+								echo '<option data-value="' . $each->id . '" value="' . $each->roomName . ' (peidetud)"></option>';
+							}else{
 							echo '<option data-value="' . $each->id . '" value="' . $each->roomName . '"></option>';
+						}
 						}
 					}
 					?>
