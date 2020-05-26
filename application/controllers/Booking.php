@@ -200,7 +200,7 @@ class Booking extends CI_Controller {
 			$endDateToDb = strtotime($endDate);
 			$weekday=$this->input->post('weekday');
 			$days=array('Esmaspäev'=>'Monday','Teisipäev' => 'Tuesday','Kolmapäev' => 'Wednesday','Neljapäev'=>'Thursday','Reede' =>'Friday','Laupäev' => 'Saturday','Pühapäev'=>'Sunday');
-			
+			$checkHoManyWeekDays=array();
 		
 			// var_dump(date("H:i", strtotime($this->input->post('timesStart')[1])));
 			$dateToRedirect='';
@@ -216,6 +216,14 @@ class Booking extends CI_Controller {
 				foreach($days as $key => $value){
 		
 			if ($weekday[$t]==$key){
+				$checkHoManyWeekDays[]=$key;
+				$checkHoManyWeekDays=array_unique($checkHoManyWeekDays);
+				if (count($checkHoManyWeekDays) > 1 && $startDate==$endDate){
+					$this->session->set_flashdata('errors', 'Oled sisestanud mitu nädalapäeva, kuid perioodiks on ainult üks päev');
+					$this->session->set_flashdata('validationErrorMessageforPeriod', "<small class='text-danger'>Vaata perioon üle või kustuta üleliigsed nädalapäevad</small>");
+					$this->session->set_flashdata('key',$this->security->xss_clean($postData));
+					redirect( $this->input->post('current_url'));
+				}
 				//var_dump($this->input->post('Ending'));
 				for($i = strtotime($value, $startDate); $i <= $endDate; $i = strtotime('+1 week', $i))
 					{  
