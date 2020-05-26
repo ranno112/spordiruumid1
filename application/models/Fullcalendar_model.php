@@ -90,7 +90,11 @@ class Fullcalendar_model extends CI_Model
 	function fetch_city($country_id)
     {
         $this->db->where('regionID', $country_id);
-        $this->db->order_by('id', 'ASC');
+		$this->db->order_by('id', 'ASC');
+		$this->db->select("name, buildings.id");
+		$this->db->distinct();
+		$this->db->join('rooms', 'buildings.id  = rooms.buildingID' , 'left');
+		$this->db->where('roomActive','1');
         $query = $this->db->get('buildings');
         $output = '<option value="">Select Asutus</option>';
         foreach ($query->result() as $row) {

@@ -38,6 +38,10 @@ class Pages_model extends CI_Model
 
     function getAllBuildings()
     {
+		$this->db->select("name, buildings.id, regionID");
+		$this->db->distinct();
+		$this->db->join('rooms', 'buildings.id  = rooms.buildingID' , 'left');
+		$this->db->where('roomActive','1');
         $query = $this->db->get('buildings');
         return $query->result();
     }
