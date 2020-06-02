@@ -128,7 +128,7 @@ CREATE TABLE `bookingTimes` (
 );
 
 CREATE TABLE `bookingTimeVersions` (
-  `versionID` int(11) NOT NULL,
+  `versionID` int(11) NOT NULL AUTO_INCREMENT,
   `timeID` int(11) NOT NULL,
   `startTime` timestamp NULL DEFAULT NULL,
   `endTime` timestamp NULL DEFAULT NULL,
