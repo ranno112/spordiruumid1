@@ -124,7 +124,7 @@
 						<?php echo form_open('building/delete/'.$singleBuilding['id'], array('class' => 'cat-delete pl-1', 'id' => "delete")); ?>
 							<!-- <input type="submit" class="" value="Kustuta"> -->
 							<input type="hidden" name="buildingID" value="<?php echo $singleBuilding['id']; ?>" />
-                            <p type="submit"class="btn btn-delete btn-width text-white text-center py-1 px-2 txt-strong ">Kustuta</p>
+							<input type="submit" value="Kustuta" class="btn btn-delete btn-width text-white text-center py-1 px-2 txt-strong " onclick="return confirm('Oled kindel kustutada asutus <?php echo $singleBuilding['name']; ?>?')" />
                         </form>
                     </td>
                 </tr>                
@@ -137,19 +137,3 @@
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/datepicker.js"></script>
-<script>
-	$(document).ready(function() {
-$(".btn-delete").click(function(event)
-{
-	var r = confirm("Oled kindel?");
-  if (r == true) {
-	$('#delete').submit();
-  } else {
-    txt = "You pressed Cancel!";
-  }
-
-
-   
-});
-	})
-</script>
