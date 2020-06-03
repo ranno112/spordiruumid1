@@ -68,7 +68,7 @@ class Home_model extends CI_Model
         $output = '<option value="">Select Asutus</option>';
         foreach ($query->result() as $row) {
 			if($row->roomActive==0){
-				$output .= '<option  data-value="' . $row->id . '" value="' . $row->roomName . ' (peidetud)"></option>';
+				$output .= '<option  data-value="' . $row->id . '" value="' . $row->roomName . ' (peidetud)">'.$row->roomName.' (peidetud)</option>';
 			}
 			else{
 				$output .= '<option  data-value="' . $row->id . '" value="' . $row->roomName . '">'.$row->roomName.'</option>';
@@ -89,10 +89,10 @@ class Home_model extends CI_Model
         $output = '<option value="">Select room</option>';
         foreach ($query->result() as $row) {
 			if($row->roomActive==0){
-				$output .= '<option  data-value="' . $row->id . '" value="' . $row->roomName . ' (peidetud)"></option>';
+				$output .= '<option  data-value="' . $row->id . '" value="'. $row->roomName .' (peidetud)">'.$row->roomName.' (peidetud)</option>';
 			}
 			else{
-				$output .= '<option  data-value="' . $row->id . '" value="' . $row->roomName . '">'.$row->roomName.'</option>';
+				$output .= '<option  data-value="' . $row->id . '" value="'. $row->roomName .'">'.$row->roomName.'</option>';
 			}
 		}
         return $output;

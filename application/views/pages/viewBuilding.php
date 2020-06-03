@@ -118,13 +118,13 @@
                  
                     <td class="d-flex justify-content-end p-1 pr-3">
                        
-						<?php echo form_open('building/edit/'.$singleBuilding['id'], array('class' => 'cat-delete')); ?>
+						<?php echo form_open('building/edit/'.$singleBuilding['id'], array('class' => 'cat-delete', 'id' => "change")); ?>
                             <button type="submit" class="btn btn-second btn-width text-white text-center py-1 px-2 txt-strong ">Muuda</button>
                         </form>
-						<?php echo form_open('building/delete/'.$singleBuilding['id'], array('class' => 'cat-delete pl-1')); ?>
+						<?php echo form_open('building/delete/'.$singleBuilding['id'], array('class' => 'cat-delete pl-1', 'id' => "delete")); ?>
 							<!-- <input type="submit" class="" value="Kustuta"> -->
 							<input type="hidden" name="buildingID" value="<?php echo $singleBuilding['id']; ?>" />
-                            <button type="submit" class="btn btn-delete btn-width text-white text-center py-1 px-2 txt-strong ">Kustuta</button>
+                            <p type="submit"class="btn btn-delete btn-width text-white text-center py-1 px-2 txt-strong ">Kustuta</p>
                         </form>
                     </td>
                 </tr>                
@@ -134,3 +134,22 @@
     </div>
 </div>
 <?php endif;?>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/datepicker.js"></script>
+<script>
+	$(document).ready(function() {
+$(".btn-delete").click(function(event)
+{
+	var r = confirm("Oled kindel?");
+  if (r == true) {
+	$('#delete').submit();
+  } else {
+    txt = "You pressed Cancel!";
+  }
+
+
+   
+});
+	})
+</script>
