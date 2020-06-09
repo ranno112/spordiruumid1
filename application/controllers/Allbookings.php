@@ -147,7 +147,7 @@
 			{
 				$data[] = array(
 					'id'	=>	$row['id'],
-					 'title'	=>	$row['roomName'],
+					 'title'	=> mb_substr($row['roomName'], 0, 4,"utf-8"),
 					 'eventColor'	=>	$row['roomColor']
 					
 				);

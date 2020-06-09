@@ -23,6 +23,8 @@ foreach($rooms as $value){
 
 <!-- <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.css" rel="stylesheet" type="text/css" />
 <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/1.6.4/fullcalendar.print.css " rel="stylesheet" type="text/css" media="print" /> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.min.js"></script>
 <link href='<?php echo base_url(); ?>assets/css/fullcalendar.print.css' rel="stylesheet" type="text/css"  media="print">`
 <link href='<?php echo base_url(); ?>assets/packages/core/main.css' rel='stylesheet' />
 <link href='<?php echo base_url(); ?>assets/packages/daygrid/main.css' rel='stylesheet' />
@@ -55,7 +57,21 @@ foreach($rooms as $value){
 
     var calendar1 = new FullCalendar.Calendar(calendar1El, {
 		//schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-		monthNames: ['jaanuar', 'veebruar', 'märts', 'aprill', 'mai', 'juuni', 'juuli', 'august', 'september', 'oktoober', 'november', 'detsember'],
+	resourceRender: function(info) {
+        var questionMark = document.createElement('span');
+        questionMark.innerText = ' (?) 	';
+//	<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">  Tooltip on top</button>
+      //  info.el.appendChild(questionMark);
+
+        // var tooltip = new Tooltip(questionMark, {
+        //   title: info.resource.title + '!!!',
+        //   placement: 'top',
+        //   trigger: 'hover',
+        //   container: 'body'
+		// });
+		
+
+      },
       plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid','momentPlugin' ],
 			defaultDate:dateConvert,
       defaultView: 'resourceTimeGridWeek',
@@ -67,7 +83,30 @@ foreach($rooms as $value){
 			maxTime: '22:00:00',
 			slotDuration: '00:30:00',
 			
-			timeFormat: 'H:mm',
+			eventTimeFormat: { // like '14:30:00'
+    hour: '2-digit',
+    minute: '2-digit',
+  
+    meridiem: false
+  },
+  slotLabelFormat: [
+  { month: 'long', year: 'numeric' }, // top level of text
+  { weekday: 'short' }, // lower level of text
+  {
+  hour: 'numeric',
+  minute: '2-digit',
+ 
+  meridiem: 'short'
+}
+]
+  ,
+//   titleFormat: { // will produce something like "Tuesday, September 18, 2018"
+//     month: 'long',
+//     year: 'numeric',
+//     day: 'numeric',
+//     weekday: 'long'
+//   },
+  
       header: {
         left: 'today',
         center: 'prev,title,next',
@@ -195,7 +234,7 @@ foreach($rooms as $value){
 		window.location.href="<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $this->session->userdata('room');?>&date="+moment(calendar1.getDate()).format("DD.MM.YYYY");
 		} );
 
-	
+		calendar1.setOption('locale', 'ee');
 	
 			
 
