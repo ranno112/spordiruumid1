@@ -348,7 +348,7 @@
 		});
 
 		var days = ['P', 'E', 'T', 'K', 'N', 'R', 'L'];
-		var displayOrNot = '<?php echo $this->session->userdata('roleID') ?>';
+		var displayOrNot = '<?php if($rooms['api_url']) {echo '4';} else echo $this->session->userdata('roleID') ?>';
 
 		var monthNamesForModal = ['Jaanuar', 'Veebruar', 'Märts', 'Aprill', 'Mai', 'Juuni', 'Juuli', 'August', 'September', 'Oktoober', 'November', 'Detsember'];
 
@@ -417,7 +417,7 @@
 
 				// your event source
 				{
-					url: "<?php echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get('roomId')); ?>" // use the `url` property
+					url: "<?php if($rooms['api_url']) {echo $rooms['api_url'];} else { echo base_url(); ?>fullcalendar/load/<?php echo ($this->input->get('roomId'));} ?>" // use the `url` property
 
 					// rendering : 'background'
 				},

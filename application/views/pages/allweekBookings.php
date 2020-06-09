@@ -55,6 +55,7 @@ foreach($rooms as $value){
 
     var calendar1 = new FullCalendar.Calendar(calendar1El, {
 		//schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+		monthNames: ['jaanuar', 'veebruar', 'märts', 'aprill', 'mai', 'juuni', 'juuli', 'august', 'september', 'oktoober', 'november', 'detsember'],
       plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid','momentPlugin' ],
 			defaultDate:dateConvert,
       defaultView: 'resourceTimeGridWeek',
@@ -65,8 +66,8 @@ foreach($rooms as $value){
 	 minTime: '08:00:00',
 			maxTime: '22:00:00',
 			slotDuration: '00:30:00',
-			monthNames: ['jaanuar', 'veebruar', 'märts', 'aprill', 'mai', 'juuni', 'juuli', 'august', 'september', 'oktoober', 'november', 'detsember'],
 			
+			timeFormat: 'H:mm',
       header: {
         left: 'today',
         center: 'prev,title,next',

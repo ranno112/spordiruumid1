@@ -18,6 +18,7 @@
 			$this->db->join('rooms', 'bookingTimes.roomID = rooms.id' , 'left');
 			$this->db->join('buildings', 'rooms.buildingID = buildings.id' , 'left');
 			$this->db->where('buildingID', $buildingID);
+			$this->db->where('endTime >=',   date("Y-m-d H:i:s", strtotime("-2 week")));
 			return $this->db->get('bookingTimes');
 		}
 
