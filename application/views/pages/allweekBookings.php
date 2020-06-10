@@ -10,7 +10,7 @@
 $json = file_get_contents(base_url().'allbookings/loadRooms/'.$this->session->userdata['building']);
 $array = json_encode(json_decode($json, true));
 ?>
-
+<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">  Tooltip on top</button>
 <?php 
 foreach($rooms as $value){
 	echo  '<input type="checkbox" id="addOrRemoveRoom'.$value['id'].'" name="vehicle" value="'.$value['id'].'" checked>
@@ -58,12 +58,18 @@ foreach($rooms as $value){
     var calendar1 = new FullCalendar.Calendar(calendar1El, {
 		//schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
 	resourceRender: function(info) {
-        var questionMark = document.createElement('span');
-        questionMark.innerText = ' (?) 	';
+	
+        var roomTitle = document.createElement('span');
+    //    roomTitle.setAttribute('class', 'btn btn-secondary');
+        roomTitle.setAttribute("data-toggle","tooltip");
+        roomTitle.setAttribute("data-placement","top");
+        roomTitle.setAttribute("title", info.resource._resource.extendedProps.description);
+				info.el.textContent=""
+        roomTitle.innerText =info.resource.title ;
 //	<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">  Tooltip on top</button>
-      //  info.el.appendChild(questionMark);
+        info.el.appendChild(roomTitle);
 
-        // var tooltip = new Tooltip(questionMark, {
+        // var tooltip = new Tooltip(roomTitle, {
         //   title: info.resource.title + '!!!',
         //   placement: 'top',
         //   trigger: 'hover',
@@ -71,7 +77,37 @@ foreach($rooms as $value){
 		// });
 		
 
+		// var roomTitle = document.createElement('strong');
+    //   roomTitle.innerText = ' (?) ';
+
+    //   info.el.querySelector('.fc-cell-text')
+    //     .appendChild(roomTitle);
+
+      // var tooltip = new Tooltip(roomTitle, {
+      //   title: info.resource.title + '!!!',
+      //   placement: 'top',
+      //   trigger: 'hover',
+      //   container: 'body'
+      // });
+
+
       },
+			eventRender: function(info) {
+				console.log(info.el.innerText);
+				var eventTooltip = document.createElement('span');
+				eventTooltip.setAttribute("data-toggle","tooltip");
+        eventTooltip.setAttribute("data-placement","top");
+				eventTooltip.setAttribute("title", (info.el.innerText).substring(0, 13)+" "+(info.el.innerText).substring( 13));
+				eventTooltip.innerText=(info.el.innerText).substring(0, 13)+" "+(info.el.innerText).substring( 13);
+				info.el.textContent=""
+				info.el.prepend(eventTooltip);
+    // var tooltip = new Tooltip(info.el, {
+    //   title: info.event.extendedProps.description,
+    //   placement: 'top',
+    //   trigger: 'hover',
+    //   container: 'body'
+    // });
+  },
       plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid','momentPlugin' ],
 			defaultDate:dateConvert,
       defaultView: 'resourceTimeGridWeek',

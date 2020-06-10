@@ -142,12 +142,19 @@
 		{
 			
 			$event_data = $this->allbookings_model->fetch_all_rooms($buildingID);
+			$count=count($event_data->result_array());
 			foreach($event_data->result_array() as $row)
-				
 			{
+				$roomName=$row['roomName'];
+				if ($count >4 && strpos($roomName, ' ') !== false) {
+					$pieces =explode(" ", $roomName);
+					$roomName= mb_substr($pieces[0], 0, 3,"utf-8").'-'.mb_substr($pieces[1], 0, 1,"utf-8");
+				
+				}
 				$data[] = array(
 					'id'	=>	$row['id'],
-					 'title'	=> mb_substr($row['roomName'], 0, 4,"utf-8"),
+					 'title'	=> $roomName ,
+					 'description'	=> $row['roomName'],
 					 'eventColor'	=>	$row['roomColor']
 					
 				);
