@@ -133,7 +133,7 @@ foreach($rooms as $value){
   hour: 'numeric',
   minute: '2-digit',
  
-  meridiem: 'short'
+  meridiem: false
 }
 ]
   ,
