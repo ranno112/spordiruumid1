@@ -116,20 +116,20 @@
 				
 			{
 				$data[] = array(
-					'id'	=>	$row['bookingID'],
+			//		'id'	=>	$row['bookingID'],
 					'resourceId'	=>	$row['roomID'],
-					'timeID'=>	$row['timeID'],
+				//	'timeID'=>	$row['timeID'],
 					'title'	=>	$row['public_info'],
-					'description'	=>	$row['workout'],
+				//	'description'	=>	$row['workout'],
 					'start'	=>	$row['startTime'],
 					'end'	=>	$row['endTime'],
-					'clubname'	=>	$row['c_name'],
+				//	'clubname'	=>	$row['c_name'],
 				//	'color'	=>	$row['bookingTimeColor'],
 					
-					 'building'	=>	$row['name'],
-					 'roomName'	=>	$row['roomName'],
-					 'organizer'	=>	$row['organizer'],
-					 'typeID'	=>	$row['typeID'],
+				//	 'building'	=>	$row['name'],
+				//	 'roomName'	=>	$row['roomName'],
+				//	 'organizer'	=>	$row['organizer'],
+				//	 'typeID'	=>	$row['typeID'],
 	
 				);
 		
