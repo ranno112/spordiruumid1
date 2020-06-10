@@ -154,8 +154,8 @@
 				else if($count >4 && strlen($roomName) > 7){
 					$roomName=	mb_substr($roomName, 0, 6,"utf-8");
 				}
-				else if( strlen($roomName) > 15){
-					$roomName=	mb_substr($roomName, 0, 10,"utf-8").' '.mb_substr($roomName, 10, 10,"utf-8");
+				else if( strlen($roomName) > 12){ 
+					$roomName=	mb_substr($roomName, 0, 9,"utf-8").' '.	mb_substr($roomName, 9, 8,"utf-8");
 				
 				}
 				$data[] = array(
