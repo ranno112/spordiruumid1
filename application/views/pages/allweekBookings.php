@@ -10,7 +10,7 @@
 $json = file_get_contents(base_url().'allbookings/loadRooms/'.$this->session->userdata['building']);
 $array = json_encode(json_decode($json, true));
 ?>
-<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">  Tooltip on top</button>
+<!-- <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">  Tooltip on top</button> -->
 <?php 
 foreach($rooms as $value){
 	echo  '<input type="checkbox" id="addOrRemoveRoom'.$value['id'].'" name="vehicle" value="'.$value['id'].'" checked>
