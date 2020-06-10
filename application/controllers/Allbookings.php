@@ -151,9 +151,12 @@
 					$roomName= mb_substr($pieces[0], 0, 3,"utf-8").'-'.mb_substr($pieces[1], 0, 1,"utf-8");
 				
 				}
+				if($count >4 && strlen($roomName) > 7){
+					$roomName=	mb_substr($roomName, 0, 6,"utf-8");
+				}
 				$data[] = array(
 					'id'	=>	$row['id'],
-					 'title'	=> $roomName ,
+					 'title'	=> wordwrap($roomName, 7, "\n", true) ,
 					 'description'	=> $row['roomName'],
 					 'eventColor'	=>	$row['roomColor']
 					
