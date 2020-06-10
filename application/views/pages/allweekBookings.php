@@ -9,6 +9,7 @@
 <?php
 $json = file_get_contents(base_url().'allbookings/loadRooms/'.$this->session->userdata['building']);
 $array = json_encode(json_decode($json, true));
+echo mb_substr('õõõõõõõ', 0, 3,"utf-8");
 ?>
 <!-- <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">  Tooltip on top</button> -->
 <?php 
