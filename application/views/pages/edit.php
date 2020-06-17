@@ -216,7 +216,17 @@
 										</div> 
 										<div class="col-4 col-md-2">
 											<label class="col-2 m-0 p-0" for="color">Värv</label>
-                                            <input type="color" id="periodWorkoutColor" class="form-control" name="color" value="#ffffff" >
+                                            <input type="color" id="periodWorkoutColor" class="form-control" name="color" value="#ffffff"  list="presetColors">
+											<datalist id="presetColors">
+												<option>#ffffff</option>
+												<option>#ddffee</option>
+												<option>#cceeff</option>
+												<option>#ffccee</option>
+												<option>#ffffcc</option>
+												<option>#aaffaa</option>
+												<option>#eeffff</option>
+												<option>#f6e5ff</option>
+											</datalist>
 										</div>                                  
                                     </div>
                                 </div>
@@ -517,7 +527,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 					}
 					else if (n) {
 						//     console.log(i);
-						$('#myTable > tbody').append(' <tr id="' + BTimesid + '"> <td class="td-width-l"><b>' + days[new Date(start).getDay()] + '</b>,&nbsp;' + moment(start).format("DD.MM.YYYY") + '</td><td class="td-width-m">&nbsp;&nbsp;' + moment(start).format("HH:mm") + '&#8209;' + moment(end).format("HH:mm") + '</td><td class="td-width-s pl-3"><input class="datePicker form-control p" id="time_' + BTimesid + '" data-toggle="datepicker" name="bookingtimesFrom[' + counter + ']"  value="' + moment(start).format("DD.MM.YYYY") + '"></td><td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield' + i + '" value="' + moment(start).format("HH:mm") + '"></td>  <td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeEnd[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + i + '" value="' + moment(end).format("HH:mm") + '"></td><td class="pl-3"><input name="color[]" type="color" class="form-control" value="'+eventColor+'"></td></tr>'); 
+						$('#myTable > tbody').append(' <tr id="' + BTimesid + '"> <td class="td-width-l"><b>' + days[new Date(start).getDay()] + '</b>,&nbsp;' + moment(start).format("DD.MM.YYYY") + '</td><td class="td-width-m">&nbsp;&nbsp;' + moment(start).format("HH:mm") + '&#8209;' + moment(end).format("HH:mm") + '</td><td class="td-width-s pl-3"><input class="datePicker form-control p" id="time_' + BTimesid + '" data-toggle="datepicker" name="bookingtimesFrom[' + counter + ']"  value="' + moment(start).format("DD.MM.YYYY") + '"></td><td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield' + i + '" value="' + moment(start).format("HH:mm") + '"></td>  <td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeEnd[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + i + '" value="' + moment(end).format("HH:mm") + '"></td><td class="pl-3"><input name="color[]" type="color" class="form-control" value="'+eventColor+'"  list="presetColors"><datalist id="presetColors"><option>#ffffff</option><option>#ddffee</option><option>#cceeff</option><option>#ffccee</option><option>#ffffcc</option><option>#aaffaa</option><option>#eeffff</option><option>#f6e5ff</option></td></tr>'); 
 						resConflicts.push(start.replace('T', ' ').substring(0, 16));
 						res2Conflicts.push(end.replace('T', ' ').substring(0, 16));
 						ConflictID.push(obj.timeID);
