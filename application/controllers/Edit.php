@@ -61,29 +61,29 @@ class Edit extends CI_Controller {
 	//	$this->input->get('saal', TRUE);
 		$event_data = $this->edit_model->fetch_all_event();
 		foreach($event_data->result_array() as $row)
-		if(	$row['bookingID']==$bookingID){
-			
+		
 		{
-			$data[] = array(
-				'id'	=>	$row['bookingID'],
-				'roomID'	=>	$row['roomID'],
-				'timeID'=>	$row['timeID'],
-				'title'	=>	$row['public_info'],
-				'start'	=>	$row['startTime'],
-				'end'	=>	$row['endTime'],
-				'event_in'	=>	$row['event_in'],
-				'event_out'	=>	$row['event_out'],
-				'clubname'	=>	$row['c_name'],
-				'workout'	=>	$row['workout'],
-				'created_at'	=>	$row['created_at'],
-				 'comment'	=>	$row['comment'],
-				 'building'	=>	$row['name'],
-				 'roomName'	=>	$row['roomName'],
-				 'bookingID'	=>	$row['bookingID'],
-				 'takesPlace'	=>	$row['takes_place'],
-				 'approved'	=>	$row['approved'],
-				 'organizer'	=>	$row['organizer'],
-				 'color'	=>	$row['bookingTimeColor'],
+			if(	$row['bookingID']==$bookingID){
+				$data[] = array(
+					'id'	=>	$row['bookingID'],
+					'roomID'	=>	$row['roomID'],
+					'timeID'=>	$row['timeID'],
+					'title'	=>	$row['public_info'],
+					'start'	=>	$row['startTime'],
+					'end'	=>	$row['endTime'],
+					'event_in'	=>	$row['event_in'],
+					'event_out'	=>	$row['event_out'],
+					'clubname'	=>	$row['c_name'],
+					'workout'	=>	$row['workout'],
+					'created_at'	=>	$row['created_at'],
+					'comment'	=>	$row['comment'],
+					'building'	=>	$row['name'],
+					'roomName'	=>	$row['roomName'],
+					'bookingID'	=>	$row['bookingID'],
+					'takesPlace'	=>	$row['takes_place'],
+					'approved'	=>	$row['approved'],
+					'organizer'	=>	$row['organizer'],
+					'color'	=>	$row['bookingTimeColor'],
 
 				);
 			}
@@ -259,7 +259,7 @@ class Edit extends CI_Controller {
 	}
 
 
-	// The Main function
+	// Update Once
 	public function update()
 	{	
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
@@ -314,11 +314,11 @@ class Edit extends CI_Controller {
 
 						$this->form_validation->set_message('validationErrorMessage', 'Kuupäevad ei ole õigesti sisestatud.');
 						$this->session->set_flashdata('validationErrorMessage', 'Kellaaeg on valesti sisestatud');
-
+						$data=$this-> index();
 						//	redirect('edit/update'  ,$_POST);
-						$this->load->view('templates/header');
-						$this->load->view('pages/edit');
-						$this->load->view('templates/footer');
+						// $this->load->view('templates/header');
+						// $this->load->view('pages/edit');
+						// $this->load->view('templates/footer');
 						$RedirectToCalendar=false;
 					break;
 
@@ -344,11 +344,51 @@ class Edit extends CI_Controller {
 						
 							);
 						
-						$this->edit_model->insert_version($dataForVersioning);
-						$this->edit_model->update_bookingTimes($insert_data[$i], $this->input->post('timesIdArray')[$i]);
+							$this->edit_model->insert_version($dataForVersioning);
+							$this->edit_model->update_bookingTimes($insert_data[$i], $this->input->post('timesIdArray')[$i]);
+
+						
 					}
 				}
+				$allEventsForConflictCheck=$this->edit_model->get_conflictsDates2($this->session->userdata('building'),$this->input->post('roomID'), $this->input->post('BookingID'));
+				foreach($allEventsForConflictCheck as $key => $value){
+					$property1 = 'startTime'; 
+					$property2 = 'endTime'; 
+					$property3 = 'public_info'; 
+					$property4 = 'workout'; 
+					foreach($insert_data as $key2 => $value2){
+				 
+						
+						if($value->$property1<$value2['endTime'] && $value->$property2>$value2['startTime']){
+							//insert_data3 mean conflick days
+							$insert_data3[] = array(
+							  
+								'startTime' => $value->$property1,
+								'endTime' =>  $value->$property2,
+								'public_info' => $value->$property3,
+								'workout' => $value->$property4
+								);
+		
+						break;
+						}
+					
+						//$value['startTime'],$value['endTime']
+					
+					}
+		
+				}
 			
+				if($RedirectToCalendar&&!empty($insert_data3)&&$this->input->post('allowSave')==0){
+					$this->session->set_flashdata('validationErrorMessage', 'Tuvastatud kattuvus');
+					$this->session->set_flashdata('conflictDates', $this->security->xss_clean($insert_data3));
+					$data=$this-> index();
+					$RedirectToCalendar=false;
+					
+					}
+			
+				
+			
+
 		if($this->input->post('additionalBookingDate')){
 		
 			$addtimes = array();

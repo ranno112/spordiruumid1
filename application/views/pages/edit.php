@@ -1,3 +1,30 @@
+<?php  $conflictDates=$this->session->flashdata('conflictDates');  ?>
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Muudatus on salvestatud</h5>
+ 
+      </div>
+      <div class="modal-body">
+		<h6>Soovitud broneering kattub allolevate broneeringutega.</h6>
+	
+		<table id="myModalTable" class="table">
+		<thead>	<tr><th>Nädalapäev</th><th>Kuupäev</th><th>Kellaaeg</th><th>Treening</th><th>Klubi</th></tr>	
+		</thead>
+			<tbody>
+		
+			</tbody>
+		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="submitWithConflicts" class="btn btn-secondary">Vaatan kalendrist</button>
+        <button type="button" class="btn btn-custom text-white " data-dismiss="modal">Muudan broneeringut</button>
+      </div>
+    </div>
+  </div>
+</div>  
 <div class="container">
 
 	<div id="forms" class="container-md pb-5">
@@ -25,9 +52,10 @@
 					<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
 					<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
 								<label for="contact">Klubi nimi (avalik info)* <?php if($this->session->flashdata('validationErrorMessageForClubname')){  echo $this->session->flashdata('validationErrorMessageForClubname');} ?></label>
-								<input type="text" class="form-control" name="publicInfo" value="<?php if(!empty($allPostData['publicInfo'])){echo $allPostData['publicInfo'];}else {echo $bookingData['public_info'];}?>" id="publicInfo" required>
+								<input type="text" class="form-control" name="publicInfo" value="<?php if(!empty($allPostData['publicInfo'])){echo $allPostData['publicInfo'];}else {echo $bookingData['public_info'];}?>" id="publicInfo">
 							</div>
 							<input class="d-none" type="checkbox" id="type" name="type" value="1" checked>
+							<input class="d-none" type="checkbox" id="allowFormToSubmitAndNeverMindConflicts1" name="allowSave" value="0" checked>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
 								<label>Kontaktisik <?php if($this->session->flashdata('validationErrorMessageContactPerson')){  echo $this->session->flashdata('validationErrorMessageContactPerson');} ?> </label>
 								<input type="text" class="form-control" name="contactPerson" id="contactPerson" value="<?php if(!empty($allPostData['contactPerson'])){echo $allPostData['contactPerson'];}else {echo $bookingData['c_name'];}?>">
@@ -121,9 +149,15 @@
 						<input class="d-none" type="hidden" name="roomID" id="roomID" value="<?php echo $bookingData['roomID'];?>"> 
 
 						<div class="row d-flex justify-content-end mt-5 px-md-5 mx-md-5">
-							<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#" onClick="history.go(-1); return false;">Katkesta</a>
+							<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $bookingData['roomID'];?>">Katkesta</a>
 							<input type="submit" id="changeTimes" class="btn btn-custom col-12 col-sm-4 text-white txt-xl" value="Salvesta muudatused">
+							
+							<button id="loadingTemporarlyButtonOnce" class="d-none btn btn-custom text-white txt-xl" type="button" disabled>
+							<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+							Kontrollin kattuvusi...
+							</button>
 						</div>
+
 
 					</form>
 				</div>
@@ -134,7 +168,7 @@
 					<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
 					<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
 								<label for="contact">Klubi nimi (avalik info)* <?php if($this->session->flashdata('validationErrorMessageForClubname')){  echo $this->session->flashdata('validationErrorMessageForClubname');} ?></label>	
-								<input type="text" class="form-control" name="publicInfoPeriod" value="<?php if(!empty($allPostData['publicInfoPeriod'])){echo $allPostData['publicInfoPeriod'];}else { echo $bookingData['public_info'];}?>" id="publicInfoPeriod" required>
+								<input type="text" class="form-control" name="publicInfoPeriod" value="<?php if(!empty($allPostData['publicInfoPeriod'])){echo $allPostData['publicInfoPeriod'];}else { echo $bookingData['public_info'];}?>" id="publicInfoPeriod" >
 							</div>
 							<input class="d-none" type="checkbox" id="type" name="type" value="1" checked>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
@@ -284,7 +318,7 @@
 						<input class="d-none" type="hidden" name="roomID" id="roomIDPeriodic" value="<?php echo $bookingData['roomID'];?>">
 
 						<div class="row d-flex justify-content-end mt-5 px-md-5 mx-md-5">
-							<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="#" onClick="history.go(-1); return false;">Katkesta</a>
+							<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $bookingData['roomID'];?>">Katkesta</a>
 							<input type="submit" id="changePeriodTimes" class="btn btn-custom col-12 col-sm-4 text-white txt-xl" value="Salvesta muudatused">
 						</div>
 
@@ -619,6 +653,68 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 
 
 		$("#changeTimes").on('click', function(event) {
+
+	
+		$(this).hide();
+	
+	
+		$("#loadingTemporarlyButtonOnce").removeClass('d-none');
+		$("#loadingTemporarlyButtonOnce").html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Kontrollin kattuvusi...');
+
+		var bookingID = '<?= $_POST['BookingID'] ?>';
+		//	console.log(bookingID);
+			var datafrom = ['<?= implode("', '", $arr2) ?>'];
+			var myForm = document.getElementById('change');
+
+			datafrom.forEach(function(value) {
+				var hiddenInput = document.createElement('input');
+
+				hiddenInput.type = 'hidden';
+				hiddenInput.name = 'timesIdArray[]';
+				hiddenInput.value = value;
+
+				myForm.appendChild(hiddenInput);
+			});
+
+			var hiddenInput = document.createElement('input');
+			hiddenInput.type = 'hidden';
+			hiddenInput.name = 'BookingID';
+			hiddenInput.value = bookingID;
+			myForm.appendChild(hiddenInput);
+			$("#changeTimes").on('click', function(event) {
+
+				$('#change').submit();
+
+
+			});
+		//	event.preventDefault();
+	
+
+		});
+
+
+		$("#changePeriodTimes").on('click', function(event) {
+			var bookingID = '<?= $_POST['BookingID'] ?>';
+		//	console.log(bookingID);
+		
+			var myForm = document.getElementById('changePeriod');
+			var hiddenInput = document.createElement('input');
+			hiddenInput.type = 'hidden';
+			hiddenInput.name = 'BookingID';
+			hiddenInput.value = bookingID;
+			myForm.appendChild(hiddenInput);
+			$("#changeTimes").on('click', function(event) {
+
+			//	$('#change').submit();
+
+
+			});
+
+		});
+
+		$( "#submitWithConflicts" ).click(function() {
+		
+			var whichFormToSubmit='<?php echo $_POST['isPeriodic']; ?>';		
 			var bookingID = '<?= $_POST['BookingID'] ?>';
 		//	console.log(bookingID);
 			var datafrom = ['<?= implode("', '", $arr2) ?>'];
@@ -645,28 +741,38 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 
 
 			});
+		//	event.preventDefault();
+			if (whichFormToSubmit==0){
+				$( "#allowFormToSubmitAndNeverMindConflicts1" ).val("1");
+				$('#change').submit();
 
-		});
+			}
+			else if (whichFormToSubmit==1 ){
+				$( "#allowFormToSubmitAndNeverMindConflicts2" ).val("1");
+			
+				$( "#changePeriod" ).submit();
 
-
-		$("#changePeriodTimes").on('click', function(event) {
-			var bookingID = '<?= $_POST['BookingID'] ?>';
-		//	console.log(bookingID);
+			}
 		
-			var myForm = document.getElementById('changePeriod');
-			var hiddenInput = document.createElement('input');
-			hiddenInput.type = 'hidden';
-			hiddenInput.name = 'BookingID';
-			hiddenInput.value = bookingID;
-			myForm.appendChild(hiddenInput);
-			$("#changeTimes").on('click', function(event) {
-
-			//	$('#change').submit();
-
-
+			
 			});
 
-		});
+
+		
+		var allConflictsFromBE=JSON.stringify(<?php echo json_encode($conflictDates);?>);
+
+		if(hasJsonStructure(allConflictsFromBE)){
+			//console.log(allConflictsFromBE);
+
+			var conflict = JSON.parse(allConflictsFromBE);
+			conflict.forEach(function(item) {
+			// console.log(item.public_info+":  "+item.startTime+"-"+item.endTime);
+			var days=['Pühapäev', 'Esmaspäev', 'Teisipäev', 'Kolmapäev', 'Neljapäev', 'Reede', 'Laupäev'];
+				$('#myModalTable > tbody:last-child').append('<tr><td>'+days[new Date(item.startTime.substring(0, 10)).getDay()]+'</td><td>'+moment(item.startTime.substring(0, 10), "YYYY-MM-DD").format("DD.MM.YYYY")+'</td><td>'+ item.startTime.substring(11, 16)+"-"+item.endTime.substring(11, 16)+'</td><td>'+item.workout+'</td><td>'+item.public_info+'</td></tr>');
+			
+				});
+				$('#myModal').modal('show')
+		}
 
 
 
@@ -677,5 +783,18 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
         $(".nav a").removeClass("active");
         $(this).addClass("active");
 	});
+
+	function hasJsonStructure(str) {
+    if (typeof str !== 'string') return false;
+    try {
+        const result = JSON.parse(str);
+        const type = Object.prototype.toString.call(result);
+        return type === '[object Object]' 
+            || type === '[object Array]';
+    } catch (err) {
+        return false;
+    }
+}
+
 	
 </script>

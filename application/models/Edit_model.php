@@ -87,6 +87,23 @@ class Edit_model extends CI_Model
 		}
 
 
+		public function get_conflictsDates2($insert_data, $inserted_room,$bookingID){
+		
+			$this->db->select("created_at, startTime, endTime, public_info, workout");  
+			$this->db->order_by('bookingTimes.startTime');
+			$this->db->join('bookings', 'bookingTimes.bookingID = bookings.id' , 'left');
+			$this->db->join('rooms', 'bookingTimes.roomID = rooms.id' , 'left');
+			$this->db->join('buildings', 'rooms.buildingID = buildings.id' , 'left');
+			$this->db->where('bookingID != ', $bookingID); 
+			$this->db->where('buildingID', $insert_data);
+			$this->db->where('roomID',  $inserted_room);
+			$this->db->where('DATE(startTime) >=', date('Y-m-d H:i:s',strtotime("-1 day")));
+			$query=$this->db->get('bookingTimes');
+			return  $query->result();
+		
+	
+		}
+
 		
 
 	public function can_update_or_not($sessionBuilding,$timeID)
@@ -143,6 +160,9 @@ class Edit_model extends CI_Model
 		return $query;
 	}
 
+
+
+	
 
 }
 

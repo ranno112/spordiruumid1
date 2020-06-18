@@ -463,6 +463,7 @@ class Booking extends CI_Controller {
 		 
 				
 				if($value->$property1<$value2['endTime'] && $value->$property2>$value2['startTime']){
+					//insert_data3 mean conflick days
 					$insert_data3[] = array(
 					  
 						'startTime' => $value->$property1,
