@@ -271,7 +271,7 @@ foreach($rooms as $value){
 		window.location.href="<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $this->session->userdata('room');?>&date="+moment(calendar1.getDate()).format("DD.MM.YYYY");
 		} );
 
-		calendar1.setOption('locale', 'ee');
+		calendar1.setOption('locale', 'est');
 	
 			
 
