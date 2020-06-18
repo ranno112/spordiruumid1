@@ -171,6 +171,7 @@ CREATE TABLE `rooms` (
   `roomName` varchar(255) NOT NULL,
   `roomActive` tinyint(1) NOT NULL DEFAULT '1',
   `roomColor` char(50) DEFAULT '#ffffff',
+  `api_url` text DEFAULT '',
    PRIMARY KEY (id),
    CONSTRAINT `buildingidrooms` FOREIGN KEY (`buildingID`) REFERENCES `buildings` (`id`)
 );
