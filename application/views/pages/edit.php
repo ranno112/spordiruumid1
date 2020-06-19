@@ -8,7 +8,7 @@
  
       </div>
       <div class="modal-body">
-		<h6>Soovitud broneering kattub allolevate broneeringutega.</h6>
+		<h6>Broneering kattub allolevate broneeringutega.</h6>
 	
 		<table id="myModalTable" class="table">
 		<thead>	<tr><th>Nädalapäev</th><th>Kuupäev</th><th>Kellaaeg</th><th>Treening</th><th>Klubi</th></tr>	
@@ -171,6 +171,7 @@
 								<input type="text" class="form-control" name="publicInfoPeriod" value="<?php if(!empty($allPostData['publicInfoPeriod'])){echo $allPostData['publicInfoPeriod'];}else { echo $bookingData['public_info'];}?>" id="publicInfoPeriod" >
 							</div>
 							<input class="d-none" type="checkbox" id="type" name="type" value="1" checked>
+							<input class="d-none" type="checkbox" id="allowFormToSubmitAndNeverMindConflicts2" name="allowSave" value="0" checked>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
 								<label>Kontaktisik <?php if($this->session->flashdata('validationErrorMessageContactPerson')){  echo $this->session->flashdata('validationErrorMessageContactPerson');} ?> </label>
 								<input type="text" class="form-control" name="contactPersonPeriod" id="contactPersonPeriod"  value="<?php if(!empty($allPostData['contactPersonPeriod'])){echo $allPostData['contactPersonPeriod'];}else {echo $bookingData['c_name'];}?>">
@@ -320,6 +321,10 @@
 						<div class="row d-flex justify-content-end mt-5 px-md-5 mx-md-5">
 							<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $bookingData['roomID'];?>">Katkesta</a>
 							<input type="submit" id="changePeriodTimes" class="btn btn-custom col-12 col-sm-4 text-white txt-xl" value="Salvesta muudatused">
+							<button id="loadingTemporarlyButton" class="d-none btn btn-custom text-white txt-xl" type="button" disabled>
+							<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+							Kontrollin kattuvusi...
+							</button>
 						</div>
 
 					</form>
@@ -339,6 +344,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/datepicker.js"></script>
 <script>
 	$(document).ready(function() {
+		var URLdate="";
 		var isPeriodic = '<?= $_POST['isPeriodic']; ?>';
 		$('input[id=sport_facility2]').focusin(function() {
             $('input[id=sport_facility2]').val('');           
@@ -430,75 +436,12 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 				//   console.log(datafrom);
 				for (var i = 0, l = res.length; i < l; i++) {
 					var obj = res[i];
-					// console.log(obj);
-					//console.log(obj.start);
-					
-
-					//  $('#lefty').modal('show');
-					//  $("#lefty .modal-header h4").text(obj.title);
-					//  $("#lefty #time").text(obj.created_at);
-
-				
-				//	$('#publicInfo').val(obj.title);
-			//		$('#publicInfoPeriod').val(obj.title);
-					
-				//	$('#contactPerson').val(obj.clubname);
-				//	$('#contactPersonPeriod').val(obj.clubname);
-				//	$('#organizer').val(obj.organizer);
-				//	$('#organizerPeriod').val(obj.organizer);
-					// if ($('#eventIn').is(':empty')){
-					// $('#eventIn').val('Pole hooajaline broneering');}
-					// else{
-					//     $('#eventIn').val(moment(obj.event_in).format('DD/MM/YYYY HH:mm'));
-					// }
-					// if ($('#eventOut').is(':empty')){
-					// $('#eventOut').val('Pole hooajaline broneering');}
-					// else{
-					//     $('#eventOut').val(moment(obj.event_out).format('DD/MM/YYYY HH:mm'));
-					// }
-				//	$('#phone').val(obj.phone);
-				//	$('#phonePeriod').val(obj.phone);
-				//	$('#additional').val(obj.comment);
-				//	$('#additionalPeriod').val(obj.comment);
-
-				//	$('#email').val(obj.email);
-				//	$('#emailPeriod').val(obj.email);
-					
-				//	$('#created_at').val(obj.created_at);
-				//	$('#workoutType').val(obj.workout);
-				//	$('#workoutTypePeriod').val(obj.workout);
+			
 					$('#selectedroom').val(obj.roomName);
 					$('#selectedroomPeriod').val(obj.roomName);
-				//	document.getElementById("selectedroom").value = obj.roomName;
-					//     document.getElementById("building").value = obj.roomName;
 					$('#sport_facility').val(obj.building);
 					$('#sport_facilityPeriod').val(obj.building);
 				
-				
-					
-				
-				
-					// 	if(weekDays.includes(	weekDays[new Date(start).getDay()])){
-					// 	var list = document.getElementsByClassName("form-control col-5 arrow");
-					// 		for (var i = 0; i < list.length; i++) {
-					// 		list[i].setAttribute("value", 	weekDays[new Date(start).getDay()]);
-					// 		}
-					// };
-
-					for (var property in obj) {
-						//console.log(property + "=" + obj[property]);
-					
-
-					};
-				//	document.getElementById("roomID").value = obj.roomID;
-				//	document.getElementById("roomIDPeriodic").value = obj.roomID;
-					// $('#start').val(obj.start);
-					// $('#timestartfield').val(obj.start);
-					//   $('#building').val(obj.building);
-
-				
-					//  $('#selectedroom').val(obj.roomID)
-
 					var BTimesid = obj.timeID;
 
 					var start = obj.start;
@@ -510,12 +453,14 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 					if(!eventColor){
 						eventColor='#ffffff';
 					}
-				
-				
+					
+					
 
 					var n = datafrom.indexOf(BTimesid)!== -1;
 				
-					
+					if(n && !URLdate){
+						URLdate=start;
+					}	
 
 					//    console.log(BTimesid);
 					if(isPeriodic==1){
@@ -694,6 +639,11 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 
 
 		$("#changePeriodTimes").on('click', function(event) {
+			$(this).hide();
+	
+			$("#loadingTemporarlyButton").removeClass('d-none');
+			$("#loadingTemporarlyButton").html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Kontrollin kattuvusi...');
+
 			var bookingID = '<?= $_POST['BookingID'] ?>';
 		//	console.log(bookingID);
 		
@@ -703,12 +653,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 			hiddenInput.name = 'BookingID';
 			hiddenInput.value = bookingID;
 			myForm.appendChild(hiddenInput);
-			$("#changeTimes").on('click', function(event) {
-
-			//	$('#change').submit();
-
-
-			});
+		
 
 		});
 
@@ -742,19 +687,21 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 
 			});
 		//	event.preventDefault();
-			if (whichFormToSubmit==0){
-				$( "#allowFormToSubmitAndNeverMindConflicts1" ).val("1");
-				$('#change').submit();
+		// 	if (whichFormToSubmit==0){
+		// 		$( "#allowFormToSubmitAndNeverMindConflicts1" ).val("1");
+		// //		$('#change').submit();
+		// 	//	
+		// 	window.location.href = "<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $bookingData['roomID'];?>"+'&date='+moment(URLdate).format("DD.MM.YYYY");
+		// 	}
+		// 	else if (whichFormToSubmit==1 ){
+		// 		$( "#allowFormToSubmitAndNeverMindConflicts2" ).val("1");
+		// 		console.log(moment(URLdate).format("DD.MM.YYYY"))
+		// 	//	window.location.href = "<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $bookingData['roomID'];?>"+'&date='+moment(URLdate).format("DD.MM.YYYY");
+		// 	//	$( "#changePeriod" ).submit();
 
-			}
-			else if (whichFormToSubmit==1 ){
-				$( "#allowFormToSubmitAndNeverMindConflicts2" ).val("1");
-			
-				$( "#changePeriod" ).submit();
-
-			}
+		// 	}
 		
-			
+			window.location.href = "<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $bookingData['roomID'];?>"+'&date='+moment(URLdate).format("DD.MM.YYYY");
 			});
 
 

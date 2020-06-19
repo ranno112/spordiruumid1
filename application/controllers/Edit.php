@@ -379,7 +379,7 @@ class Edit extends CI_Controller {
 				}
 			
 				if($RedirectToCalendar&&!empty($insert_data3)&&$this->input->post('allowSave')==0){
-					$this->session->set_flashdata('validationErrorMessage', 'Tuvastatud kattuvus');
+				//	$this->session->set_flashdata('validationErrorMessage', 'Tuvastatud kattuvus');
 					$this->session->set_flashdata('conflictDates', $this->security->xss_clean($insert_data3));
 					$data=$this-> index();
 					$RedirectToCalendar=false;
@@ -550,6 +550,41 @@ class Edit extends CI_Controller {
 				
 				}
 		
+				$allEventsForConflictCheck=$this->edit_model->get_conflictsDates2($this->session->userdata('building'),$this->input->post('roomID'), $this->input->post('BookingID'));
+				foreach($allEventsForConflictCheck as $key => $value){
+					$property1 = 'startTime'; 
+					$property2 = 'endTime'; 
+					$property3 = 'public_info'; 
+					$property4 = 'workout'; 
+					foreach($insert_data as $key2 => $value2){
+				 
+						
+						if($value->$property1<$value2['endTime'] && $value->$property2>$value2['startTime']){
+							//insert_data3 mean conflick days
+							$insert_data3[] = array(
+							  
+								'startTime' => $value->$property1,
+								'endTime' =>  $value->$property2,
+								'public_info' => $value->$property3,
+								'workout' => $value->$property4
+								);
+		
+						break;
+						}
+					
+						//$value['startTime'],$value['endTime']
+					
+					}
+		
+				}
+			
+				if($RedirectToCalendar&&!empty($insert_data3)&&$this->input->post('allowSave')==0){
+				//	$this->session->set_flashdata('validationErrorMessage', 'Tuvastatud kattuvus');
+					$this->session->set_flashdata('conflictDates', $this->security->xss_clean($insert_data3));
+					$data=$this-> index();
+					$RedirectToCalendar=false;
+					
+					}
 
 		if($this->input->post('additionalBookingDate')){
 		
