@@ -315,10 +315,7 @@ class Edit extends CI_Controller {
 						$this->form_validation->set_message('validationErrorMessage', 'Kuupäevad ei ole õigesti sisestatud.');
 						$this->session->set_flashdata('validationErrorMessage', 'Kellaaeg on valesti sisestatud');
 						$data=$this-> index();
-						//	redirect('edit/update'  ,$_POST);
-						// $this->load->view('templates/header');
-						// $this->load->view('pages/edit');
-						// $this->load->view('templates/footer');
+					
 						$RedirectToCalendar=false;
 					break;
 
@@ -532,12 +529,11 @@ class Edit extends CI_Controller {
 							$this->form_validation->set_message('validationErrorMessage', 'Kuupäevad ei ole õigesti sisestatud.');
 							$this->session->set_flashdata('validationErrorMessage', 'Kellaaeg on valesti sisestatud');
 
-							//	redirect('edit/update'  ,$_POST);
-							$this->load->view('templates/header');
-							$this->load->view('pages/edit');
-							$this->load->view('templates/footer');
+							
+							$data=$this-> index();
+						
 							$RedirectToCalendar=false;
-						break;
+							break;
 
 						}
 						else{

@@ -226,7 +226,7 @@
 									<div class="row d-flex align-items-center mb-3 justify-content-between">
 									<div class="col-md-5 col-9 m-0 p-md-0">
 										<label class="col-5 m-0 p-0" for="sport_facility2">Nädalapäev</label>
-										<input class="form-control col-11 arrow" id="sport_facility2" list="weekdays" name="weekday[]" required>
+										<input class="form-control col-11 arrow" id="sport_facility2" list="weekdays" name="weekday[]">
 
 										<datalist id="weekdays">
 											<option data-value="1" value="Esmaspäev"></option>
