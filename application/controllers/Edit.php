@@ -337,14 +337,33 @@ class Edit extends CI_Controller {
 
 						$dataForVersioning = array(
 							'timeID'	=>	$this->input->post('timesIdArray')[$i],
-							'startTime'		=>	$dataForVersion[0]['startTime'],
-							'endTime'	=>		$dataForVersion[0]['endTime'],
 							'nameWhoChanged'		=>	$this->session->userdata('userName'),
 							'reason'	=>	$this->input->post('reason'),
 						
-							);
 						
+							);
+							
+							$saveVersion=false;
+							if( !in_array( $dataForVersion[0]['startTime'] ,$insert_data[$i]) 
+								|| !in_array( $dataForVersion[0]['endTime'] ,$insert_data[$i]) 
+								)
+								{
+									$dataForVersioning['startTime']= $dataForVersion[0]['startTime'];
+									$dataForVersioning['endTime']=	$dataForVersion[0]['endTime'];
+									$saveVersion=true;
+								}
+							
+							else if( $this->input->post('reason')!=''){
+									$saveVersion=true;
+							}
+							else if(!in_array( $dataForVersion[0]['bookingTimeColor'] ,$insert_data[$i]) && $this->input->post('reason')==''){
+								$dataForVersioning['reason']="värvi muudatus";
+								$saveVersion=true;	
+							}
+
+							if($saveVersion){
 							$this->edit_model->insert_version($dataForVersioning);
+							}
 							$this->edit_model->update_bookingTimes($insert_data[$i], $this->input->post('timesIdArray')[$i]);
 
 						
@@ -537,14 +556,34 @@ class Edit extends CI_Controller {
 
 							$dataForVersioning = array(
 								'timeID'	=>	$this->input->post('timesIdArray')[$i],
-								'startTime'		=>	$dataForVersion[0]['startTime'],
-								'endTime'	=>		$dataForVersion[0]['endTime'],
 								'nameWhoChanged'		=>	$this->session->userdata('userName'),
 								'reason'	=>	$this->input->post('reason'),
 							
-								);
 							
-							$this->edit_model->insert_version($dataForVersioning);
+								);
+								
+								$saveVersion=false;
+								if( !in_array( $dataForVersion[0]['startTime'] ,$insert_data[$i]) 
+									|| !in_array( $dataForVersion[0]['endTime'] ,$insert_data[$i]) 
+									)
+									{
+										$dataForVersioning['startTime']= $dataForVersion[0]['startTime'];
+										$dataForVersioning['endTime']=	$dataForVersion[0]['endTime'];
+										$saveVersion=true;
+									}
+								
+								else if( $this->input->post('reason')!=''){
+										$saveVersion=true;
+								}
+								else if(!in_array( $dataForVersion[0]['bookingTimeColor'] ,$insert_data[$i]) && $this->input->post('reason')==''){
+									$dataForVersioning['reason']="värvi muudatus";
+									$saveVersion=true;	
+								}
+	
+								if($saveVersion){
+								$this->edit_model->insert_version($dataForVersioning);
+								}
+						
 							$this->edit_model->update_bookingTimes($insert_data[$i], $this->input->post('timesIdArray')[$i]);
 						}
 				

@@ -135,7 +135,7 @@ class Edit_model extends CI_Model
 
 	public function get_info_for_version( $timID)
     {
-		$this->db->select("startTime, endTime");  
+		$this->db->select("startTime, endTime, bookingTimeColor");  
 		$this->db->order_by('bookingTimes.startTime');
 		 $this->db->where('timeID',  $timID);
 		$query=$this->db->get('bookingTimes');
