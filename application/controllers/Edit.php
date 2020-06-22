@@ -332,34 +332,13 @@ class Edit extends CI_Controller {
 						);
 						$dataForVersion=$this->edit_model->get_info_for_version($this->input->post('timesIdArray')[$i]);
 
-						$dataForVersioning = array(
-							'timeID'	=>	$this->input->post('timesIdArray')[$i],
-							'nameWhoChanged'		=>	$this->session->userdata('userName'),
-							'reason'	=>	$this->input->post('reason'),
 						
+							
+							$saveVersion=$this->saveVersionOrNot($this->input->post('timesIdArray')[$i], $dataForVersion[0]['startTime'],$dataForVersion[0]['endTime'], 
+							$insert_data[$i],  $this->input->post('reason'), $dataForVersion[0]['bookingTimeColor']);
 						
-							);
-							
-							$saveVersion=false;
-							if( !in_array( $dataForVersion[0]['startTime'] ,$insert_data[$i]) 
-								|| !in_array( $dataForVersion[0]['endTime'] ,$insert_data[$i]) 
-								)
-								{
-									$dataForVersioning['startTime']= $dataForVersion[0]['startTime'];
-									$dataForVersioning['endTime']=	$dataForVersion[0]['endTime'];
-									$saveVersion=true;
-								}
-							
-							else if( $this->input->post('reason')!=''){
-									$saveVersion=true;
-							}
-							else if(!in_array( $dataForVersion[0]['bookingTimeColor'] ,$insert_data[$i]) && $this->input->post('reason')==''){
-								$dataForVersioning['reason']="värvi muudatus";
-								$saveVersion=true;	
-							}
-
 							if($saveVersion){
-							$this->edit_model->insert_version($dataForVersioning);
+							$this->edit_model->insert_version($saveVersion);
 							}
 							$this->edit_model->update_bookingTimes($insert_data[$i], $this->input->post('timesIdArray')[$i]);
 
@@ -550,35 +529,12 @@ class Edit extends CI_Controller {
 
 							$dataForVersion=$this->edit_model->get_info_for_version($this->input->post('timesIdArray')[$i]);
 
-							$dataForVersioning = array(
-								'timeID'	=>	$this->input->post('timesIdArray')[$i],
-								'nameWhoChanged'		=>	$this->session->userdata('userName'),
-								'reason'	=>	$this->input->post('reason'),
-							
-							
-								);
-								
-								$saveVersion=false;
-								if( !in_array( $dataForVersion[0]['startTime'] ,$insert_data[$i]) 
-									|| !in_array( $dataForVersion[0]['endTime'] ,$insert_data[$i]) 
-									)
-									{
-										$dataForVersioning['startTime']= $dataForVersion[0]['startTime'];
-										$dataForVersioning['endTime']=	$dataForVersion[0]['endTime'];
-										$saveVersion=true;
-									}
-								
-								else if( $this->input->post('reason')!=''){
-										$saveVersion=true;
-								}
-								else if(!in_array( $dataForVersion[0]['bookingTimeColor'] ,$insert_data[$i]) && $this->input->post('reason')==''){
-									$dataForVersioning['reason']="värvi muudatus";
-									$saveVersion=true;	
-								}
-	
-								if($saveVersion){
-								$this->edit_model->insert_version($dataForVersioning);
-								}
+							$saveVersion=$this->saveVersionOrNot($this->input->post('timesIdArray')[$i], $dataForVersion[0]['startTime'],$dataForVersion[0]['endTime'], 
+							$insert_data[$i],  $this->input->post('reason'), $dataForVersion[0]['bookingTimeColor']);
+						
+							if($saveVersion){
+							$this->edit_model->insert_version($saveVersion);
+							}
 						
 							$this->edit_model->update_bookingTimes($insert_data[$i], $this->input->post('timesIdArray')[$i]);
 						}
@@ -646,6 +602,32 @@ class Edit extends CI_Controller {
 	}
 
 
+	function saveVersionOrNot($timesID, $startTimeFromDB, $endTimefromDB, $insertData, $reason, $color){
+	$dataForVersioning = array(
+			'timeID'	=>$timesID,
+			'nameWhoChanged'		=>	$this->session->userdata('userName'),
+			'reason'	=>	$reason,
+		);
+	if( !in_array( $startTimeFromDB , $insertData) 
+			|| !in_array( $endTimefromDB , $insertData) 
+			)
+			{
+				$dataForVersioning['startTime']= $startTimeFromDB;
+				$dataForVersioning['endTime']=	$endTimefromDB;
+				return $dataForVersioning;
+			}
+
+		else if(  $reason!=''){
+			return $dataForVersioning;
+		}
+		else if(!in_array( $color , $insertData) &&  $reason==''){
+			$dataForVersioning['reason']="värvi muudatus";
+			return $dataForVersioning;
+		}
+		else{
+			return false;
+		}
+	}
 
 
 }
