@@ -37,7 +37,7 @@
                         <?php if($this->session->userdata('roleID')==='1'):?>
 						<form class="cat-delete pl-1" action="users/delete" method="POST">
 							<input type="hidden" name="userID" value="<?php echo $singleUser['userID']; ?>" />
-                            <button type="submit" class="btn btn-delete btn-width text-white text-center py-1 px-2 txt-strong ">Kustuta</button>
+                            <input type="submit" value="Kustuta" class="btn btn-delete btn-width text-white text-center py-1 px-2 txt-strong " onclick="return confirm('Oled kindel kustutada kasutaja <?php echo $singleUser['userName']; ?>?')" />
                         </form>
                         <?php endif;?>
                     </td>

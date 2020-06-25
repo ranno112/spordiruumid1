@@ -34,7 +34,7 @@
 								<form class="cat-delete pl-1" action="<?php echo base_url(); ?>region/delete" method="POST">
 									<!-- <input type="submit" class="" value="Kustuta"> -->
 									<input type="hidden" name="regionID" value="<?php echo $region['regionID']; ?>" />
-									<button type="submit" class="btn btn-delete btn-width text-white text-center py-1 px-2 txt-strong ">Kustuta</button>
+									<input type="submit" value="Kustuta" class="btn btn-delete btn-width text-white text-center py-1 px-2 txt-strong " onclick="return confirm('Oled kindel kustutada piirkond <?php echo $region['regionName']; ?>?')" />
 								</form>
 							</td>
 						</tr>                
