@@ -11,7 +11,13 @@ class Fullcalendar extends CI_Controller {
 		$this->load->model('fullcalendar_model');
 	}
 
+	function getUnapprovedBookings(){
 	
+		$data= $this->fullcalendar_model->getUnapprovedBookings($this->session->userdata('building'));
+		echo json_encode($data);
+	}
+
+
 	function load($roomId)
 	{
 		$this->input->get('saal', TRUE);

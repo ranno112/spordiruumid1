@@ -1,6 +1,7 @@
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/et_EE/sdk.js#xfbml=1&version=v6.0&appId=320472512246850&autoLogAppEvents=1"></script>
-<script src="https://www.google.com/recaptcha/api.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 <div class="container">
 	<div class="container-sm h-100 mx-auto">
 		<div class="vert-center form-bg">

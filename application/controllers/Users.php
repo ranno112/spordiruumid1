@@ -197,7 +197,7 @@
 		  }
 		  else
 		  {
-			$this->form_validation->set_message('recaptcha', 'reCAPTCHA arvas, et sa oled robot. Palun proovi uuesti.');
+			$this->form_validation->set_message('recaptcha', 'reCAPTCHA on kohustuslik');
 			return FALSE;
 		  }
 		}

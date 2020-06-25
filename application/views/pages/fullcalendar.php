@@ -606,6 +606,12 @@
 						{
 							//console.log( eClone);
 							calendar.fullCalendar('refetchEvents');
+							$.ajax({
+									url: "<?php echo base_url(); ?>fullcalendar/getUnapprovedBookings",
+									success: function(res) {
+									$('.badge.badge-danger').text(res);
+								}
+								});
 						
 						}
 					})
@@ -652,7 +658,12 @@
 								{
 									
 									calendar.fullCalendar('refetchEvents');
-								
+									$.ajax({
+									url: "<?php echo base_url(); ?>fullcalendar/getUnapprovedBookings",
+									success: function(res) {
+									$('.badge.badge-danger').text(res);
+								}
+								});
 								}
 							});
 						})
@@ -886,35 +897,40 @@
 						if(value){
 							var id = $('input:checkbox:checked').parents("tbody").attr('id');
 			
-			$.ajax({
-				url: "<?php echo base_url(); ?>fullcalendar/deleteAllConnectedBookings",
-				type: "POST",
-				data: {
-					bookingID: id,
-					selectedRoomID:selectedRoomID
-				},
-				success: function() {
-					calendar.fullCalendar('refetchEvents');
+				$.ajax({
+					url: "<?php echo base_url(); ?>fullcalendar/deleteAllConnectedBookings",
+					type: "POST",
+					data: {
+						bookingID: id,
+						selectedRoomID:selectedRoomID
+					},
+					success: function() {
+						calendar.fullCalendar('refetchEvents');
 
-					jQuery('input:checkbox:checked').parents("tr").remove();
-					$("#lefty").modal("hide");
-					$('#calendar-container').css({
-						'margin-left': '0'
-					});
-					$('#widthToggle').css({
-						'margin-left': '0'
-					});
-					//  alert('Event Removed');
-				},
-				error: function(returnval) {
-					$(".message").text(returnval + " failure");
-					$(".message").fadeIn("slow");
-					$(".message").delay(2000).fadeOut(1000);
-				}
-			});
-					}	})
+						jQuery('input:checkbox:checked').parents("tr").remove();
+						$("#lefty").modal("hide");
+						$('#calendar-container').css({
+							'margin-left': '0'
+						});
+						$('#widthToggle').css({
+							'margin-left': '0'
+						});
+						$.ajax({
+							url: "<?php echo base_url(); ?>fullcalendar/getUnapprovedBookings",
+							success: function(res) {
+							$('.badge.badge-danger').text(res);
+						}
+						});
+					},
+					error: function(returnval) {
+						$(".message").text(returnval + " failure");
+						$(".message").fadeIn("slow");
+						$(".message").delay(2000).fadeOut(1000);
+					}
+				});
+						}	})
 
-					event.preventDefault();
+						event.preventDefault();
 
 
 			} else if ($('.abc:checked').length < $('.abc').length && $('.abc:checked').length > 0) {
@@ -948,7 +964,12 @@
 							
 								calendar.fullCalendar('refetchEvents');
 								jQuery('input:checkbox:checked').parents("tr").remove();
-
+								$.ajax({
+									url: "<?php echo base_url(); ?>fullcalendar/getUnapprovedBookings",
+									success: function(res) {
+									$('.badge.badge-danger').text(res);
+								}
+								});
 							},
 							error: function(returnval) {
 								$(".message").text(returnval + " failure");
@@ -974,6 +995,7 @@
 				event.preventDefault();
 			}
 
+		
 
 
 		});
@@ -1029,7 +1051,12 @@
 									$this.parents("tr").children("td:nth-child(3)").html("&nbsp;&nbsp;&nbsp;Kinnitamata");
 								}
 
-								// alert('Kinnitatud');
+								$.ajax({
+									url: "<?php echo base_url(); ?>fullcalendar/getUnapprovedBookings",
+									success: function(res) {
+									$('.badge.badge-danger').text(res);
+								}
+								});
 							},
 							error: function(returnval) {
 								$(".message").text(returnval + " failure");
