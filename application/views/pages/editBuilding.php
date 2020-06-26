@@ -6,8 +6,9 @@
             <div class="d-flex mb-5">
                 <ul class="nav nav-tabs nav-justified col-12 bg-grey p-0">
                     <li class="nav-item p-0"><a class="nav-link link txt-lg single-tab active pl-5"  href="#asutus" data-toggle="tab"><?php foreach ($editBuildings as $value) {echo $value['name'];break;}?> sätted</a></li>
-										<li class="nav-item p-0"><a class="nav-link link txt-lg" href="#broneering" data-toggle="tab">Broneerimisvormi sätted</a></li>
+										<!-- <li class="nav-item p-0"><a class="nav-link link txt-lg" href="#broneering" data-toggle="tab">Broneerimisvormi sätted</a></li> -->
 										<li class="nav-item p-0"></li>
+											<li class="nav-item p-0"></li>
                 </ul>
             </div>
 
@@ -92,40 +93,39 @@
 							</form>
 							
 							</div>  
-							<div id="broneering" class="tab-pane center">   
+							<!-- <div id="broneering" class="tab-pane center">   
+							<?php echo form_open('building/updateBookingSettings', array('id' => 'changebookingSettings')); ?>
 								<h4 class="pt-2 txt-xl px-5 mx-5">Administraatori broneeringuvormi vaikeseaded</h4>
 								<p class="pt-2 txt-lg px-5 mx-5">Kohustuslikud väljad: </p>
 								<div class="row d-flex p-0 mt-4 px-md-5 mx-5">
-									Broneeringu kinnitus  &nbsp;&nbsp;	<label><input type="checkbox" checked name="approveNow" id="approveNow" value="1"><span></span></label>
+									Broneeringu kinnitus  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($bookingformdata['approved_admin']){echo 'checked';} ?> name="approveNow" id="approveNow" value="<?php echo $bookingformdata['approved_admin'] ?>"><span></span></label>
 								</div>
 								<div class="row d-flex p-0 mt-4 px-md-5 mx-5">
-									Klubi nimi  &nbsp;&nbsp;	<label><input type="checkbox" checked name="approveNow" id="approveNow" value="1"><span></span></label>
+									Klubi nimi  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($bookingformdata['clubname_admin']){echo 'checked';}?>  name="clubname_admin" value="<?php echo $bookingformdata['clubname_admin'] ?>"><span></span></label>
 								</div>
 								<div class="row d-flex p-0 mt-4 px-md-5 mx-5">	
-									Kontaktisik  &nbsp;&nbsp;	<label><input type="checkbox" checked name="approveNow" id="approveNow" value="1"><span></span></label>
+									Kontaktisik  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($bookingformdata['contactname_admin']){echo 'checked';}?> name="contact_admin" value="<?php echo $bookingformdata['contactname_admin'] ?>"><span></span></label>
 								</div>
 									<div class="row d-flex p-0 mt-4 px-md-5 mx-5">
-									Telefon  &nbsp;&nbsp;	<label><input type="checkbox"  name="approveNow" id="approveNow" value="0"><span></span></label>
+									Telefon  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($bookingformdata['phone_admin']){echo 'checked';}?> name="phone_admin" value="<?php echo $bookingformdata['phone_admin'] ?>"><span></span></label>
 								</div>	
 								<div class="row d-flex p-0 mt-4 px-md-5 mx-5">	
-									E-mail &nbsp;&nbsp;	<label><input type="checkbox"  name="approveNow" id="approveNow" value="0"><span></span></label>
+									E-mail &nbsp;&nbsp;	<label><input type="checkbox" <?php if($bookingformdata['email_admin']){echo 'checked';}?> name="email_admin" value="<?php echo $bookingformdata['email_admin'] ?>"><span></span></label>
 								</div>	<div class="row d-flex p-0 mt-4 px-md-5 mx-5">
-									Sündmus / Treeningu tüüp  &nbsp;&nbsp;	<label><input type="checkbox"  name="approveNow" id="approveNow" value="0"><span></span></label>
+									Sündmus / Treeningu tüüp  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($bookingformdata['type_admin']){echo 'checked';}?> name="type_admin" value="<?php echo $bookingformdata['type_admin'] ?>"><span></span></label>
 								</div>
-									<div class="row d-flex p-0 mt-4 px-md-5 mx-5">	
-									Lisainfo  &nbsp;&nbsp;	<label><input type="checkbox"  name="approveNow" id="approveNow" value="0"><span></span></label>
-								</div>
+								
 								<div class="row d-flex p-0 mt-4 px-md-5 mx-5">
 								
 									<p class="txt-lg">	Vaikevärvid: </p>
-									&nbsp;&nbsp; <input type="color" id="favcolor" name="favcolor1" value="#ffffff">
-									&nbsp;&nbsp; <input type="color" id="favcolor" name="favcolor2" value="#ddffee">
-									&nbsp;&nbsp; <input type="color" id="favcolor" name="favcolor3" value="#cceeff">
-									&nbsp;&nbsp; <input type="color" id="favcolor" name="favcolor4" value="#ffccee">
-									&nbsp;&nbsp; <input type="color" id="favcolor" name="favcolor5" value="#ffffcc">
-									&nbsp;&nbsp; <input type="color" id="favcolor" name="favcolor6" value="#aaffaa">
-									&nbsp;&nbsp; <input type="color" id="favcolor" name="favcolor7" value="#eeffff">
-									&nbsp;&nbsp; <input type="color" id="favcolor" name="favcolor8" value="#f6e5ff">
+									&nbsp;&nbsp; <input type="color" id="favcolor" name="favcolor1" value="<?php echo $bookingformdata['color1'];?>">
+									&nbsp;&nbsp; <input type="color" id="favcolor" name="favcolor2" value="<?php echo $bookingformdata['color2'];?>">
+									&nbsp;&nbsp; <input type="color" id="favcolor" name="favcolor3" value="<?php echo $bookingformdata['color3'];?>">
+									&nbsp;&nbsp; <input type="color" id="favcolor" name="favcolor4" value="<?php echo $bookingformdata['color4'];?>">
+									&nbsp;&nbsp; <input type="color" id="favcolor" name="favcolor5" value="<?php echo $bookingformdata['color5'];?>">
+									&nbsp;&nbsp; <input type="color" id="favcolor" name="favcolor6" value="<?php echo $bookingformdata['color6'];?>">
+									&nbsp;&nbsp; <input type="color" id="favcolor" name="favcolor7" value="<?php echo $bookingformdata['color7'];?>">
+									&nbsp;&nbsp; <input type="color" id="favcolor" name="favcolor8" value="<?php echo $bookingformdata['color8'];?>">
 								</div>
 								<div class="row d-flex p-0 mt-4 px-md-5 mx-5">
 								</div>
@@ -133,34 +133,34 @@
 							
 								<h4 class="pt-2 txt-xl px-5 mx-5">Tavakasutaja broneeringuvormi vaikeseaded</h4>	
 								<div class="row d-flex p-0 m-4 px-md-5 mx-5">	
-									Luba tavakasutajate broneerimine  &nbsp;&nbsp;	<label><input type="checkbox"  name="approveNow" id="approveNow" value="0"><span></span></label>
+									Luba tavakasutajate broneerimine  &nbsp;&nbsp;	<label><input type="checkbox"  name="allowBooking" value="0"><span></span></label>
 								</div>
 								<p class="pt-2 txt-lg px-5 mx-5">Kohustuslikud väljad tavakasutajatele: </p>
 				
 							<div class="row d-flex p-0 mt-4 px-md-5 mx-5">
-								Klubi nimi  &nbsp;&nbsp;	<label><input type="checkbox" checked name="approveNow" id="approveNow" value="1"><span></span></label>
+								Klubi nimi  &nbsp;&nbsp;	<label><input type="checkbox" checked name="clubname_user" value="1"><span></span></label>
 							</div>
 							<div class="row d-flex p-0 mt-4 px-md-5 mx-5">	
-								Kontaktisik  &nbsp;&nbsp;	<label><input type="checkbox" checked name="approveNow" id="approveNow" value="1"><span></span></label>
+								Kontaktisik  &nbsp;&nbsp;	<label><input type="checkbox" checked name="name_user" value="1"><span></span></label>
 							</div>
 								<div class="row d-flex p-0 mt-4 px-md-5 mx-5">
-								Telefon  &nbsp;&nbsp;	<label><input type="checkbox"  name="approveNow" id="approveNow" value="0"><span></span></label>
+								Telefon  &nbsp;&nbsp;	<label><input type="checkbox"  name="phone_user" value="0"><span></span></label>
 							</div>	
 							<div class="row d-flex p-0 mt-4 px-md-5 mx-5">	
-								E-mail &nbsp;&nbsp;	<label><input type="checkbox"  name="approveNow" id="approveNow" value="0"><span></span></label>
+								E-mail &nbsp;&nbsp;	<label><input type="checkbox"  name="email_user" value="0"><span></span></label>
 							</div>	<div class="row d-flex p-0 mt-4 px-md-5 mx-5">
-								Sündmus / Treeningu tüüp  &nbsp;&nbsp;	<label><input type="checkbox"  name="approveNow" id="approveNow" value="0"><span></span></label>
-							</div>
-								<div class="row d-flex p-0 mt-4 px-md-5 mx-5">	
-								Lisainfo  &nbsp;&nbsp;	<label><input type="checkbox"  name="approveNow" id="approveNow" value="0"><span></span></label>
+								Sündmus / Treeningu tüüp  &nbsp;&nbsp;	<label><input type="checkbox"  name="type_user" value="0"><span></span></label>
 							</div>
 							<div class="row d-flex p-0 mt-4 px-md-5 mx-5">	
-						
+							</div>
 							</div>
 
-							</div>
-
-							</div>
+							<div class="d-flex justify-content-end my-5 px-5 mx-5">
+										<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="<?php echo base_url(); ?>building/view/<?php  print_r($this->session->userdata['building']);?>">Katkesta</a>
+											<button type="submit" class="btn btn-custom col-md-5 text-white txt-xl">Salvesta muudatused</button>
+									</div>
+							</form>
+							</div> -->
 					 </div>
 
         </div>
@@ -173,6 +173,12 @@
 <script>
 
 $( document ).ready(function() {
+
+	$(':checkbox').click(function() {
+   		value = +$(this).is( ':checked' );
+		   $(this).val(value);
+	});
+
 	var counter=1;
    $('#lisaSaal').on('click', function() {
     $('#saalid').append('<div class="d-flex mb-3 p-0 justify-content-between"><input class="form-control col-6" id="activeRoom[]" type="text" name="additionalRoom[]" value=""><input name="colorForNewRoom[]" type="color" value="#cbe9fe"><input type="button" id="activeOrPassive<?php echo($value["id"]); ?>" class="addedRoom btn btn-custom btn-width-92 text-white text-center py-1 px-2 txt-strong" value="Nähtav">	<input class="d-none" type="hidden" name="newRoomStatus[]" value="1"> 	<input data-id="<?php echo $value['id']; ?>" id="additionalRoom'+counter+'" class="abc btn btn-delete btn-width-92 text-white text-center py-1 px-2 txt-strong"  type="button" value="Kustuta"></div>');
@@ -214,7 +220,8 @@ $( document ).ready(function() {
  
   
   $(document).on('click', '.addedRoom', function() { 
-	
+
+
 		var newRoomStatus=1;
 	if($(this).val()=="Nähtav"){
 		$(this).val("Peidus");

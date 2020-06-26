@@ -41,6 +41,7 @@
 			$data=$this->menu();
 			$data['regions'] = $this->building_model->getAllRegions();
 			$data['editBuildings'] = $this->building_model->get_building($slug);
+			$data['bookingformdata'] = $this->building_model->getBookingformData();
 			$this->load->view('templates/header', $this->security->xss_clean($data));
 			$this->load->view('pages/editBuilding', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
@@ -196,7 +197,36 @@
 		
 		}
 
-	
+		public function updateBookingSettings(){
+			if($this->session->userdata('roleID')==='2'){
+				$data = array(
+					//	'name' => $this->input->post('building'),
+						'approved_admin' => $this->input->post('approveNow'),
+						'clubname_admin' => $this->input->post('clubname_admin'),
+						'contactname_admin' => $this->input->post('contact_admin'),
+						'phone_admin' => $this->input->post('phone_admin'),
+						'email_admin' => $this->input->post('email_admin'),
+						'type_admin' => $this->input->post('type_admin'),
+						'color1' => $this->input->post('favcolor1'),
+						'color2' => $this->input->post('favcolor2'),
+						'color3' => $this->input->post('favcolor3'),
+						'color4' => $this->input->post('favcolor4'),
+						'color5' => $this->input->post('favcolor5'),
+						'color6' => $this->input->post('favcolor6'),
+						'color7' => $this->input->post('favcolor7'),
+						'color8' => $this->input->post('favcolor8'),
+						'allow_booking' => $this->input->post('allowBooking'),
+						'clubname_user' => $this->input->post('clubname_user'),
+						'contactname_user' => $this->input->post('name_user'),
+						'phone_user' => $this->input->post('phone_user'),
+						'email_user' => $this->input->post('email_user'),
+						'type_user' => $this->input->post('type_user'),
+					);
+					$this->building_model->update_booking_settings($data);
+			}
+			//print_r($data);
+			redirect('building/view/'.$this->session->userdata['building']);
+		}
 	
 
 		public function update(){

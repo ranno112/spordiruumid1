@@ -20,6 +20,12 @@
 		
 		}
 
+		
+		public function getBookingformData(){
+			$this->db->where('buildingID', $this->session->userdata('building'));
+			$query = $this->db->get('bookingformsettings');
+			return $query->row_array();
+		}
 
 		public function get_rooms(){
 			$this->db->order_by('buildingID');
@@ -99,7 +105,13 @@
 		}
 
 
+		public function update_booking_settings($data){
+			
+		
+			$this->db->where('buildingID', $this->session->userdata('building'));
 
+			return $this->db->update('bookingformsettings', $data);
+		}
 
 	
 		public function update_building($data){
