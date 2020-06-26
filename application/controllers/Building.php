@@ -41,7 +41,7 @@
 			$data=$this->menu();
 			$data['regions'] = $this->building_model->getAllRegions();
 			$data['editBuildings'] = $this->building_model->get_building($slug);
-			$data['bookingformdata'] = $this->building_model->getBookingformData();
+		//	$data['bookingformdata'] = $this->building_model->getBookingformData();
 			$this->load->view('templates/header', $this->security->xss_clean($data));
 			$this->load->view('pages/editBuilding', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
