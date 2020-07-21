@@ -905,7 +905,7 @@
 						selectedRoomID:selectedRoomID
 					},
 					success: function() {
-						calendar.fullCalendar('refetchEvents');
+					
 
 						jQuery('input:checkbox:checked').parents("tr").remove();
 						$("#lefty").modal("hide");
@@ -915,12 +915,7 @@
 						$('#widthToggle').css({
 							'margin-left': '0'
 						});
-						$.ajax({
-							url: "<?php echo base_url(); ?>fullcalendar/getUnapprovedBookings",
-							success: function(res) {
-							$('.badge.badge-danger').text(res);
-						}
-						});
+					
 					},
 					error: function(returnval) {
 						$(".message").text(returnval + " failure");
@@ -928,6 +923,13 @@
 						$(".message").delay(2000).fadeOut(1000);
 					}
 				});
+				calendar.fullCalendar('refetchEvents');
+						$.ajax({
+							url: "<?php echo base_url(); ?>fullcalendar/getUnapprovedBookings",
+							success: function(res) {
+							$('.badge.badge-danger').text(res);
+						}
+						});
 						}	})
 
 						event.preventDefault();
@@ -962,14 +964,8 @@
 							},
 							success: function() {
 							
-								calendar.fullCalendar('refetchEvents');
 								jQuery('input:checkbox:checked').parents("tr").remove();
-								$.ajax({
-									url: "<?php echo base_url(); ?>fullcalendar/getUnapprovedBookings",
-									success: function(res) {
-									$('.badge.badge-danger').text(res);
-								}
-								});
+							
 							},
 							error: function(returnval) {
 								$(".message").text(returnval + " failure");
@@ -979,6 +975,13 @@
 						});
 					}
 				});
+				calendar.fullCalendar('refetchEvents');
+								$.ajax({
+									url: "<?php echo base_url(); ?>fullcalendar/getUnapprovedBookings",
+									success: function(res) {
+									$('.badge.badge-danger').text(res);
+								}
+								});
 
 						}	})
 						event.preventDefault();
@@ -1012,7 +1015,7 @@
 				},
 					}).then(function(value){
 						if(value){
-
+						
 					$("input:checkbox").each(function() {
 					var $this = $(this);
 
@@ -1043,7 +1046,7 @@
 
 							},
 							success: function() {
-								calendar.fullCalendar('refetchEvents');
+								
 								//siia tule teha panna kinnitatud olekuks modalis  
 								if (approvedOrNotToDB == 1) {
 									$this.parents("tr").children("td:nth-child(3)").html("&nbsp;&nbsp;&nbsp;Kinnitatud");
@@ -1051,12 +1054,7 @@
 									$this.parents("tr").children("td:nth-child(3)").html("&nbsp;&nbsp;&nbsp;Kinnitamata");
 								}
 
-								$.ajax({
-									url: "<?php echo base_url(); ?>fullcalendar/getUnapprovedBookings",
-									success: function(res) {
-									$('.badge.badge-danger').text(res);
-								}
-								});
+							
 							},
 							error: function(returnval) {
 								$(".message").text(returnval + " failure");
@@ -1066,7 +1064,13 @@
 						});
 					}
 				});
-
+						$.ajax({
+										url: "<?php echo base_url(); ?>fullcalendar/getUnapprovedBookings",
+										success: function(res) {
+										$('.badge.badge-danger').text(res);
+									}
+						});
+						calendar.fullCalendar('refetchEvents');
 
 						}	})
 
