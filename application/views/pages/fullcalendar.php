@@ -1003,34 +1003,36 @@
 
 		});
 
-
+		var IAmTheLastChecked
 		$("#approveCheck").click(function(event) {
-			if ($('.abc:checked').length <= $('.abc').length && $('.abc:checked').length > 0) {
-				var IAmTheLastChecked
+			var checkedInputLenght=$('.abc:checked').length;
+		
+				
+			if (checkedInputLenght <= $('.abc').length && checkedInputLenght > 0) {
+				var text='';
+				if (checkedInputLenght> 300){
+					text="Nii paljude broneeringuaegade kinnitamine võtab aega üle 20 sekundi";
+						};
+
 				swal({
 					title:  "Muudan kinnitamise olekut?",
+					text: text,
+					closeOnConfirm: false,
+					showLoaderOnConfirm: true,
 					buttons: {
 					cancel: "Ei",
 					Jah: true,
 				},
 					}).then(function(value){
-						if(value){
-						//	swal.close();
-							$("body").css("cursor", "wait");
+						setTimeout(function () {
 							var counter=0;
-							$("input:checkbox:checked").each(function() {
-								counter++;
-								IAmTheLastChecked= $(this);
-								console.log(counter);
-								
-							});
-
+							IAmTheLastChecked=$(".abc:checkbox:checked").last();
 							
 							
-							$("input:checkbox:checked").each(function() {
+							$(".abc:checkbox:checked").each(function() {
 								var $this = $(this);
 								counter++;
-								console.log(counter);
+							//	console.log(counter);
 
 								if ($this.is(":checked")) {
 									var id = $this.attr("id");
@@ -1089,6 +1091,11 @@
 									}
 						});
 						calendar.fullCalendar('refetchEvents');
+					}, 200);
+						if(value){
+						//	swal.close();
+							$("body").css("cursor", "wait");
+							
 
 						}	
 					
@@ -1123,53 +1130,66 @@
 				},
 					}).then(function(value){
 						if(value){
-							$("input:checkbox").each(function() {
-					var $this = $(this);
+							$("body").css("cursor", "wait");
 
-					var approvedOrNot = $this.parents("tr").children("td:nth-child(4)");
-			
-					var approvedOrNotToDB;
-					if ($.trim(approvedOrNot.text()) == "XXX") {
-						approvedOrNotToDB = 1;
-					} else {
-						approvedOrNotToDB = 0;
-					}
-					var selectedRoomID = $('#saal  option').filter(function() {
-					return $('#room').val();
-					}).data('value');
+						setTimeout(function () {
+							IAmTheLastChecked=$(".abc:checkbox:checked").last()
+							$(".abc:checkbox:checked").each(function() {
+								var $this = $(this);
 
-					if ($this.is(":checked")) {
-						var id = $this.attr("id");
-						$.ajax({
-							url: "<?php echo base_url(); ?>fullcalendar/takesPlace",
-							type: "POST",
-							data: {
-								timeID: id,
-								takesPlace: approvedOrNotToDB,
-								selectedRoomID:selectedRoomID
-
-							},
-							success: function() {
-								calendar.fullCalendar('refetchEvents');
-								if (approvedOrNotToDB == 0) {
-									$this.parents("tr").children("td:nth-child(4)").html("&nbsp;XXX");
+								var approvedOrNot = $this.parents("tr").children("td:nth-child(4)");
+						
+								var approvedOrNotToDB;
+								if ($.trim(approvedOrNot.text()) == "XXX") {
+									approvedOrNotToDB = 1;
 								} else {
-									$this.parents("tr").children("td:nth-child(4)").html("&nbsp;&nbsp;&nbsp;");
+									approvedOrNotToDB = 0;
 								}
-								//  $('input:checkbox:checked').parents("tr").children("td:contains('Ei toimunud')").html("");
-								//alert('Ei toimunud');
-							},
-							error: function(returnval) {
-								alert('Midagi läks valesti ja tulemust ei salvestatud');
-								$(".message").text(returnval + " failure");
-								$(".message").fadeIn("slow");
-								$(".message").delay(2000).fadeOut(1000);
-							}
-						});
-					}
-				});
+								var selectedRoomID = $('#saal  option').filter(function() {
+								return $('#room').val();
+								}).data('value');
 
-						}	})
+								if ($this.is(":checked")) {
+									var id = $this.attr("id");
+									$.ajax({
+										url: "<?php echo base_url(); ?>fullcalendar/takesPlace",
+										type: "POST",
+										data: {
+											timeID: id,
+											takesPlace: approvedOrNotToDB,
+											selectedRoomID:selectedRoomID
+
+										},
+									
+										success: function() {
+											
+											if (approvedOrNotToDB == 0) {
+												$this.parents("tr").children("td:nth-child(4)").html("&nbsp;XXX");
+											} else {
+												$this.parents("tr").children("td:nth-child(4)").html("&nbsp;&nbsp;&nbsp;");
+											}
+											//  $('.abc:checkbox:checked').parents("tr").children("td:contains('Ei toimunud')").html("");
+											//alert('Ei toimunud');
+										},
+										error: function(returnval) {
+											alert('Midagi läks valesti ja tulemust ei salvestatud');
+											$(".message").text(returnval + " failure");
+											$(".message").fadeIn("slow");
+											$(".message").delay(2000).fadeOut(1000);
+										},
+										complete: function (data) {
+											if($this[0] ===IAmTheLastChecked[0] ) {
+												$("body").css("cursor", "default");
+											}	}
+									});
+								}
+							});
+							calendar.fullCalendar('refetchEvents');
+									}, 200);
+
+									
+						}
+							})
 						event.preventDefault();
 
 	
