@@ -1006,7 +1006,7 @@
 
 		$("#approveCheck").click(function(event) {
 			if ($('.abc:checked').length <= $('.abc').length && $('.abc:checked').length > 0) {
-				
+				var IAmTheLastChecked
 				swal({
 					title:  "Muudan kinnitamise olekut?",
 					buttons: {
@@ -1015,55 +1015,73 @@
 				},
 					}).then(function(value){
 						if(value){
-						
-					$("input:checkbox").each(function() {
-					var $this = $(this);
-
-					if ($this.is(":checked")) {
-						var id = $this.attr("id");
-					
-					
-						var approvedOrNot = $this.parents("tr").children("td:nth-child(3)");
-					
-						var approvedOrNotToDB;
-						if ($.trim(approvedOrNot.text()) == "Kinnitatud") {
-							approvedOrNotToDB = 0;
-						} else {
-							approvedOrNotToDB = 1;
-						}
-						var selectedRoomID = $('#saal  option').filter(function() {
-						return $('#room').val();
-						}).data('value');
-
-
-						$.ajax({
-							url: "<?php echo base_url(); ?>fullcalendar/approveEvents",
-							type: "POST",
-							data: {
-								timeID: id,
-								approved: approvedOrNotToDB,
-								selectedRoomID:selectedRoomID
-
-							},
-							success: function() {
+						//	swal.close();
+							$("body").css("cursor", "wait");
+							var counter=0;
+							$("input:checkbox:checked").each(function() {
+								counter++;
+								IAmTheLastChecked= $(this);
+								console.log(counter);
 								
-								//siia tule teha panna kinnitatud olekuks modalis  
-								if (approvedOrNotToDB == 1) {
-									$this.parents("tr").children("td:nth-child(3)").html("&nbsp;&nbsp;&nbsp;Kinnitatud");
-								} else {
-									$this.parents("tr").children("td:nth-child(3)").html("&nbsp;&nbsp;&nbsp;Kinnitamata");
-								}
+							});
 
 							
-							},
-							error: function(returnval) {
-								$(".message").text(returnval + " failure");
-								$(".message").fadeIn("slow");
-								$(".message").delay(2000).fadeOut(1000);
-							}
+							
+							$("input:checkbox:checked").each(function() {
+								var $this = $(this);
+								counter++;
+								console.log(counter);
+
+								if ($this.is(":checked")) {
+									var id = $this.attr("id");
+								
+								
+									var approvedOrNot = $this.parents("tr").children("td:nth-child(3)");
+								
+									var approvedOrNotToDB;
+									if ($.trim(approvedOrNot.text()) == "Kinnitatud") {
+										approvedOrNotToDB = 0;
+									} else {
+										approvedOrNotToDB = 1;
+									}
+									var selectedRoomID = $('#saal  option').filter(function() {
+									return $('#room').val();
+									}).data('value');
+
+
+									$.ajax({
+										url: "<?php echo base_url(); ?>fullcalendar/approveEvents",
+										type: "POST",
+										data: {
+											timeID: id,
+											approved: approvedOrNotToDB,
+											selectedRoomID:selectedRoomID
+
+										},
+										success: function() {
+											
+											//siia tule teha panna kinnitatud olekuks modalis  
+											if (approvedOrNotToDB == 1) {
+												$this.parents("tr").children("td:nth-child(3)").html("&nbsp;&nbsp;&nbsp;Kinnitatud");
+											} else {
+												$this.parents("tr").children("td:nth-child(3)").html("&nbsp;&nbsp;&nbsp;Kinnitamata");
+											}
+										
+										},
+										error: function(returnval) {
+											$(".message").text(returnval + " failure");
+											$(".message").fadeIn("slow");
+											$(".message").delay(2000).fadeOut(1000);
+										},
+										complete: function (data) {
+											if($this[0] ===IAmTheLastChecked[0] ) {
+												$("body").css("cursor", "default");
+											}
+											
+										}
+									});
+								}
 						});
-					}
-				});
 						$.ajax({
 										url: "<?php echo base_url(); ?>fullcalendar/getUnapprovedBookings",
 										success: function(res) {
@@ -1072,7 +1090,9 @@
 						});
 						calendar.fullCalendar('refetchEvents');
 
-						}	})
+						}	
+					
+					})
 
 					event.preventDefault();
 		
