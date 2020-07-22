@@ -238,7 +238,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 							</button>
 
                         </div>
-						<input type="hidden" name="current_url" value="<?php echo 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']; ?>" />
+						<input type="hidden" name="current_url" value="<?php echo current_url(); ?>" />
                     </form>
                 </div>
 
@@ -471,7 +471,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 							</button>
 
                         </div>
-						<input type="hidden" name="current_url" value="<?php echo 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']; ?>" />
+						<input type="hidden" name="current_url" value="<?php echo current_url(); ?>" />
                     </form>
                 </div>
 
@@ -633,7 +633,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										} ?>&date=<?php if(isset($data['workoutDate'])){ echo $data['workoutDate'][0];} else if(isset($_GET["startDate"])){echo $_GET["startDate"];}else{ echo date("d.m.yy");}?>" >Katkesta</a>
                             <input class="btn btn-custom col-12 col-sm-3 text-white txt-xl" type="submit" value="Broneeri">
                         </div>
-						<input type="hidden" name="current_url" value="<?php echo 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']; ?>" />
+						<input type="hidden" name="current_url" value="<?php echo current_url();?>" />
                     </form>
                 </div>
             </div>

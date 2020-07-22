@@ -237,16 +237,12 @@ class Booking extends CI_Controller {
 				
 				
 					//Kuni kuni aeg on minevikus, siis näita veateadet ning tee redirect
-					if(strtotime("$dateToDb $formated_timeToDb")>strtotime("$dateToDb $formated_EndtimeToDb")){
+					if(strtotime("$dateToDb $formated_timeToDb")>=strtotime("$dateToDb $formated_EndtimeToDb")){
 							
 						  $this->form_validation->set_message('validationErrorMessage', 'Kuupäevad ei ole õigesti sisestatud.');
 						  $this->session->set_flashdata('validationErrorMessage', 'Kellaaeg on valesti sisestatud');
-									 
-						
-						
-						   $this->load->view('templates/header', $data);
-						   $this->load->view('pages/booking', $data);
-						   $this->load->view('templates/footer');
+						  $this->session->set_flashdata('key',$this->security->xss_clean($postData));
+						  redirect( $this->input->post('current_url'));
 					  
 					}
 					else
