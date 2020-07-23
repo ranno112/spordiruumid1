@@ -415,19 +415,13 @@ class Booking extends CI_Controller {
 				$start_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_startTime"));
 				$end_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_endTime"));
 			
-				if(strtotime("$formated_date $formated_startTime")>strtotime("$formated_date $formated_endTime")){
+				if(strtotime("$formated_date $formated_startTime")>=strtotime("$formated_date $formated_endTime")){
 								
 					$this->form_validation->set_message('validationErrorMessage', 'Kuupäevad ei ole õigesti sisestatud.');
 					$this->session->set_flashdata('validationErrorMessage', 'Kellaaeg on valesti sisestatud');
-							
-					if($this->form_validation->run() === FALSE){
-						redirect( $this->input->post('current_url'));
-				
-					} 
-	
-					$this->load->view('templates/header', $data);
-					$this->load->view('pages/booking', $data);
-					$this->load->view('templates/footer');
+					
+					$this->session->set_flashdata('key',$this->security->xss_clean($postData));
+					redirect( $this->input->post('current_url'));
 				
 				}
 				else
