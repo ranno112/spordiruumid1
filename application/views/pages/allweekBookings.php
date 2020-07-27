@@ -51,8 +51,14 @@ foreach($rooms as $value){
 			}
 			//console.log(theUrlDate);
 			var dateConvert = new Date(theUrlDate.replace( /(\d{2}).(\d{2}).(\d{4})/, "$2/$1/$3"))
-	
-	
+			
+			var defaultView='resourceTimeGridWeek';
+			if(window.innerWidth < 800){
+				defaultView='resourceTimeGridDay';
+			} else	if(window.innerWidth < 1400){
+			defaultView=	'resourceTimeGridFourDay';
+			}
+
 
     var calendar1El = document.getElementById('calendar1');
 
@@ -112,7 +118,7 @@ foreach($rooms as $value){
   },
       plugins: [ 'interaction', 'resourceDayGrid', 'resourceTimeGrid','momentPlugin' ],
 			defaultDate:dateConvert,
-      defaultView: 'resourceTimeGridWeek',
+      defaultView: defaultView,
 	   datesAboveResources: true,
    	firstDay: 1,
 		 allDaySlot: false,
@@ -216,15 +222,6 @@ foreach($rooms as $value){
 	
 		);
 
-		if(window.innerWidth < 800){
-			
-				calendar1.changeView('resourceTimeGridDay');
-				
-			}
-		 else	if(window.innerWidth < 1400){
-			
-				calendar1.changeView('resourceTimeGridFourDay');
-			}
 
 			calendar1.setOption('height', 951);
     calendar1.render();
