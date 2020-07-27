@@ -93,6 +93,7 @@ foreach($rooms as $value){
 
 
       },
+			locale: 'est',
 			eventRender: function(info) {
 				console.log(info.el.innerText);
 				var eventTooltip = document.createElement('span');
@@ -223,8 +224,6 @@ foreach($rooms as $value){
 		 else	if(window.innerWidth < 1400){
 			
 				calendar1.changeView('resourceTimeGridFourDay');
-			} else {
-				calendar1.changeView('resourceTimeGridWeek');
 			}
 
 			calendar1.setOption('height', 951);
@@ -271,9 +270,6 @@ foreach($rooms as $value){
 		window.location.href="<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $this->session->userdata('room');?>&date="+moment(calendar1.getDate()).format("DD.MM.YYYY");
 		} );
 
-		calendar1.setOption('locale', 'est');
-	
-			
 
 
   });
