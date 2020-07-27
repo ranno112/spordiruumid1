@@ -401,7 +401,7 @@
 				}
 
 			},
-			defaultDate: moment('<?php echo ($this->input->get("date")); ?>', "DD.MM.YYYY"),
+			defaultDate: moment('<?php if($this->input->get("date")){ echo ($this->input->get("date")); } else{ echo date("dd.mm.YYYY");}?>', "DD.MM.YYYY"),
 			defaultView: 'agendaWeek',
 			weekNumbers: true,
 			slotLabelFormat: 'H:mm',
