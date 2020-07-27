@@ -401,7 +401,7 @@
 				}
 
 			},
-
+			defaultDate: moment('<?php echo ($this->input->get("date")); ?>', "DD.MM.YYYY"),
 			defaultView: 'agendaWeek',
 			weekNumbers: true,
 			slotLabelFormat: 'H:mm',
