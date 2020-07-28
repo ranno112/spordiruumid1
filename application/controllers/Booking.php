@@ -327,7 +327,7 @@ class Booking extends CI_Controller {
 			$this->booking_model->create_bookingTimes($insert_data2);
 				
 					$this->session->set_flashdata('post_updated', 'Andmed salvestatud');
-						redirect('fullcalendar?roomId='.$this->input->post('sportrooms').'&date='. date('d.m.Y', strtotime($dateToRedirect)));
+						redirect('fullcalendar?roomId='.$this->input->post('sportrooms')[0].'&date='. date('d.m.Y', strtotime($dateToRedirect)));
 		
 					}
 
@@ -361,15 +361,17 @@ class Booking extends CI_Controller {
 			$this->form_validation->set_rules('type', 'Tüüp', 'integer');
 		
 			//check if selected room exists and user has right to make a booking in this room $this->input->post('sportrooms') 
-			$isAllowedOrNot=$this->booking_model->checkIfRoomIsBookable($this->input->post('sportrooms'));
-						
+			foreach($this->input->post('sportrooms') as $value){
+			$isAllowedOrNot=$this->booking_model->checkIfRoomIsBookable( $value);
 			if(empty($isAllowedOrNot[0]['id'])){
 				$postData['thisIsWhatIm']=$isAllowedOrNot[0]['id'];
 				$this->session->set_flashdata('key',$this->security->xss_clean($postData));
 				$this->session->set_flashdata('errors', 'Ai ai ai nii küll teha ei tohi! '.$isAllowedOrNot->id);
-				redirect('booking/create/'.$this->input->post('sportrooms'));
+				redirect('booking/create/'. $value);
 			}
 
+			}	
+			
 			if($this->form_validation->run() === FALSE ){
 				
 				$this->form_validation->set_message('clubname', 'text dont match captcha'); 
@@ -406,69 +408,71 @@ class Booking extends CI_Controller {
 		$insert_data3 = array();
 
 		$takesPlace = $this->input->post('approveNow')==1 ? 1 : 0;
-		for($t = 0; $t <= count($this->input->post('workoutDate')); $t++) {
-			if(isset($this->input->post('workoutDate')[$t])){
-				$formated_startTime = date("H:i:s", strtotime($this->input->post('timesStart')[$t]));
-				$formated_endTime = date("H:i:s", strtotime($this->input->post('timeTo')[$t]));
-				$formated_date = date("Y-m-d", strtotime($this->input->post('workoutDate')[$t]));
+		foreach($this->input->post('sportrooms') as $value){
+			for($t = 0; $t <= count($this->input->post('workoutDate')); $t++) {
+				if(isset($this->input->post('workoutDate')[$t])){
+					$formated_startTime = date("H:i:s", strtotime($this->input->post('timesStart')[$t]));
+					$formated_endTime = date("H:i:s", strtotime($this->input->post('timeTo')[$t]));
+					$formated_date = date("Y-m-d", strtotime($this->input->post('workoutDate')[$t]));
 
-				$start_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_startTime"));
-				$end_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_endTime"));
-			
-				if(strtotime("$formated_date $formated_startTime")>=strtotime("$formated_date $formated_endTime")){
-								
-					$this->form_validation->set_message('validationErrorMessage', 'Kuupäevad ei ole õigesti sisestatud.');
-					$this->session->set_flashdata('validationErrorMessage', 'Kellaaeg on valesti sisestatud');
-					
-					$this->session->set_flashdata('key',$this->security->xss_clean($postData));
-					redirect( $this->input->post('current_url'));
+					$start_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_startTime"));
+					$end_date = date('Y-m-d H:i:s', strtotime("$formated_date $formated_endTime"));
 				
-				}
-				else
-				{
+					if(strtotime("$formated_date $formated_startTime")>=strtotime("$formated_date $formated_endTime")){
+									
+						$this->form_validation->set_message('validationErrorMessage', 'Kuupäevad ei ole õigesti sisestatud.');
+						$this->session->set_flashdata('validationErrorMessage', 'Kellaaeg on valesti sisestatud');
+						
+						$this->session->set_flashdata('key',$this->security->xss_clean($postData));
+						redirect( $this->input->post('current_url'));
+					
+					}
+					else
+					{
 
-				$insert_data2[] = array(
-					'roomID' => $this->input->post('sportrooms'),
-					'startTime' => $start_date,
-					'endTime' => $end_date,
-					'approved' => $takesPlace,
-					'bookingID' => $id,
-					'bookingTimeColor' => $this->input->post('color')[$t]
-				);
-				}
+					$insert_data2[] = array(
+						'roomID' => $value,
+						'startTime' => $start_date,
+						'endTime' => $end_date,
+						'approved' => $takesPlace,
+						'bookingID' => $id,
+						'bookingTimeColor' => $this->input->post('color')[$t]
+					);
+					}
 
-			}	
+				}	
+			}
 		}
 		
-		
+		foreach($this->input->post('sportrooms') as $value){
+			$allEventsForConflictCheck=$this->booking_model->get_conflictsDates($this->session->userdata('building'),$value);
+								
+			foreach($allEventsForConflictCheck as $key => $value){
+				$property1 = 'startTime'; 
+				$property2 = 'endTime'; 
+				$property3 = 'public_info'; 
+				$property4 = 'workout'; 
+				foreach($insert_data2 as $key2 => $value2){
+			
+					
+					if($value->$property1<$value2['endTime'] && $value->$property2>$value2['startTime']){
+						//insert_data3 mean conflick days
+						$insert_data3[] = array(
+						
+							'startTime' => $value->$property1,
+							'endTime' =>  $value->$property2,
+							'public_info' => $value->$property3,
+							'workout' => $value->$property4
+							);
 
-		$allEventsForConflictCheck=$this->booking_model->get_conflictsDates($this->session->userdata('building'),$this->input->post('sportrooms'));
-							
-		foreach($allEventsForConflictCheck as $key => $value){
-			$property1 = 'startTime'; 
-			$property2 = 'endTime'; 
-			$property3 = 'public_info'; 
-			$property4 = 'workout'; 
-			foreach($insert_data2 as $key2 => $value2){
-		 
+					break;
+					}
 				
-				if($value->$property1<$value2['endTime'] && $value->$property2>$value2['startTime']){
-					//insert_data3 mean conflick days
-					$insert_data3[] = array(
-					  
-						'startTime' => $value->$property1,
-						'endTime' =>  $value->$property2,
-						'public_info' => $value->$property3,
-						'workout' => $value->$property4
-						);
-
-				break;
+					//$value['startTime'],$value['endTime']
+				
 				}
-			
-				//$value['startTime'],$value['endTime']
-			
-			}
 
+			}
 		}
 	   if(!empty($insert_data3)&&$this->input->post('allowSave')==0){
    
@@ -488,7 +492,7 @@ class Booking extends CI_Controller {
 		$this->booking_model->create_bookingTimes($insert_data2);
 
 		$this->session->set_flashdata('post_updated', 'Andmed salvestatud');
-		redirect('fullcalendar?roomId='.$this->input->post('sportrooms').'&date='.$this->input->post('workoutDate')[0]);
+		redirect('fullcalendar?roomId='.$this->input->post('sportrooms')[0].'&date='.$this->input->post('workoutDate')[0]);
 		 }
 	
 

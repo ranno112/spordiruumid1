@@ -97,7 +97,9 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                            <?php echo $this->input->get('roomId');?>
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
                                 <label for="roomOnce">Ruum*</label>
-                                <select id="roomOnce" list="saal" name="sportrooms" class="form-control arrow" >
+								<select id="roomOnce"  onchange="myFunction()" list="saal" class="form-control arrow" >
+								
+								<option> Vali ruum </option>
                                     <?php foreach ($rooms as $each) {
 										echo $each->id;
 										if($data['sportrooms']== $each->id){ 
@@ -110,6 +112,29 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                                 echo '<option value="' . $each->id . '">' . $each->roomName . '</option>';}
                                             } ?>
                                 </select>
+							<div id="selectedRooms">	
+								<?php 
+
+								if(isset($data['sportrooms'])){ 
+									foreach($data['sportrooms'] as $value){
+										foreach($rooms as $room){
+											if($value== $room->id){
+												echo '<p class="removeRoom btn btn-light" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
+											}
+										}
+									}
+								}
+	
+								else {
+									foreach($rooms as $room){
+									
+										if( $this->uri->segment(3)== $room->id){
+											echo '<p class="removeRoom btn btn-light" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
+										}
+									} 
+									 } ?>
+										</div>
+
                             </div>
                         </div>
                         <div class="row d-flex mt-2 px-md-5 mx-md-5">
@@ -1132,9 +1157,26 @@ $( "#submitWithConflicts" ).click(function() {
  
 });
 
+$('#selectedRooms').on('click', '.removeRoom', function(e) { //user click on remove text
+   
+                $(this).remove(); //remove text box
+          
+               
 
- 
+        
+        });
 
 });
+
+function myFunction() {
+  var selectedRoomID =  $( "#roomOnce" ).val();
+  var selectedRoomName =  $( "#roomOnce option:selected" ).text();
+ // console.log($("#selectedRooms p").text().match(selectedRoomName));
+
+ if (!$("#selectedRooms p").text().match(selectedRoomName)){
+  $("#selectedRooms").append( '<p class="removeRoom btn btn-light"  value="' + selectedRoomID + '">' + selectedRoomName + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+selectedRoomID+'></input></p>' );
+}
+}
+ 
 
 </script>
