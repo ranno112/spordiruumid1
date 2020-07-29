@@ -96,21 +96,16 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                             </div>
                            <?php echo $this->input->get('roomId');?>
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-                                <label for="roomOnce">Ruum*</label>
-								<select id="roomOnce"  onchange="myFunction()" list="saal" class="form-control arrow" >
+                                <label for="roomOnce">Ruum*</label><?php if($this->session->flashdata('sportroomMissing')){  echo $this->session->flashdata('sportroomMissing');} ?>
+								<select id="roomOnce"  onchange="addRoomInOnce()" list="saal" class="form-control arrow" >
 								
-								<option> Vali ruum </option>
+								<option >Vali ruum</option>
                                     <?php foreach ($rooms as $each) {
 										echo $each->id;
-										if($data['sportrooms']== $each->id){ 
-											echo '<option selected value="' . $each->id . '">' . $each->roomName . '</option>';
-										}
-										   else 
-                                               if( $this->uri->segment(3)== $each->id){
-                                                    echo '<option selected value="' . $each->id . '">' . $each->roomName . '</option>';
-                                                }else{
-                                                echo '<option value="' . $each->id . '">' . $each->roomName . '</option>';}
-                                            } ?>
+									
+											echo '<option value="' . $each->id . '">' . $each->roomName . '</option>';
+									}
+										   ?>
                                 </select>
 							<div id="selectedRooms">	
 								<?php 
@@ -306,19 +301,39 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
                                 <label for="roomPeriod">Ruum*</label>
-                                <select id="roomPeriod" list="saal" name="sportrooms" class="form-control arrow" >
+								<select id="roomPeriod"  onchange="addRoomInPeriod()" list="saal" class="form-control arrow" >
+								<option >Vali ruum</option>
 								<?php 
 								foreach ($rooms as $each) {
 										echo $each->id;
-											if($data['sportrooms']== $each->id){ 
-											    echo '<option selected value="' . $each->id . '">' . $each->roomName . '</option>';
-											}
-                                               else if( $this->uri->segment(3)== $each->id){
-                                                    echo '<option selected value="' . $each->id . '">' . $each->roomName . '</option>';
-                                                }else{
-                                                echo '<option value="' . $each->id . '">' . $each->roomName . '</option>';}
+										
+											    echo '<option value="' . $each->id . '">' . $each->roomName . '</option>';
+									
                                             } ?>
-                                </select>
+								</select>
+								<div id="selectedPeriodRooms">	
+								<?php 
+
+								if(isset($data['sportrooms'])){ 
+									foreach($data['sportrooms'] as $value){
+										foreach($rooms as $room){
+											if($value== $room->id){
+												echo '<p class="removeRoom btn btn-light" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
+											}
+										}
+									}
+								}
+	
+								else {
+									foreach($rooms as $room){
+									
+										if( $this->uri->segment(3)== $room->id){
+											echo '<p class="removeRoom btn btn-light" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
+										}
+									} 
+									 } ?>
+										</div>
+
                             </div>
                         </div>
 
@@ -1158,25 +1173,33 @@ $( "#submitWithConflicts" ).click(function() {
 });
 
 $('#selectedRooms').on('click', '.removeRoom', function(e) { //user click on remove text
-   
                 $(this).remove(); //remove text box
-          
-               
-
-        
         });
 
+$('#selectedPeriodRooms').on('click', '.removeRoom', function(e) { //user click on remove text
+                $(this).remove(); //remove text box
+        });
 });
 
-function myFunction() {
+
+function addRoomInOnce() {
   var selectedRoomID =  $( "#roomOnce" ).val();
   var selectedRoomName =  $( "#roomOnce option:selected" ).text();
  // console.log($("#selectedRooms p").text().match(selectedRoomName));
 
- if (!$("#selectedRooms p").text().match(selectedRoomName)){
+ if (!$("#selectedRooms p").text().match(selectedRoomName)&& selectedRoomName!="Vali ruum"){
   $("#selectedRooms").append( '<p class="removeRoom btn btn-light"  value="' + selectedRoomID + '">' + selectedRoomName + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+selectedRoomID+'></input></p>' );
 }
 }
  
+function addRoomInPeriod () {
+  var selectedRoomID =  $( "#roomPeriod" ).val();
+  var selectedRoomName =  $( "#roomPeriod option:selected" ).text();
+  console.log(selectedRoomName);
+
+ if (!$("#selectedPeriodRooms p").text().match(selectedRoomName)&& selectedRoomName!="Vali ruum"){
+  $("#selectedPeriodRooms").append( '<p class="removeRoom btn btn-light"  value="' + selectedRoomID + '">' + selectedRoomName + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+selectedRoomID+'></input></p>' );
+}
+}
 
 </script>
