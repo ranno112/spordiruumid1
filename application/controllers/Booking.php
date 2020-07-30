@@ -19,6 +19,7 @@ class Booking extends CI_Controller {
 	function menu(){
 		$data['menu'] = 'calendar'; // Capitalize the first letter
 		$data['unapprovedBookings'] = $this->booking_model->getUnapprovedBookings($this->session->userdata('building'));
+		$data['bookingformdata'] = $this->booking_model->getBookingformData();
 		return $data;
 	}
 
@@ -42,28 +43,36 @@ class Booking extends CI_Controller {
 
 	public function clubname_check($str= '')
 	{
-			if ($str == '')
+			if ($str == '' && $this->input->post('type')!='4')
 			{
+				$data['bookingformdata'] = $this->booking_model->getBookingformData();
+				if($data['bookingformdata']['clubname_admin']==0){
+					return TRUE;
+				}
 				$this->session->set_flashdata('validationErrorMessageForClubname', "<small class='text-danger'>See väli on kohustuslik</small>");
 				return FALSE;
 			}
-			else if(!preg_match("/^[A-Za-z0-9\x{00C0}-\x{00FF} ][A-Za-z0-9\x{00C0}-\x{00FF}\'\-\.\,]+([\ A-Za-z0-9\x{00C0}-\x{00FF}][A-Za-z0-9\x{00C0}-\x{00FF}\'\-]+)*/u", $str)){
+			else if(!preg_match("/^[A-Za-z0-9 \x{00C0}-\x{00FF} ][A-Za-z0-9 \x{00C0}-\x{00FF}\'\-\.\,]+([\ A-Za-z0-9\x{00C0}-\x{00FF}][A-Za-z0-9\x{00C0}-\x{00FF}\'\-]+)*/u", $str)){
 				$this->session->set_flashdata('validationErrorMessageForClubname', "<small class='text-danger'>Sellised märgid ei ole lubatud</small>");
 				return FALSE;
 			}
 
 			else
 			{
-					return TRUE;
+				return TRUE;
 			}
 	}
 	public function contactPerson_check($str= '')
 	{
 			if ($str == '' && $this->input->post('type')!='4'){
+				$data['bookingformdata'] = $this->booking_model->getBookingformData();
+				if($data['bookingformdata']['contactname_admin']==0){
+					return TRUE;
+				}
 				$this->session->set_flashdata('validationErrorMessageContactPerson', "<small class='text-danger'>See väli on kohustuslik</small>");
 				return FALSE;
 			}
-			else if(!preg_match("/^[A-Za-z0-9\x{00C0}-\x{00FF} ][A-Za-z0-9\x{00C0}-\x{00FF}\'\-\.\,]+([\ A-Za-z0-9\x{00C0}-\x{00FF}][A-Za-z0-9\x{00C0}-\x{00FF}\'\-]+)*/u", $str) && $this->input->post('type')!='4'){
+			else if(!preg_match("/^[A-Za-z0-9 \x{00C0}-\x{00FF} ][A-Za-z0-9 \x{00C0}-\x{00FF}\'\-\.\,]+([\ A-Za-z0-9\x{00C0}-\x{00FF}][A-Za-z0-9\x{00C0}-\x{00FF}\'\-]+)*/u", $str) && $this->input->post('type')!='4'){
 				$this->session->set_flashdata('validationErrorMessageContactPerson', "<small class='text-danger'>Sellised märgid ei ole lubatud</small>");
 				return FALSE;
 			}
@@ -84,11 +93,48 @@ class Booking extends CI_Controller {
 					return TRUE;
 			}
 	}
+	public function email_cant_be_empty($str= '')
+	{
+			if ($str == '' && $this->input->post('type')!='4')
+			{
+				$data['bookingformdata'] = $this->booking_model->getBookingformData();
+				if($data['bookingformdata']['email_admin']==0){
+					return TRUE;
+				}
+				$this->form_validation->set_message('email_cant_be_empty', 'Email on kohustuslik');
+				return false;
+			}
+			return TRUE;
+		
+	}
+
+	public function type_cant_be_empty($str= '')
+	{
+			if ($str == '' && $this->input->post('type')!='4')
+			{
+				$data['bookingformdata'] = $this->booking_model->getBookingformData();
+				if($data['bookingformdata']['type_admin']==0){
+					return TRUE;
+				}
+				$this->session->set_flashdata('type_flash', "<small class='text-danger'>Tüüp on kohustuslik</small>");
+				return false;
+			}
+			return TRUE;
+		
+	}
+	
+
 	public function phoneNumber_check($str= '')
 	{
 		if ($str == '')
 			{
-				return TRUE;
+				$data['bookingformdata'] = $this->booking_model->getBookingformData();
+				if($data['bookingformdata']['phone_admin']==0 || $this->input->post('type')=='4'){
+					return TRUE;
+				}
+				$this->session->set_flashdata('validationErrorMessageForPhone', "<small class='text-danger'>See väli on kohustuslik</small>");
+				return FALSE;
+			
 			}
 		else if(!preg_match('/^\+?[\d\s]+$/', $str))
 			{
@@ -125,13 +171,13 @@ class Booking extends CI_Controller {
 			$data['buildings'] = $this->booking_model->getAllBuildings();
 			$data['allBookingInfo'] = $this->booking_model->getAllBookings();
 			
-			$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
+			$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|htmlspecialchars|callback_clubname_check');
 
 			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactPerson_check');
 
 			$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
-			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
-			$this->form_validation->set_rules('workoutType', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars');
+			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email|callback_email_cant_be_empty');
+			$this->form_validation->set_rules('workoutType', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars|callback_type_cant_be_empty');
 			$this->form_validation->set_rules('comment2', 'Lisainfo', 'trim|htmlspecialchars');
 			$this->form_validation->set_rules('type', 'Tüüp', 'integer');
 			$this->form_validation->set_rules('weekday[]', 'Nädal', 'required|callback_weekDayMissing');
@@ -163,7 +209,7 @@ class Booking extends CI_Controller {
 			//	}
 				
 			$this->session->set_flashdata('key',$this->security->xss_clean($postData));
-			redirect( $this->input->post('current_url'));
+			redirect('booking/create/'.$this->input->post('sportrooms')[0]);
 			} 
 			else{
 			$event_in = strtotime($this->input->post('startingFrom'));
@@ -373,11 +419,11 @@ class Booking extends CI_Controller {
 			$postData = $this->input->post();
 			$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
 			$data['allBookingInfo'] = $this->booking_model->getAllBookings();
-			$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
-			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|required|callback_contactPerson_check');
+			$this->form_validation->set_rules('clubname', 'Klubi nimi', 'trim|htmlspecialchars|callback_clubname_check');
+			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactPerson_check');
 			$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
-			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
-			$this->form_validation->set_rules('workoutType', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars');
+			$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email|callback_email_cant_be_empty');
+			$this->form_validation->set_rules('workoutType', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars|callback_type_cant_be_empty');
 			$this->form_validation->set_rules('comment2', 'Lisainfo', 'trim|htmlspecialchars');
 			$this->form_validation->set_rules('type', 'Tüüp', 'integer');
 			$this->form_validation->set_rules('sportrooms[]', 'Spordiruum', 'required|callback_sportroomMissing');

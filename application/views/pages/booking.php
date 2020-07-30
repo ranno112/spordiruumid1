@@ -78,12 +78,12 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                         </div>
                         <div class="row d-flex mt-2 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-                                <label>Telefon <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?></label>
+                                <label>Telefon <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?><?php if($this->session->flashdata('validationErrorMessageForPhone')){  echo $this->session->flashdata('validationErrorMessageForPhone');} ?></label>
                                 <input class="form-control" id="phoneForSingle" name="phone" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
                             </div>
 
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-                                <label>Email <?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?></label>
+                                <label>Email <?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?><?php if($this->session->flashdata('email_flash')){  echo $this->session->flashdata('email_flash');} ?></label>
                                 <input class="form-control" id="emailForSingle" name="email" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
                             </div>
                         </div>
@@ -135,7 +135,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                         </div>
                         <div class="row d-flex mt-2 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-                                <label>Sündmus / Treeningu tüüp (avalik info)</label>
+                                <label>Sündmus / Treeningu tüüp (avalik info)<?php if($this->session->flashdata('type_flash')){  echo $this->session->flashdata('type_flash');} ?></label>
                                 <input class="form-control" id="typePeriod" name="workoutType" placeholder="nt iluvõimlemine" value="<?php if(isset($data['workoutType'])){ echo $data['workoutType'];}?>">
                             </div>
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5"></div>
@@ -170,15 +170,26 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										<label class="col-2 m-0 p-md-0" for="color">Värv </label>
 											<input type="color" class="form-control" name="color[]" value="<?php if(isset($data['color'][0])){ echo $data['color'][0];}else{  echo "#ffffff";}?>" list="presetColors">
 											<datalist id="presetColors">
-												
-												<option>#ffffff</option>
-												<option>#ddffee</option>
-												<option>#cceeff</option>
-												<option>#ffccee</option>
-												<option>#ffffcc</option>
-												<option>#aaffaa</option>
-												<option>#eeffff</option>
-												<option>#f6e5ff</option>
+											<?php if(isset($bookingformdata['color1'])){
+												echo "<option>".$bookingformdata['color1']."</option>";
+												echo "<option>".$bookingformdata['color2']."</option>";
+												echo "<option>".$bookingformdata['color3']."</option>";
+												echo "<option>".$bookingformdata['color4']."</option>";
+												echo "<option>".$bookingformdata['color5']."</option>";
+												echo "<option>".$bookingformdata['color6']."</option>";
+												echo "<option>".$bookingformdata['color7']."</option>";
+												echo "<option>".$bookingformdata['color8']."</option>";
+											} else {
+											echo "<option>#ffffff</option>";
+											echo "<option>#ddffee</option>";
+											echo "<option>#cceeff</option>";
+											echo "<option>#ffccee</option>";
+											echo "<option>#ffffcc</option>";
+											echo "<option>#aaffaa</option>";
+											echo "<option>#eeffff</option>";
+											echo "<option>#f6e5ff</option>";
+											}
+												?>	
 											</datalist>
 										</div>
 										</div>
@@ -201,14 +212,26 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										<div class="col-4 col-sm-3">
                                             <input type="color" class="form-control" name="color[]" value="<?php if(isset($data['color'][$i])){ echo $data['color'][$i];}else{  echo "#ffffff";}?>" list="presetColors">
 											<datalist id="presetColors">
-												<option>#ffffff</option>
-												<option>#ddffee</option>
-												<option>#cceeff</option>
-												<option>#ffccee</option>
-												<option>#ffffcc</option>
-												<option>#aaffaa</option>
-												<option>#eeffff</option>
-												<option>#f6e5ff</option>
+											<?php if(isset($bookingformdata['color1'])){
+												echo "<option>".$bookingformdata['color1']."</option>";
+												echo "<option>".$bookingformdata['color2']."</option>";
+												echo "<option>".$bookingformdata['color3']."</option>";
+												echo "<option>".$bookingformdata['color4']."</option>";
+												echo "<option>".$bookingformdata['color5']."</option>";
+												echo "<option>".$bookingformdata['color6']."</option>";
+												echo "<option>".$bookingformdata['color7']."</option>";
+												echo "<option>".$bookingformdata['color8']."</option>";
+											} else {
+											echo "<option>#ffffff</option>";
+											echo "<option>#ddffee</option>";
+											echo "<option>#cceeff</option>";
+											echo "<option>#ffccee</option>";
+											echo "<option>#ffffcc</option>";
+											echo "<option>#aaffaa</option>";
+											echo "<option>#eeffff</option>";
+											echo "<option>#f6e5ff</option>";
+											}
+												?>	
 											</datalist>
 											
 										</div>
@@ -282,12 +305,12 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                         </div>
                         <div class="row d-flex mt-2 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-                                <label>Telefon <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?></label>
+                                <label>Telefon <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?><?php if($this->session->flashdata('validationErrorMessageForPhone')){  echo $this->session->flashdata('validationErrorMessageForPhone');} ?></label>
                                 <input class="form-control" id="phone" name="phone" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
                             </div>
 
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-                                <label>Email <?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?></label>
+                                <label>Email <?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?><?php if($this->session->flashdata('email_flash')){  echo $this->session->flashdata('email_flash');} ?></label>
                                 <input class="form-control" id="email" name="email" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
                             </div>
                         </div>
@@ -341,7 +364,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
                         <div class="row d-flex mt-2 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-                                <label for="typeClosed">Sündmus / Treeningu tüüp (avalik info)</label>
+                                <label for="typeClosed">Sündmus / Treeningu tüüp (avalik info)<?php if($this->session->flashdata('type_flash')){  echo $this->session->flashdata('type_flash');} ?></label>
                                 <input class="form-control" id="typeClosed" name="workoutType" placeholder="nt iluvõimlemine"  value="<?php if(isset($data['workoutType'])): echo $data['workoutType'];endif; ?>">
                             </div>
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
@@ -386,14 +409,26 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 											<label class="col-2 m-0 p-md-0" for="color">Värv </label>
 										<input type="color" class="form-control" name="color[]" value="<?php if(isset($data['color'][0])){ echo $data['color'][0];}else{  echo "#ffffff";}?>" list="presetColors">
 											<datalist id="presetColors">
-												<option>#ffffff</option>
-												<option>#ddffee</option>
-												<option>#cceeff</option>
-												<option>#ffccee</option>
-												<option>#ffffcc</option>
-												<option>#aaffaa</option>
-												<option>#eeffff</option>
-												<option>#f6e5ff</option>
+											<?php if(isset($bookingformdata['color1'])){
+												echo "<option>".$bookingformdata['color1']."</option>";
+												echo "<option>".$bookingformdata['color2']."</option>";
+												echo "<option>".$bookingformdata['color3']."</option>";
+												echo "<option>".$bookingformdata['color4']."</option>";
+												echo "<option>".$bookingformdata['color5']."</option>";
+												echo "<option>".$bookingformdata['color6']."</option>";
+												echo "<option>".$bookingformdata['color7']."</option>";
+												echo "<option>".$bookingformdata['color8']."</option>";
+											} else {
+											echo "<option>#ffffff</option>";
+											echo "<option>#ddffee</option>";
+											echo "<option>#cceeff</option>";
+											echo "<option>#ffccee</option>";
+											echo "<option>#ffffcc</option>";
+											echo "<option>#aaffaa</option>";
+											echo "<option>#eeffff</option>";
+											echo "<option>#f6e5ff</option>";
+											}
+												?>	
 											</datalist>
 										</div>                                   
                                     </div>
@@ -423,14 +458,26 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 									<div class="col-4 col-sm-3">
 									<input type="color" class="form-control" name="color[]" value="<?php if(isset($data['color'][$i])){ echo $data['color'][$i];}else{  echo "#ffffff";}?>" list="presetColors">
 											<datalist id="presetColors">
-												<option>#ffffff</option>
-												<option>#ddffee</option>
-												<option>#cceeff</option>
-												<option>#ffccee</option>
-												<option>#ffffcc</option>
-												<option>#aaffaa</option>
-												<option>#eeffff</option>
-												<option>#f6e5ff</option>
+											<?php if(isset($bookingformdata['color1'])){
+												echo "<option>".$bookingformdata['color1']."</option>";
+												echo "<option>".$bookingformdata['color2']."</option>";
+												echo "<option>".$bookingformdata['color3']."</option>";
+												echo "<option>".$bookingformdata['color4']."</option>";
+												echo "<option>".$bookingformdata['color5']."</option>";
+												echo "<option>".$bookingformdata['color6']."</option>";
+												echo "<option>".$bookingformdata['color7']."</option>";
+												echo "<option>".$bookingformdata['color8']."</option>";
+											} else {
+											echo "<option>#ffffff</option>";
+											echo "<option>#ddffee</option>";
+											echo "<option>#cceeff</option>";
+											echo "<option>#ffccee</option>";
+											echo "<option>#ffffcc</option>";
+											echo "<option>#aaffaa</option>";
+											echo "<option>#eeffff</option>";
+											echo "<option>#f6e5ff</option>";
+											}
+												?>	
 											</datalist>
 										</div>
                                 </div>
@@ -598,14 +645,26 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										</div>
 										<input type="color" class="d-none form-control" name="color[]" value="#ffffff"  list="presetColors">
 											<datalist id="presetColors">
-												<option>#ffffff</option>
-												<option>#ddffee</option>
-												<option>#cceeff</option>
-												<option>#ffccee</option>
-												<option>#ffffcc</option>
-												<option>#aaffaa</option>
-												<option>#eeffff</option>
-												<option>#f6e5ff</option>
+											<?php if(isset($bookingformdata['color1'])){
+												echo "<option>".$bookingformdata['color1']."</option>";
+												echo "<option>".$bookingformdata['color2']."</option>";
+												echo "<option>".$bookingformdata['color3']."</option>";
+												echo "<option>".$bookingformdata['color4']."</option>";
+												echo "<option>".$bookingformdata['color5']."</option>";
+												echo "<option>".$bookingformdata['color6']."</option>";
+												echo "<option>".$bookingformdata['color7']."</option>";
+												echo "<option>".$bookingformdata['color8']."</option>";
+											} else {
+											echo "<option>#ffffff</option>";
+											echo "<option>#ddffee</option>";
+											echo "<option>#cceeff</option>";
+											echo "<option>#ffccee</option>";
+											echo "<option>#ffffcc</option>";
+											echo "<option>#aaffaa</option>";
+											echo "<option>#eeffff</option>";
+											echo "<option>#f6e5ff</option>";
+											}
+												?>	
 											</datalist>
 									
 									
@@ -635,14 +694,26 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 									</div>
 									<input type="color" class="d-none form-control" name="color[]" value="#ffffff" list="presetColors">
 											<datalist id="presetColors">
-												<option>#ffffff</option>
-												<option>#ddffee</option>
-												<option>#cceeff</option>
-												<option>#ffccee</option>
-												<option>#ffffcc</option>
-												<option>#aaffaa</option>
-												<option>#eeffff</option>
-												<option>#f6e5ff</option>
+											<?php if(isset($bookingformdata['color1'])){
+												echo "<option>".$bookingformdata['color1']."</option>";
+												echo "<option>".$bookingformdata['color2']."</option>";
+												echo "<option>".$bookingformdata['color3']."</option>";
+												echo "<option>".$bookingformdata['color4']."</option>";
+												echo "<option>".$bookingformdata['color5']."</option>";
+												echo "<option>".$bookingformdata['color6']."</option>";
+												echo "<option>".$bookingformdata['color7']."</option>";
+												echo "<option>".$bookingformdata['color8']."</option>";
+											} else {
+											echo "<option>#ffffff</option>";
+											echo "<option>#ddffee</option>";
+											echo "<option>#cceeff</option>";
+											echo "<option>#ffccee</option>";
+											echo "<option>#ffffcc</option>";
+											echo "<option>#aaffaa</option>";
+											echo "<option>#eeffff</option>";
+											echo "<option>#f6e5ff</option>";
+											}
+												?>	
 											</datalist>
                                 </div>
                                 
