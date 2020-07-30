@@ -182,26 +182,14 @@ class Booking extends CI_Controller {
 			 		
 			$event_in = date('Y-m-d H:i:s', $event_in);
 			$event_out = date('Y-m-d H:i:s', $event_out);
-			$data1 = array(
-				'public_info'=>$this->input->post('clubname'),
-			//	'comment_inner' => $this->input->post('comment2'),
-				'event_in' => $event_in,
-				'event_out' => $event_out,
-				'typeID' => $this->input->post('type'),
-				'c_name' => $this->input->post('contactPerson'),
-				'c_phone' => $this->input->post('phone'),
-				'c_email' => $this->input->post('email'),
-				'comment' => $this->input->post('comment2'),
-				'workout' => $this->input->post('workoutType'),
-				
-
-			);
-
+		
+			$this->booking_model->begin_trans();
 			
 		//	$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|required');
 			$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim');
 		
-			$id= $this->booking_model->create_booking($data1);
+		
+
 					
 			$insert_data2 = array();
 			$insert_data3 = array();
@@ -220,6 +208,21 @@ class Booking extends CI_Controller {
 			$counter=0;
 			$takesPlace= $this->input->post('approveNow')==1 ? 1 : 0;
 			foreach($this->input->post('sportrooms') as $room){
+				$data1 = array(
+					'public_info'=>$this->input->post('clubname'),
+				//	'comment_inner' => $this->input->post('comment2'),
+					'event_in' => $event_in,
+					'event_out' => $event_out,
+					'typeID' => $this->input->post('type'),
+					'c_name' => $this->input->post('contactPerson'),
+					'c_phone' => $this->input->post('phone'),
+					'c_email' => $this->input->post('email'),
+					'comment' => $this->input->post('comment2'),
+					'workout' => $this->input->post('workoutType'),
+					
+	
+				);
+				$id= $this->booking_model->create_booking($data1);
 				for($t = 0; $t <= count($this->input->post('timesStart')); $t++)
 					{
 						if(isset($this->input->post('timesStart')[$t])){
@@ -497,7 +500,7 @@ class Booking extends CI_Controller {
 
 			}
 		}
-		print_r($insert_data2);
+	
 	   if(!empty($insert_data3)&&$this->input->post('allowSave')==0){
    
 		 $this->booking_model->create_bookingTimes('');
