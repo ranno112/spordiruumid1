@@ -178,6 +178,7 @@ class Fullcalendar extends CI_Controller {
 				{
 					$data = array(
 						'approved'			=>	$this->input->post('approved'),
+						'hasChanged'	=>	1,
 						);
 
 					$this->fullcalendar_model->update_event($data, $this->input->post('timeID'));
@@ -205,6 +206,7 @@ class Fullcalendar extends CI_Controller {
 				{
 					$data = array(
 						'takes_place'			=>	$this->input->post('takesPlace'),
+						'hasChanged'	=>	1,
 						);
 
 					$this->fullcalendar_model->update_event($data, $this->input->post('timeID'));

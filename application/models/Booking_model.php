@@ -5,11 +5,19 @@ class Booking_model extends CI_Model
 
 public function create_booking($data1){
 
-	$this->db->trans_start();
+	//$this->db->trans_start();
 
 
 	$this->db->insert('bookings', $data1);
 	return $this->db->insert_id();
+
+}
+
+
+
+public function begin_trans(){
+
+	$this->db->trans_start();
 
 }
 
