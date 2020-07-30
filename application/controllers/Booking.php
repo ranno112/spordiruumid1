@@ -22,9 +22,8 @@ class Booking extends CI_Controller {
 		return $data;
 	}
 
-	public function create($slug)
+	public function create()
 	{	
-		
 		if($this->session->userdata('session_id')===TRUE){
 		$data=$this->menu();
 		$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
@@ -164,7 +163,7 @@ class Booking extends CI_Controller {
 			//	}
 				
 			$this->session->set_flashdata('key',$this->security->xss_clean($postData));
-			redirect('booking/create/'.$this->input->post('sportrooms')[0]);
+			redirect( $this->input->post('current_url'));
 			} 
 			else{
 			$event_in = strtotime($this->input->post('startingFrom'));
@@ -305,6 +304,7 @@ class Booking extends CI_Controller {
 				$property2 = 'endTime'; 
 				$property3 = 'public_info'; 
 				$property4 = 'workout'; 
+				$property5 = 'roomName'; 
 				foreach($insert_data2 as $key2 => $value2){
 				
 					
@@ -314,7 +314,8 @@ class Booking extends CI_Controller {
 							'startTime' => $value->$property1,
 							'endTime' =>  $value->$property2,
 							'public_info' => $value->$property3,
-							'workout' => $value->$property4
+							'workout' => $value->$property4,
+							'room' => $value->$property5
 							);
 
 					break;
@@ -385,7 +386,7 @@ class Booking extends CI_Controller {
 					$postData['thisIsWhatIm']=$isAllowedOrNot[0]['id'];
 					$this->session->set_flashdata('key',$this->security->xss_clean($postData));
 					$this->session->set_flashdata('errors', 'Ai ai ai nii küll teha ei tohi! '.$isAllowedOrNot->id);
-					redirect('booking/create/'. $room);
+					redirect('booking/create/'.$room);
 				}
 
 			}	
@@ -401,7 +402,7 @@ class Booking extends CI_Controller {
 			//	}
 				
 				$this->session->set_flashdata('key',$this->security->xss_clean($postData));
-				redirect( $this->input->post('current_url'));
+				redirect('booking/create/'.$this->input->post('sportrooms')[0]);
 
 			} 
 		$data['rooms'] = $this->booking_model->getAllRooms();
@@ -470,6 +471,7 @@ class Booking extends CI_Controller {
 				$property2 = 'endTime'; 
 				$property3 = 'public_info'; 
 				$property4 = 'workout'; 
+				$property5 = 'roomName'; 
 				foreach($insert_data2 as $key2 => $value2){
 			
 					
@@ -480,7 +482,8 @@ class Booking extends CI_Controller {
 							'startTime' => $value->$property1,
 							'endTime' =>  $value->$property2,
 							'public_info' => $value->$property3,
-							'workout' => $value->$property4
+							'workout' => $value->$property4,
+							'room' => $value->$property5
 							);
 
 					break;
