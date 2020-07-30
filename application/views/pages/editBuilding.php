@@ -6,7 +6,7 @@
             <div class="d-flex mb-5">
                 <ul class="nav nav-tabs nav-justified col-12 bg-grey p-0">
                     <li class="nav-item p-0"><a class="nav-link link txt-lg single-tab active pl-5"  href="#asutus" data-toggle="tab"><?php foreach ($editBuildings as $value) {echo $value['name'];break;}?> sätted</a></li>
-										<!-- <li class="nav-item p-0"><a class="nav-link link txt-lg" href="#broneering" data-toggle="tab">Broneerimisvormi sätted</a></li> -->
+										<li class="nav-item p-0"><a class="nav-link link txt-lg" href="#broneering" data-toggle="tab">Broneerimisvormi sätted</a></li>
 										<li class="nav-item p-0"></li>
 											<li class="nav-item p-0"></li>
                 </ul>
@@ -93,13 +93,13 @@
 							</form>
 							
 							</div>  
-							<!-- <div id="broneering" class="tab-pane center">   
+							<div id="broneering" class="tab-pane center">   
 							<?php echo form_open('building/updateBookingSettings', array('id' => 'changebookingSettings')); ?>
 								<h4 class="pt-2 txt-xl px-5 mx-5">Administraatori broneeringuvormi vaikeseaded</h4>
-								<p class="pt-2 txt-lg px-5 mx-5">Kohustuslikud väljad: </p>
-								<div class="row d-flex p-0 mt-4 px-md-5 mx-5">
-									Broneeringu kinnitus  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($bookingformdata['approved_admin']){echo 'checked';} ?> name="approveNow" id="approveNow" value="<?php echo $bookingformdata['approved_admin'] ?>"><span></span></label>
+								<div class="row d-flex p-0 m-4 px-md-5 mx-5">
+									Broneeringu kinnitus vaikimisi sees  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($bookingformdata['approved_admin']){echo 'checked';} ?> name="approveNow" id="approveNow" value="<?php echo $bookingformdata['approved_admin'] ?>"><span></span></label>
 								</div>
+								<p class="pt-2 txt-lg px-5 mx-5">Kohustuslikud väljad: </p>
 								<div class="row d-flex p-0 mt-4 px-md-5 mx-5">
 									Klubi nimi  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($bookingformdata['clubname_admin']){echo 'checked';}?>  name="clubname_admin" value="<?php echo $bookingformdata['clubname_admin'] ?>"><span></span></label>
 								</div>
@@ -133,24 +133,27 @@
 							
 								<h4 class="pt-2 txt-xl px-5 mx-5">Tavakasutaja broneeringuvormi vaikeseaded</h4>	
 								<div class="row d-flex p-0 m-4 px-md-5 mx-5">	
-									Luba tavakasutajate broneerimine  &nbsp;&nbsp;	<label><input type="checkbox"  name="allowBooking" value="0"><span></span></label>
+									Luba tavakasutajate broneerimine  &nbsp;&nbsp;	<label><input type="checkbox" id="allowUserBooking" <?php if($bookingformdata['allow_booking']){echo 'checked';} ?> name="allowBooking" value="<?php echo $bookingformdata['allow_booking'] ?>"><span></span></label>
 								</div>
-								<p class="pt-2 txt-lg px-5 mx-5">Kohustuslikud väljad tavakasutajatele: </p>
-				
-							<div class="row d-flex p-0 mt-4 px-md-5 mx-5">
-								Klubi nimi  &nbsp;&nbsp;	<label><input type="checkbox" checked name="clubname_user" value="1"><span></span></label>
-							</div>
-							<div class="row d-flex p-0 mt-4 px-md-5 mx-5">	
-								Kontaktisik  &nbsp;&nbsp;	<label><input type="checkbox" checked name="name_user" value="1"><span></span></label>
-							</div>
+								<div id="showOrHide">
+									<p class="pt-2 txt-lg px-5 mx-5">Kohustuslikud väljad tavakasutajatele: </p>
+					
 								<div class="row d-flex p-0 mt-4 px-md-5 mx-5">
-								Telefon  &nbsp;&nbsp;	<label><input type="checkbox"  name="phone_user" value="0"><span></span></label>
-							</div>	
-							<div class="row d-flex p-0 mt-4 px-md-5 mx-5">	
-								E-mail &nbsp;&nbsp;	<label><input type="checkbox"  name="email_user" value="0"><span></span></label>
-							</div>	<div class="row d-flex p-0 mt-4 px-md-5 mx-5">
-								Sündmus / Treeningu tüüp  &nbsp;&nbsp;	<label><input type="checkbox"  name="type_user" value="0"><span></span></label>
+									Klubi nimi  &nbsp;&nbsp;	<label><input type="checkbox"  <?php if($bookingformdata['clubname_user']){echo 'checked';} ?> name="clubname_user" value="<?php echo $bookingformdata['clubname_user'] ?>"><span></span></label>
+								</div>
+								<div class="row d-flex p-0 mt-4 px-md-5 mx-5">	
+									Kontaktisik  &nbsp;&nbsp;	<label><input type="checkbox"  <?php if($bookingformdata['contactname_user']){echo 'checked';} ?> name="name_user" value="<?php echo $bookingformdata['contactname_user'] ?>"><span></span></label>
+								</div>
+									<div class="row d-flex p-0 mt-4 px-md-5 mx-5">
+									Telefon  &nbsp;&nbsp;	<label><input type="checkbox"  <?php if($bookingformdata['phone_user']){echo 'checked';} ?> name="phone_user" value="<?php echo $bookingformdata['phone_user'] ?>"><span></span></label>
+								</div>	
+								<div class="row d-flex p-0 mt-4 px-md-5 mx-5">	
+									E-mail &nbsp;&nbsp;	<label><input type="checkbox"  <?php if($bookingformdata['email_user']){echo 'checked';} ?> name="email_user" value="<?php echo $bookingformdata['email_user'] ?>"><span></span></label>
+								</div>	<div class="row d-flex p-0 mt-4 px-md-5 mx-5">
+									Sündmus / Treeningu tüüp  &nbsp;&nbsp;	<label><input type="checkbox"  <?php if($bookingformdata['type_user']){echo 'checked';} ?> name="type_user" value="<?php echo $bookingformdata['type_user'] ?>"><span></span></label>
+								</div>
 							</div>
+						
 							<div class="row d-flex p-0 mt-4 px-md-5 mx-5">	
 							</div>
 							</div>
@@ -160,7 +163,7 @@
 											<button type="submit" class="btn btn-custom col-md-5 text-white txt-xl">Salvesta muudatused</button>
 									</div>
 							</form>
-							</div> -->
+							</div>
 					 </div>
 
         </div>
@@ -174,10 +177,22 @@
 
 $( document ).ready(function() {
 
+	if(!$('#allowUserBooking').is(":checked")){
+			$( "#showOrHide" ).hide();
+		}
+
 	$(':checkbox').click(function() {
    		value = +$(this).is( ':checked' );
 		   $(this).val(value);
+		
+		if($('#allowUserBooking').is(":checked")){
+			console.log(value);
+			$( "#showOrHide" ).show();
+		}else{
+			$( "#showOrHide" ).hide();
+		}
 	});
+
 
 	var counter=1;
    $('#lisaSaal').on('click', function() {

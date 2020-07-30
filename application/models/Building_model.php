@@ -46,6 +46,12 @@
 			$this->db->delete('buildings');
 			return true;
 		}
+		public function delete_building_settings($id){
+			$this->db->where('buildingID', $id);
+			$this->db->delete('bookingformsettings');
+			return true;
+		}
+		
 
 		public function check_if_room_has_reservations_only_in_past($id){
 			$query1 = $this->db->get_where('bookingTimes', array('roomID' => $id));
@@ -101,8 +107,14 @@
 
 		public function registerBuilding($data){
 		
-			return $this->db->insert('buildings', $data);
+			$this->db->insert('buildings', $data);
+			return $this->db->insert_id();
 		}
+
+		public function registerBuildingSettings($id){
+			return $this->db->insert('bookingformsettings', array('buildingID' => $id));
+		}
+
 
 
 		public function update_booking_settings($data){

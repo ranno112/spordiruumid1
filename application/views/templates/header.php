@@ -87,7 +87,7 @@ Under the GPL license, you may use Scheduler and this project without charge. Yo
 											<?php endif; ?>
 										
 									<?php ;}  if(!empty($this->session->userdata('userID'))){?>
-												<li class="nav-item"><a class="nav-link text-white py-0" href="<?php echo base_url(); ?>profile/view/<?php echo $this->session->userdata('userID');?>"> <?php if($menu=='profile'){echo ' <strong><u>'.$this->session->userdata('userName').' profiil</u></strong>';} else {echo ''.$this->session->userdata('userName').' profiil';} ?>  	<?php if(isset($requestFromBuilding)){if($requestFromBuilding['requestFromBuilding']=='1'){echo '<span class="badge badge-danger">1</span>';}} ?></a></li>
+												<li class="nav-item"><a class="nav-link text-white py-0" href="<?php echo base_url(); ?>profile/edit/<?php echo $this->session->userdata('userID');?>"> <?php if($menu=='profile'){echo ' <strong><u>'.$this->session->userdata('userName').' profiil</u></strong>';} else {echo ''.$this->session->userdata('userName').' profiil';} ?>  	<?php if(isset($requestFromBuilding)){if($requestFromBuilding['requestFromBuilding']=='1'){echo '<span class="badge badge-danger">1</span>';}} ?></a></li>
 									<?php ;}?>
 
 									</ul>

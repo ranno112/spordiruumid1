@@ -41,7 +41,11 @@
 			$data=$this->menu();
 			$data['regions'] = $this->building_model->getAllRegions();
 			$data['editBuildings'] = $this->building_model->get_building($slug);
-		//	$data['bookingformdata'] = $this->building_model->getBookingformData();
+			$data['bookingformdata'] = $this->building_model->getBookingformData();
+			if(empty($data['bookingformdata'])){
+				$this->building_model->registerBuildingSettings($this->session->userdata('building'));
+				$data['bookingformdata'] = $this->building_model->getBookingformData();
+			}
 			$this->load->view('templates/header', $this->security->xss_clean($data));
 			$this->load->view('pages/editBuilding', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
@@ -57,6 +61,9 @@
 			if ($this->session->userdata['building']!=$slug){
 			redirect('building/view/'.$this->session->userdata['building']);
 			}else{
+				if ($this->session->userdata('roleID')==='2'){
+					redirect('building/edit/'.$this->session->userdata['building']);
+				}
 			$data=$this->menu();
 			$data['editBuildings'] = $this->building_model->get_building($slug);
 			$data['regions'] = $this->building_model->getAllRegions();
@@ -82,6 +89,7 @@
 				print_r($allRoomsID);
 				if(empty($allRoomsID)){
 					$this->building_model->delete_building($buildingID);
+					$this->building_model->delete_building_settings($buildingID);
 					$this->session->set_flashdata('building_deleted', 'Asutus kustutatud');
 					redirect('building/view/'.$this->session->userdata['building']);
 				}
@@ -99,6 +107,7 @@
 				}
 
 				$this->building_model->delete_building($buildingID);
+				$this->building_model->delete_building_settings($buildingID);
 				$this->session->set_flashdata('building_deleted', 'Asutus kustutatud');
 				redirect('building/view/'.$this->session->userdata['building']);
 			}
@@ -225,7 +234,7 @@
 					$this->building_model->update_booking_settings($data);
 			}
 			//print_r($data);
-			redirect('building/view/'.$this->session->userdata['building']);
+			redirect('building/edit/'.$this->session->userdata['building']);
 		}
 	
 
@@ -332,7 +341,8 @@
 						'regionID' => $this->input->post('place'),
 						'price_url' => $this->input->post('price_url'),				
 					);
-					$this->building_model->registerBuilding($data);
+					$id=$this->building_model->registerBuilding($data);
+					$this->building_model->registerBuildingSettings($id);
 					$this->session->set_flashdata('user_registered', 'Asutus lisatud');
 					redirect('building/view/'.$this->session->userdata['building']);
 				}

@@ -24,7 +24,6 @@ class Profile extends CI_Controller
 	public function view($slug=FALSE){
    
         if ($this->session->userdata['userID']!=$slug){
-
             redirect('profile/view/'.$this->session->userdata['userID']);
         }else{
 		$data=$this->menu();
@@ -40,7 +39,6 @@ class Profile extends CI_Controller
 	public function edit($slug=FALSE){
    
         if ($this->session->userdata['userID']!=$slug){
-
             redirect('profile/edit/'.$this->session->userdata['userID']);
         }else{
 		$data=$this->menu();
@@ -58,7 +56,7 @@ class Profile extends CI_Controller
 		$this->form_validation->set_rules('giveaccess', 'Ligipääs', 'integer|max_length[1]');
 		if($this->form_validation->run() === FALSE ){
 			$this->session->set_flashdata('message','Proovi uuesti');
-			redirect('profile/view/'.$this->session->userdata['userID']);
+			redirect('profile/edit/'.$this->session->userdata['userID']);
 		}
 
 
@@ -164,7 +162,7 @@ class Profile extends CI_Controller
 		$this->profile_model->update_profile($data);
         // Set message
         $this->session->set_flashdata('post_updated', 'Uuendasid oma profiili');
-        redirect('profile/view/'.$this->session->userdata['userID']);
+        redirect('profile/edit/'.$this->session->userdata['userID']);
 	}
 	
 
