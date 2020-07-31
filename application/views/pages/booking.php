@@ -253,7 +253,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 								<textarea class="form-control" id="additional" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"><?php if(isset($data['comment2'])): echo $data['comment2'];endif; ?></textarea>
 								
 							</div>
-							<label class="px-2"><input type="checkbox" <?php if($bookingformdata['approved_admin']==1){echo 'checked';} ?> name="approveNow" id="approveNow" value="<?php if(isset($bookingformdata['approved_admin'])){echo $bookingformdata['approved_admin'];} else{echo 1;}?>"><span></span></label> Kinnita kohe
+							<label class="px-2"><input type="checkbox" <?php if(isset($data['approveNow'])){ if($data['approveNow']==1) echo  'checked'; }  else if($bookingformdata['approved_admin']==1){echo 'checked';} ?> name="approveNow" id="approveNow" value="<?php if(isset($data['approveNow'])){ echo $data['approveNow']; } else if(isset($bookingformdata['approved_admin'])){echo $bookingformdata['approved_admin'];} else{echo 1;}?>"><span></span></label> Kinnita kohe
 						</div>
 					
                         <div class="row d-flex justify-content-end mt-5 px-md-5 mx-md-5">
@@ -782,8 +782,8 @@ if(!empty($conflictDates)){// print_r($conflictDates);
     $(document).ready(function() {
 		$('[data-toggle="tooltip"]').tooltip();  
 		$('#myModal').on('hidden.bs.modal', function (e) {
-			$('#approvePeriodNow').prop('checked', true);
-			$('#approveNow').prop('checked', true);
+			$('#approvePeriodNow').prop('checked','<?php if(isset($data['approveNow'])){ if($data['approveNow']==1) echo  'checked'; } ?>');
+			$('#approveNow').prop('checked', '<?php if(isset($data['approveNow'])){ if($data['approveNow']==1) echo  'checked'; } ?>');
 			$("#myTable").find("tr:gt(0)").remove();
 		});
 		var days=['Pühapäev', 'Esmaspäev', 'Teisipäev', 'Kolmapäev', 'Neljapäev', 'Reede', 'Laupäev'];
@@ -1317,4 +1317,12 @@ if ( selectedRoomName=="Kõik ruumid"){
 	}
 }
 
+
+$("#approveNow, #approvePeriodNow").change(function() {
+    if(this.checked) {
+		$(this).val('1');
+    }else{
+		$(this).val('0');
+	}
+});
 </script>
