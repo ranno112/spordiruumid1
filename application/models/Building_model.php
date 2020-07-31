@@ -23,7 +23,7 @@
 		
 		public function getBookingformData($buildingID){
 			$this->db->where('buildingID', $buildingID);
-			$query = $this->db->get('bookingformsettings');
+			$query = $this->db->get('bookingFormSettings');
 			return $query->row_array();
 		}
 
@@ -48,7 +48,7 @@
 		}
 		public function delete_building_settings($id){
 			$this->db->where('buildingID', $id);
-			$this->db->delete('bookingformsettings');
+			$this->db->delete('bookingFormSettings');
 			return true;
 		}
 		
@@ -112,7 +112,7 @@
 		}
 
 		public function registerBuildingSettings($id){
-			return $this->db->insert('bookingformsettings', array('buildingID' => $id));
+			return $this->db->insert('bookingFormSettings', array('buildingID' => $id));
 		}
 
 
@@ -122,7 +122,7 @@
 		
 			$this->db->where('buildingID', $this->session->userdata('building'));
 
-			return $this->db->update('bookingformsettings', $data);
+			return $this->db->update('bookingFormSettings', $data);
 		}
 
 	
