@@ -40,7 +40,7 @@ public function create_bookingTimes($insert_data){
 	}
 	public function getBookingformData(){
 		$this->db->where('buildingID', $this->session->userdata('building'));
-		$query = $this->db->get('bookingformsettings');
+		$query = $this->db->get('bookingFormSettings');
 		return $query->row_array();
 	}
 

@@ -60,6 +60,32 @@ Täpsemad juhised oAuth v2 seadistamiseks leiad [siit](https://www.youtube.com/w
 
 Rakenduse tööle saamiseks tuleb luua MySQL tabelid:
 ```sql
+CREATE TABLE `bookingFormSettings` (
+  `formID` int(11) NOT NULL AUTO_INCREMENT,
+  `buildingID` int(11) NOT NULL,
+  `approved_admin` tinyint(1) NOT NULL DEFAULT 1,
+  `clubname_admin` tinyint(1) NOT NULL DEFAULT 1,
+  `contactname_admin` tinyint(1) NOT NULL DEFAULT 1,
+  `phone_admin` tinyint(1) NOT NULL DEFAULT 0,
+  `email_admin` tinyint(1) NOT NULL DEFAULT 0,
+  `type_admin` tinyint(1) NOT NULL DEFAULT 0,
+  `color1` char(7) NOT NULL DEFAULT '#ffffff',
+  `color2` char(7) NOT NULL DEFAULT '#ddffee',
+  `color3` char(7) NOT NULL DEFAULT '#cceeff',
+  `color4` char(7) NOT NULL DEFAULT '#ffccee',
+  `color5` char(7) NOT NULL DEFAULT '#ffffcc',
+  `color6` char(7) NOT NULL DEFAULT '#aaffaa',
+  `color7` char(7) NOT NULL DEFAULT '#eeffff',
+  `color8` char(7) NOT NULL DEFAULT '#f6e5ff',
+  `allow_booking` tinyint(1) NOT NULL DEFAULT 0,
+  `clubname_user` tinyint(1) NOT NULL DEFAULT 1,
+  `contactname_user` tinyint(1) NOT NULL DEFAULT 1,
+  `phone_user` tinyint(1) NOT NULL DEFAULT 1,
+  `email_user` tinyint(1) NOT NULL DEFAULT 1,
+  `type_user` tinyint(1) NOT NULL DEFAULT 1,
+	PRIMARY KEY (formID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 CREATE TABLE `bookings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `typeID` int(11) DEFAULT NULL,
@@ -74,8 +100,7 @@ CREATE TABLE `bookings` (
   `event_in` datetime DEFAULT NULL,
   `event_out` datetime DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-   PRIMARY KEY (id),
-   CONSTRAINT `bookingtypes` FOREIGN KEY (`typeID`) REFERENCES `bookingtypes` (`id`)
+   PRIMARY KEY (id)
 );
 
 CREATE TABLE `users` (
@@ -93,9 +118,8 @@ CREATE TABLE `users` (
   `updated_at` datetime NOT NULL,
 	`last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `requestFromBuilding` tinyint default '0',
-   PRIMARY KEY (userID),
-   CONSTRAINT `userroles` FOREIGN KEY (`roleID`) REFERENCES `userroles` (`id`)
-);
+   PRIMARY KEY (userID)
+ );
 
 INSERT INTO `users` (`userID`, `login_oauth_uid`, `roleID`, `buildingID`, `email`, `status`, `userName`, `userPhone`, `pw_hash`, `session_id`, `created_at`, `updated_at`) VALUES
 (1, '', 1, 0, 'admin@admin.ee', 1, 'Admin', '12345', '$2y$10$L9ptq3zKFXK447U.m4g48emDTNx2W4C7aQeahRUJsHcuq1sneb/eW', '', '2020-03-02 09:00:46', '0000-00-00 00:00:00');
@@ -123,8 +147,7 @@ CREATE TABLE `bookingTimes` (
   `endTime` datetime NOT NULL,
   `bookingTimeColor` char(50) DEFAULT '#ffffff',
   `hasChanged` tinyint(1) NOT NULL DEFAULT 0,
-   PRIMARY KEY (timeID),
-   CONSTRAINT `booking` FOREIGN KEY (`bookingID`) REFERENCES `bookings` (`id`)
+   PRIMARY KEY (timeID)
 );
 
 CREATE TABLE `bookingTimeVersions` (
@@ -135,8 +158,7 @@ CREATE TABLE `bookingTimeVersions` (
   `nameWhoChanged` varchar(30) DEFAULT NULL,
   `reason` varchar(255) DEFAULT NULL,
   `whenChanged` timestamp NOT NULL DEFAULT current_timestamp(), 
-   PRIMARY KEY (versionID),
-   CONSTRAINT `timeid` FOREIGN KEY (`timeID`) REFERENCES `bookingtimes` (`timeID`)
+   PRIMARY KEY (versionID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `buildings` (
@@ -147,8 +169,7 @@ CREATE TABLE `buildings` (
   `contact_email` varchar(255) NOT NULL,
   `notify_email` varchar(255) NOT NULL,
   `price_url` varchar(255) NOT NULL,
-   PRIMARY KEY (id),
-   CONSTRAINT `regionid` FOREIGN KEY (`regionID`) REFERENCES `regions` (`regionID`)
+   PRIMARY KEY (id)
 );
 
 CREATE TABLE `regions` (
@@ -172,8 +193,7 @@ CREATE TABLE `rooms` (
   `roomActive` tinyint(1) NOT NULL DEFAULT '1',
   `roomColor` char(50) DEFAULT '#ffffff',
   `api_url` text DEFAULT '',
-   PRIMARY KEY (id),
-   CONSTRAINT `buildingidrooms` FOREIGN KEY (`buildingID`) REFERENCES `buildings` (`id`)
+   PRIMARY KEY (id)
 );
 
 CREATE TABLE `userRoles` (
