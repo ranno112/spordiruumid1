@@ -21,8 +21,8 @@
 		}
 
 		
-		public function getBookingformData(){
-			$this->db->where('buildingID', $this->session->userdata('building'));
+		public function getBookingformData($buildingID){
+			$this->db->where('buildingID', $buildingID);
 			$query = $this->db->get('bookingformsettings');
 			return $query->row_array();
 		}
