@@ -253,16 +253,15 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 								<textarea class="form-control" id="additional" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"><?php if(isset($data['comment2'])): echo $data['comment2'];endif; ?></textarea>
 								
 							</div>
-							<label class="px-2"><input type="checkbox" checked name="approveNow" id="approveNow" value="1"><span></span></label> Kinnita kohe
+							<label class="px-2"><input type="checkbox" <?php if($bookingformdata['approved_admin']==1){echo 'checked';} ?> name="approveNow" id="approveNow" value="<?php if(isset($bookingformdata['approved_admin'])){echo $bookingformdata['approved_admin'];} else{echo 1;}?>"><span></span></label> Kinnita kohe
 						</div>
 					
-
                         <div class="row d-flex justify-content-end mt-5 px-md-5 mx-md-5">
 							
 							  <a class="txt-xl link-deco align-self-center py-md-0 pr-md-5 mr-2" href="<?php echo base_url()?>fullcalendar?roomId=<?php foreach ($rooms as $each) {
 									
 									if(!empty($data['sportrooms'])){ 
-									if($data['sportrooms']== $each->id){ 
+										if($data['sportrooms'][0]== $each->id){ 
 										echo $each->id;
 									
 									}
@@ -535,14 +534,14 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                 <label>Lisainfo</label>
                                 <textarea class="form-control" id="comment2ForSingle" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"><?php if(isset($data['comment2'])): echo $data['comment2'];endif; ?></textarea>
 							</div>
-							<label class="px-2"><input type="checkbox" checked name="approveNow" id="approvePeriodNow" value="1"><span></span></label> Kinnita kohe
+							<label class="px-2"><input type="checkbox" <?php if($bookingformdata['approved_admin']==1){echo 'checked';} ?> name="approveNow" id="approvePeriodNow" value="<?php if(isset($bookingformdata['approved_admin'])){echo $bookingformdata['approved_admin'];} else{echo 1;}?>"><span></span></label> Kinnita kohe
                         </div>
 
                         <div class="row d-flex justify-content-end mt-5 px-md-5 mx-md-5">
 						<a class="txt-xl link-deco align-self-center py-md-0 pr-md-5 mr-2" href="<?php echo base_url()?>fullcalendar?roomId=<?php foreach ($rooms as $each) {
 									
 									if(!empty($data['sportrooms'])){ 
-									if($data['sportrooms']== $each->id){ 
+										if($data['sportrooms'][0]== $each->id){ 
 										echo $each->id;
 									
 									}
@@ -754,7 +753,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 						<a class="txt-xl link-deco align-self-center py-md-0 pr-md-5 mr-2" href="<?php echo base_url()?>fullcalendar?roomId=<?php foreach ($rooms as $each) {
 									
 									if(!empty($data['sportrooms'])){ 
-									if($data['sportrooms']== $each->id){ 
+										if($data['sportrooms'][0]== $each->id){ 
 										echo $each->id;
 									
 									}
