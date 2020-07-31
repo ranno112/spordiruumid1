@@ -40,6 +40,12 @@
 			return $query->result();
 		}
 
+		public function does_building_have_admin($buildingID){
+			$this->db->where('buildingID', $buildingID);
+			$query = $this->db->get('users');
+			return $query->row_array();
+		}
+
 
 		public function delete_building($id){
 			$this->db->where('id', $id);

@@ -92,8 +92,9 @@
 				}
 				$buildingID=$this->input->post('buildingID');
 				$allRoomsID=$this->building_model->get_all_roomsID_from_one_building($buildingID);
-				print_r($allRoomsID);
-				if(empty($allRoomsID)){
+				$doesBuildingHaveAdmins=$this->building_model->does_building_have_admin($buildingID);
+				
+				if(empty($allRoomsID) && empty($doesBuildingHaveAdmins)){
 					$this->building_model->delete_building($buildingID);
 					$this->building_model->delete_building_settings($buildingID);
 					$this->session->set_flashdata('building_deleted', 'Asutus kustutatud');
@@ -111,7 +112,11 @@
 					$this->session->set_flashdata('message', 'Ennem tuleb kustutada ruumid, seejärel saab asutust kustutada');
 					redirect('building/view/'.$this->session->userdata['building']);	
 				}
-
+				if(!empty($doesBuildingHaveAdmins)){
+					$this->session->set_flashdata('message', 'Asutusele on määratud peaadministraatorid/administraatorid. Asutuse kustutamiseks tuleb kasutajatelt ennem õigused ära võtta');
+					redirect('building/view/'.$this->session->userdata['building']);	
+				}
+				print_r($doesBuildingHaveAdmins);
 				$this->building_model->delete_building($buildingID);
 				$this->building_model->delete_building_settings($buildingID);
 				$this->session->set_flashdata('building_deleted', 'Asutus kustutatud');
