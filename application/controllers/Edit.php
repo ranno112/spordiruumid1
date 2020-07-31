@@ -66,23 +66,23 @@ class Edit extends CI_Controller {
 			if(	$row['bookingID']==$bookingID){
 				$data[] = array(
 					'id'	=>	$row['bookingID'],
-					'roomID'	=>	$row['roomID'],
+				//	'roomID'	=>	$row['roomID'],
 					'timeID'=>	$row['timeID'],
-					'title'	=>	$row['public_info'],
+				//	'title'	=>	$row['public_info'],
 					'start'	=>	$row['startTime'],
 					'end'	=>	$row['endTime'],
-					'event_in'	=>	$row['event_in'],
-					'event_out'	=>	$row['event_out'],
-					'clubname'	=>	$row['c_name'],
-					'workout'	=>	$row['workout'],
-					'created_at'	=>	$row['created_at'],
-					'comment'	=>	$row['comment'],
+				//	'event_in'	=>	$row['event_in'],
+				//	'event_out'	=>	$row['event_out'],
+				//	'clubname'	=>	$row['c_name'],
+				//	'workout'	=>	$row['workout'],
+				//	'created_at'	=>	$row['created_at'],
+				//	'comment'	=>	$row['comment'],
 					'building'	=>	$row['name'],
 					'roomName'	=>	$row['roomName'],
-					'bookingID'	=>	$row['bookingID'],
-					'takesPlace'	=>	$row['takes_place'],
-					'approved'	=>	$row['approved'],
-					'organizer'	=>	$row['organizer'],
+				//	'bookingID'	=>	$row['bookingID'],
+				//	'takesPlace'	=>	$row['takes_place'],
+				//	'approved'	=>	$row['approved'],
+				//	'organizer'	=>	$row['organizer'],
 					'color'	=>	$row['bookingTimeColor'],
 
 				);
@@ -117,6 +117,10 @@ class Edit extends CI_Controller {
 	{
 			if ($str == '')
 			{
+				$data['bookingformdata'] = $this->edit_model->getBookingformData();
+				if($data['bookingformdata']['clubname_admin']==0 ){
+					return TRUE;
+				}
 				$this->session->set_flashdata('validationErrorMessageForClubname', "<small class='text-danger'>See väli on kohustuslik</small>");
 				return FALSE;
 			}
@@ -127,15 +131,20 @@ class Edit extends CI_Controller {
 
 			else
 			{
-					return TRUE;
+				return TRUE;
 			}
 	}
 
 	public function contactPerson_check($str= '')
 	{
 			if ($str == '')
-			{
-				return TRUE;
+			{	
+				$data['bookingformdata'] = $this->edit_model->getBookingformData();
+				if($data['bookingformdata']['contactname_admin']==0 || $this->input->post('closed')=='4'){
+					return TRUE;
+				}
+				$this->session->set_flashdata('validationErrorMessageContactPerson', "<small class='text-danger'>See väli on kohustuslik</small>");
+				return FALSE;
 			}
 			else if(!preg_match("/^[A-Za-z0-9\x{00C0}-\x{00FF} ][A-Za-z0-9\x{00C0}-\x{00FF}\'\-\.\,]+([\ A-Za-z0-9\x{00C0}-\x{00FF}][A-Za-z0-9\x{00C0}-\x{00FF}\'\-]+)*/u", $str)){
 				$this->session->set_flashdata('validationErrorMessageContactPerson', "<small class='text-danger'>Sellised märgid ei ole lubatud</small>");
@@ -153,7 +162,12 @@ class Edit extends CI_Controller {
 	{
 		if ($str == '')
 			{
-				return TRUE;
+				$data['bookingformdata'] = $this->edit_model->getBookingformData();
+				if($data['bookingformdata']['phone_admin']==0 || $this->input->post('closed')=='4'){
+					return TRUE;
+				}
+				$this->session->set_flashdata('validationErrorMessageForPhone', "<small class='text-danger'>See väli on kohustuslik</small>");
+				return FALSE;
 			}
 		else if(!preg_match('/^\+?[\d\s]+$/', $str))
 			{
@@ -166,6 +180,35 @@ class Edit extends CI_Controller {
 			}
 	}
 
+	public function email_cant_be_empty($str= '')
+	{
+			if ($str == '' && $this->input->post('closed')!='4')
+			{
+				$data['bookingformdata'] = $this->edit_model->getBookingformData();
+				if($data['bookingformdata']['email_admin']==0){
+					return TRUE;
+				}
+				$this->form_validation->set_message('email_cant_be_empty', 'Email on kohustuslik');
+				return false;
+			}
+			return TRUE;
+		
+	}
+	public function type_cant_be_empty($str= '')
+	{
+			if ($str == '' && $this->input->post('type')!='4')
+			{
+				$data['bookingformdata'] = $this->edit_model->getBookingformData();
+				if($data['bookingformdata']['type_admin']==0){
+					return TRUE;
+				}
+				$this->session->set_flashdata('type_flash', "<small class='text-danger'>Tüüp on kohustuslik</small>");
+				return false;
+			}
+			return TRUE;
+		
+	}
+	
 
 	public function checkIfIsAllowedToUpdate($id)
 	{
@@ -264,16 +307,17 @@ class Edit extends CI_Controller {
 	{	
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
 
-		$this->form_validation->set_rules('publicInfo', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
+		$this->form_validation->set_rules('publicInfo', 'Klubi nimi', 'trim|htmlspecialchars|callback_clubname_check');
 		$this->form_validation->set_rules('contactPerson', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactPerson_check');
 		$this->form_validation->set_rules('phone', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
-		$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email');
-		$this->form_validation->set_rules('workoutType', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars');
+		$this->form_validation->set_rules('email', 'E-mail', 'trim|htmlspecialchars|valid_email|callback_email_cant_be_empty');
+		$this->form_validation->set_rules('workoutType', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars|callback_type_cant_be_empty');
 		$this->form_validation->set_rules('additionalComment', 'Lisainfo', 'trim|htmlspecialchars');
 	
 		if($this->form_validation->run() === FALSE ){
 
 			if($this->input->post('dontShow')!=1){
+			$this->session->set_flashdata("emailIsNotCorrect", form_error('email', '<small class="text-danger">','</small>')); 
 			$this->session->set_flashdata('validationErrorMessage', 'Vormiga on midagi valesti');
 			}
 			$data=$this-> index();
@@ -443,11 +487,11 @@ class Edit extends CI_Controller {
 		
 
 
-			$this->form_validation->set_rules('publicInfoPeriod', 'Klubi nimi', 'trim|htmlspecialchars|required|callback_clubname_check');
+			$this->form_validation->set_rules('publicInfoPeriod', 'Klubi nimi', 'trim|htmlspecialchars|callback_clubname_check');
 			$this->form_validation->set_rules('contactPersonPeriod', 'Kontaktisik', 'trim|htmlspecialchars|callback_contactPerson_check');
 			$this->form_validation->set_rules('phonePeriod', 'Telefon', 'trim|htmlspecialchars|callback_PhoneNumber_check');
-			$this->form_validation->set_rules('emailPeriod', 'E-mail', 'trim|htmlspecialchars|valid_email');
-			$this->form_validation->set_rules('workoutTypePeriod', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars');
+			$this->form_validation->set_rules('emailPeriod', 'E-mail', 'trim|htmlspecialchars|valid_email|callback_email_cant_be_empty');
+			$this->form_validation->set_rules('workoutTypePeriod', 'Sündmus / Treeningu tüüp', 'trim|htmlspecialchars|callback_type_cant_be_empty');
 			$this->form_validation->set_rules('additionalCommentPeriod', 'Lisainfo', 'trim|htmlspecialchars');
 			
 		
@@ -455,7 +499,7 @@ class Edit extends CI_Controller {
 			if($this->form_validation->run() === FALSE ){
 
 				if($this->input->post('dontShow')!=1){
-			
+				$this->session->set_flashdata("emailIsNotCorrect", form_error('email', '<small class="text-danger">','</small>')); 
 				$this->session->set_flashdata('validationErrorMessage', 'Vormiga on midagi valesti');
 				}
 				$data=$this-> index();

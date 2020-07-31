@@ -430,12 +430,8 @@
 
 
 				if (event.description) {
-					element.find('.fc-title').prepend('<span style="font-weight:550">' + event.description + "<br/>" + '</span>');
-				} else {
-					element.find('.fc-title').prepend(event.description);
-
-				}
-
+					element.find('.fc-time').append('<br /> <span style="font-weight:450;font-size:12px">' + event.description + "<br/>" + '</span>');
+				} 
 				if ((displayOrNot == 2 || displayOrNot == 3) && (event.typeID == 1 || event.typeID == 2)) {
 					element.find('.fc-time').before("<span class='timequery'>Päring: " + moment(event.created_at).format("DD.MM.YYYY HH:mm") + "</span>"); // Päringu kirje broneeringu lahtris
 				}
@@ -818,7 +814,7 @@
 
 				if (monthCheckbox != st_monthIndex) {
 				//	console.log(st_monthIndex);
-				$('#myTable > tbody:last-child').append('<tr id="monthRow' + start_date.getUTCMonth() + '"><th><label><input type="checkbox"  id="selectMonth[' + start_date.getUTCMonth() + ']" value="1"></label> ' + monthNamesForModal[moment(eventToCheck[i].start._i).toDate().getUTCMonth()] + ' </th></tr>');
+				$('#myTable > tbody:last-child').append('<tr id="monthRow' + start_date.getUTCMonth() + '"><th colspan="2"><label><input type="checkbox"  id="selectMonth[' + start_date.getUTCMonth() + ']" value="1"></label> ' + monthNamesForModal[moment(eventToCheck[i].start._i).toDate().getUTCMonth()] + ' </th></tr>');
 				}
 				monthCheckbox = st_monthIndex;
 				var isSelected=false;
@@ -830,13 +826,13 @@
 					isSelected='';	
 				}
 
-				$('#myTable > tbody:last-child').append(' <tr class="red' + i + '">  <td><label><input type="checkbox" class="abc brdr" name="choices" id="' + eventToCheck[i].timeID + '"'+isSelected+' ><span></span></label> ' +  nameOfWeek + ', ' + moment(eventToCheck[i].start._i).format('DD.MM.YYYY') + ' <br></td>  <td>&nbsp;&nbsp; ' + moment(eventToCheck[i].start._i).format('HH:mm') +  '-' + moment(eventToCheck[i].end._i).format('HH:mm') + '</td>   <td>&nbsp;&nbsp;&nbsp;' + approved + ' </td> <td>&nbsp;' + takesPlace + ' </td>   </tr>');
+				$('#myTable > tbody:last-child').append(' <tr class="red' + i + '">  <td><label><input type="checkbox" class="abc brdr" name="choices" id="' + eventToCheck[i].timeID + '"'+isSelected+' ><span></span></label> ' +  nameOfWeek + ',</td> <td>' + moment(eventToCheck[i].start._i).format('DD.MM.YYYY') + ' <br>  </td> <td>&nbsp;&nbsp; ' + moment(eventToCheck[i].start._i).format('HH:mm') +  '-' + moment(eventToCheck[i].end._i).format('HH:mm') + '</td>   <td>&nbsp;&nbsp;&nbsp;' + approved + ' </td> <td>&nbsp;' + takesPlace + ' </td>   </tr>');
 				
 				var checkingConflicts=isOverlapping2(eventToCheck[i], events);
 			
 				if	(checkingConflicts){
 					$(".red" + i).css("color", "red");
-						if ($("table").find(".red" + i + ":first td").length < 5) {
+						if ($("table").find(".red" + i + ":first td").length < 6) {
 							checkingConflicts.title.length > 10 ? checkingConflicts.title = checkingConflicts.title.substring(0, 10) + "...": checkingConflicts.title = checkingConflicts.title;
 						
 							$(".red" + i).append('<td> &nbsp;' + checkingConflicts.title + '</td>');
@@ -1038,7 +1034,7 @@
 									var id = $this.attr("id");
 								
 								
-									var approvedOrNot = $this.parents("tr").children("td:nth-child(3)");
+									var approvedOrNot = $this.parents("tr").children("td:nth-child(4)");
 								
 									var approvedOrNotToDB;
 									if ($.trim(approvedOrNot.text()) == "Kinnitatud") {
@@ -1064,9 +1060,9 @@
 											
 											//siia tule teha panna kinnitatud olekuks modalis  
 											if (approvedOrNotToDB == 1) {
-												$this.parents("tr").children("td:nth-child(3)").html("&nbsp;&nbsp;&nbsp;Kinnitatud");
+												$this.parents("tr").children("td:nth-child(4)").html("&nbsp;&nbsp;&nbsp;Kinnitatud");
 											} else {
-												$this.parents("tr").children("td:nth-child(3)").html("&nbsp;&nbsp;&nbsp;Kinnitamata");
+												$this.parents("tr").children("td:nth-child(4)").html("&nbsp;&nbsp;&nbsp;Kinnitamata");
 											}
 										
 										},
@@ -1137,7 +1133,7 @@
 							$(".abc:checkbox:checked").each(function() {
 								var $this = $(this);
 
-								var approvedOrNot = $this.parents("tr").children("td:nth-child(4)");
+								var approvedOrNot = $this.parents("tr").children("td:nth-child(5)");
 						
 								var approvedOrNotToDB;
 								if ($.trim(approvedOrNot.text()) == "XXX") {
@@ -1164,9 +1160,9 @@
 										success: function() {
 											
 											if (approvedOrNotToDB == 0) {
-												$this.parents("tr").children("td:nth-child(4)").html("&nbsp;XXX");
+												$this.parents("tr").children("td:nth-child(5)").html("&nbsp;XXX");
 											} else {
-												$this.parents("tr").children("td:nth-child(4)").html("&nbsp;&nbsp;&nbsp;");
+												$this.parents("tr").children("td:nth-child(5)").html("&nbsp;&nbsp;&nbsp;");
 											}
 											//  $('.abc:checkbox:checked').parents("tr").children("td:contains('Ei toimunud')").html("");
 											//alert('Ei toimunud');

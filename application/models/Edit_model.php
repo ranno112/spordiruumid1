@@ -15,7 +15,11 @@ class Edit_model extends CI_Model
 		return $this->db->get('bookingTimes');
 	}
 
-
+	public function getBookingformData(){
+		$this->db->where('buildingID', $this->session->userdata('building'));
+		$query = $this->db->get('bookingFormSettings');
+		return $query->row_array();
+	}
 	
 
 	function fetch_all_Booking_times(){

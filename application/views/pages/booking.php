@@ -135,7 +135,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                         </div>
                         <div class="row d-flex mt-2 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-                                <label>Sündmus / Treeningu tüüp (avalik info)<?php if($this->session->flashdata('type_flash')){  echo $this->session->flashdata('type_flash');} ?></label>
+                                <label>Sündmus / Treeningu tüüp (avalik info) <?php if($this->session->flashdata('type_flash')){  echo $this->session->flashdata('type_flash');} ?></label>
                                 <input class="form-control" id="typePeriod" name="workoutType" placeholder="nt iluvõimlemine" value="<?php if(isset($data['workoutType'])){ echo $data['workoutType'];}?>">
                             </div>
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5"></div>
@@ -363,7 +363,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
                         <div class="row d-flex mt-2 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-                                <label for="typeClosed">Sündmus / Treeningu tüüp (avalik info)<?php if($this->session->flashdata('type_flash')){  echo $this->session->flashdata('type_flash');} ?></label>
+                                <label for="typeClosed">Sündmus / Treeningu tüüp (avalik info) <?php if($this->session->flashdata('type_flash')){  echo $this->session->flashdata('type_flash');} ?></label>
                                 <input class="form-control" id="typeClosed" name="workoutType" placeholder="nt iluvõimlemine"  value="<?php if(isset($data['workoutType'])): echo $data['workoutType'];endif; ?>">
                             </div>
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
