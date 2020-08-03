@@ -82,7 +82,7 @@
 									</div>
 
 									<div class="flex mx-5 px-5 mt-5">
-											<a id="lisaSaal" class="btn btn-custom text-white text-center py-2 px-4 pluss"><p class="m-0 px-0 txt-lg txt-strong text-center align-items-center">Lisa saal</p></a>
+											<a id="lisaSaal" class="btn btn-custom text-white text-center py-2 px-4 pluss"><p class="m-0 px-0 txt-lg txt-strong text-center align-items-center">Lisa ruum</p></a>
 									</div>
 
 									<div class="d-flex justify-content-end my-5 px-5 mx-5">

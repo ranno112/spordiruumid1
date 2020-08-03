@@ -6,7 +6,6 @@
 //    echo $each;
 //  };
  endif; ?>
-
 <?php $stack = array(); foreach ($allBookingInfo as $each) { 
     array_push($stack, $each['c_name'] );
  };
@@ -66,24 +65,24 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                         <div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
 							
-								<label class=" col-7 col-sm-7 col-md-12  p-0" for="contact">Klubi nimi (avalik info)* <b data-tooltip="Klubi puudumisel kirjuta kontaktisiku nime initsiaalid"><img id="tool" class="mr-5" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="7%"></b> <?php if($this->session->flashdata('validationErrorMessageForClubname')){  echo $this->session->flashdata('validationErrorMessageForClubname');} ?></label>
+								<label class=" col-7 col-sm-7 col-md-12  p-0" for="contact">Klubi nimi (avalik info)<?php if($bookingformdata['clubname_admin']==1){echo "*";} ?> <b data-tooltip="Klubi puudumisel kirjuta kontaktisiku nime initsiaalid"><img id="tool" class="mr-5" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="7%"></b> <?php if($this->session->flashdata('validationErrorMessageForClubname')){  echo $this->session->flashdata('validationErrorMessageForClubname');} ?></label>
 								<input class="form-control <?php if($this->session->flashdata('validationErrorMessageForClubname')){ echo 'is-invalid';}?>" id="clubnameForSingle" type="text" name="clubname" required value="<?php if(isset($data['clubname'])): echo $data['clubname'];endif; ?>">
 							</div>
                             <input class="d-none" type="checkbox" id="typeOnce" name="type" value="1" checked>
                             <input class="d-none" type="checkbox" id="allowFormToSubmitAndNeverMindConflicts1" name="allowSave" value="0" checked>
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-                                <label>Kontaktisik*	<?php if($this->session->flashdata('validationErrorMessageContactPerson')){  echo $this->session->flashdata('validationErrorMessageContactPerson');} ?> </label>
+                                <label>Kontaktisik<?php if($bookingformdata['contactname_admin']==1){echo "*";} ?>	<?php if($this->session->flashdata('validationErrorMessageContactPerson')){  echo $this->session->flashdata('validationErrorMessageContactPerson');} ?> </label>
                                 <input class="form-control" id="contactForSingle" name="contactPerson" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>">
                             </div>
                         </div>
                         <div class="row d-flex mt-2 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-                                <label>Telefon <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?><?php if($this->session->flashdata('validationErrorMessageForPhone')){  echo $this->session->flashdata('validationErrorMessageForPhone');} ?></label>
+                                <label>Telefon<?php if($bookingformdata['phone_admin']==1){echo "*";} ?> <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?><?php if($this->session->flashdata('validationErrorMessageForPhone')){  echo $this->session->flashdata('validationErrorMessageForPhone');} ?></label>
                                 <input class="form-control" id="phoneForSingle" name="phone" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
                             </div>
 
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-                                <label>Email <?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?><?php if($this->session->flashdata('email_flash')){  echo $this->session->flashdata('email_flash');} ?></label>
+                                <label>Email<?php if($bookingformdata['email_admin']==1){echo "*";} ?> <?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?><?php if($this->session->flashdata('email_flash')){  echo $this->session->flashdata('email_flash');} ?></label>
                                 <input class="form-control" id="emailForSingle" name="email" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
                             </div>
                         </div>
@@ -135,7 +134,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                         </div>
                         <div class="row d-flex mt-2 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-                                <label>Sündmus / Treeningu tüüp (avalik info) <?php if($this->session->flashdata('type_flash')){  echo $this->session->flashdata('type_flash');} ?></label>
+                                <label>Sündmus / Treeningu tüüp (avalik info)<?php if($bookingformdata['type_admin']==1){echo "*";} ?>  <?php if($this->session->flashdata('type_flash')){  echo $this->session->flashdata('type_flash');} ?></label>
                                 <input class="form-control" id="typePeriod" name="workoutType" placeholder="nt iluvõimlemine" value="<?php if(isset($data['workoutType'])){ echo $data['workoutType'];}?>">
                             </div>
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5"></div>
@@ -292,24 +291,24 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                         <div class="row d-flex px-md-5 mx-md-5 mt-4">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
 							<?php echo form_error('clubname'); ?>
-							<label class=" col-7 col-sm-7 col-md-12  p-0" for="contact">Klubi nimi (avalik info)*	<b data-tooltip="Klubi puudumisel kirjuta kontaktisiku nime initsiaalid"><img id="tool" class="mr-5" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="7%"></b> <?php if($this->session->flashdata('validationErrorMessageForClubname')){  echo $this->session->flashdata('validationErrorMessageForClubname');} ?></label>
+							<label class=" col-7 col-sm-7 col-md-12  p-0" for="contact">Klubi nimi (avalik info)<?php if($bookingformdata['clubname_admin']==1){echo "*";} ?> <b data-tooltip="Klubi puudumisel kirjuta kontaktisiku nime initsiaalid"><img id="tool" class="mr-5" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="7%"></b> <?php if($this->session->flashdata('validationErrorMessageForClubname')){  echo $this->session->flashdata('validationErrorMessageForClubname');} ?></label>
 								<input class="form-control <?php if($this->session->flashdata('validationErrorMessageForClubname')){  echo 'is-invalid';} ?>" id="clubname" type="text" name="clubname" required value="<?php if(isset($data['clubname'])): echo $data['clubname'];endif; ?>">
 								
                             </div>
 
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-                                <label>Kontaktisik* <?php if($this->session->flashdata('validationErrorMessageContactPerson')){  echo $this->session->flashdata('validationErrorMessageContactPerson');} ?></label>
+                                <label>Kontaktisik<?php if($bookingformdata['contactname_admin']==1){echo "*";} ?> <?php if($this->session->flashdata('validationErrorMessageContactPerson')){  echo $this->session->flashdata('validationErrorMessageContactPerson');} ?></label>
                                 <input class="form-control" id="contact" name="contactPerson" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>" required>
                             </div>
                         </div>
                         <div class="row d-flex mt-2 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-                                <label>Telefon <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?><?php if($this->session->flashdata('validationErrorMessageForPhone')){  echo $this->session->flashdata('validationErrorMessageForPhone');} ?></label>
+                                <label>Telefon<?php if($bookingformdata['phone_admin']==1){echo "*";} ?> <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?><?php if($this->session->flashdata('validationErrorMessageForPhone')){  echo $this->session->flashdata('validationErrorMessageForPhone');} ?></label>
                                 <input class="form-control" id="phone" name="phone" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
                             </div>
 
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-                                <label>Email <?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?><?php if($this->session->flashdata('email_flash')){  echo $this->session->flashdata('email_flash');} ?></label>
+                                <label>Email<?php if($bookingformdata['email_admin']==1){echo "*";} ?> <?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?><?php if($this->session->flashdata('email_flash')){  echo $this->session->flashdata('email_flash');} ?></label>
                                 <input class="form-control" id="email" name="email" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
                             </div>
                         </div>
@@ -363,7 +362,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
                         <div class="row d-flex mt-2 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-                                <label for="typeClosed">Sündmus / Treeningu tüüp (avalik info) <?php if($this->session->flashdata('type_flash')){  echo $this->session->flashdata('type_flash');} ?></label>
+                                <label for="typeClosed">Sündmus / Treeningu tüüp (avalik info)<?php if($bookingformdata['type_admin']==1){echo "*";} ?> <?php if($this->session->flashdata('type_flash')){  echo $this->session->flashdata('type_flash');} ?></label>
                                 <input class="form-control" id="typeClosed" name="workoutType" placeholder="nt iluvõimlemine"  value="<?php if(isset($data['workoutType'])): echo $data['workoutType'];endif; ?>">
                             </div>
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
