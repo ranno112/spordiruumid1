@@ -322,7 +322,10 @@
 					}
 				}
 				
-				$this->session->set_flashdata('post_updated', 'Uuendasid asutuse infot');
+				$this->session->set_flashdata('post_updated', 'Andmed salvestatud');
+				if ($this->session->userdata('roleID')==='2'){
+					redirect('building/edit/'.$this->session->userdata['building']);
+				}
 				redirect('building/view/'.$this->session->userdata['building']);
 			}	
 		}
