@@ -16,7 +16,8 @@
                     <th class="py-2 txt-strong text-darkblue" scope="col">Nimi</th>
                     <th class="py-2 txt-strong text-darkblue" scope="col">Telefon</th>
                     <th class="py-2 txt-strong text-darkblue" scope="col">Asutus</th>
-                    <th class="py-2 txt-strong text-darkblue" scope="col">Roll</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Roll</th>
+					<th class="py-2 txt-strong text-darkblue" scope="col">Viimane sisse logimine</th>
                     <!-- <th class="py-2 txt-strong text-darkblue" scope="col">Staatus</th> -->
                     <th class="py-2 txt-strong text-darkblue" scope="col"></th>
                 </tr>
@@ -28,7 +29,8 @@
                     <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['userName']; ?></td>
                     <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['userPhone']; ?></td>
                     <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['name']; ?></td>
-                    <td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['role']; ?> &nbsp; &nbsp;</td>
+					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['role']; ?> &nbsp; &nbsp;</td>
+					<td class="p-1 text-darkblue border-bottom-light"><?php echo $singleUser['last_login']; ?> &nbsp; &nbsp;</td>
                     <!-- <td class="p-1 text-darkblue border-bottom-light"><?php if( $singleUser['status']==1){ echo "Aktiivne";} else {echo "Mitteakviivne";} ?></td> -->
                     <td class="d-flex justify-content-end p-1 pr-3">
                         <form class="cat-delete" action="users/edit/<?php echo $singleUser['userID']; ?>" method="POST">
