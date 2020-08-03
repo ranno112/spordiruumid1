@@ -65,7 +65,7 @@
 						<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
 							<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
 								<label>Telefoni number  <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?><?php if($this->session->flashdata('validationErrorMessageForPhone')){  echo $this->session->flashdata('validationErrorMessageForPhone');} ?></label>
-								<input type="number" class="form-control" name="phone" id="phone" value="<?php if(!empty($allPostData['phone'])){echo $allPostData['phone'];}else {echo $bookingData['c_phone'];}?>">
+								<input type="text" class="form-control" name="phone" id="phone" value="<?php if(!empty($allPostData['phone'])){echo $allPostData['phone'];}else {echo $bookingData['c_phone'];}?>">
 							</div>
 
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
@@ -182,7 +182,7 @@
 						<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
 							<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
 								<label>Telefon <?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?></label>
-								<input type="number" class="form-control" name="phonePeriod" id="phonePeriod" value="<?php if(!empty($allPostData['phonePeriod'])){echo $allPostData['phonePeriod'];}else {echo $bookingData['c_phone'];}?>">
+								<input type="text" class="form-control" name="phonePeriod" id="phonePeriod" value="<?php if(!empty($allPostData['phonePeriod'])){echo $allPostData['phonePeriod'];}else {echo $bookingData['c_phone'];}?>">
 							</div>
 
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
@@ -255,14 +255,17 @@
 											<label class="col-2 m-0 p-0" for="color">Värv</label>
                                             <input type="color" id="periodWorkoutColor" class="form-control" name="color" value="#ffffff"  list="presetColors">
 											<datalist id="presetColors">
-												<option>#ffffff</option>
-												<option>#ddffee</option>
-												<option>#cceeff</option>
-												<option>#ffccee</option>
-												<option>#ffffcc</option>
-												<option>#aaffaa</option>
-												<option>#eeffff</option>
-												<option>#f6e5ff</option>
+											<?php if(isset($bookingformdata['color1'])){
+												echo "<option>".$bookingformdata['color1']."</option>";
+												echo "<option>".$bookingformdata['color2']."</option>";
+												echo "<option>".$bookingformdata['color3']."</option>";
+												echo "<option>".$bookingformdata['color4']."</option>";
+												echo "<option>".$bookingformdata['color5']."</option>";
+												echo "<option>".$bookingformdata['color6']."</option>";
+												echo "<option>".$bookingformdata['color7']."</option>";
+												echo "<option>".$bookingformdata['color8']."</option>";
+											} 
+												?>	
 											</datalist>
 										</div>                                  
                                     </div>
@@ -492,6 +495,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 								ConflictID.push(obj.timeID);
 								publicInfo.push(obj.title);
 								counter++;
+							
 
 							}
 							//siia tuleb panna seda, millised päevade mustrid ei kattu
@@ -508,7 +512,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 					}
 					else if (n) {
 						//     console.log(i);
-						$('#myTable > tbody').append(' <tr id="' + BTimesid + '"> <td class="td-width-l"><b>' + days[new Date(start).getDay()] + '</b>,&nbsp;' + moment(start).format("DD.MM.YYYY") + '</td><td class="td-width-m">&nbsp;&nbsp;' + moment(start).format("HH:mm") + '&#8209;' + moment(end).format("HH:mm") + '</td><td class="td-width-s pl-3"><input class="datePicker form-control p" id="time_' + BTimesid + '" data-toggle="datepicker" name="bookingtimesFrom[' + counter + ']"  value="' + moment(start).format("DD.MM.YYYY") + '"></td><td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield' + i + '" value="' + moment(start).format("HH:mm") + '"></td>  <td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeEnd[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + i + '" value="' + moment(end).format("HH:mm") + '"></td><td class="pl-3"><input name="color[]" type="color" class="form-control" value="'+eventColor+'"  list="presetColors"><datalist id="presetColors"><option>#ffffff</option><option>#ddffee</option><option>#cceeff</option><option>#ffccee</option><option>#ffffcc</option><option>#aaffaa</option><option>#eeffff</option><option>#f6e5ff</option></td></tr>'); 
+						$('#myTable > tbody').append(' <tr id="' + BTimesid + '"> <td class="td-width-l"><b>' + days[new Date(start).getDay()] + '</b>,&nbsp;' + moment(start).format("DD.MM.YYYY") + '</td><td class="td-width-m">&nbsp;&nbsp;' + moment(start).format("HH:mm") + '&#8209;' + moment(end).format("HH:mm") + '</td><td class="td-width-s pl-3"><input class="datePicker form-control p" id="time_' + BTimesid + '" data-toggle="datepicker" name="bookingtimesFrom[' + counter + ']"  value="' + moment(start).format("DD.MM.YYYY") + '"></td><td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield' + i + '" value="' + moment(start).format("HH:mm") + '"></td>  <td class="td-width-s pl-3"><input type="text" class="clock form-control" name="timeEnd[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + i + '" value="' + moment(end).format("HH:mm") + '"></td><td class="pl-3"><input name="color[]" type="color" class="form-control" value="'+eventColor+'"  list="presetColors"><datalist id="presetColors">	<?php if(isset($bookingformdata['color1'])){echo "<option>".$bookingformdata['color1']."</option>";echo "<option>".$bookingformdata['color2']."</option>";echo "<option>".$bookingformdata['color3']."</option>";echo "<option>".$bookingformdata['color4']."</option>";echo "<option>".$bookingformdata['color5']."</option>";echo "<option>".$bookingformdata['color6']."</option>";echo "<option>".$bookingformdata['color7']."</option>";echo "<option>".$bookingformdata['color8']."</option>";} else {echo "<option>#ffffff</option><option>#ddffee</option><option>#cceeff</option><option>#ffccee</option><option>#ffffcc</option><option>#aaffaa</option><option>#eeffff</option><option>#f6e5ff</option>";}	?>	</td></tr>'); 
 						resConflicts.push(start.replace('T', ' ').substring(0, 16));
 						res2Conflicts.push(end.replace('T', ' ').substring(0, 16));
 						ConflictID.push(obj.timeID);
@@ -516,10 +520,10 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 						counter++;
 
 					}
-
+				
 
 				}
-
+				console.log(counter);
 
 				var conflictTimes=<?php echo $conflictTimes; ?>;
 				

@@ -15,6 +15,7 @@ class Edit extends CI_Controller {
 	function menu(){
 		$data['menu'] = 'calendar'; // Capitalize the first letter
 		$data['unapprovedBookings'] = $this->edit_model->getUnapprovedBookings($this->session->userdata('building'));
+		$data['bookingformdata'] = $this->edit_model->getBookingformData();
 		return $data;
 		}
 
