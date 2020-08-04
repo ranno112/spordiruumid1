@@ -42,8 +42,7 @@
 					<li class="nav-item"></li>
 				</ul>
 			</div>
-
-			<div class="tab-content ">
+				<div class="tab-content ">
 		
 				<div id="mitmekordne" class="tab-pane center <?php if ($_POST['isPeriodic'] == 0) echo "active";?>">
 					<?php echo form_open('edit/update', array('id' => 'change')); ?>
@@ -54,7 +53,7 @@
 								<input type="text" class="form-control" name="publicInfo" value="<?php if(!empty($allPostData['publicInfo'])){echo $allPostData['publicInfo'];}else {echo $bookingData['public_info'];}?>" id="publicInfo">
 							</div>
 							<input class="d-none" type="checkbox" id="type" name="type" value="1" checked>
-							<input class="d-none" type="checkbox" id="type" name="closed" value="<?php if($bookingData['public_info']=='Suletud'){echo '4';}else { echo '1';}?>" checked>
+							<input class="d-none" type="checkbox" id="type" name="closed" value="<?php if($bookingData['typeID']=='4'){echo '4';}else { echo '1';}?>" checked>
 							<input class="d-none" type="checkbox" id="allowFormToSubmitAndNeverMindConflicts1" name="allowSave" value="0" checked>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
 								<label>Kontaktisik <?php if($this->session->flashdata('validationErrorMessageContactPerson')){  echo $this->session->flashdata('validationErrorMessageContactPerson');} ?> </label>
@@ -171,7 +170,7 @@
 								<input type="text" class="form-control" name="publicInfoPeriod" value="<?php if(!empty($allPostData['publicInfoPeriod'])){echo $allPostData['publicInfoPeriod'];}else { echo $bookingData['public_info'];}?>" id="publicInfoPeriod" >
 							</div>
 							<input class="d-none" type="checkbox" id="type" name="type" value="1" checked>
-							<input class="d-none" type="checkbox" id="type" name="closed" value="<?php if($bookingData['public_info']=='Suletud'){echo '4';}else { echo '1';}?>" checked>
+							<input class="d-none" type="checkbox" id="type" name="closed" value="<?php if($bookingData['typeID']=='4'){echo '4';}else { echo '1';}?>" checked>
 							<input class="d-none" type="checkbox" id="allowFormToSubmitAndNeverMindConflicts2" name="allowSave" value="0" checked>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
 								<label>Kontaktisik <?php if($this->session->flashdata('validationErrorMessageContactPerson')){  echo $this->session->flashdata('validationErrorMessageContactPerson');} ?> </label>

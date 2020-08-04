@@ -199,6 +199,9 @@ class Edit extends CI_Controller {
 	{
 			if ($str == '' && $this->input->post('type')!='4')
 			{
+				if($this->input->post('closed')=='4'){
+					return TRUE;
+				}
 				$data['bookingformdata'] = $this->edit_model->getBookingformData();
 				if($data['bookingformdata']['type_admin']==0){
 					return TRUE;
