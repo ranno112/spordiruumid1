@@ -919,7 +919,7 @@
 						$(".message").delay(2000).fadeOut(1000);
 					}
 				});
-				calendar.fullCalendar('refetchEvents');
+				setTimeout(function(){calendar.fullCalendar('refetchEvents'); }, 200);
 						$.ajax({
 							url: "<?php echo base_url(); ?>fullcalendar/getUnapprovedBookings",
 							success: function(res) {
@@ -971,7 +971,7 @@
 						});
 					}
 				});
-				calendar.fullCalendar('refetchEvents');
+				setTimeout(function(){calendar.fullCalendar('refetchEvents'); }, 200);
 								$.ajax({
 									url: "<?php echo base_url(); ?>fullcalendar/getUnapprovedBookings",
 									success: function(res) {
