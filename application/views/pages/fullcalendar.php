@@ -457,7 +457,12 @@
 				}
 
 				if (event.takesPlace == false) {
-					element.find('.fc-content').after('<span class="notice notice-error">Ei toimunud</span>');
+					
+					console.log((event.start).isAfter());
+					if((event.start).isAfter()){
+						element.find('.fc-content').after('<span class="notice notice-error">Ei toimu</span>');
+					}
+					else{element.find('.fc-content').after('<span class="notice notice-error">Ei toimunud</span>');}
 				}
 	
 
@@ -1086,7 +1091,7 @@
 										$('.badge.badge-danger').text(res);
 									}
 						});
-						calendar.fullCalendar('refetchEvents');
+						setTimeout(function(){calendar.fullCalendar('refetchEvents'); }, 200);
 					}, 200);
 						if(value){
 						//	swal.close();
@@ -1180,7 +1185,7 @@
 									});
 								}
 							});
-							calendar.fullCalendar('refetchEvents');
+							setTimeout(function(){calendar.fullCalendar('refetchEvents'); }, 200);
 									}, 200);
 
 									

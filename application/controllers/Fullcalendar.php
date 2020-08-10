@@ -124,7 +124,7 @@ class Fullcalendar extends CI_Controller {
 
 		
 		}
-		print_r($this->db->last_query());    
+		
 	}
 
 	function deleteAllConnectedBookings()
