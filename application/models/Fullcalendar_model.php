@@ -75,6 +75,14 @@ class Fullcalendar_model extends CI_Model
 
 	}
 
+	function count_bookingTimes($bookingID)
+	{
+		$this->db->where('bookingID',$bookingID);
+		return $this->db->get('bookingTimes')->num_rows();
+		
+	}
+
+	
 
 	function fetch_versions($timeID)
     {

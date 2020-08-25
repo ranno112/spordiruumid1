@@ -87,6 +87,13 @@ class Fullcalendar extends CI_Controller {
 	}
 
 
+	function countBookindTimes(){
+		
+		
+		print_r($this->fullcalendar_model->count_bookingTimes($this->input->post('bookingID')));
+
+	}
+
 	function insert()
 	{
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){

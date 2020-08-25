@@ -1,3 +1,4 @@
+
 <?php if(!isset($rooms)){
 			$this->session->set_flashdata('access_deniedToUrl', 'Sellist ruumi ei eksisteeri. Teid suunati avalehele');
 			redirect('');
@@ -458,7 +459,7 @@
 
 				if (event.takesPlace == false) {
 					
-					console.log((event.start).isAfter());
+				//	console.log((event.start).isAfter());
 					if((event.start).isAfter()){
 						element.find('.fc-content').after('<span class="notice notice-error">Ei toimu</span>');
 					}
@@ -886,8 +887,10 @@
 			var selectedRoomID = $('#saal  option').filter(function() {
 					return $('#room').val();
 					}).data('value');
-			if ($('.abc:checked').length == $('.abc').length) {
-
+			var countSelected;
+			$.post("<?php echo base_url(); ?>fullcalendar/countBookindTimes/", { bookingID: $('input:checkbox:checked').parents("tbody").attr('id') } )
+			.done(function( data ) {
+			if ($('.abc:checked').length == $('.abc').length && $('.abc').length == data) {
 				swal({
 					title:  "Oled kindel kustutada kogu broneeringu?",
 					buttons: {
@@ -936,7 +939,7 @@
 						event.preventDefault();
 
 
-			} else if ($('.abc:checked').length < $('.abc').length && $('.abc:checked').length > 0) {
+			} else if ($('.abc:checked').length <= $('.abc').length && $('.abc:checked').length > 0) {
 				
 				swal({
 					title:  "Oled kindel, et soovid kustutada valitud ajad?",
@@ -998,8 +1001,8 @@
 					})
 				event.preventDefault();
 			}
-
-		
+		});
+			event.preventDefault();
 
 
 		});
