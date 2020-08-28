@@ -824,7 +824,7 @@ height:0px;
     content: attr(data-tooltip);
 
     position: absolute;
-    top: -65px;
+    top: -35px;
     right: -140px;
     width: 200px;
 

@@ -207,6 +207,26 @@ INSERT INTO `userRoles` (`id`, `role`) VALUES
 (2, 'Peaadministraator'),
 (3, 'Administraator'),
 (4, 'Tavakasutaja');
+
+CREATE TABLE category (
+    categoryID int  NOT NULL AUTO_INCREMENT,
+    categoryName varchar(255), 
+    PRIMARY KEY (categoryID)
+);
+
+CREATE TABLE agerange (
+    agerangeID int NOT NULL AUTO_INCREMENT,
+    nameofrange varchar(255),
+    PRIMARY KEY (agerangeID)    
+);
+
+
+CREATE TABLE roomCategory (
+    roomcategoryID int  NOT NULL AUTO_INCREMENT,
+    roomID int, 
+    categoryID int, 
+    PRIMARY KEY (roomcategoryID)
+);
 ```
 
 Head rakenduse kasutamist!
