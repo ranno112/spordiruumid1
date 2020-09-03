@@ -90,6 +90,16 @@ public function getAllRooms()
 	return $query->result();}
 }
 
+public function getOtherRooms($roomID)
+{
+	$this->db->order_by('id');
+	$this->db->where('id', $roomID);
+	$this->db->where('buildingID',  $this->db->get('rooms')->row_array()['buildingID']);
+	$this->db->where('roomActive', 1);
+	$query = $this->db->get('rooms');
+	return $query->result();
+}
+
 
 
 public function getAllBuildings()
@@ -98,6 +108,13 @@ public function getAllBuildings()
         return $query->result();
 	}
 
+	public function getBuilding($bookingID)
+    {
+		$this->db->select("id, name");  
+		$this->db->where('id', $bookingID);
+		$query = $this->db->get('buildings');
+	    return $query->result();
+	}
 
 	var $table = "bookingTimes";  
 

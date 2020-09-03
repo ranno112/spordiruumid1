@@ -10,22 +10,27 @@ class Booking extends CI_Controller {
 	{
 		parent::__construct();
 		if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'  || $this->session->userdata('roleID')==='1'){
-			$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
-			redirect('');
+		//	$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+		//	redirect('');
 		}
-		$this->load->model('booking_model');
+	//	if ( $this->session->userdata('roleID')==='2'  || $this->session->userdata('roleID')==='3'){
+
+			$this->load->model('booking_model');
+	//	}
 	}
 
 	function menu(){
 		$data['menu'] = 'calendar'; // Capitalize the first letter
-		$data['unapprovedBookings'] = $this->booking_model->getUnapprovedBookings($this->session->userdata('building'));
+		if ( $this->session->userdata('roleID')==='2'  || $this->session->userdata('roleID')==='3'){
+			$data['unapprovedBookings'] = $this->booking_model->getUnapprovedBookings($this->session->userdata('building'));
+		}
 		$data['bookingformdata'] = $this->booking_model->getBookingformData();
 		return $data;
 	}
 
 	public function create()
 	{	
-		if($this->session->userdata('session_id')===TRUE){
+		if( $this->session->userdata('roleID')==='2'  || $this->session->userdata('roleID')==='3'){
 		$data=$this->menu();
 		$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
 		$data['rooms'] = $this->booking_model->getAllRooms();
@@ -36,8 +41,21 @@ class Booking extends CI_Controller {
 		$this->load->view('pages/booking', $data);//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
 		$this->load->view('templates/footer');
 
-
 		}else{redirect('');}
+	}
+
+	public function createquery($roomID)
+	{	
+		$data=$this->menu();
+		$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
+		$data['rooms'] = $this->booking_model->getOtherRooms($roomID);
+		$data['buildings'] = $this->booking_model->getBuilding($roomID);
+		$data['allBookingInfo'] = $this->booking_model->getAllBookings();
+	
+		$this->load->view('templates/header',$data);
+		$this->load->view('pages/bookingquery', $data);//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
+		$this->load->view('templates/footer');
+
 	}
 
 
@@ -162,6 +180,10 @@ class Booking extends CI_Controller {
 
 	public function createClosed()
 	{
+		if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'  || $this->session->userdata('roleID')==='1'){
+				$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+				redirect('');
+			}
 		$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
 		$postData = $this->input->post();
 	
@@ -414,6 +436,10 @@ class Booking extends CI_Controller {
 
 	public function createOnce()
 	{
+		if (empty($this->session->userdata('roleID'))  || $this->session->userdata('roleID')==='4'  || $this->session->userdata('roleID')==='1'){
+			$this->session->set_flashdata('errors', 'Sul ei ole õigusi');
+			redirect('');
+		}
 		if( $this->session->userdata('session_id')===TRUE){
 			$data=$this->menu();
 			$postData = $this->input->post();
