@@ -30,9 +30,20 @@
 				$data['regions'] = $this->building_model->getAllRegions();
 				$data['editBuildings'] = $this->building_model->get_building($slug);
 				$data['bookingformdata'] = $this->building_model->getBookingformData($slug);
-				if(empty($data['bookingformdata'])&&$this->session->userdata('roleID')==='1'){
+				$data['getBookingformDataDetailsOnce'] = $this->building_model->getBookingformDataDetailsOnce($slug);
+				$data['getBookingformDataDetailsPeriod'] = $this->building_model->getBookingformDataDetailsPeriod($slug);
+				$data['getBookingformDataDetailsEvent'] = $this->building_model->getBookingformDataDetailsEvent($slug);
+				if(empty($data['bookingformdata'])){
 					$this->building_model->registerBuildingSettings($slug);
 					$data['bookingformdata'] = $this->building_model->getBookingformData($slug);
+				}
+				if(empty($data['getBookingformDataDetailsOnce'])){
+					$this->building_model->registerBuildingSettingsDetails($slug, 1);
+					$this->building_model->registerBuildingSettingsDetails($slug, 2);
+					$this->building_model->registerBuildingSettingsDetails($slug, 3);
+					$data['getBookingformDataDetailsOnce'] = $this->building_model->getBookingformDataDetailsOnce($slug);
+					$data['getBookingformDataDetailsPeriod'] = $this->building_model->getBookingformDataDetailsPeriod($slug);
+					$data['getBookingformDataDetailsEvent'] = $this->building_model->getBookingformDataDetailsEvent($slug);
 				}
 				$this->load->view('templates/header', $this->security->xss_clean($data));
 				$this->load->view('pages/editBuilding', $this->security->xss_clean($data));
@@ -47,6 +58,9 @@
 			$data['regions'] = $this->building_model->getAllRegions();
 			$data['editBuildings'] = $this->building_model->get_building($slug);
 			$data['bookingformdata'] = $this->building_model->getBookingformData($this->session->userdata('building'));
+			$data['getBookingformDataDetailsOnce'] = $this->building_model->getBookingformDataDetailsOnce($slug);
+			$data['getBookingformDataDetailsPeriod'] = $this->building_model->getBookingformDataDetailsPeriod($slug);
+			$data['getBookingformDataDetailsEvent'] = $this->building_model->getBookingformDataDetailsEvent($slug);
 			if(empty($data['bookingformdata'])){
 				$this->building_model->registerBuildingSettings($this->session->userdata('building'));
 				$data['bookingformdata'] = $this->building_model->getBookingformData($this->session->userdata('building'));
@@ -219,6 +233,23 @@
 
 		public function updateBookingSettings(){
 			if($this->session->userdata('roleID')==='2'){
+				
+				foreach($this->input->post() as $postedthing => $key){
+					if(substr( $postedthing, 0, 5 ) === "intro" ||substr( $postedthing, 0, 19 ) === "additionalemailtext"  ){
+						$this->form_validation->set_rules($postedthing, 'Trimmi ära', 'trim');
+					}
+					elseif(!(substr( $postedthing, 0, 8 ) === "favcolor")){
+						$this->form_validation->set_rules($postedthing, 'Vaikimisi kinnitatud', 'integer|max_length[1]');
+					}
+					elseif(substr( $postedthing, 0, 8 ) === "favcolor"){
+						$this->form_validation->set_rules($postedthing, 'Värvid valed', 'regex_match[/^#([A-Fa-f0-9]{6})$/]');
+					}
+				}
+				if($this->form_validation->run() === FALSE){
+					$this->session->set_flashdata('errors','Sisestatud andmetega on midagi korrast ära. Palun proovi uuesti.');
+					redirect('building/edit/'.$this->session->userdata['building']);
+				}
+			
 				$data = array(
 					//	'name' => $this->input->post('building'),
 						'approved_admin' => $this->input->post('approveNow'),
@@ -243,6 +274,63 @@
 						'type_user' => $this->input->post('type_user'),
 					);
 					$this->building_model->update_booking_settings($data);
+					$threeforms= array('once', 'period', 'event');
+					for ($i=0; $i < count($threeforms) ; $i++) { 
+						$datasettingsonce = array(
+							//	'name' => $this->input->post('building'),
+								'maxpeaplenumbersee' => $this->input->post('maxpeaplenumbersee'.$threeforms[$i]),
+								'maxpeaplenumberrequired' => $this->input->post('maxpeaplenumberrequired'.$threeforms[$i]),
+								'groupsee' => $this->input->post('groupsee'.$threeforms[$i]),
+								'grouprequired' => $this->input->post('grouprequired'.$threeforms[$i]),
+								'publicsee' => $this->input->post('publicsee'.$threeforms[$i]),
+								'publicrequired' => $this->input->post('publicrequired'.$threeforms[$i]),
+								'prepsee' => $this->input->post('prepsee'.$threeforms[$i]),
+								'preprequired' => $this->input->post('preprequired'.$threeforms[$i]),
+								'cleansee' => $this->input->post('cleansee'.$threeforms[$i]),
+								'cleanrequired' => $this->input->post('cleanrequired'.$threeforms[$i]),
+								'agreementsee' => $this->input->post('agreementsee'.$threeforms[$i]),
+								'agreementrequired' => $this->input->post('agreementrequired'.$threeforms[$i]),
+								'agreementnamesee' => $this->input->post('agreementnamesee'.$threeforms[$i]),
+								'agreementnamerequired' => $this->input->post('agreementnamerequired'.$threeforms[$i]),
+								'agreementcodesee' => $this->input->post('agreementcodesee'.$threeforms[$i]),
+								'agreementcoderequired' => $this->input->post('agreementcoderequired'.$threeforms[$i]),
+								'agreementaddresssee' => $this->input->post('agreementaddresssee'.$threeforms[$i]),
+								'agreementaddressrequired' => $this->input->post('agreementaddressrequired'.$threeforms[$i]),
+								'agreementcontactsee' => $this->input->post('agreementcontactsee'.$threeforms[$i]),
+								'agreementcontactrequired' => $this->input->post('agreementcontactrequired'.$threeforms[$i]),
+								'agreementemailsee' => $this->input->post('agreementemailsee'.$threeforms[$i]),
+								'agreementemailrequired' => $this->input->post('agreementemailrequired'.$threeforms[$i]),
+								'agreementphonesee' => $this->input->post('agreementphonesee'.$threeforms[$i]),
+								'agreementphonerequired' => $this->input->post('agreementphonerequired'.$threeforms[$i]),
+								'methodofpaymentsee' => $this->input->post('methodofpaymentsee'.$threeforms[$i]),
+								'methodofpaymentrequired' => $this->input->post('methodofpaymentrequired'.$threeforms[$i]),
+								'methodofpaymentcash' => $this->input->post('methodofpaymentcash'.$threeforms[$i]),
+								'methodofpaymentcard' => $this->input->post('methodofpaymentcard'.$threeforms[$i]),
+								'methodofpaymentbill' => $this->input->post('methodofpaymentbill'.$threeforms[$i]),
+								'methodofpaymentprepayment' => $this->input->post('methodofpaymentprepayment'.$threeforms[$i]),
+								'methodofpaymentother' => $this->input->post('methodofpaymentother'.$threeforms[$i]),
+								'invoicesee' => $this->input->post('invoicesee'.$threeforms[$i]),
+								'invoicerequired' => $this->input->post('invoicerequired'.$threeforms[$i]),
+								'invoicenamesee' => $this->input->post('invoicenamesee'.$threeforms[$i]),
+								'invoicenamerequired' => $this->input->post('invoicenamerequired'.$threeforms[$i]),
+								'invoicecodesee' => $this->input->post('invoicecodesee'.$threeforms[$i]),
+								'invoicecoderequired' => $this->input->post('invoicecoderequired'.$threeforms[$i]),
+								'invoiceaddresssee' => $this->input->post('invoiceaddresssee'.$threeforms[$i]),
+								'invoiceaddressrequired' => $this->input->post('invoiceaddressrequired'.$threeforms[$i]),
+								'invoicecontact' => $this->input->post('invoicecontact'.$threeforms[$i]),
+								'invoicecontactrequired' => $this->input->post('invoicecontactrequired'.$threeforms[$i]),
+								'invoiceemailsee' => $this->input->post('invoiceemailsee'.$threeforms[$i]),
+								'invoiceemailrequired' => $this->input->post('invoiceemailrequired'.$threeforms[$i]),
+								'invoicephonesee' => $this->input->post('invoicephonesee'.$threeforms[$i]),
+								'invoicephonerequired' => $this->input->post('invoicephonerequired'.$threeforms[$i]),
+
+								'intro' => $this->input->post('intro'.$threeforms[$i]),
+								'emailtext' => $this->input->post('additionalemailtext'.$threeforms[$i])
+							);
+							$this->building_model->update_booking_settings_details($datasettingsonce, $this->input->post('typeID'.$threeforms[$i]));
+					}
+					
+						
 			}
 			//print_r($data);
 			redirect('building/edit/'.$this->session->userdata['building']);
@@ -357,6 +445,9 @@
 					);
 					$id=$this->building_model->registerBuilding($data);
 					$this->building_model->registerBuildingSettings($id);
+					$this->building_model->registerBuildingSettingsDetails($id, 1);
+					$this->building_model->registerBuildingSettingsDetails($id, 2);
+					$this->building_model->registerBuildingSettingsDetails($id, 3);
 					$this->session->set_flashdata('user_registered', 'Asutus lisatud');
 					redirect('building/view/'.$this->session->userdata['building']);
 				}

@@ -27,6 +27,26 @@
 			return $query->row_array();
 		}
 
+		public function getBookingformDataDetailsOnce($buildingID){
+			$this->db->where('buildingID', $buildingID);
+			$this->db->where('typeID', '1');
+			$query = $this->db->get('bookingFormSettingsDetails');
+			return $query->row_array();
+		}
+		public function getBookingformDataDetailsPeriod($buildingID){
+			$this->db->where('buildingID', $buildingID);
+			$this->db->where('typeID', '2');
+			$query = $this->db->get('bookingFormSettingsDetails');
+			return $query->row_array();
+		}
+		public function getBookingformDataDetailsEvent($buildingID){
+			$this->db->where('buildingID', $buildingID);
+			$this->db->where('typeID', '3');
+			$query = $this->db->get('bookingFormSettingsDetails');
+			return $query->row_array();
+		}
+
+
 		public function get_rooms(){
 			$this->db->order_by('buildingID');
 			$query = $this->db->get('rooms');
@@ -122,13 +142,22 @@
 		}
 
 
+		public function registerBuildingSettingsDetails($id, $typeID){
+			return $this->db->insert('bookingFormSettingsDetails', array('buildingID' => $id, 'typeID' => $typeID));
+		}
+
+
 
 		public function update_booking_settings($data){
-			
-		
 			$this->db->where('buildingID', $this->session->userdata('building'));
-
 			return $this->db->update('bookingFormSettings', $data);
+		}
+
+		
+		public function update_booking_settings_details($data, $typeID){
+			$this->db->where('buildingID', $this->session->userdata('building'));
+			$this->db->where('typeID', $typeID);
+			return $this->db->update('bookingFormSettingsDetails', $data);
 		}
 
 	
