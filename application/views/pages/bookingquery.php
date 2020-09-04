@@ -155,45 +155,20 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										</div>
                                         <a href="#" class="removeclass mt-3 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a>
 
-                                        <div class="col-4 col-sm-2">
+                                        <div class="col-4 col-sm-3">
 											<div>	
 												<label class="col-2 m-0 p-md-0" for="from1">Alates</label>
 												<input type="input" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_1" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
 											</div>
 										</div>
-                                        <div class="col-4 col-sm-2">
+                                        <div class="col-4 col-sm-3">
 										<div>	
 											<label class="col-2 m-0 p-md-0" for="until1">Kuni</label>
                                             <input type="input" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_1" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
 										</div>
 										</div>
 										<div class="col-4 col-sm-3">
-										<div>	
-										<label class="col-2 m-0 p-md-0" for="color">Värv </label>
-											<input type="color" class="form-control" name="color[]" value="<?php if(isset($data['color'][0])){ echo $data['color'][0];}else{  echo "#ffffff";}?>" list="presetColors">
-											<datalist id="presetColors">
-											<?php if(isset($bookingformdata['color1'])){
-												echo "<option>".$bookingformdata['color1']."</option>";
-												echo "<option>".$bookingformdata['color2']."</option>";
-												echo "<option>".$bookingformdata['color3']."</option>";
-												echo "<option>".$bookingformdata['color4']."</option>";
-												echo "<option>".$bookingformdata['color5']."</option>";
-												echo "<option>".$bookingformdata['color6']."</option>";
-												echo "<option>".$bookingformdata['color7']."</option>";
-												echo "<option>".$bookingformdata['color8']."</option>";
-											} else {
-											echo "<option>#ffffff</option>";
-											echo "<option>#ddffee</option>";
-											echo "<option>#cceeff</option>";
-											echo "<option>#ffccee</option>";
-											echo "<option>#ffffcc</option>";
-											echo "<option>#aaffaa</option>";
-											echo "<option>#eeffff</option>";
-											echo "<option>#f6e5ff</option>";
-											}
-												?>	
-											</datalist>
-										</div>
+									
 										</div>
                                     </div>
                                     
@@ -211,32 +186,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										<div class="col-4 col-sm-2">
 											<input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_<?php echo $i;?>" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
 										</div>
-										<div class="col-4 col-sm-3">
-                                            <input type="color" class="form-control" name="color[]" value="<?php if(isset($data['color'][$i])){ echo $data['color'][$i];}else{  echo "#ffffff";}?>" list="presetColors">
-											<datalist id="presetColors">
-											<?php if(isset($bookingformdata['color1'])){
-												echo "<option>".$bookingformdata['color1']."</option>";
-												echo "<option>".$bookingformdata['color2']."</option>";
-												echo "<option>".$bookingformdata['color3']."</option>";
-												echo "<option>".$bookingformdata['color4']."</option>";
-												echo "<option>".$bookingformdata['color5']."</option>";
-												echo "<option>".$bookingformdata['color6']."</option>";
-												echo "<option>".$bookingformdata['color7']."</option>";
-												echo "<option>".$bookingformdata['color8']."</option>";
-											} else {
-											echo "<option>#ffffff</option>";
-											echo "<option>#ddffee</option>";
-											echo "<option>#cceeff</option>";
-											echo "<option>#ffccee</option>";
-											echo "<option>#ffffcc</option>";
-											echo "<option>#aaffaa</option>";
-											echo "<option>#eeffff</option>";
-											echo "<option>#f6e5ff</option>";
-											}
-												?>	
-											</datalist>
-											
-										</div>
+							
 								    	</div>
 									<?php ;}}; ?>
 								
@@ -246,8 +196,58 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                     <a id="AddMoreFileBox" class="btn btn-custom text-white text-center py-2 px-4 pluss ml-3 ml-md-0"><p class="m-0 px-0 txt-lg txt-strong text-center align-items-center">Lisa veel üks kuupäev</p></a>
                                 </div>
                             </div>
-                        </div>
-						<h4 class="pt-2 txt-xl px-md-5 mx-md-5 ml-3  mt-5">Kontakt</h4>
+						</div>
+						<div id="preparingTime">
+                                    <div class="row d-flex align-items-center">
+										<div class="mt-2 txt-xl pl-md-5 ml-md-5">
+											<label>Treeningu ettevalmistamiseks kuluv aeg:</label>
+										</div>
+
+                                        <div class="ml-4 mr-1 mt-3 txt-xl">
+											<div>	
+												<input  type="number" min="0" max="48" value="0" class="form-control">
+												 
+											</div>
+										</div>
+										<div class="mt-2">
+											<p>tund(i)</p>
+										</div>
+                                        <div class="ml-3 mr-1 mt-3 txt-xl">
+											<input  type="number" min="0" max="60" value="0" class="form-control">
+										</div>
+										<div class="mt-2">
+											<p>minutit</p>
+										</div>
+							</div>
+						</div>
+						<div id="preparingTime">
+                                    <div class="row d-flex align-items-center">
+										<div class="mt-2 txt-xl pl-md-5 ml-md-5">
+											<label>Treeningujärgsele koristamisele kuluv aeg:</label>
+										</div>
+
+                                        <div class="ml-3 mr-1 mt-3 txt-xl">
+											<div>	
+												<input  type="number" min="0" max="48" value="0" class="form-control">
+												 
+											</div>
+										</div>
+										<div class="mt-2">
+											<p>tund(i)</p>
+										</div>
+                                        <div class="ml-3 mr-1 mt-3 txt-xl">
+										<div>	
+                                            <input  type="number" min="0" max="60" value="0" class="form-control">
+										</div>
+									</div>
+									<div class="mt-2">
+												<p>minutit</p>
+											</div>
+							</div>
+						</div>
+	
+
+						<h4 class="pt-2 txt-xl px-md-5 mx-md-5 ml-3 mt-5">Kontakt</h4>
                         <div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
 							
@@ -271,7 +271,85 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                 <label>Email<?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?><?php if($this->session->flashdata('email_flash')){  echo $this->session->flashdata('email_flash');} ?></label>
                                 <input class="form-control" id="emailForSingle" name="email" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
                             </div>
-                        </div>
+						</div>
+						
+						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox" onchange="showContractInfo('div1')"><span></span></label> Soovin sõlmida lepingu 
+
+						<div id="div1" style="display:none">
+							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Lepingu andmed</h4>
+							<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
+								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+								
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi</label>
+									<input class="form-control" id="text1">
+								</div>
+								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrkood/isikukood</label>
+									<input class="form-control" id="text3">
+								</div>
+							</div>
+							<div class="row d-flex mt-2 px-md-5 mx-md-5">
+								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress</label>
+									<input class="form-control" id="text5">
+								</div>
+								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik</label>
+									<input class="form-control" id="text7" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>">
+								</div>     
+							</div>
+							<div class="row d-flex mt-2 px-md-5 mx-md-5">
+								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon</label>
+									<input class="form-control" id="text9" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
+								</div>
+								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Email</label>
+									<input class="form-control" id="text11" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
+								</div>     
+							</div>
+						</div>
+
+										<br>
+						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox" onchange="showContractInfo('div2')"><span></span></label> Soovin saada arvet
+
+						<div style='display:none;' id='div2'>
+							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Arve saaja andmed</h4>
+							<label class="p-md-0 mt-3 col-1 pl-md-5 ml-md-5"><input type="checkbox" id="checkbox1"><span></span></label> Arve saaja andmed ühtivad lepingu sõlmija andmetega
+
+							<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
+								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+								
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi</label>
+									<input class="form-control" id="text2">
+								</div>
+								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrkood/isikukood</label>
+									<input class="form-control" id="text4">
+								</div>
+							</div>
+							<div class="row d-flex mt-2 px-md-5 mx-md-5">
+								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress</label>
+									<input class="form-control" id="text6">
+								</div>
+								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik</label>
+									<input class="form-control" id="text8">
+								</div>     
+							</div>
+							<div class="row d-flex mt-2 px-md-5 mx-md-5">
+								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon</label>
+									<input class="form-control" id="text10">
+								</div>
+								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Email</label>
+									<input class="form-control" id="text12">
+								</div>     
+							</div>
+						</div>
+
                         <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Lisainfo (valikuline) </h4>
 						<div class="mt-4 px-md-5 mx-md-5">
                             <div class="form-label-group pb-2 px-md-0 px-2">
@@ -281,7 +359,9 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 							</div>
 						
 						</div>
-					
+						<div>
+							<label class="p-md-0 mt-5 col-1 pl-md-5 ml-md-5"><input type="checkbox"><span></span></label> Olen lugenud ja nõustun <u class=text-primary>kasutustingimustega*</u>
+						</div>
                         <div class="row d-flex justify-content-end mt-5 px-md-5 mx-md-5">
 							
 							  <a class="txt-xl link-deco align-self-center py-md-0 pr-md-5 mr-2" href="<?php echo base_url()?>fullcalendar?roomId=<?php foreach ($rooms as $each) {
@@ -421,41 +501,16 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										</div>
                                         <a href="#" class="removeclass col-3 mt-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a>
 										
-                                        <div class="col-4 col-sm-2">
+                                        <div class="col-4 col-sm-3">
 											<label class="col-2 m-0 p-md-0" for="from1">Alates</label>
                                             <input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from1" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
                                         </div>
 										
-                                        <div class="col-4 col-sm-2">
+                                        <div class="col-4 col-sm-3">
 											<label class="col-2 m-0 p-md-0" for="until1">Kuni</label>
                                             <input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until1" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
 										</div>   
-										<div class="col-4 col-sm-3">
-											<label class="col-2 m-0 p-md-0" for="color">Värv </label>
-										<input type="color" class="form-control" name="color[]" value="<?php if(isset($data['color'][0])){ echo $data['color'][0];}else{  echo "#ffffff";}?>" list="presetColors">
-											<datalist id="presetColors">
-											<?php if(isset($bookingformdata['color1'])){
-												echo "<option>".$bookingformdata['color1']."</option>";
-												echo "<option>".$bookingformdata['color2']."</option>";
-												echo "<option>".$bookingformdata['color3']."</option>";
-												echo "<option>".$bookingformdata['color4']."</option>";
-												echo "<option>".$bookingformdata['color5']."</option>";
-												echo "<option>".$bookingformdata['color6']."</option>";
-												echo "<option>".$bookingformdata['color7']."</option>";
-												echo "<option>".$bookingformdata['color8']."</option>";
-											} else {
-											echo "<option>#ffffff</option>";
-											echo "<option>#ddffee</option>";
-											echo "<option>#cceeff</option>";
-											echo "<option>#ffccee</option>";
-											echo "<option>#ffffcc</option>";
-											echo "<option>#aaffaa</option>";
-											echo "<option>#eeffff</option>";
-											echo "<option>#f6e5ff</option>";
-											}
-												?>	
-											</datalist>
-										</div>                                   
+								                                 
                                     </div>
                              
                                 <?php if(isset($data['weekday'])){ for ($i = 1; $i<count($data['weekday']); $i++) { ?>
@@ -480,31 +535,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                     <div class="col-4 col-sm-2">
                                         <input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until<?php echo $i;?>" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
 									</div>
-									<div class="col-4 col-sm-3">
-									<input type="color" class="form-control" name="color[]" value="<?php if(isset($data['color'][$i])){ echo $data['color'][$i];}else{  echo "#ffffff";}?>" list="presetColors">
-											<datalist id="presetColors">
-											<?php if(isset($bookingformdata['color1'])){
-												echo "<option>".$bookingformdata['color1']."</option>";
-												echo "<option>".$bookingformdata['color2']."</option>";
-												echo "<option>".$bookingformdata['color3']."</option>";
-												echo "<option>".$bookingformdata['color4']."</option>";
-												echo "<option>".$bookingformdata['color5']."</option>";
-												echo "<option>".$bookingformdata['color6']."</option>";
-												echo "<option>".$bookingformdata['color7']."</option>";
-												echo "<option>".$bookingformdata['color8']."</option>";
-											} else {
-											echo "<option>#ffffff</option>";
-											echo "<option>#ddffee</option>";
-											echo "<option>#cceeff</option>";
-											echo "<option>#ffccee</option>";
-											echo "<option>#ffffcc</option>";
-											echo "<option>#aaffaa</option>";
-											echo "<option>#eeffff</option>";
-											echo "<option>#f6e5ff</option>";
-											}
-												?>	
-											</datalist>
-										</div>
+							
                                 </div>
                                 
 										<?php 	} };?>
@@ -580,6 +611,85 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                             </div>
                         </div>
 
+
+
+						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox" onchange="showContractInfo('div3')"><span></span></label> Soovin sõlmida lepingu 
+
+					<div id="div3" style="display:none">
+						<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Lepingu andmed</h4>
+						<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
+							<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+							
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi</label>
+								<input class="form-control" id="text13">
+							</div>
+							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrkood/isikukood</label>
+								<input class="form-control" id="text15">
+							</div>
+						</div>
+						<div class="row d-flex mt-2 px-md-5 mx-md-5">
+							<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress</label>
+								<input class="form-control" id="text17">
+							</div>
+							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik</label>
+								<input class="form-control" id="text19" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>">
+							</div>     
+						</div>
+						<div class="row d-flex mt-2 px-md-5 mx-md-5">
+							<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon</label>
+								<input class="form-control" id="text21" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
+							</div>
+							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Email</label>
+								<input class="form-control" id="text23" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
+							</div>     
+						</div>
+					</div>
+
+									<br>
+					<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox" onchange="showContractInfo('div4')"><span></span></label> Soovin saada arvet
+
+					<div style='display:none;' id='div4'>
+						<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Arve saaja andmed</h4>
+						<label class="p-md-0 mt-3 col-1 pl-md-5 ml-md-5"><input type="checkbox" id="checkbox2"><span></span></label> Arve saaja andmed ühtivad lepingu sõlmija andmetega
+
+						<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
+							<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+							
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi</label>
+								<input class="form-control" id="text14">
+							</div>
+							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrkood/isikukood</label>
+								<input class="form-control" id="text16">
+							</div>
+						</div>
+						<div class="row d-flex mt-2 px-md-5 mx-md-5">
+							<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress</label>
+								<input class="form-control" id="text18">
+							</div>
+							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik</label>
+								<input class="form-control" id="text20">
+							</div>     
+						</div>
+						<div class="row d-flex mt-2 px-md-5 mx-md-5">
+							<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon</label>
+								<input class="form-control" id="text22">
+							</div>
+							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Email</label>
+								<input class="form-control" id="text24">
+							</div>     
+						</div>
+					</div>
+
                         <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Lisainfo (valikuline) </h4>
                         <div class="mt-4 px-md-5 mx-md-5">
                             <div class="form-label-group pb-2 px-md-0 px-2">
@@ -587,7 +697,10 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                 <textarea class="form-control" id="comment2ForSingle" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"><?php if(isset($data['comment2'])): echo $data['comment2'];endif; ?></textarea>
 							</div>
 						
-                        </div>
+						</div>
+						<div>
+							<label class="p-md-0 mt-5 col-1 pl-md-5 ml-md-5"><input type="checkbox"><span></span></label> Olen lugenud ja nõustun <u class=text-primary>kasutustingimustega*</u>
+						</div>
 
                         <div class="row d-flex justify-content-end mt-5 px-md-5 mx-md-5">
 						<a class="txt-xl link-deco align-self-center py-md-0 pr-md-5 mr-2" href="<?php echo base_url()?>fullcalendar?roomId=<?php foreach ($rooms as $each) {
@@ -715,7 +828,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
             if (x <= MaxInputs) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#InputsWrapper').append('<div class="row d-flex align-items-center mb-3 justify-content-between"><div class="col-sm-4 col-9 m-0 p-md-0"><input class="datePicker col-11 form-control" id="datefield_' + FieldCount + '" data-toggle="datepicker" name="workoutDate[]"></div><a class="removeclass mt-3 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a><div class="col-4 col-sm-2"><input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-4 col-sm-2"><input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div>	<div class="col-4 col-sm-3"><input type="color" class="form-control" name="color[]" value="#ffffff" list="presetColors"><datalist id="presetColors"><option>#ffffff</option><option>#ffffff</option><option>#ddffee</option><option>#cceeff</option><option>#ffccee</option><option>#ffffcc</option><option>#aaffaa</option><option>#eeffff</option><option>#f6e5ff</option>	</datalist></div></div>');
+                $('#InputsWrapper').append('<div class="row d-flex align-items-center mb-3 justify-content-between"><div class="col-sm-4 col-9 m-0 p-md-0"><input class="datePicker col-11 form-control" id="datefield_' + FieldCount + '" data-toggle="datepicker" name="workoutDate[]"></div><a class="removeclass mt-3 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a><div class="col-4 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-4 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div>	</div>');
 
                 $(".datePicker").datepicker({
                     language: "et-EE", 
@@ -781,7 +894,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
             if (y <= maxPeriod) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#dateContainer').append('<div class="row d-flex align-items-center mb-3 justify-content-between"><div class="col-sm-4 col-9 m-0 p-md-0"><input class="form-control col-11 arrow" id="periodicWeekDay' + FieldCount + '" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist></div><a href="#" class="removeclass1 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a><div class="col-4 col-sm-2"><input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-4 col-sm-2"><input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div>	<div class="col-4 col-sm-3"><input type="color" class="form-control" name="color[]" value="#ffffff"  list="presetColors"><datalist id="presetColors"><option>#ddffee</option><option>#cceeff</option><option>#ffccee</option><option>#ffffcc</option><option>#aaffaa</option><option>#eeffff</option><option>#f6e5ff</option>	</div></div>');
+                $('#dateContainer').append('<div class="row d-flex align-items-center mb-3 justify-content-between"><div class="col-sm-4 col-9 m-0 p-md-0"><input class="form-control col-11 arrow" id="periodicWeekDay' + FieldCount + '" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist></div><a href="#" class="removeclass1 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a><div class="col-4 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-4 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div></div>');
 
                 $('.clock').clockTimePicker({
                     duration: true,
@@ -1115,6 +1228,88 @@ $( "#submitWithConflicts" ).click(function() {
 $('div').on('click', '.removeRoom', function(e) { //user click on remove text
                 $(this).remove(); //remove text box
         });
+});
+
+
+function showContractInfo(box) {
+		var chboxs = document.getElementById(box).style.display;
+		var vis = "none";
+			if(chboxs=="none"){
+			vis = "block"; }
+			if(chboxs=="block"){
+			vis = "none"; }
+		document.getElementById(box).style.display = vis;
+	}
+
+	var oldvalue1;
+	var oldvalue2;
+	var oldvalue3;
+	var oldvalue4;
+	var oldvalue5;
+	var oldvalue6;
+
+	var oldvalue7;
+	var oldvalue8;
+	var oldvalue9;
+	var oldvalue10;
+	var oldvalue11;
+	var oldvalue12;
+$("#checkbox1").on("change",function(){
+	if (this.checked ) {
+		oldvalue1 = $("#text2").val();
+		oldvalue2 = $("#text4").val();
+		oldvalue3 = $("#text6").val();
+		oldvalue4 = $("#text8").val();
+		oldvalue5 = $("#text10").val();
+		oldvalue6 = $("#text12").val();
+
+			$("#text2").val($("#text1").val());
+			$("#text4").val($("#text3").val());
+			$("#text6").val($("#text5").val());
+			$("#text8").val($("#text7").val());
+			$("#text10").val($("#text9").val());
+			$("#text12").val($("#text11").val());
+
+		}   
+		else{
+			$("#text2").val(oldvalue1);
+			$("#text4").val(oldvalue2);
+			$("#text6").val(oldvalue3);
+			$("#text8").val(oldvalue4);
+			$("#text10").val(oldvalue5);
+			$("#text12").val(oldvalue6);
+
+		}
+
+});
+
+$("#checkbox2").on("change",function(){
+	if (this.checked ) {
+		
+		oldvalue7 = $("#text14").val();
+		oldvalue8 = $("#text16").val();
+		oldvalue9 = $("#text18").val();
+		oldvalue10 = $("#text20").val();
+		oldvalue11 = $("#text22").val();
+		oldvalue12 = $("#text24").val();
+		
+			$("#text14").val($("#text13").val());
+			$("#text16").val($("#text15").val());
+			$("#text18").val($("#text17").val());
+			$("#text20").val($("#text19").val());
+			$("#text22").val($("#text21").val());
+			$("#text24").val($("#text23").val());
+		}   
+		else{
+		
+			$("#text14").val(oldvalue7);
+			$("#text16").val(oldvalue8);
+			$("#text18").val(oldvalue9);
+			$("#text20").val(oldvalue10);
+			$("#text22").val(oldvalue11);
+			$("#text24").val(oldvalue12);
+		}
+
 });
 
 
