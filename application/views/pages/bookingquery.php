@@ -47,11 +47,9 @@ if(!empty($conflictDates)){// print_r($conflictDates);
         <div id="nav-tabs" class="mt-5 pb-5 form-bg">
             <div class="row d-flex mb-5">
                 <ul class="nav nav-tabs nav-justified col-12 bg-grey">
-                    <li class="nav-item"><a  class="nav-link link txt-lg <?php if(!isset($data['type'])){ echo 'active';$data['type']=1;}else if($data['type']==1){echo 'active';}; ?>" href="#mitmekordne" data-toggle="tab">Ühekordne broneering</a></li>
-                    <li class="nav-item"><a  class="nav-link link txt-lg <?php if($data['type']==2){echo 'active';}; ?>" href="#hooajaline" data-toggle="tab">Hooajaline broneering</a></li>
-                    <?php if($this->session->userdata('roleID')==='2'||$this->session->userdata('roleID')==='3'):?>
-                    <li class="nav-item"><a  class="nav-link link txt-lg <?php if($data['type']==4){echo 'active';}; ?>" href="#suletud" data-toggle="tab">Suletud broneering</a></li>
-                    <?php endif;?>
+                    <li class="nav-item"><a  class="nav-link link h-100 txt-lg <?php if(!isset($data['type'])){ echo 'active';$data['type']=1;}else if($data['type']==1){echo 'active';}; ?>" href="#mitmekordne" data-toggle="tab">Ruumipäring ühekordseks treeninguks</a></li>
+                    <li class="nav-item"><a  class="nav-link link h-100 txt-lg <?php if($data['type']==2){echo 'active';}; ?>" href="#hooajaline" data-toggle="tab">Ruumipäring hooajaliseks treeninguks</a></li>
+                    <li class="nav-item"><a  class="nav-link link h-100 txt-lg <?php if($data['type']==5){echo 'active';}; ?>" href="#syndmus" data-toggle="tab">Ruumipäring sündmuseks</a></li>
                 </ul>
             </div>
 
@@ -179,7 +177,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										</div>
 
 
-										<a class="removeclass col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a>
+										<a class="removeclass1 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a>
 										<div class="col-4 col-sm-2">
 											<input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_<?php echo $i;?>" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
 										</div>
@@ -193,14 +191,14 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
                                 </div>
                                 <div id="AddMoreFileId" class="row d-flex p-md-0">
-                                    <a id="AddMoreFileBox" class="btn btn-custom text-white text-center py-2 px-4 pluss ml-3 ml-md-0"><p class="m-0 px-0 txt-lg txt-strong text-center align-items-center">Lisa veel üks kuupäev</p></a>
+                                    <a id="AddMoreFileBox" class="btn btn-custom text-white text-center py-2 col-4 pluss ml-3 ml-md-0"><p class="m-0 px-0 txt-lg txt-strong text-center align-items-center">Lisa veel üks kuupäev</p></a>
                                 </div>
                             </div>
 						</div>
-						<div id="preparingTime">
+						<!-- <div id="preparingTime">
                                     <div class="row d-flex align-items-center">
 										<div class="mt-2 txt-xl pl-md-5 ml-md-5">
-											<label>Treeningu ettevalmistamiseks kuluv aeg:</label>
+											<label>Treeningu ettevalmistamiseks kuluv aeg: </label> <span data-tooltip="Treeninguks ruumi ette valmistamine (varustuse ülespanek, mattide maha panek jne. Kui ettevalmistust ei toimu, siis jätke mõlemasse lahtrisse nullid)"><img id="tool" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="6%"></span>
 										</div>
 
                                         <div class="ml-4 mr-1 mt-3 txt-xl">
@@ -245,7 +243,30 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 											</div>
 							</div>
 						</div>
-	
+						<div id="preparingTime">
+                                    <div class="row d-flex align-items-center">
+										<div class="col-5 mt-2 pl-md-5 ml-md-5 m-0">
+										<p>Treeningu ettevalmistamise algusaeg <span data-tooltip="Treeninguks ruumi ette valmistamine (varustuse ülespanek, mattide maha panek jne)"><img id="tool" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="6%"></span></p>
+										</div>
+
+                                        <div class="col-3 mr-1 mt-3 txt-xl m-0">
+											<input type="input" class="clock pl-2 col-5 pl-3 form-control" data-minimum="08:00" data-maximum="22:00">
+										</div>
+								                                   
+							</div>
+						</div>
+						<div id="preparingTime">
+                                    <div class="row d-flex align-items-center">
+									<div class="col-5 mt-2 pl-md-5 ml-md-5 m-0">
+											<label>Treeningujärgselt ruumi vabastatakse hiljemalt:</label>
+										</div>
+
+										<div class="col-3 mr-1 mt-3 txt-xl m-0">
+											<input type="input" class="clock pl-2 col-5 pl-3 form-control" data-minimum="08:00" data-maximum="22:00">
+										</div>
+									</div>
+								
+							</div> -->
 
 						<h4 class="pt-2 txt-xl px-md-5 mx-md-5 ml-3 mt-5">Kontakt</h4>
                         <div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
@@ -284,7 +305,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 									<input class="form-control" id="text1">
 								</div>
 								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrkood/isikukood</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood</label>
 									<input class="form-control" id="text3">
 								</div>
 							</div>
@@ -324,7 +345,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 									<input class="form-control" id="text2">
 								</div>
 								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrkood/isikukood</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood</label>
 									<input class="form-control" id="text4">
 								</div>
 							</div>
@@ -528,7 +549,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                             <option data-value="7" <?php if($data['weekday'][$i]=="Pühapäev"): echo 'selected';endif; ?> value="Pühapäev"></option>       
                                       </datalist>
                                       </div>
-                                    <a href="#" class="removeclass1 col-3 mt-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a>
+                                    <a href="#" class="removeclass2 col-3 mt-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a>
                                     <div class="col-4 col-sm-2">
                                         <input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from<?php echo $i;?>" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
                                     </div>
@@ -541,7 +562,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										<?php 	} };?>
 										</div>
                                 <div id="AddMoreFileId1" class="flex ">
-                                    <a id="AddMoreFileBoxPeriod" class="btn btn-custom text-white text-center py-2 px-4 pluss ml-3 ml-md-0"><p class="m-0 px-0 txt-lg txt-strong text-center align-items-center">Lisa nädalapäev</p></a>
+                                    <a id="AddMoreFileBoxPeriod" class="btn btn-custom text-white col-4 py-2 px-4 pluss ml-3 ml-md-0"><p class="m-0 px-0 txt-lg txt-strong text-center align-items-center">Lisa nädalapäev</p></a>
 								</div>
 								
 
@@ -624,7 +645,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 								<input class="form-control" id="text13">
 							</div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-								<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrkood/isikukood</label>
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood</label>
 								<input class="form-control" id="text15">
 							</div>
 						</div>
@@ -664,7 +685,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 								<input class="form-control" id="text14">
 							</div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-								<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrkood/isikukood</label>
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood</label>
 								<input class="form-control" id="text16">
 							</div>
 						</div>
@@ -728,7 +749,361 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                     </form>
                 </div>
 
-               
+				<div id="syndmus" class="tab-pane center  <?php if(!isset($data['type'])){ echo 'active';}else if($data['type']==5){echo 'active';}; ?>">
+                    <?php echo form_open('booking/createOnce', array('id' => 'myOnceForm')); ?>
+		
+                
+
+                        <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Asukoht ja sündmus / treeningu tüüp</h4>
+                        <div class="row d-flex mt-4 px-md-5 mx-md-5">
+                            <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+                                <label for="sport_facilityOnce">Asutus</label>
+                                <input id="sport_facilityOnce" class="form-control" list="asutus" id="building" value="<?php $test = $this->session->userdata('building'); foreach ($buildings as $each) { $id = $each->id; $name = $each->name; if ($id == $test) {echo $each->name;}}; if(!$this->session->userdata('building')){print_r($buildings[0]->name);} ?>" disabled>
+                            </div>
+                           <?php echo $this->input->get('roomId');?>
+                            <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+                                <label for="roomEvent">Ruum*</label><?php if($this->session->flashdata('sportroomMissing')){  echo $this->session->flashdata('sportroomMissing');} ?>
+								<select id="roomEvent"  onchange="addRoomInEvent()" list="saal" class="form-control arrow" >
+								
+								<option >Vali ruum</option>
+                                    <?php foreach ($rooms as $each) {
+										echo $each->id;
+									
+											echo '<option value="' . $each->id . '">' . $each->roomName . '</option>';
+									}
+										   ?>
+										   	<option >Kõik ruumid</option>
+                                </select>
+							<div id="selectedEventRooms">	
+								<?php 
+
+								if(isset($data['sportrooms'])){ 
+									foreach($data['sportrooms'] as $value){
+										foreach($rooms as $room){
+											if($value== $room->id){
+												echo '<p class="removeRoom mt-1 btn btn-success  text-light" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
+											}
+										}
+									}
+								}
+	
+								else {
+									foreach($rooms as $room){
+									
+										if( $this->uri->segment(3)== $room->id){
+											echo '<p class="removeRoom mt-1 btn btn-success  text-light" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
+										}
+									} 
+									 } ?>
+										</div>
+
+                            </div>
+                        </div>
+                        <div class="row d-flex mt-2 px-md-5 mx-md-5">
+                            <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+                                <label>Ruumi kasutamise eesmärk (avalik info)  <?php if($this->session->flashdata('type_flash')){  echo $this->session->flashdata('type_flash');} ?></label>
+                                <input class="form-control" id="typePeriod" name="workoutType" placeholder="nt Korvpalli võistlus" value="<?php if(isset($data['workoutType'])){ echo $data['workoutType'];}?>">
+                            </div>
+							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+								<label >Vali sihtrühm</label>
+                                <select  class="form-control arrow">
+								<option >Vali sihtrühm</option>
+								<option >Koolinoored (alla 20a)</option>
+								<option >Täiskasvanud</option>
+								<option >Seeniorid (alates 63a)</option>
+								<option >Erivajadustega </option>
+								<option >Erinevad</option>
+								</select>
+                            </div>  
+							
+						</div>
+						<div class="row d-flex mt-2 px-md-5 mx-md-5">
+                            <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+                                <label for="typeClosed">Maksimaalne osalejate arv</label>
+                                <input type="number"  min="0" class="form-control" id="typeClosed" name="workoutType">
+							</div>
+							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+                                <label for="typeClosed">Treening on:</label>
+							    <select  class="form-control arrow">
+								<option >Privaatne</option>
+								<option >Avalik</option>
+								</select>
+                            </div>
+						</div> 
+					
+                       
+					
+
+                        <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Sündmuse kuupäev ja kellaaeg</h4>
+                        <div class="mt-4 bg-grey py-2">
+                            <div class="form-label-group px-md-5 mx-md-5" id="InputsWrapper2">
+							
+                                <div id="eventContainer" class="mb-3 p-md-0">
+                                    <div class="row d-flex align-items-center mb-3 justify-content-between">
+										<div class="col-sm-4 col-9 m-0 p-md-0">
+											<label class="col-md-5 m-0 p-md-0" for="datetime">Kuupäev</label>
+											<input class="datePicker col-11 form-control" id="datefield_1" data-toggle="datepicker" name="workoutDate[]" value="<?php  if(isset($data['workoutDate'])){ echo $data['workoutDate'][0];} else if(isset($_GET["startDate"])){echo $_GET["startDate"];}?>">
+										</div>
+                                        <a href="#" class="removeclass mt-3 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a>
+
+                                        <div class="col-4 col-sm-3">
+											<div>	
+												<label class="col-2 m-0 p-md-0" for="from1">Alates</label>
+												<input type="input" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_1" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
+											</div>
+										</div>
+                                        <div class="col-4 col-sm-3">
+										<div>	
+											<label class="col-2 m-0 p-md-0" for="until1">Kuni</label>
+                                            <input type="input" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_1" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
+										</div>
+										</div>
+										<div class="col-4 col-sm-3">
+									
+										</div>
+                                    </div>
+                                    
+                                    <?php if(isset($data['workoutDate'])){ for ($i = 1; $i<count($data['workoutDate']); $i++) { ?>
+									    <div class="row d-flex align-items-center mb-3 justify-content-between">
+                                        <div class="col-sm-4 col-9 m-0 p-md-0">
+										<input class="datePicker col-11 form-control" id="datefield_<?php echo $i;?>" data-toggle="datepicker" name="workoutDate[]" value="<?php echo $data['workoutDate'][$i];?>">
+										</div>
+
+
+										<a class="removeclass3 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a>
+										<div class="col-4 col-sm-2">
+											<input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_<?php echo $i;?>" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
+										</div>
+										<div class="col-4 col-sm-2">
+											<input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_<?php echo $i;?>" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
+										</div>
+							
+								    	</div>
+									<?php ;}}; ?>
+								
+
+                                </div>
+                                <div id="AddMoreFileId" class="row d-flex p-md-0">
+                                    <a id="AddMoreFileBoxEvent" class="btn btn-custom text-white text-center py-2 col-4 pluss ml-3 ml-md-0"><p class="m-0 px-0 txt-lg txt-strong text-center align-items-center">Lisa veel üks kuupäev</p></a>
+                                </div>
+                            </div>
+						</div>
+						<div id="preparingTime">
+                                    <div class="row d-flex align-items-center">
+										<div class="mt-2 txt-xl pl-md-5 ml-md-5">
+											<label>Sündmuse ettevalmistamiseks kuluv aeg: </label> <span data-tooltip="Sündmuseks ruumi ette valmistamine (varustuse ülespanek, vaatajakohtade sättimine vms. Kui ettevalmistust ei toimu, siis jätke mõlemasse lahtrisse nullid)"><img id="tool" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="6%"></span>
+										</div>
+
+                                        <div class="ml-4 mr-1 mt-3 txt-xl">
+											<div>	
+												<input  type="number" min="0" max="48" value="0" class="form-control">
+												 
+											</div>
+										</div>
+										<div class="mt-2">
+											<p>tund(i)</p>
+										</div>
+                                        <div class="ml-3 mr-1 mt-3 txt-xl">
+											<input  type="number" min="0" max="60" value="0" class="form-control">
+										</div>
+										<div class="mt-2">
+											<p>minutit</p>
+										</div>
+							</div>
+						</div>
+						<div id="preparingTime">
+                                    <div class="row d-flex align-items-center">
+										<div class="mt-2 txt-xl pl-md-5 ml-md-5">
+											<label>Sündmusejärgse koristamisele kuluv aeg:</label>
+										</div>
+
+                                        <div class="ml-3 mr-1 mt-3 txt-xl">
+											<div>	
+												<input  type="number" min="0" max="48" value="0" class="form-control">
+												 
+											</div>
+										</div>
+										<div class="mt-2">
+											<p>tund(i)</p>
+										</div>
+                                        <div class="ml-3 mr-1 mt-3 txt-xl">
+										<div>	
+                                            <input  type="number" min="0" max="60" value="0" class="form-control">
+										</div>
+									</div>
+									<div class="mt-2">
+												<p>minutit</p>
+											</div>
+							</div>
+						</div>
+						<!-- <div id="preparingTime">
+                                    <div class="row d-flex align-items-center">
+										<div class="col-5 mt-2 pl-md-5 ml-md-5 m-0">
+										<p>Sündmuse ettevalmistamise algusaeg <span data-tooltip="Treeninguks ruumi ette valmistamine (varustuse ülespanek, mattide maha panek jne)"><img id="tool" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="6%"></span></p>
+										</div>
+
+                                        <div class="col-3 mr-1 mt-3 txt-xl m-0">
+											<input type="input" class="clock pl-2 col-5 pl-3 form-control" data-minimum="08:00" data-maximum="22:00">
+										</div>
+								                                   
+							</div>
+						</div> -->
+						<!-- <div id="preparingTime">
+                                    <div class="row d-flex align-items-center">
+									<div class="col-5 mt-2 pl-md-5 ml-md-5 m-0">
+											<label>Sündmusejärgse koristamise lõppaeg:</label>
+										</div>
+
+										<div class="col-3 mr-1 mt-3 txt-xl m-0">
+											<input type="input" class="clock pl-2 col-5 pl-3 form-control" data-minimum="08:00" data-maximum="22:00">
+										</div>
+									</div>
+								
+							</div> -->
+
+						<h4 class="pt-2 txt-xl px-md-5 mx-md-5 ml-3 mt-5">Kontakt</h4>
+                        <div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
+                            <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+							
+								<label class=" col-7 col-sm-7 col-md-12  p-0" for="contact">Korraldaja (avalik info) <b data-tooltip="Klubi puudumisel kirjuta kontaktisiku nime initsiaalid"><img id="tool" class="mr-5" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="7%"></b> <?php if($this->session->flashdata('validationErrorMessageForClubname')){  echo $this->session->flashdata('validationErrorMessageForClubname');} ?></label>
+								<input class="form-control <?php if($this->session->flashdata('validationErrorMessageForClubname')){ echo 'is-invalid';}?>" id="clubnameForSingle" type="text" name="clubname" required value="<?php if(isset($data['clubname'])): echo $data['clubname'];endif; ?>">
+							</div>
+                            <input class="d-none" type="checkbox" id="typeOnce" name="type" value="1" checked>
+                            <input class="d-none" type="checkbox" id="allowFormToSubmitAndNeverMindConflicts1" name="allowSave" value="0" checked>
+                            <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+                                <label>Kontaktisik	<?php if($this->session->flashdata('validationErrorMessageContactPerson')){  echo $this->session->flashdata('validationErrorMessageContactPerson');} ?> </label>
+                                <input class="form-control" id="contactForSingle" name="contactPerson" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>">
+                            </div>
+                        </div>
+                        <div class="row d-flex mt-2 px-md-5 mx-md-5">
+                            <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+                                <label>Telefon<?php if($this->session->flashdata('phoneIsNotCorrect')){  echo $this->session->flashdata('phoneIsNotCorrect');} ?><?php if($this->session->flashdata('validationErrorMessageForPhone')){  echo $this->session->flashdata('validationErrorMessageForPhone');} ?></label>
+                                <input class="form-control" id="phoneForSingle" name="phone" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
+                            </div>
+
+                            <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+                                <label>Email<?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?><?php if($this->session->flashdata('email_flash')){  echo $this->session->flashdata('email_flash');} ?></label>
+                                <input class="form-control" id="emailForSingle" name="email" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
+                            </div>
+						</div>
+						
+						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox" onchange="showContractInfo('div5')"><span></span></label> Soovin sõlmida lepingu 
+
+						<div id="div5" style="display:none">
+							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Lepingu andmed</h4>
+							<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
+								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+								
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi</label>
+									<input class="form-control" id="text25">
+								</div>
+								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood</label>
+									<input class="form-control" id="text27">
+								</div>
+							</div>
+							<div class="row d-flex mt-2 px-md-5 mx-md-5">
+								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress</label>
+									<input class="form-control" id="text29">
+								</div>
+								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik</label>
+									<input class="form-control" id="text31" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>">
+								</div>     
+							</div>
+							<div class="row d-flex mt-2 px-md-5 mx-md-5">
+								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon</label>
+									<input class="form-control" id="text33" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
+								</div>
+								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Email</label>
+									<input class="form-control" id="text35" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
+								</div>     
+							</div>
+						</div>
+
+										<br>
+						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox" onchange="showContractInfo('div6')"><span></span></label> Soovin saada arvet
+
+						<div style='display:none;' id='div6'>
+							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Arve saaja andmed</h4>
+							<label class="p-md-0 mt-3 col-1 pl-md-5 ml-md-5"><input type="checkbox" id="checkbox3"><span></span></label> Arve saaja andmed ühtivad lepingu sõlmija andmetega
+
+							<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
+								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+								
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi</label>
+									<input class="form-control" id="text26">
+								</div>
+								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood</label>
+									<input class="form-control" id="text28">
+								</div>
+							</div>
+							<div class="row d-flex mt-2 px-md-5 mx-md-5">
+								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress</label>
+									<input class="form-control" id="text30">
+								</div>
+								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik</label>
+									<input class="form-control" id="text32">
+								</div>     
+							</div>
+							<div class="row d-flex mt-2 px-md-5 mx-md-5">
+								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon</label>
+									<input class="form-control" id="text34">
+								</div>
+								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Email</label>
+									<input class="form-control" id="text36">
+								</div>     
+							</div>
+						</div>
+
+                        <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Lisainfo (valikuline) </h4>
+						<div class="mt-4 px-md-5 mx-md-5">
+                            <div class="form-label-group pb-2 px-md-0 px-2">
+                                <label>Lisainfo</label>
+								<textarea class="form-control" id="additional" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"><?php if(isset($data['comment2'])): echo $data['comment2'];endif; ?></textarea>
+								
+							</div>
+						
+						</div>
+						<div>
+							<label class="p-md-0 mt-5 col-1 pl-md-5 ml-md-5"><input type="checkbox"><span></span></label> Olen lugenud ja nõustun <u class=text-primary>kasutustingimustega*</u>
+						</div>
+                        <div class="row d-flex justify-content-end mt-5 px-md-5 mx-md-5">
+							
+							  <a class="txt-xl link-deco align-self-center py-md-0 pr-md-5 mr-2" href="<?php echo base_url()?>fullcalendar?roomId=<?php foreach ($rooms as $each) {
+									
+									if(!empty($data['sportrooms'])){ 
+										if($data['sportrooms'][0]== $each->id){ 
+										echo $each->id;
+									
+									}
+								}
+									   else 
+										   if( $this->uri->segment(3)== $each->id){
+												echo $each->id;
+											}
+										} ?>&date=<?php if(isset($data['workoutDate'])){ echo $data['workoutDate'][0];} else if(isset($_GET["startDate"])){echo $_GET["startDate"];}else{ echo date("d.m.yy");}?>" >Katkesta</a>
+							
+							
+							<input class="btn btn-custom col-12 col-sm-3 text-white txt-xl" type="submit"  id="checkForOnceConflicts" value="Broneeri">
+						
+						<button id="loadingTemporarlyButtonOnce" class="d-none btn btn-custom text-white txt-xl" type="button" disabled>
+							<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+							Kontrollin kattuvusi...
+							</button>
+
+                        </div>
+						<input type="hidden" name="current_url" value="<?php echo current_url(); ?>" />
+                    </form>
+                </div>
             </div>
 
         </div>
@@ -828,7 +1203,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
             if (x <= MaxInputs) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#InputsWrapper').append('<div class="row d-flex align-items-center mb-3 justify-content-between"><div class="col-sm-4 col-9 m-0 p-md-0"><input class="datePicker col-11 form-control" id="datefield_' + FieldCount + '" data-toggle="datepicker" name="workoutDate[]"></div><a class="removeclass mt-3 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a><div class="col-4 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-4 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div>	</div>');
+                $('#InputsWrapper').append('<div class="row d-flex align-items-center mb-3 justify-content-between"><div class="col-sm-4 col-9 m-0 p-md-0"><input class="datePicker col-11 form-control" id="datefield_' + FieldCount + '" data-toggle="datepicker" name="workoutDate[]"></div><a class="removeclass1 mt-3 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a><div class="col-4 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-4 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div>	</div>');
 
                 $(".datePicker").datepicker({
                     language: "et-EE", 
@@ -869,7 +1244,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
             return false;
         });
 
-        $("#timestamp").on("click", ".removeclass", function(e) { //user click on remove text
+        $("#timestamp").on("click", ".removeclass1", function(e) { //user click on remove text
      
             if (x > 1) {
                 $(this).parent('div').remove(); //remove text box
@@ -894,7 +1269,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
             if (y <= maxPeriod) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#dateContainer').append('<div class="row d-flex align-items-center mb-3 justify-content-between"><div class="col-sm-4 col-9 m-0 p-md-0"><input class="form-control col-11 arrow" id="periodicWeekDay' + FieldCount + '" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist></div><a href="#" class="removeclass1 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a><div class="col-4 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-4 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div></div>');
+                $('#dateContainer').append('<div class="row d-flex align-items-center mb-3 justify-content-between"><div class="col-sm-4 col-9 m-0 p-md-0"><input class="form-control col-11 arrow" id="periodicWeekDay' + FieldCount + '" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist></div><a href="#" class="removeclass2 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a><div class="col-4 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-4 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div></div>');
 
                 $('.clock').clockTimePicker({
                     duration: true,
@@ -923,7 +1298,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
             return false;
         });
 
-        $("#dateContainer").on("click", ".removeclass1", function(e) { //user click on remove text
+        $("#dateContainer").on("click", ".removeclass2", function(e) { //user click on remove text
             if (y > 1) {
                 $(this).parent('div').remove(); //remove text box
                 y--; 
@@ -935,19 +1310,19 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
 
         var maxClosed = 100;
-        var InputsWrapper2 = $("#InputsWrapper2 #closeContainer"); //Input boxes wrapper ID
-        var AddButton2 = $("#AddMoreFileBoxClosed"); //Add button ID
+        var InputsWrapper2 = $("#InputsWrapper2 #eventContainer"); //Input boxes wrapper ID
+        var AddButton2 = $("#AddMoreFileBoxEvent"); //Add button ID
 
         var z = InputsWrapper2.children().length; //initlal text box count
 
 
-        $("#AddMoreFileBoxClosed").click(function(e) {
+        $("#AddMoreFileBoxEvent").click(function(e) {
             //max input box allowed
 
             if (z <= maxClosed) {
                 FieldCount++; //text box added ncrement
                 //add input box
-				$('#closeContainer').append('<div class="row d-flex align-items-center mb-3 justify-content-between"><div class="col-sm-5 col-9 m-0 p-md-0"><input class="form-control col-11 arrow" id="closedWeekDay" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist></div><a href="#" class="removeclass2 col-sm-1 col-3 pl-1 pr-xl-5"><span class="icon-cancel"></span></a><div class="col-6 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timesStart[]" id="from' + FieldCount + '" value="08:00"></div><div class="col-6 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="22:00"></div></div>');
+				$('#eventContainer').append('<div class="row d-flex align-items-center mb-3 justify-content-between"><div class="col-sm-4 col-9 m-0 p-md-0"><input class="datePicker col-11 form-control" id="datefield_' + FieldCount + '" data-toggle="datepicker" name="workoutDate[]"></div><a class="removeclass3 mt-3 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a><div class="col-4 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-4 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div>	</div>');
            
                 $('.clock').clockTimePicker({
                     duration: true,
@@ -976,7 +1351,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
             return false;
         });
 
-        $('#closeContainer').on('click', '.removeclass2', function(e) { //user click on remove text
+        $('#eventContainer').on('click', '.removeclass3', function(e) { //user click on remove text
             if (z > 1) {
                 $(this).parent('div').remove(); //remove text box
                 z--; 
@@ -996,23 +1371,23 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 	
 		if($(this).prop('hash')=='#mitmekordne')
 		{
-			$("#suletud").removeClass("active");
+			$("#syndmus").removeClass("active");
 			$("#hooajaline").removeClass("active");
 			$("#mitmekordne").addClass("active");
 			
 		}
 		if($(this).prop('hash')=='#hooajaline')
 		{
-			$("#suletud").removeClass("active");
+			$("#syndmus").removeClass("active");
 			$("#mitmekordne").removeClass("active");
 			$("#hooajaline").addClass("active");
 			
 		}
-		if($(this).prop('hash')=='#suletud')
+		if($(this).prop('hash')=='#syndmus')
 		{
 			$("#hooajaline").removeClass("active");
 			$("#mitmekordne").removeClass("active");
-			$("#suletud").addClass("active");
+			$("#syndmus").addClass("active");
 		
 		}
 
@@ -1241,6 +1616,7 @@ function showContractInfo(box) {
 		document.getElementById(box).style.display = vis;
 	}
 
+
 	var oldvalue1;
 	var oldvalue2;
 	var oldvalue3;
@@ -1254,6 +1630,13 @@ function showContractInfo(box) {
 	var oldvalue10;
 	var oldvalue11;
 	var oldvalue12;
+
+	var oldvalue13;
+	var oldvalue14;
+	var oldvalue15;
+	var oldvalue16;
+	var oldvalue17;
+	var oldvalue18;
 $("#checkbox1").on("change",function(){
 	if (this.checked ) {
 		oldvalue1 = $("#text2").val();
@@ -1312,6 +1695,35 @@ $("#checkbox2").on("change",function(){
 
 });
 
+$("#checkbox3").on("change",function(){
+	if (this.checked ) {
+		
+		oldvalue13 = $("#text26").val();
+		oldvalue14 = $("#text28").val();
+		oldvalue15 = $("#text30").val();
+		oldvalue16 = $("#text32").val();
+		oldvalue17 = $("#text34").val();
+		oldvalue18 = $("#text36").val();
+		
+			$("#text26").val($("#text25").val());
+			$("#text28").val($("#text27").val());
+			$("#text30").val($("#text29").val());
+			$("#text32").val($("#text31").val());
+			$("#text34").val($("#text33").val());
+			$("#text36").val($("#text35").val());
+		}   
+		else{
+		
+			$("#text26").val(oldvalue13);
+			$("#text28").val(oldvalue14);
+			$("#text30").val(oldvalue15);
+			$("#text32").val(oldvalue16);
+			$("#text34").val(oldvalue17);
+			$("#text36").val(oldvalue18);
+		}
+
+});
+
 
 function addRoomInOnce() {
   var selectedRoomID =  $( "#roomOnce" ).val();
@@ -1344,21 +1756,22 @@ if ( selectedRoomName=="Kõik ruumid"){
 	});
 	}
 }
-function addRoomInClosed () {
-  var selectedRoomID =  $( "#roomClosed" ).val();
-  var selectedRoomName =  $( "#roomClosed option:selected" ).text();
+function addRoomInEvent () {
+  var selectedRoomID =  $( "#roomEvent" ).val();
+  var selectedRoomName =  $( "#roomEvent option:selected" ).text();
 
- if (!$("#selectedClosedRooms p").text().match(selectedRoomName)&& selectedRoomName!="Vali ruum"  && selectedRoomName!="Kõik ruumid"){
-  $("#selectedClosedRooms").append( '<p class="removeRoom  mt-1 mr-1 btn btn-success  text-light"  value="' + selectedRoomID + '">' + selectedRoomName + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+selectedRoomID+'></input></p>' );
+ if (!$("#selectedEventRooms p").text().match(selectedRoomName)&& selectedRoomName!="Vali ruum"  && selectedRoomName!="Kõik ruumid"){
+  $("#selectedEventRooms").append( '<p class="removeRoom  mt-1 mr-1 btn btn-success  text-light"  value="' + selectedRoomID + '">' + selectedRoomName + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+selectedRoomID+'></input></p>' );
 }
 if ( selectedRoomName=="Kõik ruumid"){
-	$("#roomClosed option").each(function(){
-		if(!$("#selectedClosedRooms p").text().match($(this).text() ) && $(this).text()!="Vali ruum" && $(this).text()!="Kõik ruumid"){
-			$("#selectedClosedRooms").append( '<p class="removeRoom  mt-1 mr-1 btn btn-success  text-light">' + $(this).text() + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+$(this).val()+'></input></p>' );
+	$("#roomEvent option").each(function(){
+		if(!$("#selectedEventRooms p").text().match($(this).text() ) && $(this).text()!="Vali ruum" && $(this).text()!="Kõik ruumid"){
+			$("#selectedEventRooms").append( '<p class="removeRoom  mt-1 mr-1 btn btn-success  text-light">' + $(this).text() + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+$(this).val()+'></input></p>' );
 		}
 	});
 	}
 }
+
 
 
 $("#approveNow, #approvePeriodNow").change(function() {
