@@ -113,7 +113,7 @@ public function getAllBuildings()
 		$this->db->select("id, name");  
 		$this->db->where('id', $bookingID);
 		$query = $this->db->get('buildings');
-	    return $query->result();
+	    return $query->row_array();
 	}
 
 	var $table = "bookingTimes";  

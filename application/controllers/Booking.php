@@ -49,7 +49,7 @@ class Booking extends CI_Controller {
 		$data=$this->menu();
 		$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
 		$data['rooms'] = $this->booking_model->getOtherRooms($roomID);
-		$data['buildings'] = $this->booking_model->getBuilding($roomID);
+		$data['selectedBuilding'] = $this->booking_model->getBuilding($roomID);
 		$data['allBookingInfo'] = $this->booking_model->getAllBookings();
 	
 		$this->load->view('templates/header',$data);

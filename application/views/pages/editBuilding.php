@@ -182,9 +182,9 @@
 									<div id="showOrHide">
 										<div class="row d-flex p-0 m-4 px-md-5 mx-5">	
 									
-											<p class="txt-lg ">	Näita kliendi edastatud ühekordse treeningu päring avalikust kalendrist  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($getBookingformDataDetailsOnce['showtopublicuser']){echo 'checked';} ?> name="showtopublicuser" value="<?php echo $getBookingformDataDetailsOnce['showtopublicuser'] ?>"><span></span></label></p>
-											<p class="txt-lg ">	Näita kliendi edastatud hooajalise treeningu päringu avalikust kalendrist  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($getBookingformDataDetailsPeriod['showtopublicuser']){echo 'checked';} ?> name="showtopublicuser" value="<?php echo $getBookingformDataDetailsPeriod['showtopublicuser'] ?>"><span></span></label></p>
-											<p class="txt-lg ">	Näita kliendi edastatud sündmuse päring avalikust kalendrist  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($getBookingformDataDetailsEvent['showtopublicuser']){echo 'checked';}  ?> name="showtopublicuser" value="<?php echo $getBookingformDataDetailsEvent['showtopublicuser'] ?>"><span></span></label></p>
+											<p class="txt-lg ">	Näita kliendi edastatud ühekordse treeningu päring avalikust kalendrist  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($getBookingformDataDetailsOnce['showtopublicuser']){echo 'checked';} ?> name="showtopublicuseronce" value="<?php echo $getBookingformDataDetailsOnce['showtopublicuser'] ?>"><span></span></label></p>
+											<p class="txt-lg ">	Näita kliendi edastatud hooajalise treeningu päringu avalikust kalendrist  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($getBookingformDataDetailsPeriod['showtopublicuser']){echo 'checked';} ?> name="showtopublicuserperiod" value="<?php echo $getBookingformDataDetailsPeriod['showtopublicuser'] ?>"><span></span></label></p>
+											<p class="txt-lg ">	Näita kliendi edastatud sündmuse päring avalikust kalendrist  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($getBookingformDataDetailsEvent['showtopublicuser']){echo 'checked';}  ?> name="showtopublicuserevent" value="<?php echo $getBookingformDataDetailsEvent['showtopublicuser'] ?>"><span></span></label></p>
 										</div>
 										<p class="pt-1 txt-lg px-5 mx-5">Kohustuslikud väljad tavakasutajatele: </p>
 										

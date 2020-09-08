@@ -47,8 +47,8 @@ if(!empty($conflictDates)){// print_r($conflictDates);
         <div id="nav-tabs" class="mt-5 pb-5 form-bg">
             <div class="row d-flex mb-5">
                 <ul class="nav nav-tabs nav-justified col-12 bg-grey">
-                    <li class="nav-item"><a  class="nav-link link h-100 txt-lg <?php if(!isset($data['type'])){ echo 'active';$data['type']=1;}else if($data['type']==1){echo 'active';}; ?>" href="#mitmekordne" data-toggle="tab">Ruumipäring ühekordseks treeninguks</a></li>
-                    <li class="nav-item"><a  class="nav-link link h-100 txt-lg <?php if($data['type']==2){echo 'active';}; ?>" href="#hooajaline" data-toggle="tab">Ruumipäring hooajaliseks treeninguks</a></li>
+                    <li class="nav-item"><a  class="nav-link link h-100 txt-lg <?php if(!isset($data['type'])){ echo 'active';$data['type']=1;}else if($data['type']==1){echo 'active';}; ?>" href="#mitmekordne" data-toggle="tab">Ruumipäring ühekordseks tegevuseks</a></li>
+                    <li class="nav-item"><a  class="nav-link link h-100 txt-lg <?php if($data['type']==2){echo 'active';}; ?>" href="#hooajaline" data-toggle="tab">Ruumipäring hooajaliseks tegevuseks</a></li>
                     <li class="nav-item"><a  class="nav-link link h-100 txt-lg <?php if($data['type']==5){echo 'active';}; ?>" href="#syndmus" data-toggle="tab">Ruumipäring sündmuseks</a></li>
                 </ul>
             </div>
@@ -61,11 +61,11 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 		
                 
 
-                        <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Asukoht ja sündmus / treeningu tüüp</h4>
+                        <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Asukoha ja treeningu info</h4>
                         <div class="row d-flex mt-4 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
                                 <label for="sport_facilityOnce">Asutus</label>
-                                <input id="sport_facilityOnce" class="form-control" list="asutus" id="building" value="<?php $test = $this->session->userdata('building'); foreach ($buildings as $each) { $id = $each->id; $name = $each->name; if ($id == $test) {echo $each->name;}}; if(!$this->session->userdata('building')){print_r($buildings[0]->name);} ?>" disabled>
+                                <input id="sport_facilityOnce" class="form-control" list="asutus" id="building" value="<?php print_r($selectedBuilding['name']); ?>" disabled>
                             </div>
                            <?php echo $this->input->get('roomId');?>
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
@@ -109,7 +109,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                         <div class="row d-flex mt-2 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
                                 <label>Ruumi kasutamise eesmärk (avalik info)  <?php if($this->session->flashdata('type_flash')){  echo $this->session->flashdata('type_flash');} ?></label>
-                                <input class="form-control" id="typePeriod" name="workoutType" placeholder="nt iluvõimlemine" value="<?php if(isset($data['workoutType'])){ echo $data['workoutType'];}?>">
+                                <input class="form-control" id="typePeriod" name="workoutType" placeholder="iluvõimlemine, võrkpall, male, tantsutund vms" value="<?php if(isset($data['workoutType'])){ echo $data['workoutType'];}?>">
                             </div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
 								<label >Vali sihtrühm</label>
@@ -126,7 +126,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 						</div>
 						<div class="row d-flex mt-2 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-                                <label for="typeClosed">Maksimaalne treenijate arv</label>
+                                <label for="typeClosed">Maksimaalne osalejate arv</label>
                                 <input type="number"  min="0" class="form-control" id="typeClosed" name="workoutType">
 							</div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
@@ -418,11 +418,11 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                  
 
 
-                        <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Asukoht ja sündmus / treeningu tüüp</h4>
+                        <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Asukoha ja treeningu info</h4>
                         <div class="row d-flex mt-4 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
                                 <label for="sport_facility">Asutus</label>
-                                <input id="sport_facility" class="form-control" list="asutus" id="building" value="<?php $test = $this->session->userdata('building'); foreach ($buildings as $each) { $id = $each->id; $name = $each->name; if ($id == $test) {echo $each->name;}}; if(!$this->session->userdata('building')){print_r($buildings[0]->name);} ?>" disabled>
+                                <input id="sport_facility" class="form-control" list="asutus" id="building" value="<?php print_r($selectedBuilding['name']); ?>" disabled>
                             </div>
 
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
@@ -466,8 +466,8 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
                         <div class="row d-flex mt-2 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-                                <label for="typeClosed">Sündmus / Treeningu tüüp (avalik info)<?php if($this->session->flashdata('type_flash')){  echo $this->session->flashdata('type_flash');} ?></label>
-                                <input class="form-control" id="typeClosed" name="workoutType" placeholder="nt iluvõimlemine"  value="<?php if(isset($data['workoutType'])): echo $data['workoutType'];endif; ?>">
+                                <label for="typeClosed">Ruumi kasutamise eesmärk (avalik info)<?php if($this->session->flashdata('type_flash')){  echo $this->session->flashdata('type_flash');} ?></label>
+                                <input class="form-control" id="typeClosed" name="workoutType" placeholder="iluvõimlemine, võrkpall, male, tantsutund vms"  value="<?php if(isset($data['workoutType'])): echo $data['workoutType'];endif; ?>">
                             </div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
 								<label >Vali sihtrühm</label>
@@ -486,7 +486,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 						</div>  
 						<div class="row d-flex mt-2 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-                                <label for="typeClosed">Maksimaalne treenijate arv</label>
+                                <label for="typeClosed">Maksimaalne osalejate arv</label>
                                 <input type="number"  min="0" class="form-control" id="typeClosed" name="workoutType">
 							</div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
@@ -754,11 +754,11 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 		
                 
 
-                        <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Asukoht ja sündmus / treeningu tüüp</h4>
+                        <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Asukoha ja sündmuse info</h4>
                         <div class="row d-flex mt-4 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
                                 <label for="sport_facilityOnce">Asutus</label>
-                                <input id="sport_facilityOnce" class="form-control" list="asutus" id="building" value="<?php $test = $this->session->userdata('building'); foreach ($buildings as $each) { $id = $each->id; $name = $each->name; if ($id == $test) {echo $each->name;}}; if(!$this->session->userdata('building')){print_r($buildings[0]->name);} ?>" disabled>
+                                <input id="sport_facilityOnce" class="form-control" list="asutus" id="building" value="<?php print_r($selectedBuilding['name']); ?>" disabled>
                             </div>
                            <?php echo $this->input->get('roomId');?>
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">

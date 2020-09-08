@@ -278,6 +278,7 @@
 					for ($i=0; $i < count($threeforms) ; $i++) { 
 						$datasettingsonce = array(
 							//	'name' => $this->input->post('building'),
+								'showtopublicuser' => $this->input->post('showtopublicuser'.$threeforms[$i]),
 								'maxpeaplenumbersee' => $this->input->post('maxpeaplenumbersee'.$threeforms[$i]),
 								'maxpeaplenumberrequired' => $this->input->post('maxpeaplenumberrequired'.$threeforms[$i]),
 								'groupsee' => $this->input->post('groupsee'.$threeforms[$i]),
