@@ -21,21 +21,24 @@ class Booking extends CI_Controller {
 
 	function menu(){
 		$data['menu'] = 'calendar'; // Capitalize the first letter
+		
 		if ( $this->session->userdata('roleID')==='2'  || $this->session->userdata('roleID')==='3'){
 			$data['unapprovedBookings'] = $this->booking_model->getUnapprovedBookings($this->session->userdata('building'));
+
 		}
-		$data['bookingformdata'] = $this->booking_model->getBookingformData();
+		
 		return $data;
 	}
 
 	public function create()
 	{	
 		if( $this->session->userdata('roleID')==='2'  || $this->session->userdata('roleID')==='3'){
-		$data=$this->menu();
-		$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
-		$data['rooms'] = $this->booking_model->getAllRooms();
-		$data['buildings'] = $this->booking_model->getAllBuildings();
-		$data['allBookingInfo'] = $this->booking_model->getAllBookings();
+			$data=$this->menu();
+			$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
+			$data['rooms'] = $this->booking_model->getAllRooms();
+			$data['buildings'] = $this->booking_model->getAllBuildings();
+			$data['allBookingInfo'] = $this->booking_model->getAllBookings();
+			$data['bookingformdata'] = $this->booking_model->getBookingformData($this->session->userdata('building'));
 	
 		$this->load->view('templates/header',$data);
 		$this->load->view('pages/booking', $data);//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
@@ -50,7 +53,10 @@ class Booking extends CI_Controller {
 		$data['weekdays']=array('', 'Esmaspäev','Teisipäev','Kolmapäev','Neljapäev','Reede' ,'Laupäev','Pühapäev');
 		$data['rooms'] = $this->booking_model->getOtherRooms($roomID);
 		$data['selectedBuilding'] = $this->booking_model->getBuilding($roomID);
-		$data['allBookingInfo'] = $this->booking_model->getAllBookings();
+	//	$data['allBookingInfo'] = $this->booking_model->getAllBookings();
+		$data['bookingformdata'] = $this->booking_model->getBookingformData($data['selectedBuilding']['id']);
+		$data['bookingformdatadetails'] = $this->booking_model->getBookingformDataDetails($data['selectedBuilding']['id'] );
+		print_r($data['bookingformdatadetails']);
 	
 		$this->load->view('templates/header',$data);
 		$this->load->view('pages/bookingquery', $data);//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
