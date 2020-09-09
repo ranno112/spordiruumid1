@@ -75,7 +75,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                            <?php echo $this->input->get('roomId');?>
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
                                 <label for="roomOnce">Ruum*</label><?php if($this->session->flashdata('sportroomMissing')){  echo $this->session->flashdata('sportroomMissing');} ?>
-								<select id="roomOnce"  onchange="addRoomInOnce()" list="saal" class="form-control arrow" >
+								<select id="roomOnce" onchange="addRoom('roomOnce','selectedRooms')" list="saal" class="form-control arrow" >
 								
 								<option >Vali ruum</option>
                                     <?php foreach ($rooms as $each) {
@@ -86,7 +86,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										   ?>
 										   	<option >Kõik ruumid</option>
                                 </select>
-							<div id="selectedRooms">	
+							<div id="selectedRooms">	Valitud ruumid:
 								<?php 
 
 								if(isset($data['sportrooms'])){ 
@@ -302,58 +302,67 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                 <input class="form-control" id="emailForSingle" name="email" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
                             </div>
 						</div>
-						
-						<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Eelistatud maksmisviis</h4>
-							
+						<?php if($bookingformdatadetails[0]['methodofpaymentsee']==1){?>
+						<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Eelistatud maksmisviis <?php if($bookingformdatadetails[0]['methodofpaymentrequired']==1){echo "*";} ?></h4>
 							<div class="row mt-3 pl-4 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
 									<select  onchange="showBillingInfo(this, 'checkmeifpayingwithinvoice1','div2')" id="invoice1" class="form-control arrow">
 									<!-- <option >Vali maksmisviis</option> -->
 									<option value="" disabled selected>Vali maksmisviis</option>
-									<option >sularaha kohapeal tasudes</option>
-									<option >pangakaart kohapeal tasudes</option>
-									<option value="1">arvega</option>
-									<option >ettemaks</option>
-									<option >muu</option>
+									<?php if($bookingformdatadetails[0]['methodofpaymentcash']==1){?>
+										<option >sularaha kohapeal tasudes</option>
+									<?php } ?>
+									<?php if($bookingformdatadetails[0]['methodofpaymentcard']==1){?>
+										<option >pangakaart kohapeal tasudes</option>
+									<?php } ?>
+									<?php if($bookingformdatadetails[0]['methodofpaymentbill']==1){?>
+										<option value="1">arvega</option>
+									<?php } ?>
+									<?php if($bookingformdatadetails[0]['methodofpaymentprepayment']==1){?>
+										<option >ettemaks</option>
+									<?php } ?>
+									<?php if($bookingformdatadetails[0]['methodofpaymentother']==1){?>
+										<option >muu</option>
+									<?php } ?>
 									</select>
 								</div>
-								
-						
-						</div>
+							</div>
+						<?php } ?>
+
 						<?php if($bookingformdatadetails[0]['agreementsee']==1){ ?>
 							<?php if($bookingformdatadetails[0]['agreementrequired']==0){?>
 						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox" onchange="showContractInfo('div1', 'sameasagreement1','div1')"><span></span></label> Soovin sõlmida lepingu 
 								<?php } ?>
 						<div id="div1" <?php if($bookingformdatadetails[0]['agreementrequired']==0){echo "style='display:none'";} ?> >
-							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Lepingu andmed  <?php if($bookingformdatadetails[0]['agreementrequired']==1){echo "*";} ?></h4>
+							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Lepingu andmed <?php if($bookingformdatadetails[0]['agreementrequired']==1){echo "*";} ?></h4>
 							<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
 								
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi <?php if($bookingformdatadetails[0]['agreementnamerequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text1">
 								</div>
 								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood <?php if($bookingformdatadetails[0]['agreementcoderequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text3">
 								</div>
 							</div>
 							<div class="row d-flex mt-2 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress <?php if($bookingformdatadetails[0]['agreementaddressrequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text5">
 								</div>
 								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik <?php if($bookingformdatadetails[0]['agreementcontactrequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text7" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>">
 								</div>     
 							</div>
 							<div class="row d-flex mt-2 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon <?php if($bookingformdatadetails[0]['agreementphonerequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text9" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
 								</div>
 								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Email</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Email <?php if($bookingformdatadetails[0]['agreementemailrequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text11" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
 								</div>     
 							</div>
@@ -370,55 +379,55 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 						<div  <?php if($bookingformdatadetails[0]['invoicerequired']==0){echo "style='display:none'";} ?>  id='div2'>
 							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Arve saaja andmed <?php if($bookingformdatadetails[0]['invoicerequired']==1){echo "*";} ?></h4>
 							<?php if($bookingformdatadetails[0]['agreementsee']==1){ ?>
-								<div id="sameasagreement1" style="display:none">
-							<label class="p-md-0 mt-3 col-1 pl-md-5 ml-md-5"><input type="checkbox" id="checkbox1"><span></span></label> Arve saaja andmed ühtivad lepingu sõlmija andmetega</div>
+								<div id="sameasagreement1" <?php if($bookingformdatadetails[0]['agreementrequired']==0){ echo 'style="display:none"';}?> >
+							<label class="p-md-0 mt-3 col-1 pl-md-5 ml-md-5"><input type="checkbox" id="checkbox1"><span></span></label> Kanna üle lepingu andmed</div>
 							<?php } ?>
 							<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
 								
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi <?php if($bookingformdatadetails[0]['invoicenamerequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text2">
 								</div>
 								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood <?php if($bookingformdatadetails[0]['invoicecoderequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text4">
 								</div>
 							</div>
 							<div class="row d-flex mt-2 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress <?php if($bookingformdatadetails[0]['invoiceaddressrequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text6">
 								</div>
 								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik</label>
-									<input class="form-control" id="text8">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik <?php if($bookingformdatadetails[0]['invoicecontactrequired']==1){echo "*";} ?></label>
+									<input class="form-control" id="text8" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>">
 								</div>     
 							</div>
 							<div class="row d-flex mt-2 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon</label>
-									<input class="form-control" id="text10">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon <?php if($bookingformdatadetails[0]['invoicephonerequired']==1){echo "*";} ?></label>
+									<input class="form-control" id="text10" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
 								</div>
 								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Email</label>
-									<input class="form-control" id="text12">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Email <?php if($bookingformdatadetails[0]['invoiceemailrequired']==1){echo "*";} ?></label>
+									<input class="form-control" id="text12" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
 								</div>     
 							</div>
 						</div>
 
 						<?php } ?>
 
-                        <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Lisainfo (valikuline) </h4>
+                        <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Lisainfo </h4>
 						<div class="mt-4 px-md-5 mx-md-5">
                             <div class="form-label-group pb-2 px-md-0 px-2">
-                                <label>Lisainfo</label>
+                             
 								<textarea class="form-control" id="additional" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"><?php if(isset($data['comment2'])): echo $data['comment2'];endif; ?></textarea>
 								
 							</div>
 						
 						</div>
 						<div>
-							<label class="p-md-0 mt-5 col-1 pl-md-5 ml-md-5"><input type="checkbox"><span></span></label> Olen lugenud ja nõustun <u class=text-primary>kasutustingimustega*</u>
+							<!-- <label class="p-md-0 mt-5 col-1 pl-md-5 ml-md-5"><input type="checkbox"><span></span></label> Olen lugenud ja nõustun <u class=text-primary>kasutustingimustega*</u> -->
 						</div>
                         <div class="row d-flex justify-content-end mt-5 px-md-5 mx-md-5">
 							
@@ -437,7 +446,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										} ?>&date=<?php if(isset($data['workoutDate'])){ echo $data['workoutDate'][0];} else if(isset($_GET["startDate"])){echo $_GET["startDate"];}else{ echo date("d.m.yy");}?>" >Katkesta</a>
 							
 							
-							<input class="btn btn-custom col-12 col-sm-3 text-white txt-xl" type="submit"  id="checkForOnceConflicts" value="Broneeri">
+							<input class="btn btn-custom col-12 col-sm-3 text-white txt-xl" type="submit"  id="checkForOnceConflicts" value="Esita päring">
 						
 						<button id="loadingTemporarlyButtonOnce" class="d-none btn btn-custom text-white txt-xl" type="button" disabled>
 							<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
@@ -467,7 +476,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
                                 <label for="roomPeriod">Ruum*</label><?php if($this->session->flashdata('sportroomMissing')){  echo $this->session->flashdata('sportroomMissing');} ?>
-								<select id="roomPeriod"  onchange="addRoomInPeriod()" list="saal" class="form-control arrow" >
+								<select id="roomPeriod"  onchange="addRoom('roomPeriod','selectedPeriodRooms')" list="saal" class="form-control arrow" >
 								<option >Vali ruum</option>
 								<?php 
 								foreach ($rooms as $each) {
@@ -478,7 +487,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 											} ?>
 									<option >Kõik ruumid</option>
 								</select>
-								<div id="selectedPeriodRooms">	
+								<div id="selectedPeriodRooms">		Valitud ruumid:
 								<?php 
 
 								if(isset($data['sportrooms'])){ 
@@ -510,7 +519,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                 <input class="form-control" id="typeClosed" name="workoutType" placeholder="iluvõimlemine, võrkpall, male, tantsutund vms"  value="<?php if(isset($data['workoutType'])): echo $data['workoutType'];endif; ?>">
                             </div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-								<label >Vali sihtrühm</label>
+								<label >Vali sihtrühm <?php if($bookingformdatadetails[1]['grouprequired']==1){echo "*";} ?></label>
                                 <select  class="form-control arrow">
 								<option >Vali sihtrühm</option>
 								<option >Koolinoored (alla 20a)</option>
@@ -526,11 +535,11 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 						</div>  
 						<div class="row d-flex mt-2 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-                                <label for="typeClosed">Maksimaalne osalejate arv</label>
+                                <label for="typeClosed">Maksimaalne osalejate arv <?php if($bookingformdatadetails[1]['maxpeaplenumberrequired']==1){echo "*";} ?></label>
                                 <input type="number"  min="0" class="form-control" id="typeClosed" name="workoutType">
 							</div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-                                <label for="typeClosed">Treening on:</label>
+                                <label for="typeClosed">Treening on:  <?php if($bookingformdatadetails[1]['publicrequired']==1){echo "*";} ?></label>
 							    <select  class="form-control arrow">
 								<option >Privaatne</option>
 								<option >Avalik</option>
@@ -671,110 +680,124 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                 <input class="form-control" id="email" name="email" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
                             </div>
                         </div>
-
-						<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Eelistatud maksmisviis</h4>
+						<?php if($bookingformdatadetails[1]['methodofpaymentsee']==1){?>
+						<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Eelistatud maksmisviis <?php if($bookingformdatadetails[1]['methodofpaymentrequired']==1){echo "*";} ?></h4>
 							
 							<div class="row mt-3 pl-4 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
 									<select  onchange="showBillingInfo(this, 'checkmeifpayingwithinvoice2','div4')" id="invoice2" class="form-control arrow">
 									<!-- <option >Vali maksmisviis</option> -->
 									<option value="" disabled selected>Vali maksmisviis</option>
-									<option >sularaha kohapeal tasudes</option>
-									<option >pangakaart kohapeal tasudes</option>
-									<option value="1">arvega</option>
-									<option >ettemaks</option>
-									<option >muu</option>
+									<?php if($bookingformdatadetails[1]['methodofpaymentcash']==1){?>
+										<option >sularaha kohapeal tasudes</option>
+									<?php } ?>
+									<?php if($bookingformdatadetails[1]['methodofpaymentcard']==1){?>
+										<option >pangakaart kohapeal tasudes</option>
+									<?php } ?>
+									<?php if($bookingformdatadetails[1]['methodofpaymentbill']==1){?>
+										<option value="1">arvega</option>
+									<?php } ?>
+									<?php if($bookingformdatadetails[1]['methodofpaymentprepayment']==1){?>
+										<option >ettemaks</option>
+									<?php } ?>
+									<?php if($bookingformdatadetails[1]['methodofpaymentother']==1){?>
+										<option >muu</option>
+									<?php } ?>
 									</select>
 								</div>
 							</div>
+							<?php } ?>
+							<?php if($bookingformdatadetails[1]['agreementrequired']==0){?>
 						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox"  onchange="showContractInfo('div3', 'sameasagreement2','div3')"><span></span></label> Soovin sõlmida lepingu 
-
-					<div id="div3" style="display:none">
-						<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Lepingu andmed</h4>
+						<?php } ?>
+					<div id="div3" <?php if($bookingformdatadetails[1]['agreementrequired']==0){echo "style='display:none'";} ?>>
+						<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Lepingu andmed  <?php if($bookingformdatadetails[1]['agreementrequired']==1){echo "*";} ?></h4>
 						<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
 							<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
 							
-								<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi</label>
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi <?php if($bookingformdatadetails[1]['agreementnamerequired']==1){echo "*";} ?></label>
 								<input class="form-control" id="text13">
 							</div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-								<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood</label>
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood <?php if($bookingformdatadetails[1]['agreementcoderequired']==1){echo "*";} ?></label>
 								<input class="form-control" id="text15">
 							</div>
 						</div>
 						<div class="row d-flex mt-2 px-md-5 mx-md-5">
 							<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-								<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress</label>
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress <?php if($bookingformdatadetails[1]['agreementaddressrequired']==1){echo "*";} ?></label>
 								<input class="form-control" id="text17">
 							</div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-								<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik</label>
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik  <?php if($bookingformdatadetails[1]['agreementcontactrequired']==1){echo "*";} ?></label>
 								<input class="form-control" id="text19" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>">
 							</div>     
 						</div>
 						<div class="row d-flex mt-2 px-md-5 mx-md-5">
 							<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-								<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon</label>
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon <?php if($bookingformdatadetails[1]['agreementphonerequired']==1){echo "*";} ?></label>
 								<input class="form-control" id="text21" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
 							</div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-								<label class=" col-7 col-sm-7 col-md-12  p-0" >Email</label>
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Email <?php if($bookingformdatadetails[1]['agreementemailrequired']==1){echo "*";} ?></label>
 								<input class="form-control" id="text23" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
 							</div>     
 						</div>
 					</div>
 
 									<br>
+									<?php if($bookingformdatadetails[1]['invoicesee']==1){ ?>
+									<?php if($bookingformdatadetails[1]['invoicerequired']==0){?>
 					<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox"  id="checkmeifpayingwithinvoice2"  onchange="showContractInfo('div4', 'sameasagreement2','div3')"><span></span></label> Soovin saada arvet
-
-					<div style='display:none;' id='div4'>
-						<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Arve saaja andmed</h4>
-						<div id="sameasagreement2">
-						<label class="p-md-0 mt-3 col-1 pl-md-5 ml-md-5"><input type="checkbox" id="checkbox2"><span></span></label> Arve saaja andmed ühtivad lepingu sõlmija andmetega	</div>
+					<?php } ?>
+					<div <?php if($bookingformdatadetails[1]['invoicerequired']==0){echo "style='display:none'";} ?>  id='div4'>
+						<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Arve saaja andmed <?php if($bookingformdatadetails[1]['invoicerequired']==1){echo "*";} ?></h4>
+						<div id="sameasagreement2"  <?php if($bookingformdatadetails[1]['agreementrequired']==0){ echo 'style="display:none"';}?>>
+						<label class="p-md-0 mt-3 col-1 pl-md-5 ml-md-5"><input type="checkbox" id="checkbox2"><span></span></label> Kanna üle lepingu andmed	</div>
 
 						<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
 							<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
 							
-								<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi</label>
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi <?php if($bookingformdatadetails[1]['invoicenamerequired']==1){echo "*";} ?></label>
 								<input class="form-control" id="text14">
 							</div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-								<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood</label>
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood <?php if($bookingformdatadetails[1]['invoicecoderequired']==1){echo "*";} ?></label>
 								<input class="form-control" id="text16">
 							</div>
 						</div>
 						<div class="row d-flex mt-2 px-md-5 mx-md-5">
 							<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-								<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress</label>
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress <?php if($bookingformdatadetails[1]['invoiceaddressrequired']==1){echo "*";} ?></label>
 								<input class="form-control" id="text18">
 							</div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-								<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik</label>
-								<input class="form-control" id="text20">
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik <?php if($bookingformdatadetails[1]['invoicecontactrequired']==1){echo "*";} ?></label>
+								<input class="form-control" id="text20" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>">
 							</div>     
 						</div>
 						<div class="row d-flex mt-2 px-md-5 mx-md-5">
 							<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-								<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon</label>
-								<input class="form-control" id="text22">
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon <?php if($bookingformdatadetails[1]['invoicephonerequired']==1){echo "*";} ?></label>
+								<input class="form-control" id="text22" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
 							</div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-								<label class=" col-7 col-sm-7 col-md-12  p-0" >Email</label>
-								<input class="form-control" id="text24">
+								<label class=" col-7 col-sm-7 col-md-12  p-0" >Email <?php if($bookingformdatadetails[1]['invoiceemailrequired']==1){echo "*";} ?></label>
+								<input class="form-control" id="text24"  value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
 							</div>     
 						</div>
 					</div>
-
-                        <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Lisainfo (valikuline) </h4>
+					<?php } ?>
+                        <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Lisainfo </h4>
                         <div class="mt-4 px-md-5 mx-md-5">
                             <div class="form-label-group pb-2 px-md-0 px-2">
-                                <label>Lisainfo</label>
+                           
                                 <textarea class="form-control" id="comment2ForSingle" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"><?php if(isset($data['comment2'])): echo $data['comment2'];endif; ?></textarea>
 							</div>
 						
 						</div>
 						<div>
-							<label class="p-md-0 mt-5 col-1 pl-md-5 ml-md-5"><input type="checkbox"><span></span></label> Olen lugenud ja nõustun <u class=text-primary>kasutustingimustega*</u>
+							<!-- <label class="p-md-0 mt-5 col-1 pl-md-5 ml-md-5"><input type="checkbox"><span></span></label> Olen lugenud ja nõustun <u class=text-primary>kasutustingimustega*</u> -->
 						</div>
 
                         <div class="row d-flex justify-content-end mt-5 px-md-5 mx-md-5">
@@ -791,7 +814,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 												echo $each->id;
 											}
 										} ?>&date=<?php if(isset($data['workoutDate'])){ echo $data['workoutDate'][0];} else if(isset($_GET["startDate"])){echo $_GET["startDate"];}else{ echo date("d.m.yy");}?>" >Katkesta</a>
-                            <input class="btn btn-custom col-12 col-sm-3 text-white txt-xl" type="button" id="checkForConflicts" value="Broneeri">
+                            <input class="btn btn-custom col-12 col-sm-3 text-white txt-xl" type="button" id="checkForConflicts" value="Esita päring">
 							
 							<button id="loadingTemporarlyButton" class="d-none btn btn-custom text-white txt-xl" type="button" disabled>
 							<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
@@ -820,7 +843,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                            <?php echo $this->input->get('roomId');?>
                             <div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
                                 <label for="roomEvent">Ruum*</label><?php if($this->session->flashdata('sportroomMissing')){  echo $this->session->flashdata('sportroomMissing');} ?>
-								<select id="roomEvent"  onchange="addRoomInEvent()" list="saal" class="form-control arrow" >
+								<select id="roomEvent"  onchange="addRoom('roomEvent','selectedEventRooms')" list="saal" class="form-control arrow" >
 								
 								<option >Vali ruum</option>
                                     <?php foreach ($rooms as $each) {
@@ -831,7 +854,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										   ?>
 										   	<option >Kõik ruumid</option>
                                 </select>
-							<div id="selectedEventRooms">	
+							<div id="selectedEventRooms">	Valitud ruumid:	
 								<?php 
 
 								if(isset($data['sportrooms'])){ 
@@ -862,7 +885,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                 <input class="form-control" id="typePeriod" name="workoutType" placeholder="nt Korvpalli võistlus" value="<?php if(isset($data['workoutType'])){ echo $data['workoutType'];}?>">
                             </div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-								<label >Vali sihtrühm</label>
+								<label >Vali sihtrühm <?php if($bookingformdatadetails[2]['grouprequired']==1){echo "*";} ?></label>
                                 <select  class="form-control arrow">
 								<option >Vali sihtrühm</option>
 								<option >Koolinoored (alla 20a)</option>
@@ -876,11 +899,11 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 						</div>
 						<div class="row d-flex mt-2 px-md-5 mx-md-5">
                             <div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-                                <label for="typeClosed">Maksimaalne osalejate arv</label>
+                                <label for="typeClosed">Maksimaalne osalejate arv <?php if($bookingformdatadetails[2]['maxpeaplenumberrequired']==1){echo "*";} ?></label>
                                 <input type="number"  min="0" class="form-control" id="typeClosed" name="workoutType">
 							</div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-                                <label for="typeClosed">Sündmus on:</label>
+                                <label for="typeClosed">Sündmus on:  <?php if($bookingformdatadetails[2]['publicrequired']==1){echo "*";} ?></label>
 							    <select  class="form-control arrow">
 								<option >Avalik</option>
 								<option >Privaatne</option>
@@ -1044,111 +1067,123 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                             </div>
 						</div>
 						
-
-						<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Eelistatud maksmisviis</h4>
-							
+						<?php if($bookingformdatadetails[2]['methodofpaymentsee']==1){?>
+						<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Eelistatud maksmisviis <?php if($bookingformdatadetails[2]['methodofpaymentrequired']==1){echo "*";} ?></h4>
 							<div class="row mt-3 pl-4 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
 									<select  onchange="showBillingInfo(this, 'checkmeifpayingwithinvoice3','div6')" id="invoice3" class="form-control arrow">
-									<!-- <option >Vali maksmisviis</option> -->
 									<option value="" disabled selected>Vali maksmisviis</option>
-									<option >sularaha kohapeal tasudes</option>
-									<option >pangakaart kohapeal tasudes</option>
-									<option value="1">arvega</option>
-									<option >ettemaks</option>
-									<option >muu</option>
+									<?php if($bookingformdatadetails[2]['methodofpaymentcash']==1){?>
+										<option >sularaha kohapeal tasudes</option>
+									<?php } ?>
+									<?php if($bookingformdatadetails[2]['methodofpaymentcard']==1){?>
+										<option >pangakaart kohapeal tasudes</option>
+									<?php } ?>
+									<?php if($bookingformdatadetails[2]['methodofpaymentbill']==1){?>
+										<option value="1">arvega</option>
+									<?php } ?>
+									<?php if($bookingformdatadetails[2]['methodofpaymentprepayment']==1){?>
+										<option >ettemaks</option>
+									<?php } ?>
+									<?php if($bookingformdatadetails[2]['methodofpaymentother']==1){?>
+										<option >muu</option>
+									<?php } ?>
 									</select>
 								</div>
 							</div>
+						<?php } ?>
+							<?php if($bookingformdatadetails[2]['agreementrequired']==0){?>
 						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox" onchange="showContractInfo('div5', 'sameasagreement3','div5')"><span></span></label> Soovin sõlmida lepingu 
-
-						<div id="div5" style="display:none">
-							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Lepingu andmed</h4>
+						<?php } ?>
+						<div id="div5"<?php if($bookingformdatadetails[2]['agreementrequired']==0){echo "style='display:none'";} ?>>
+							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Lepingu andmed  <?php if($bookingformdatadetails[2]['agreementrequired']==1){echo "*";} ?></h4>
 							<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
 								
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi <?php if($bookingformdatadetails[2]['agreementnamerequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text25">
 								</div>
 								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood <?php if($bookingformdatadetails[2]['agreementcoderequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text27">
 								</div>
 							</div>
 							<div class="row d-flex mt-2 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress <?php if($bookingformdatadetails[2]['agreementaddressrequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text29">
 								</div>
 								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik  <?php if($bookingformdatadetails[2]['agreementcontactrequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text31" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>">
 								</div>     
 							</div>
 							<div class="row d-flex mt-2 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon <?php if($bookingformdatadetails[2]['agreementphonerequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text33" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
 								</div>
 								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Email</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Email <?php if($bookingformdatadetails[2]['agreementemailrequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text35" value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
 								</div>     
 							</div>
 						</div>
 
 										<br>
+										<?php if($bookingformdatadetails[2]['invoicesee']==1){ ?>
+										<?php if($bookingformdatadetails[2]['invoicerequired']==0){?>
 						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox"  id="checkmeifpayingwithinvoice3"  onchange="showContractInfo('div6', 'sameasagreement3','div5')"><span></span></label> Soovin saada arvet
-
-						<div style='display:none;' id='div6'>
-							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Arve saaja andmed</h4>
-							<div id="sameasagreement3">
-							<label class="p-md-0 mt-3 col-1 pl-md-5 ml-md-5"><input type="checkbox" id="checkbox3"><span></span></label> Arve saaja andmed ühtivad lepingu sõlmija andmetega</div>
+						<?php } ?>
+						<div <?php if($bookingformdatadetails[2]['invoicerequired']==0){echo "style='display:none'";} ?>  id='div6'>
+							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Arve saaja andmed <?php if($bookingformdatadetails[2]['invoicerequired']==1){echo "*";} ?></h4>
+							<div id="sameasagreement3"  <?php if($bookingformdatadetails[2]['agreementrequired']==0){ echo 'style="display:none"';}?>>
+							<label class="p-md-0 mt-3 col-1 pl-md-5 ml-md-5"><input type="checkbox" id="checkbox3"><span></span></label> Kanna üle lepingu andmed</div>
 
 							<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
 								
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Ettevõtte/eraisiku nimi <?php if($bookingformdatadetails[2]['invoicenamerequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text26">
 								</div>
 								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Registrikood/isikukood <?php if($bookingformdatadetails[2]['invoicecoderequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text28">
 								</div>
 							</div>
 							<div class="row d-flex mt-2 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress</label>
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Aadress <?php if($bookingformdatadetails[2]['invoiceaddressrequired']==1){echo "*";} ?></label>
 									<input class="form-control" id="text30">
 								</div>
 								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik</label>
-									<input class="form-control" id="text32">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Kontaktisik <?php if($bookingformdatadetails[2]['invoicecontactrequired']==1){echo "*";} ?></label>
+									<input class="form-control" id="text32" value="<?php if(isset($data['contactPerson'])){ echo $data['contactPerson'];} else if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('userName');}; ?>">
 								</div>     
 							</div>
 							<div class="row d-flex mt-2 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon</label>
-									<input class="form-control" id="text34">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Telefon <?php if($bookingformdatadetails[2]['invoicephonerequired']==1){echo "*";} ?></label>
+									<input class="form-control" id="text34" value="<?php if(isset($data['phone'])){ echo $data['phone'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('phone');}; ?>">
 								</div>
 								<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-									<label class=" col-7 col-sm-7 col-md-12  p-0" >Email</label>
-									<input class="form-control" id="text36">
+									<label class=" col-7 col-sm-7 col-md-12  p-0" >Email <?php if($bookingformdatadetails[2]['invoiceemailrequired']==1){echo "*";} ?></label>
+									<input class="form-control" id="text36"  value="<?php if(isset($data['email'])){ echo $data['email'];} else  if($this->session->userdata('roleID')!='2' && $this->session->userdata('roleID')!='3'){echo $this->session->userdata('email');}; ?>">
 								</div>     
 							</div>
 						</div>
-
-                        <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Lisainfo (valikuline) </h4>
+						<?php } ?>
+                        <h4 class="mt-5 txt-xl px-md-5 mx-md-5 ml-3">Lisainfo </h4>
 						<div class="mt-4 px-md-5 mx-md-5">
                             <div class="form-label-group pb-2 px-md-0 px-2">
-                                <label>Lisainfo</label>
-								<textarea class="form-control" id="additional" name="comment2" rows="3" placeholder="nt palun võrkpalli trenni jaoks eelnevalt üles seada võrk"><?php if(isset($data['comment2'])): echo $data['comment2'];endif; ?></textarea>
+                               
+								<textarea class="form-control" id="additional" name="comment2" rows="3" placeholder=""><?php if(isset($data['comment2'])): echo $data['comment2'];endif; ?></textarea>
 								
 							</div>
 						
 						</div>
 						<div>
-							<label class="p-md-0 mt-5 col-1 pl-md-5 ml-md-5"><input type="checkbox"><span></span></label> Olen lugenud ja nõustun <u class=text-primary>kasutustingimustega*</u>
+							<!-- <label class="p-md-0 mt-5 col-1 pl-md-5 ml-md-5"><input type="checkbox"><span></span></label> Olen lugenud ja nõustun <u class=text-primary>kasutustingimustega*</u> -->
 						</div>
                         <div class="row d-flex justify-content-end mt-5 px-md-5 mx-md-5">
 							
@@ -1167,7 +1202,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										} ?>&date=<?php if(isset($data['workoutDate'])){ echo $data['workoutDate'][0];} else if(isset($_GET["startDate"])){echo $_GET["startDate"];}else{ echo date("d.m.yy");}?>" >Katkesta</a>
 							
 							
-							<input class="btn btn-custom col-12 col-sm-3 text-white txt-xl" type="submit"  id="checkForOnceConflicts" value="Broneeri">
+							<input class="btn btn-custom col-12 col-sm-3 text-white txt-xl" type="submit"  id="checkForOnceConflicts" value="Esita päring">
 						
 						<button id="loadingTemporarlyButtonOnce" class="d-none btn btn-custom text-white txt-xl" type="button" disabled>
 							<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
@@ -1808,58 +1843,29 @@ $("#checkbox3").on("change",function(){
 });
 
 function showBillingInfo(thiselement, ifpayingwithinvoce, divToShow) {
+	if(thiselement.value==1){
 	$("#"+divToShow).show();
 	$('#'+ifpayingwithinvoce).prop('checked', true);
 }
+}
 
 
-function addRoomInOnce() {
-  var selectedRoomID =  $( "#roomOnce" ).val();
-  var selectedRoomName =  $( "#roomOnce option:selected" ).text();
+function addRoom(selectedRoom, addselectedroomtodiv) {
+  var selectedRoomID =  $( "#"+selectedRoom ).val();
+  var selectedRoomName =  $( "#"+selectedRoom+" option:selected" ).text();
  // console.log($("#selectedRooms p").text().match(selectedRoomName));
- if (!$("#selectedRooms p").text().match(selectedRoomName)&& selectedRoomName!="Vali ruum" && selectedRoomName!="Kõik ruumid"){
-  $("#selectedRooms").append( '<p class="removeRoom  mt-1 mr-1 btn btn-success  text-light"  value="' + selectedRoomID + '">' + selectedRoomName + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+selectedRoomID+'></input></p>' );
+ if (!$("#"+addselectedroomtodiv+" p").text().match(selectedRoomName)&& selectedRoomName!="Vali ruum" && selectedRoomName!="Kõik ruumid"){
+  $("#"+addselectedroomtodiv).append( '<p class="removeRoom  mt-1 mr-1 btn btn-success  text-light"  value="' + selectedRoomID + '">' + selectedRoomName + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+selectedRoomID+'></input></p>' );
 }
 if ( selectedRoomName=="Kõik ruumid"){
-	$("#roomOnce option").each(function(){
-			if(!$("#selectedRooms p").text().match($(this).text() ) && $(this).text()!="Vali ruum" && $(this).text()!="Kõik ruumid"){
-			$("#selectedRooms").append( '<p class="removeRoom  mt-1 mr-1 btn btn-success  text-light">' + $(this).text() + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+$(this).val()+'></input></p>' );
+	$("#"+selectedRoom+" option").each(function(){
+			if(!$("#"+addselectedroomtodiv+" p").text().match($(this).text() ) && $(this).text()!="Vali ruum" && $(this).text()!="Kõik ruumid"){
+			$("#"+addselectedroomtodiv).append( '<p class="removeRoom  mt-1 mr-1 btn btn-success  text-light">' + $(this).text() + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+$(this).val()+'></input></p>' );
 		}
 	});
 	}
+	$( "#"+selectedRoom ).val('Vali ruum')
 }
- 
-function addRoomInPeriod () {
-  var selectedRoomID =  $( "#roomPeriod" ).val();
-  var selectedRoomName =  $( "#roomPeriod option:selected" ).text();
-
- if (!$("#selectedPeriodRooms p").text().match(selectedRoomName)&& selectedRoomName!="Vali ruum"  && selectedRoomName!="Kõik ruumid"){
-  $("#selectedPeriodRooms").append( '<p class="removeRoom  mt-1 mr-1 btn btn-success  text-light"  value="' + selectedRoomID + '">' + selectedRoomName + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+selectedRoomID+'></input></p>' );
-}
-if ( selectedRoomName=="Kõik ruumid"){
-	$("#roomPeriod option").each(function(){
-		if(!$("#selectedPeriodRooms p").text().match($(this).text() ) && $(this).text()!="Vali ruum" && $(this).text()!="Kõik ruumid"){
-			$("#selectedPeriodRooms").append( '<p class="removeRoom  mt-1 mr-1 btn btn-success  text-light">' + $(this).text() + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+$(this).val()+'></input></p>' );
-		}
-	});
-	}
-}
-function addRoomInEvent () {
-  var selectedRoomID =  $( "#roomEvent" ).val();
-  var selectedRoomName =  $( "#roomEvent option:selected" ).text();
-
- if (!$("#selectedEventRooms p").text().match(selectedRoomName)&& selectedRoomName!="Vali ruum"  && selectedRoomName!="Kõik ruumid"){
-  $("#selectedEventRooms").append( '<p class="removeRoom  mt-1 mr-1 btn btn-success  text-light"  value="' + selectedRoomID + '">' + selectedRoomName + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+selectedRoomID+'></input></p>' );
-}
-if ( selectedRoomName=="Kõik ruumid"){
-	$("#roomEvent option").each(function(){
-		if(!$("#selectedEventRooms p").text().match($(this).text() ) && $(this).text()!="Vali ruum" && $(this).text()!="Kõik ruumid"){
-			$("#selectedEventRooms").append( '<p class="removeRoom  mt-1 mr-1 btn btn-success  text-light">' + $(this).text() + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+$(this).val()+'></input></p>' );
-		}
-	});
-	}
-}
-
 
 
 $("#approveNow, #approvePeriodNow").change(function() {

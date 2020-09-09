@@ -56,7 +56,7 @@ class Booking extends CI_Controller {
 	//	$data['allBookingInfo'] = $this->booking_model->getAllBookings();
 		$data['bookingformdata'] = $this->booking_model->getBookingformData($data['selectedBuilding']['id']);
 		$data['bookingformdatadetails'] = $this->booking_model->getBookingformDataDetails($data['selectedBuilding']['id'] );
-		print_r($data['bookingformdatadetails']);
+	//	print_r($data['bookingformdatadetails']);
 	
 		$this->load->view('templates/header',$data);
 		$this->load->view('pages/bookingquery', $data);//see leht laeb vajalikku vaadet. ehk saab teha controllerit ka mujale, mis laeb õiget lehte
