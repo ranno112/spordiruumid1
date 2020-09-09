@@ -307,7 +307,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 							
 							<div class="row mt-3 pl-4 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-									<select id="invoice1" class="form-control arrow">
+									<select  onchange="showBillingInfo(this, 'checkmeifpayingwithinvoice1','div2')" id="invoice1" class="form-control arrow">
 									<!-- <option >Vali maksmisviis</option> -->
 									<option value="" disabled selected>Vali maksmisviis</option>
 									<option >sularaha kohapeal tasudes</option>
@@ -322,7 +322,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 						</div>
 						<?php if($bookingformdatadetails[0]['agreementsee']==1){ ?>
 							<?php if($bookingformdatadetails[0]['agreementrequired']==0){?>
-						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox" onchange="showContractInfo('div1', 'sameasagreement1')"><span></span></label> Soovin sõlmida lepingu 
+						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox" onchange="showContractInfo('div1', 'sameasagreement1','div1')"><span></span></label> Soovin sõlmida lepingu 
 								<?php } ?>
 						<div id="div1" <?php if($bookingformdatadetails[0]['agreementrequired']==0){echo "style='display:none'";} ?> >
 							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Lepingu andmed  <?php if($bookingformdatadetails[0]['agreementrequired']==1){echo "*";} ?></h4>
@@ -365,12 +365,12 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 							
 							<?php if($bookingformdatadetails[0]['invoicesee']==1){ ?>
 								<?php if($bookingformdatadetails[0]['invoicerequired']==0){?>
-						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox" id="checkmeifpayingwithinvoice1"  onchange="showContractInfo('div2', 'sameasagreement1')"><span></span></label> Soovin saada arvet
+						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox" id="checkmeifpayingwithinvoice1"  onchange="showContractInfo('div2', 'sameasagreement1','div1')"><span></span></label> Soovin saada arvet
 						<?php } ?>
 						<div  <?php if($bookingformdatadetails[0]['invoicerequired']==0){echo "style='display:none'";} ?>  id='div2'>
 							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Arve saaja andmed <?php if($bookingformdatadetails[0]['invoicerequired']==1){echo "*";} ?></h4>
 							<?php if($bookingformdatadetails[0]['agreementsee']==1){ ?>
-								<div id="sameasagreement1">
+								<div id="sameasagreement1" style="display:none">
 							<label class="p-md-0 mt-3 col-1 pl-md-5 ml-md-5"><input type="checkbox" id="checkbox1"><span></span></label> Arve saaja andmed ühtivad lepingu sõlmija andmetega</div>
 							<?php } ?>
 							<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
@@ -676,7 +676,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 							
 							<div class="row mt-3 pl-4 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-									<select id="invoice2" class="form-control arrow">
+									<select  onchange="showBillingInfo(this, 'checkmeifpayingwithinvoice2','div4')" id="invoice2" class="form-control arrow">
 									<!-- <option >Vali maksmisviis</option> -->
 									<option value="" disabled selected>Vali maksmisviis</option>
 									<option >sularaha kohapeal tasudes</option>
@@ -687,7 +687,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 									</select>
 								</div>
 							</div>
-						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox"  onchange="showContractInfo('div3', 'sameasagreement2')"><span></span></label> Soovin sõlmida lepingu 
+						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox"  onchange="showContractInfo('div3', 'sameasagreement2','div3')"><span></span></label> Soovin sõlmida lepingu 
 
 					<div id="div3" style="display:none">
 						<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Lepingu andmed</h4>
@@ -725,7 +725,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 					</div>
 
 									<br>
-					<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox"  id="checkmeifpayingwithinvoice2"  onchange="showContractInfo('div4', 'sameasagreement2')"><span></span></label> Soovin saada arvet
+					<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox"  id="checkmeifpayingwithinvoice2"  onchange="showContractInfo('div4', 'sameasagreement2','div3')"><span></span></label> Soovin saada arvet
 
 					<div style='display:none;' id='div4'>
 						<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Arve saaja andmed</h4>
@@ -880,10 +880,10 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                 <input type="number"  min="0" class="form-control" id="typeClosed" name="workoutType">
 							</div>
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
-                                <label for="typeClosed">Treening on:</label>
+                                <label for="typeClosed">Sündmus on:</label>
 							    <select  class="form-control arrow">
-								<option >Privaatne</option>
 								<option >Avalik</option>
+								<option >Privaatne</option>
 								</select>
                             </div>
 						</div> 
@@ -1049,7 +1049,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 							
 							<div class="row mt-3 pl-4 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
-									<select id="invoice3" class="form-control arrow">
+									<select  onchange="showBillingInfo(this, 'checkmeifpayingwithinvoice3','div6')" id="invoice3" class="form-control arrow">
 									<!-- <option >Vali maksmisviis</option> -->
 									<option value="" disabled selected>Vali maksmisviis</option>
 									<option >sularaha kohapeal tasudes</option>
@@ -1060,7 +1060,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 									</select>
 								</div>
 							</div>
-						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox" onchange="showContractInfo('div5', 'sameasagreement3')"><span></span></label> Soovin sõlmida lepingu 
+						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox" onchange="showContractInfo('div5', 'sameasagreement3','div5')"><span></span></label> Soovin sõlmida lepingu 
 
 						<div id="div5" style="display:none">
 							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Lepingu andmed</h4>
@@ -1098,7 +1098,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 						</div>
 
 										<br>
-						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox"  id="checkmeifpayingwithinvoice3"  onchange="showContractInfo('div6', 'sameasagreement3')"><span></span></label> Soovin saada arvet
+						<label class="p-md-0 col-1 mt-4 pl-md-5 ml-md-5"><input type="checkbox"  id="checkmeifpayingwithinvoice3"  onchange="showContractInfo('div6', 'sameasagreement3','div5')"><span></span></label> Soovin saada arvet
 
 						<div style='display:none;' id='div6'>
 							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Arve saaja andmed</h4>
@@ -1680,7 +1680,7 @@ $('div').on('click', '.removeRoom', function(e) { //user click on remove text
 });
 
 
-function showContractInfo(box, sameasagreement) {
+function showContractInfo(box, sameasagreement, checkwithdiv) {
 		var chboxs = document.getElementById(box).style.display;
 		var vis = "none";
 			if(chboxs=="none"){
@@ -1688,8 +1688,14 @@ function showContractInfo(box, sameasagreement) {
 			if(chboxs=="block"){
 				
 			vis = "none"; }
-			document.getElementById(sameasagreement).style.display = vis;
 		document.getElementById(box).style.display = vis;
+	
+			if(document.getElementById(checkwithdiv).style.display=="none"){
+				document.getElementById(sameasagreement).style.display = 'none';
+			}else{
+				document.getElementById(sameasagreement).style.display = 'block';
+			}
+		
 	}
 
 
@@ -1801,32 +1807,11 @@ $("#checkbox3").on("change",function(){
 
 });
 
-$('#invoice1').on('change', function() {
-	console.log(this.value);
-		if ( this.value == '1')
-		{
-			$("#div2").show();
-			$('#checkmeifpayingwithinvoice1').prop('checked', true);
-		}
-	});
-	
-$('#invoice2').on('change', function() {
-console.log(this.value);
-	if ( this.value == '1')
-	{
-		$("#div4").show();
-		$('#checkmeifpayingwithinvoice2').prop('checked', true);
-	}
-});
+function showBillingInfo(thiselement, ifpayingwithinvoce, divToShow) {
+	$("#"+divToShow).show();
+	$('#'+ifpayingwithinvoce).prop('checked', true);
+}
 
-$('#invoice3').on('change', function() {
-console.log(this.value);
-	if ( this.value == '1')
-	{
-		$("#div6").show();
-		$('#checkmeifpayingwithinvoice3').prop('checked', true);
-	}
-});
 
 function addRoomInOnce() {
   var selectedRoomID =  $( "#roomOnce" ).val();
