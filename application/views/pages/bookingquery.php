@@ -380,7 +380,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Arve saaja andmed <?php if($bookingformdatadetails[0]['invoicerequired']==1){echo "*";} ?></h4>
 							<?php if($bookingformdatadetails[0]['agreementsee']==1){ ?>
 								<div id="sameasagreement1" <?php if($bookingformdatadetails[0]['agreementrequired']==0){ echo 'style="display:none"';}?> >
-							<label class="p-md-0 mt-3 col-1 pl-md-5 ml-md-5"><input type="checkbox" id="checkbox1"><span></span></label> Kanna üle lepingu andmed</div>
+							<label class="p-md-0 mt-3 col-1 pl-md-5 ml-md-5"><input type="checkbox" id="checkbox1"><span></span></label> Arve saaja andmed ühtivad lepingu sõlmija andmetega</div>
 							<?php } ?>
 							<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
@@ -753,7 +753,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 					<div <?php if($bookingformdatadetails[1]['invoicerequired']==0){echo "style='display:none'";} ?>  id='div4'>
 						<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Arve saaja andmed <?php if($bookingformdatadetails[1]['invoicerequired']==1){echo "*";} ?></h4>
 						<div id="sameasagreement2"  <?php if($bookingformdatadetails[1]['agreementrequired']==0){ echo 'style="display:none"';}?>>
-						<label class="p-md-0 mt-3 col-1 pl-md-5 ml-md-5"><input type="checkbox" id="checkbox2"><span></span></label> Kanna üle lepingu andmed	</div>
+						<label class="p-md-0 mt-3 col-1 pl-md-5 ml-md-5"><input type="checkbox" id="checkbox2"><span></span></label> Arve saaja andmed ühtivad lepingu sõlmija andmetega	</div>
 
 						<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
 							<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
@@ -1138,7 +1138,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 						<div <?php if($bookingformdatadetails[2]['invoicerequired']==0){echo "style='display:none'";} ?>  id='div6'>
 							<h4 class="pt-2 txt-xl px-md-5 mt-4 mx-md-5 ml-3">Arve saaja andmed <?php if($bookingformdatadetails[2]['invoicerequired']==1){echo "*";} ?></h4>
 							<div id="sameasagreement3"  <?php if($bookingformdatadetails[2]['agreementrequired']==0){ echo 'style="display:none"';}?>>
-							<label class="p-md-0 mt-3 col-1 pl-md-5 ml-md-5"><input type="checkbox" id="checkbox3"><span></span></label> Kanna üle lepingu andmed</div>
+							<label class="p-md-0 mt-3 col-1 pl-md-5 ml-md-5"><input type="checkbox" id="checkbox3"><span></span></label> Arve saaja andmed ühtivad lepingu sõlmija andmetega</div>
 
 							<div class="row d-flex p-md-0 mt-4 px-md-5 mx-md-5">
 								<div class="form-label-group col-12 col-md-6 py-md-0 pl-md-0 pr-md-5">
