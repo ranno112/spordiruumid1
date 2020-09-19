@@ -139,9 +139,10 @@ class Edit_model extends CI_Model
 
 	public function get_info_for_version( $timID)
     {
-		$this->db->select("startTime, endTime, bookingTimeColor");  
+		$this->db->select("startTime, endTime, bookingTimeColor, roomID, roomName");  
 		$this->db->order_by('bookingTimes.startTime');
 		 $this->db->where('timeID',  $timID);
+		 $this->db->join('rooms', 'bookingTimes.roomID = rooms.id' , 'left');
 		$query=$this->db->get('bookingTimes');
 		return  $query->result_array();
       
@@ -166,7 +167,27 @@ class Edit_model extends CI_Model
 
 
 
+	function getAllRooms()
+	{
+		if($this->session->userdata('roleID')=='2' || $this->session->userdata('roleID')=='3'){
+			$this->db->select("id, roomName");
+			$this->db->order_by('id');
+			$this->db->where('rooms.buildingID', $this->session->userdata('building'));
+			$query = $this->db->get('rooms');
+			return $query->result_array();
 	
+		}
+	}
+	
+
+	
+	function getSelectedRoom($timeID){
+		$this->db->select("id, roomName");
+		$this->db->join('bookingTimes', 'bookingTimes.roomID = rooms.id' , 'left');
+		$this->db->where('bookingTimes.timeID', $timeID);
+		$query = $this->db->get('rooms');
+		return $query->result_array();
+	}
 
 }
 

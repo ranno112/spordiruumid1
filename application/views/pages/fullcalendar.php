@@ -434,7 +434,12 @@
 					element.find('.fc-time').append('<br /> <span style="font-weight:450;font-size:12px">' + event.description + "<br/>" + '</span>');
 				} 
 				if ((displayOrNot == 2 || displayOrNot == 3) && (event.typeID == 1 || event.typeID == 2)) {
+					if(event.takesPlace != 1){
+						element.find('.fc-time').before("<del><span class='timequery'>Päring: " + moment(event.created_at).format("DD.MM.YYYY HH:mm") + "</span></del>"); // Päringu kirje broneeringu lahtris
+					}
+					else{
 					element.find('.fc-time').before("<span class='timequery'>Päring: " + moment(event.created_at).format("DD.MM.YYYY HH:mm") + "</span>"); // Päringu kirje broneeringu lahtris
+				}
 				}
 				element.css('border-top', '1px solid #DDD');
 				element.css('border-right', '1px solid #DDD');
@@ -456,8 +461,8 @@
 					}
 
 				}
-
-				if (event.takesPlace == false) {
+				
+				if (event.takesPlace != 1) {
 					
 				//	console.log((event.start).isAfter());
 					if((event.start).isAfter()){
@@ -803,14 +808,14 @@
 				var approved = eventToCheck[i].approved;
 					if (approved == 1) {
 						approved = "Kinnitatud";
-					} else if (approved == 0) {
+					} else {
 						approved = "Kinnitamata";
 					}
 
 				var takesPlace = eventToCheck[i].takesPlace;
 					if (takesPlace == 1) {
 						takesPlace = "";
-					} else if (takesPlace == 0) {
+					} else {
 						takesPlace = "XXX";
 					}
 

@@ -46,7 +46,7 @@
 													<input class="form-control" id="phone" type="number" name="phone" value="<?php foreach ($editBuildings as $value) {echo $value['phone'];break;}?>">
 											</div>
 											<div class="form-label-group col-12 col-md-6 p-0 pl-0 pl-md-5  pr-5 pr-md-0">
-													<label>Hinnakirja link (url) <b data-tooltip="Aadress peab olema kujul: https://koduleht.ee "><img id="tool" class="mr-5" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="6%"></b></label>
+													<label>Hinnakirja või lisainfo link (url) <b data-tooltip="Aadress peab olema kujul: https://koduleht.ee "><img id="tool" class="mr-5" src="<?php echo base_url(); ?>assets/img/icon-info.svg" width="6%"></b></label>
 													<input class="form-control" id="price_url" type="text" name="price_url" value="<?php foreach ($editBuildings as $value) {echo $value['price_url'];break;}?>">
 											</div>
 									</div>
@@ -180,8 +180,11 @@
 										<p class="txt-lg ">	Luba kasutajatele päringute esitamine  &nbsp;&nbsp;	<label><input type="checkbox" id="allowUserBooking" <?php if($bookingformdata['allow_booking']){echo 'checked';} ?> name="allowBooking" value="<?php echo $bookingformdata['allow_booking'] ?>"><span></span></label></p>
 									</div>
 									<div id="showOrHide">
-										<div class="row d-flex p-0 m-4 px-md-5 mx-5">	
+									<div class="row d-flex p-0 m-4 px-md-5 mx-5">
 									
+										<a class="btn btn-success" href="<?php echo base_url(); ?>booking/createquery/<?php echo $this->session->userdata('room');?>" role="button" target="popup">Ava kliendi päringuvorm uues aknas</a>
+										</div>
+										<div class="row d-flex p-0 m-4 px-md-5 mx-5">	
 											<p class="txt-lg ">	Näita kliendi edastatud ühekordse treeningu päring avalikust kalendrist  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($getBookingformDataDetailsOnce['showtopublicuser']){echo 'checked';} ?> name="showtopublicuseronce" value="<?php echo $getBookingformDataDetailsOnce['showtopublicuser'] ?>"><span></span></label></p>
 											<p class="txt-lg ">	Näita kliendi edastatud hooajalise treeningu päringu avalikust kalendrist  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($getBookingformDataDetailsPeriod['showtopublicuser']){echo 'checked';} ?> name="showtopublicuserperiod" value="<?php echo $getBookingformDataDetailsPeriod['showtopublicuser'] ?>"><span></span></label></p>
 											<p class="txt-lg ">	Näita kliendi edastatud sündmuse päring avalikust kalendrist  &nbsp;&nbsp;	<label><input type="checkbox" <?php if($getBookingformDataDetailsEvent['showtopublicuser']){echo 'checked';}  ?> name="showtopublicuserevent" value="<?php echo $getBookingformDataDetailsEvent['showtopublicuser'] ?>"><span></span></label></p>

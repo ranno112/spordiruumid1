@@ -16,6 +16,7 @@ class Edit extends CI_Controller {
 		$data['menu'] = 'calendar'; // Capitalize the first letter
 		$data['unapprovedBookings'] = $this->edit_model->getUnapprovedBookings($this->session->userdata('building'));
 		$data['bookingformdata'] = $this->edit_model->getBookingformData();
+		$data['rooms'] = $this->edit_model->getAllRooms();
 		return $data;
 		}
 
@@ -258,6 +259,8 @@ class Edit extends CI_Controller {
 		if($this->session->userdata('roleID')==='2' || $this->session->userdata('roleID')==='3'){
 			$data=$this->menu();
 			$data['allPostData']=$this->input->post();
+			$data['selectedRoom']= $this->edit_model->getSelectedRoom($data['allPostData']['timesIdArray'][0]);
+		
 			
 			// print_r($data['allPostData']);
 			// echo '<br>';
@@ -371,7 +374,7 @@ class Edit extends CI_Controller {
 					else{
 						$RedirectToCalendar=true;
 						$insert_data[] = array(
-						//'roomID' => $this->input->post('sportrooms'),
+						'roomID' => $this->input->post('roomID'),
 						'startTime' => $start_date, 
 						'endTime' => $end_date,
 						'bookingTimeColor' =>$this->input->post('color')[$i],
@@ -379,17 +382,17 @@ class Edit extends CI_Controller {
 						
 						);
 						$dataForVersion=$this->edit_model->get_info_for_version($this->input->post('timesIdArray')[$i]);
-
+					
 						
 							
 							$saveVersion=$this->saveVersionOrNot($this->input->post('timesIdArray')[$i], $dataForVersion[0]['startTime'],$dataForVersion[0]['endTime'], 
-							$insert_data[$i],  $this->input->post('reason'), $dataForVersion[0]['bookingTimeColor']);
+							$insert_data[$i],  $this->input->post('reason'), $dataForVersion[0]['bookingTimeColor'],  $dataForVersion[0]);
 						
 							if($saveVersion){
 							$this->edit_model->insert_version($saveVersion);
 							}
 							$this->edit_model->update_bookingTimes($insert_data[$i], $this->input->post('timesIdArray')[$i]);
-
+							
 						
 					}
 				}
@@ -536,7 +539,7 @@ class Edit extends CI_Controller {
 					$days= array('Esmaspäev', 'Teisipäev', 'Kolmapäev', 'Neljapäev', 'Reede', 'Laupäev','Pühapäev');
 					$key = array_search($weekdayToChange, $days);
 					$difference=$key-$weekday+1;
-					echo $difference;
+			//		echo $difference;
 					
 					$RedirectToCalendar='';
 					for($i = 0; $i < count($start_data); $i++)
@@ -566,7 +569,7 @@ class Edit extends CI_Controller {
 						else{
 							$RedirectToCalendar=true;
 						$insert_data[] = array(
-					
+							'roomID' => $this->input->post('roomID'),
 							'startTime' => $start_date, 
 							'endTime' => $end_date,
 							'bookingTimeColor' =>$this->input->post('color'),	
@@ -578,7 +581,7 @@ class Edit extends CI_Controller {
 							$dataForVersion=$this->edit_model->get_info_for_version($this->input->post('timesIdArray')[$i]);
 
 							$saveVersion=$this->saveVersionOrNot($this->input->post('timesIdArray')[$i], $dataForVersion[0]['startTime'],$dataForVersion[0]['endTime'], 
-							$insert_data[$i],  $this->input->post('reason'), $dataForVersion[0]['bookingTimeColor']);
+							$insert_data[$i],  $this->input->post('reason'), $dataForVersion[0]['bookingTimeColor'],  $dataForVersion[0]);
 						
 							if($saveVersion){
 							$this->edit_model->insert_version($saveVersion);
@@ -650,12 +653,17 @@ class Edit extends CI_Controller {
 	}
 
 
-	function saveVersionOrNot($timesID, $startTimeFromDB, $endTimefromDB, $insertData, $reason, $color){
+	function saveVersionOrNot($timesID, $startTimeFromDB, $endTimefromDB, $insertData, $reason, $color, $roomfromDB){
+	
 	$dataForVersioning = array(
 			'timeID'	=>$timesID,
 			'nameWhoChanged'		=>	$this->session->userdata('userName'),
 			'reason'	=>	$reason,
 		);
+		if(!in_array( $roomfromDB['roomID'] , $insertData) ){
+		
+			$dataForVersioning['reason']=	"Ruum: ".$roomfromDB['roomName'].'. '.$reason;
+		}
 	if( !in_array( $startTimeFromDB , $insertData) 
 			|| !in_array( $endTimefromDB , $insertData) 
 			)
@@ -665,7 +673,7 @@ class Edit extends CI_Controller {
 				return $dataForVersioning;
 			}
 
-		else if(  $reason!=''){
+		else if(  $dataForVersioning['reason']!=''){
 			return $dataForVersioning;
 		}
 		else if(!in_array( $color , $insertData) &&  $reason==''){

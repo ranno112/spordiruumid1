@@ -24,7 +24,7 @@ class Booking extends CI_Controller {
 		
 		if ( $this->session->userdata('roleID')==='2'  || $this->session->userdata('roleID')==='3'){
 			$data['unapprovedBookings'] = $this->booking_model->getUnapprovedBookings($this->session->userdata('building'));
-
+			$data['bookingformdata'] = $this->booking_model->getBookingformData($this->session->userdata('building'));
 		}
 		
 		return $data;
@@ -69,7 +69,7 @@ class Booking extends CI_Controller {
 	{
 			if ($str == '' && $this->input->post('type')!='4')
 			{
-				$data['bookingformdata'] = $this->booking_model->getBookingformData();
+				$data['bookingformdata'] = $this->booking_model->getBookingformData($this->session->userdata('building'));
 				if($data['bookingformdata']['clubname_admin']==0){
 					return TRUE;
 				}
@@ -89,7 +89,7 @@ class Booking extends CI_Controller {
 	public function contactPerson_check($str= '')
 	{
 			if ($str == '' && $this->input->post('type')!='4'){
-				$data['bookingformdata'] = $this->booking_model->getBookingformData();
+				$data['bookingformdata'] = $this->booking_model->getBookingformData($this->session->userdata('building'));
 				if($data['bookingformdata']['contactname_admin']==0){
 					return TRUE;
 				}
@@ -121,7 +121,7 @@ class Booking extends CI_Controller {
 	{
 			if ($str == '' && $this->input->post('type')!='4')
 			{
-				$data['bookingformdata'] = $this->booking_model->getBookingformData();
+				$data['bookingformdata'] = $this->booking_model->getBookingformData($this->session->userdata('building'));
 				if($data['bookingformdata']['email_admin']==0){
 					return TRUE;
 				}
@@ -136,7 +136,7 @@ class Booking extends CI_Controller {
 	{
 			if ($str == '' && $this->input->post('type')!='4')
 			{
-				$data['bookingformdata'] = $this->booking_model->getBookingformData();
+				$data['bookingformdata'] = $this->booking_model->getBookingformData($this->session->userdata('building'));
 				if($data['bookingformdata']['type_admin']==0){
 					return TRUE;
 				}
@@ -152,7 +152,7 @@ class Booking extends CI_Controller {
 	{
 		if ($str == '')
 			{
-				$data['bookingformdata'] = $this->booking_model->getBookingformData();
+				$data['bookingformdata'] = $this->booking_model->getBookingformData($this->session->userdata('building'));
 				if($data['bookingformdata']['phone_admin']==0 || $this->input->post('type')=='4'){
 					return TRUE;
 				}

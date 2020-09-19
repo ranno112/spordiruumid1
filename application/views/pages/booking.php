@@ -107,14 +107,14 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										   ?>
 										   	<option >Kõik ruumid</option>
                                 </select>
-							<div id="selectedRooms">	
+							<div id="selectedRooms">	 Valitud ruumid:
 								<?php 
 
 								if(isset($data['sportrooms'])){ 
 									foreach($data['sportrooms'] as $value){
 										foreach($rooms as $room){
 											if($value== $room->id){
-												echo '<p class="removeRoom btn btn-light" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
+												echo '<p class="removeRoom mt-1 mr-1 btn btn-success" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
 											}
 										}
 									}
@@ -124,7 +124,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 									foreach($rooms as $room){
 									
 										if( $this->uri->segment(3)== $room->id){
-											echo '<p class="removeRoom btn btn-light" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
+											echo '<p class="removeRoom mt-1 mr-1 btn btn-success" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
 										}
 									} 
 									 } ?>
@@ -265,9 +265,11 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 									
 									}
 								}
-									   else 
-										   if( $this->uri->segment(3)== $each->id){
+									   else   if( $this->uri->segment(3)== $each->id){
 												echo $each->id;
+											}
+										else if ( empty($this->uri->segment(3)) && $this->session->userdata('room')== $each->id){
+											 echo $this->session->userdata('room');
 											}
 										} ?>&date=<?php if(isset($data['workoutDate'])){ echo $data['workoutDate'][0];} else if(isset($_GET["startDate"])){echo $_GET["startDate"];}else{ echo date("d.m.yy");}?>" >Katkesta</a>
 							
@@ -334,14 +336,14 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 											} ?>
 									<option >Kõik ruumid</option>
 								</select>
-								<div id="selectedPeriodRooms">	
+								<div id="selectedPeriodRooms">	Valitud ruumid:
 								<?php 
 
 								if(isset($data['sportrooms'])){ 
 									foreach($data['sportrooms'] as $value){
 										foreach($rooms as $room){
 											if($value== $room->id){
-												echo '<p class="removeRoom btn btn-light" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
+												echo '<p class="removeRoom mt-1 mr-1 btn btn-success" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
 											}
 										}
 									}
@@ -351,7 +353,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 									foreach($rooms as $room){
 									
 										if( $this->uri->segment(3)== $room->id){
-											echo '<p class="removeRoom btn btn-light" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
+											echo '<p class="removeRoom mt-1 mr-1 btn btn-success" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
 										}
 									} 
 									 } ?>
@@ -549,6 +551,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										   if( $this->uri->segment(3)== $each->id){
 												echo $each->id;
 											}
+										else if (empty($this->uri->segment(3)) && $this->session->userdata('room')== $each->id){ echo $this->session->userdata('room');}
 										} ?>&date=<?php if(isset($data['workoutDate'])){ echo $data['workoutDate'][0];} else if(isset($_GET["startDate"])){echo $_GET["startDate"];}else{ echo date("d.m.yy");}?>" >Katkesta</a>
                             <input class="btn btn-custom col-12 col-sm-3 text-white txt-xl" type="button" id="checkForConflicts" value="Broneeri">
 							
@@ -581,14 +584,14 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 											} ?>
 									<option >Kõik ruumid</option>
 								</select>  
-								<div id="selectedClosedRooms">	
+								<div id="selectedClosedRooms">	Valitud ruumid:
 								<?php 
 
 								if(isset($data['sportrooms'])){ 
 									foreach($data['sportrooms'] as $value){
 										foreach($rooms as $room){
 											if($value== $room->id){
-												echo '<p class="removeRoom btn btn-light" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
+												echo '<p class="removeRoom mt-1 mr-1 btn btn-success" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
 											}
 										}
 									}
@@ -597,7 +600,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 								else {
 									foreach($rooms as $room){
 										if( $this->uri->segment(3)== $room->id){
-											echo '<p class="removeRoom btn btn-light" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
+											echo '<p class="removeRoom mt-1 mr-1 btn btn-success" value="' . $room->id . '">' . $room->roomName . '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='.$room->id.'></input></p>';
 										}
 									} 
 									 } ?>
@@ -761,6 +764,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										   if( $this->uri->segment(3)== $each->id){
 												echo $each->id;
 											}
+										else if (empty($this->uri->segment(3)) && $this->session->userdata('room')== $each->id){ echo $this->session->userdata('room');}
 										} ?>&date=<?php if(isset($data['workoutDate'])){ echo $data['workoutDate'][0];} else if(isset($_GET["startDate"])){echo $_GET["startDate"];}else{ echo date("d.m.yy");}?>" >Katkesta</a>
                             <input class="btn btn-custom col-12 col-sm-3 text-white txt-xl" type="submit" value="Broneeri">
                         </div>
@@ -1274,15 +1278,16 @@ function addRoomInOnce() {
   var selectedRoomName =  $( "#roomOnce option:selected" ).text();
  // console.log($("#selectedRooms p").text().match(selectedRoomName));
  if (!$("#selectedRooms p").text().match(selectedRoomName)&& selectedRoomName!="Vali ruum" && selectedRoomName!="Kõik ruumid"){
-  $("#selectedRooms").append( '<p class="removeRoom btn btn-light"  value="' + selectedRoomID + '">' + selectedRoomName + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+selectedRoomID+'></input></p>' );
+  $("#selectedRooms").append( '<p class="removeRoom mt-1 mr-1 btn btn-success"  value="' + selectedRoomID + '">' + selectedRoomName + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+selectedRoomID+'></input></p>' );
 }
 if ( selectedRoomName=="Kõik ruumid"){
 	$("#roomOnce option").each(function(){
 			if(!$("#selectedRooms p").text().match($(this).text() ) && $(this).text()!="Vali ruum" && $(this).text()!="Kõik ruumid"){
-			$("#selectedRooms").append( '<p class="removeRoom btn btn-light">' + $(this).text() + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+$(this).val()+'></input></p>' );
+			$("#selectedRooms").append( '<p class="removeRoom mt-1 mr-1 btn btn-success">' + $(this).text() + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+$(this).val()+'></input></p>' );
 		}
 	});
-	}
+}
+$( "#roomOnce" ).val('Vali ruum')
 }
  
 function addRoomInPeriod () {
@@ -1290,30 +1295,32 @@ function addRoomInPeriod () {
   var selectedRoomName =  $( "#roomPeriod option:selected" ).text();
 
  if (!$("#selectedPeriodRooms p").text().match(selectedRoomName)&& selectedRoomName!="Vali ruum"  && selectedRoomName!="Kõik ruumid"){
-  $("#selectedPeriodRooms").append( '<p class="removeRoom btn btn-light"  value="' + selectedRoomID + '">' + selectedRoomName + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+selectedRoomID+'></input></p>' );
+  $("#selectedPeriodRooms").append( '<p class="removeRoom mt-1 mr-1 btn btn-success"  value="' + selectedRoomID + '">' + selectedRoomName + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+selectedRoomID+'></input></p>' );
 }
 if ( selectedRoomName=="Kõik ruumid"){
 	$("#roomPeriod option").each(function(){
 		if(!$("#selectedPeriodRooms p").text().match($(this).text() ) && $(this).text()!="Vali ruum" && $(this).text()!="Kõik ruumid"){
-			$("#selectedPeriodRooms").append( '<p class="removeRoom btn btn-light">' + $(this).text() + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+$(this).val()+'></input></p>' );
+			$("#selectedPeriodRooms").append( '<p class="removeRoom mt-1 mr-1 btn btn-success">' + $(this).text() + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+$(this).val()+'></input></p>' );
 		}
 	});
-	}
+}
+$( "#roomPeriod" ).val('Vali ruum')
 }
 function addRoomInClosed () {
   var selectedRoomID =  $( "#roomClosed" ).val();
   var selectedRoomName =  $( "#roomClosed option:selected" ).text();
 
  if (!$("#selectedClosedRooms p").text().match(selectedRoomName)&& selectedRoomName!="Vali ruum"  && selectedRoomName!="Kõik ruumid"){
-  $("#selectedClosedRooms").append( '<p class="removeRoom btn btn-light"  value="' + selectedRoomID + '">' + selectedRoomName + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+selectedRoomID+'></input></p>' );
+  $("#selectedClosedRooms").append( '<p class="removeRoom mt-1 mr-1 btn btn-success"  value="' + selectedRoomID + '">' + selectedRoomName + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+selectedRoomID+'></input></p>' );
 }
 if ( selectedRoomName=="Kõik ruumid"){
 	$("#roomClosed option").each(function(){
 		if(!$("#selectedClosedRooms p").text().match($(this).text() ) && $(this).text()!="Vali ruum" && $(this).text()!="Kõik ruumid"){
-			$("#selectedClosedRooms").append( '<p class="removeRoom btn btn-light">' + $(this).text() + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+$(this).val()+'></input></p>' );
+			$("#selectedClosedRooms").append( '<p class="removeRoom mt-1 mr-1 btn btn-success">' + $(this).text() + '<span aria-hidden="true"> &times; </span><input hidden name="sportrooms[]" value='+$(this).val()+'></input></p>' );
 		}
 	});
-	}
+}
+$( "#roomClosed" ).val('Vali ruum')
 }
 
 

@@ -87,7 +87,24 @@
 
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
 								<label for="room">Ruum</label>
-								<input type="text" class="form-control" name="selectedroom" id="selectedroom" value="" disabled>
+								<select id="roomID" name="roomID"  class="form-control arrow" >
+								
+								<option >Vali ruum</option>
+								
+									<?php 
+								
+									foreach ($rooms as $each) {
+										if( $each==$selectedRoom[0]){
+											echo '<option selected  value="' . $each['id'] . '">' . $each['roomName'] . '</option>';
+										}	
+										else{								
+											echo '<option value="' . $each['id'] . '">' . $each['roomName'] . '</option>';
+										}
+									}
+										   ?>
+										 
+                                </select>
+								
 							</div>
 						</div>
 
@@ -145,7 +162,7 @@
 						</div>
 						<input class="d-none" type="hidden" name="BookingID" id="BookingID" value="<?php echo $_POST['BookingID']; ?>">
 						<input class="d-none" type="hidden" name="isPeriodic" id="isPeriodic" value="<?php echo $_POST['isPeriodic']; ?>">
-						<input class="d-none" type="hidden" name="roomID" id="roomID" value="<?php echo $bookingData['roomID'];?>"> 
+						<!-- <input class="d-none" type="hidden" name="roomID" id="roomID" value="<?php echo $bookingData['roomID'];?>">  -->
 
 						<div class="row d-flex justify-content-end mt-5 px-md-5 mx-md-5">
 							<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $bookingData['roomID'];?>">Katkesta</a>
@@ -204,7 +221,24 @@
 
 							<div class="form-label-group col-12 col-md-6 p-md-0 pl-md-5">
 								<label for="room">Ruum</label>
-								<input type="text" class="form-control" name="selectedroomPeriod" id="selectedroomPeriod" value="" disabled>
+								<select id="roomID" name="roomID"  class="form-control arrow" >
+								
+								<option >Vali ruum</option>
+								
+									<?php 
+								
+									foreach ($rooms as $each) {
+										if( $each==$selectedRoom[0]){
+											echo '<option selected  value="' . $each['id'] . '">' . $each['roomName'] . '</option>';
+										}	
+										else{								
+											echo '<option value="' . $each['id'] . '">' . $each['roomName'] . '</option>';
+										}
+									}
+										   ?>
+										 
+                                </select>
+								<!-- <input type="text" class="form-control" name="roomID" id="selectedroomPeriod" value="" disabled> -->
 							</div>
 						</div>
 
@@ -319,7 +353,7 @@
 						<input class="d-none" type="hidden" name="weekendNumber" id="weekendNumber" value="">
 						<input class="d-none" type="hidden" name="BookingID" id="BookingID" value="<?php echo $_POST['BookingID']; ?>">
 						<input class="d-none" type="hidden" name="isPeriodic" id="isPeriodic" value="<?php echo $_POST['isPeriodic']; ?>">
-						<input class="d-none" type="hidden" name="roomID" id="roomIDPeriodic" value="<?php echo $bookingData['roomID'];?>">
+						<!-- <input class="d-none" type="hidden" name="roomID" id="roomIDPeriodic" value="<?php echo $bookingData['roomID'];?>"> -->
 
 						<div class="row d-flex justify-content-end mt-5 px-md-5 mx-md-5">
 							<a class="txt-xl link-deco align-self-center py-0 pr-5 mr-2" href="<?php echo base_url(); ?>fullcalendar?roomId=<?php echo $bookingData['roomID'];?>">Katkesta</a>
@@ -440,7 +474,7 @@ foreach ($_POST['timesIdArray'] as $key => $value) {
 				for (var i = 0, l = res.length; i < l; i++) {
 					var obj = res[i];
 			
-					$('#selectedroom').val(obj.roomName);
+					
 					$('#selectedroomPeriod').val(obj.roomName);
 					$('#sport_facility').val(obj.building);
 					$('#sport_facilityPeriod').val(obj.building);
