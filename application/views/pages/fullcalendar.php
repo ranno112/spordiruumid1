@@ -449,8 +449,10 @@
 					element.css('border-left', '7px solid #1A7AB7');
 
 				} else {
+					if(  event.id){
 
 					element.find('.fc-content').after('<span class="notice notice-error">Kinnitamata</span>');
+					}
 					element.css({
 						'background': 'repeating-linear-gradient(-45deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 1) 10px, rgba(245, 245, 245, 1) 10px, rgba(245, 245, 245, 1) 20px)'
 					});
@@ -462,7 +464,7 @@
 
 				}
 				
-				if (event.takesPlace != 1) {
+				if (event.takesPlace != 1 && event.id) {
 					
 				//	console.log((event.start).isAfter());
 					if((event.start).isAfter()){
@@ -804,7 +806,7 @@
 			
 		
 				for ( i = 0; i < eventToCheck.length; i++) {
-					
+					console.log(eventToCheck[i].title);
 				var approved = eventToCheck[i].approved;
 					if (approved == 1) {
 						approved = "Kinnitatud";
@@ -1072,7 +1074,7 @@
 										success: function() {
 											
 											//siia tule teha panna kinnitatud olekuks modalis  
-											if (approvedOrNotToDB == 1) {
+											if (approvedOrNotToDB == 1 ) {
 												$this.parents("tr").children("td:nth-child(4)").html("&nbsp;&nbsp;&nbsp;Kinnitatud");
 											} else {
 												$this.parents("tr").children("td:nth-child(4)").html("&nbsp;&nbsp;&nbsp;Kinnitamata");
