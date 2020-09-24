@@ -431,7 +431,7 @@
 
 
 				if (event.description) {
-					element.find('.fc-time').append('<br /> <span style="font-weight:450;font-size:12px">' + event.description + "<br/>" + '</span>');
+					element.find('.fc-time').append('<br /> <span style="padding-top:4px;font-weight:450;font-size:12px">' + event.description + "<br/>" + '</span>');
 				} 
 				if ((displayOrNot == 2 || displayOrNot == 3) && (event.typeID == 1 || event.typeID == 2)) {
 					if(event.takesPlace != 1){
@@ -440,6 +440,9 @@
 					else{
 					element.find('.fc-time').before("<span class='timequery'>Päring: " + moment(event.created_at).format("DD.MM.YYYY HH:mm") + "</span>"); // Päringu kirje broneeringu lahtris
 				}
+				}
+				else{
+					element.find('.fc-time').before("<span class='timequery'></span>"); // Päringu kirje broneeringu lahtris
 				}
 				element.css('border-top', '1px solid #DDD');
 				element.css('border-right', '1px solid #DDD');
