@@ -427,9 +427,16 @@
 			],
 			selectable:  (displayOrNot == 2 || displayOrNot == 3) ? true:false,
 			selectHelper: true,
+		
 			eventRender: function(event, element) {
+			
 
-
+				if (!event.isMirror) {
+				var tooltipTitle=(event.title) ? '\n'+ event.title : '';
+				var tooltipDescription= (event.description) ?  '\n'+ event.description : '';
+				element[0].title = $.fullCalendar.formatDate(event.start, "HH:mm") + ' - '+ $.fullCalendar.formatDate(event.end, "HH:mm") +tooltipTitle+ tooltipDescription;
+		//	 $(element).tooltip({title: $.fullCalendar.formatDate(event.start, "HH:mm") + ' - '+ $.fullCalendar.formatDate(event.end, "HH:mm") +tooltipTitle+ tooltipDescription , container: "body",  trigger: 'hover'});  
+				}
 				if (event.description) {
 					element.find('.fc-time').append('<br /> <span style="padding-top:4px;font-weight:450;font-size:12px">' + event.description + "<br/>" + '</span>');
 				} 
@@ -809,7 +816,7 @@
 			
 		
 				for ( i = 0; i < eventToCheck.length; i++) {
-					console.log(eventToCheck[i].title);
+					
 				var approved = eventToCheck[i].approved;
 					if (approved == 1) {
 						approved = "Kinnitatud";

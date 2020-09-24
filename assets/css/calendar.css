@@ -178,6 +178,25 @@
     background-color: #9E3253;
     color: #fff;
   }
+
+
+  .tooltip-inner {
+	background-color: #1A7AB7;
+	white-space:pre-wrap;
+}
+.tooltip.bs-tooltip-right .arrow:before {
+    border-right-color: #1A7AB7 !important;
+}
+.tooltip.bs-tooltip-left .arrow:before {
+    border-left-color: #1A7AB7 !important;
+}
+.tooltip.bs-tooltip-bottom .arrow:before {
+    border-bottom-color: #1A7AB7 !important;
+}
+.tooltip.bs-tooltip-top .arrow:before {
+    border-top-color: #1A7AB7 !important;
+}
+
 /* .modal-backdrop {
     position: fixed;
     top: 0;
