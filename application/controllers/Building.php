@@ -65,7 +65,14 @@
 				$this->building_model->registerBuildingSettings($this->session->userdata('building'));
 				$data['bookingformdata'] = $this->building_model->getBookingformData($this->session->userdata('building'));
 			}
-
+			if(empty($data['getBookingformDataDetailsOnce'])){
+				$this->building_model->registerBuildingSettingsDetails($slug, 1);
+				$this->building_model->registerBuildingSettingsDetails($slug, 2);
+				$this->building_model->registerBuildingSettingsDetails($slug, 3);
+				$data['getBookingformDataDetailsOnce'] = $this->building_model->getBookingformDataDetailsOnce($slug);
+				$data['getBookingformDataDetailsPeriod'] = $this->building_model->getBookingformDataDetailsPeriod($slug);
+				$data['getBookingformDataDetailsEvent'] = $this->building_model->getBookingformDataDetailsEvent($slug);
+			}
 			$this->load->view('templates/header', $this->security->xss_clean($data));
 			$this->load->view('pages/editBuilding', $this->security->xss_clean($data));
 			$this->load->view('templates/footer');
