@@ -446,7 +446,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										} ?>&date=<?php if(isset($data['workoutDate'])){ echo $data['workoutDate'][0];} else if(isset($_GET["startDate"])){echo $_GET["startDate"];}else{ echo date("d.m.yy");}?>" >Katkesta</a>
 							
 							
-							<input class="btn btn-custom col-12 col-sm-3 text-white txt-xl" type="submit"  id="checkForOnceConflicts" value="Esita päring">
+							<input class="btn btn-custom col-12 col-sm-3 text-white txt-xl" type="submit" disabled id="checkForOnceConflicts" value="Esita päring">
 						
 						<button id="loadingTemporarlyButtonOnce" class="d-none btn btn-custom text-white txt-xl" type="button" disabled>
 							<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
@@ -814,7 +814,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 												echo $each->id;
 											}
 										} ?>&date=<?php if(isset($data['workoutDate'])){ echo $data['workoutDate'][0];} else if(isset($_GET["startDate"])){echo $_GET["startDate"];}else{ echo date("d.m.yy");}?>" >Katkesta</a>
-                            <input class="btn btn-custom col-12 col-sm-3 text-white txt-xl" type="button" id="checkForConflicts" value="Esita päring">
+                            <input class="btn btn-custom col-12 col-sm-3 text-white txt-xl" type="button" disabled id="checkForConflicts" value="Esita päring">
 							
 							<button id="loadingTemporarlyButton" class="d-none btn btn-custom text-white txt-xl" type="button" disabled>
 							<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
@@ -1202,7 +1202,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										} ?>&date=<?php if(isset($data['workoutDate'])){ echo $data['workoutDate'][0];} else if(isset($_GET["startDate"])){echo $_GET["startDate"];}else{ echo date("d.m.yy");}?>" >Katkesta</a>
 							
 							
-							<input class="btn btn-custom col-12 col-sm-3 text-white txt-xl" type="submit"  id="checkForOnceConflicts" value="Esita päring">
+							<input class="btn btn-custom col-12 col-sm-3 text-white txt-xl" type="submit" disabled  id="checkForOnceConflicts" value="Esita päring">
 						
 						<button id="loadingTemporarlyButtonOnce" class="d-none btn btn-custom text-white txt-xl" type="button" disabled>
 							<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>

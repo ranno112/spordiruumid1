@@ -86,6 +86,61 @@ CREATE TABLE `bookingFormSettings` (
 	PRIMARY KEY (formID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `bookingformsettingsdetails` (
+  `onceID` int(11) NOT NULL AUTO_INCREMENT,
+  `buildingID` int(11) NOT NULL,
+  `typeID` int(11) NOT NULL,
+  `showtopublicuser` tinyint(1) NOT NULL DEFAULT 1,
+  `maxpeaplenumbersee` tinyint(1) NOT NULL DEFAULT 1,
+  `maxpeaplenumberrequired` tinyint(1) NOT NULL DEFAULT 0,
+  `groupsee` tinyint(1) NOT NULL DEFAULT 1,
+  `grouprequired` tinyint(1) NOT NULL DEFAULT 0,
+  `publicsee` tinyint(1) NOT NULL DEFAULT 1,
+  `publicrequired` tinyint(1) NOT NULL DEFAULT 0,
+  `prepsee` tinyint(1) NOT NULL DEFAULT 1,
+  `preprequired` tinyint(1) NOT NULL DEFAULT 0,
+  `cleansee` tinyint(1) NOT NULL DEFAULT 1,
+  `cleanrequired` tinyint(1) NOT NULL DEFAULT 0,
+  `agreementsee` tinyint(1) NOT NULL DEFAULT 1,
+  `agreementrequired` tinyint(1) NOT NULL DEFAULT 0,
+  `agreementnamesee` tinyint(1) NOT NULL DEFAULT 1,
+  `agreementnamerequired` tinyint(1) NOT NULL DEFAULT 0,
+  `agreementcodesee` tinyint(1) NOT NULL DEFAULT 1,
+  `agreementcoderequired` tinyint(1) NOT NULL DEFAULT 0,
+  `agreementaddresssee` tinyint(1) NOT NULL DEFAULT 1,
+  `agreementaddressrequired` tinyint(1) NOT NULL DEFAULT 0,
+  `agreementcontactsee` tinyint(1) NOT NULL DEFAULT 1,
+  `agreementcontactrequired` tinyint(1) NOT NULL DEFAULT 0,
+  `agreementemailsee` tinyint(1) NOT NULL DEFAULT 1,
+  `agreementemailrequired` tinyint(1) NOT NULL DEFAULT 0,
+  `agreementphonesee` tinyint(1) NOT NULL DEFAULT 1,
+  `agreementphonerequired` tinyint(1) NOT NULL DEFAULT 0,
+  `methodofpaymentsee` tinyint(1) NOT NULL DEFAULT 1,
+  `methodofpaymentrequired` tinyint(1) NOT NULL DEFAULT 0,
+  `methodofpaymentcash` tinyint(1) NOT NULL DEFAULT 1,
+  `methodofpaymentcard` tinyint(1) NOT NULL DEFAULT 1,
+  `methodofpaymentbill` tinyint(1) NOT NULL DEFAULT 1,
+  `methodofpaymentprepayment` tinyint(1) NOT NULL DEFAULT 1,
+  `methodofpaymentother` tinyint(1) NOT NULL DEFAULT 1,
+  `invoicesee` tinyint(1) NOT NULL DEFAULT 1,
+  `invoicerequired` tinyint(1) NOT NULL DEFAULT 0,
+  `invoicenamesee` tinyint(1) NOT NULL DEFAULT 1,
+  `invoicenamerequired` tinyint(1) NOT NULL DEFAULT 0,
+  `invoicecodesee` tinyint(1) NOT NULL DEFAULT 1,
+  `invoicecoderequired` tinyint(1) NOT NULL DEFAULT 0,
+  `invoiceaddresssee` tinyint(1) NOT NULL DEFAULT 1,
+  `invoiceaddressrequired` tinyint(1) NOT NULL DEFAULT 0,
+  `invoicecontact` tinyint(1) NOT NULL DEFAULT 1,
+  `invoicecontactrequired` tinyint(1) NOT NULL DEFAULT 0,
+  `invoiceemailsee` tinyint(1) NOT NULL DEFAULT 1,
+  `invoiceemailrequired` tinyint(1) NOT NULL DEFAULT 0,
+  `invoicephonesee` tinyint(1) NOT NULL DEFAULT 1,
+  `invoicephonerequired` tinyint(1) NOT NULL DEFAULT 0,
+  `intro` text NOT NULL DEFAULT '',
+  `emailtext` text NOT NULL DEFAULT '',
+	PRIMARY KEY (onceID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 CREATE TABLE `bookings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `typeID` int(11) DEFAULT NULL,
@@ -99,6 +154,11 @@ CREATE TABLE `bookings` (
   `workout` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   `event_in` datetime DEFAULT NULL,
   `event_out` datetime DEFAULT NULL,
+	`private` tinyint(1) NOT NULL DEFAULT 1,
+  `maximumparticipants` int(11) DEFAULT NULL,
+  `target` int(11) DEFAULT 0,
+  `agreementID` int(11) DEFAULT NULL,
+  `paymentID` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
    PRIMARY KEY (id)
 );
@@ -142,11 +202,14 @@ CREATE TABLE `bookingTimes` (
   `roomID` int(11) NOT NULL,
   `approved` tinyint(1) DEFAULT '0',
   `takes_place` tinyint(1) DEFAULT '1',
-  `title` varchar(255) NOT NULL,
   `startTime` datetime NOT NULL,
   `endTime` datetime NOT NULL,
+	`timetoprep` datetime NOT NULL,
+  `timetoclean` datetime NOT NULL,
   `bookingTimeColor` char(50) DEFAULT '#ffffff',
   `hasChanged` tinyint(1) NOT NULL DEFAULT 0,
+  `timecomment` varchar(255) NOT NULL DEFAULT '',
+  `showcomment` tinyint(1) NOT NULL DEFAULT 0
    PRIMARY KEY (timeID)
 );
 
@@ -186,6 +249,19 @@ INSERT INTO `regions` (`regionID`, `regionName`) VALUES
 (4, 'Tõstamaa'),
 (5, 'Paikuse');
 
+CREATE TABLE `category` (
+  `categoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `categoryName` varchar(255) DEFAULT NULL,
+	 PRIMARY KEY (categoryID)
+);
+
+INSERT INTO `category` (`categoryID`, `categoryName`) VALUES
+(1, 'Kõik'),
+(2, 'Sport'),
+(3, 'Kultuur'),
+(4, 'Koolitus'),
+(5, 'Avalikud üritused');
+
 CREATE TABLE `rooms` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `buildingID` int(11) NOT NULL,
@@ -194,6 +270,13 @@ CREATE TABLE `rooms` (
   `roomColor` char(50) DEFAULT '#ffffff',
   `api_url` text DEFAULT '',
    PRIMARY KEY (id)
+);
+
+CREATE TABLE `roomcategory` (
+  `roomcategoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `roomID` int(11) DEFAULT NULL,
+  `categoryID` int(11) DEFAULT NULL,
+	 PRIMARY KEY (roomcategoryID)
 );
 
 CREATE TABLE `userRoles` (
@@ -208,25 +291,32 @@ INSERT INTO `userRoles` (`id`, `role`) VALUES
 (3, 'Administraator'),
 (4, 'Tavakasutaja');
 
-CREATE TABLE category (
-    categoryID int  NOT NULL AUTO_INCREMENT,
-    categoryName varchar(255), 
-    PRIMARY KEY (categoryID)
-);
-
-CREATE TABLE agerange (
-    agerangeID int NOT NULL AUTO_INCREMENT,
-    nameofrange varchar(255),
-    PRIMARY KEY (agerangeID)    
+CREATE TABLE `agerange` (
+  `agerangeID` int(11) NOT NULL AUTO_INCREMENT,
+  `nameofrange` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (agerangeID)    
 );
 
 
-CREATE TABLE roomCategory (
-    roomcategoryID int  NOT NULL AUTO_INCREMENT,
-    roomID int, 
-    categoryID int, 
-    PRIMARY KEY (roomcategoryID)
+INSERT INTO `agerange` (`agerangeID`, `nameofrange`) VALUES
+(1, 'Segarühm'),
+(2, 'Koolinoored (alla 20a)'),
+(3, 'Täiskasvanud'),
+(4, 'Seeniorid (üle 63a)'),
+(5, 'Erivajadustega'),
+(6, 'Muu');
+
+CREATE TABLE `paymentandagreement` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `code` varchar(11) NOT NULL DEFAULT '',
+  `address` varchar(255) NOT NULL DEFAULT '',
+  `contact` varchar(255) NOT NULL DEFAULT '',
+  `phone` varchar(20) NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL DEFAULT '',
+	PRIMARY KEY (id)    
 );
+
 ```
 
 Head rakenduse kasutamist!
