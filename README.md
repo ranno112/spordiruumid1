@@ -139,7 +139,7 @@ CREATE TABLE `bookingformsettingsdetails` (
   `intro` text NOT NULL DEFAULT '',
   `emailtext` text NOT NULL DEFAULT '',
 	PRIMARY KEY (onceID)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE `bookings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -204,12 +204,12 @@ CREATE TABLE `bookingTimes` (
   `takes_place` tinyint(1) DEFAULT '1',
   `startTime` datetime NOT NULL,
   `endTime` datetime NOT NULL,
-	`timetoprep` datetime NOT NULL,
-  `timetoclean` datetime NOT NULL,
+	`timetoprep` datetime,
+  `timetoclean` datetime,
   `bookingTimeColor` char(50) DEFAULT '#ffffff',
-  `hasChanged` tinyint(1) NOT NULL DEFAULT 0,
   `timecomment` varchar(255) NOT NULL DEFAULT '',
-  `showcomment` tinyint(1) NOT NULL DEFAULT 0
+  `showcomment` tinyint(1) NOT NULL DEFAULT 0,
+  `hasChanged` tinyint(1) NOT NULL DEFAULT 0
    PRIMARY KEY (timeID)
 );
 
