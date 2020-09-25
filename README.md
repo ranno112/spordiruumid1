@@ -86,7 +86,7 @@ CREATE TABLE `bookingFormSettings` (
 	PRIMARY KEY (formID)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `bookingformsettingsdetails` (
+CREATE TABLE `bookingFormSettingsDetails` (
   `onceID` int(11) NOT NULL AUTO_INCREMENT,
   `buildingID` int(11) NOT NULL,
   `typeID` int(11) NOT NULL,

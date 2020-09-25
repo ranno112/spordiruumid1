@@ -114,10 +114,11 @@ public function getAllBuildings()
         return $query->result();
 	}
 
-	public function getBuilding($bookingID)
+	public function getBuilding($roomID)
     {
-		$this->db->select("id, name");  
-		$this->db->where('id', $bookingID);
+		$this->db->select("buildings.id, name");  
+		$this->db->where('rooms.id', $roomID);
+		$this->db->join('rooms', 'rooms.buildingID = buildings.id' , 'left');
 		$query = $this->db->get('buildings');
 	    return $query->row_array();
 	}
