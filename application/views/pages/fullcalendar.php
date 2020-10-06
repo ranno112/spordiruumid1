@@ -579,7 +579,7 @@
 			
 			var checkIfIsAfter8 = moment(event.start).subtract(3,'hour').toDate();
 			var checkIfIsBefore22 = moment(event.end).subtract(3,'hour').toDate();
-			var startDate = createDateTime("8:00", moment(event.start).toDate() );
+			var startDate = createDateTime("6:00", moment(event.start).toDate() );
 			var endDate = createDateTime("22:00", moment(event.start).toDate() );	
 			var isBetween = startDate <= checkIfIsAfter8 && checkIfIsAfter8 <= endDate;
 			var isBetween2 = startDate <= checkIfIsBefore22 && checkIfIsBefore22 <= endDate;
@@ -587,7 +587,7 @@
 			if(!(isBetween&&isBetween2)){
 					swal({
 						icon: 'info',
-						title: "Trenn peab jääma vahemikku 08:00-22:00!",
+						title: "Trenn peab jääma vahemikku 06:00-22:00!",
 						
 					})
 					calendar.fullCalendar('refetchEvents');
