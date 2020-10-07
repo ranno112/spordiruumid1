@@ -155,13 +155,13 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                         <div class="col-4 col-sm-2">
 											<div>	
 												<label class="col-2 m-0 p-md-0" for="from1">Alates</label>
-												<input type="input" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_1" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
+												<input type="input" class="clock pl-2 form-control" name="timesStart[]" data-minimum="06:00" data-maximum="22:00" id="timestartfield_1" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
 											</div>
 										</div>
                                         <div class="col-4 col-sm-2">
 										<div>	
 											<label class="col-2 m-0 p-md-0" for="until1">Kuni</label>
-                                            <input type="input" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_1" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
+                                            <input type="input" class="clock pl-2 form-control" name="timeTo[]" data-minimum="06:00" data-maximum="22:00" id="timeendfield_1" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
 										</div>
 										</div>
 										<div class="col-4 col-sm-3">
@@ -203,10 +203,10 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 
 										<a class="removeclass col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a>
 										<div class="col-4 col-sm-2">
-											<input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_<?php echo $i;?>" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
+											<input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="06:00" data-maximum="22:00" id="timestartfield_<?php echo $i;?>" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
 										</div>
 										<div class="col-4 col-sm-2">
-											<input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_<?php echo $i;?>" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
+											<input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="06:00" data-maximum="22:00" id="timeendfield_<?php echo $i;?>" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
 										</div>
 										<div class="col-4 col-sm-3">
                                             <input type="color" class="form-control" name="color[]" value="<?php if(isset($data['color'][$i])){ echo $data['color'][$i];}else{  echo "#ffffff";}?>" list="presetColors">
@@ -398,12 +398,12 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 										
                                         <div class="col-4 col-sm-2">
 											<label class="col-2 m-0 p-md-0" for="from1">Alates</label>
-                                            <input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from1" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
+                                            <input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="06:00" data-maximum="22:00" id="from1" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
                                         </div>
 										
                                         <div class="col-4 col-sm-2">
 											<label class="col-2 m-0 p-md-0" for="until1">Kuni</label>
-                                            <input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until1" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
+                                            <input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="06:00" data-maximum="22:00" id="until1" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
 										</div>   
 										<div class="col-4 col-sm-3">
 											<label class="col-2 m-0 p-md-0" for="color">Värv </label>
@@ -450,10 +450,10 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                       </div>
                                     <a href="#" class="removeclass1 col-3 mt-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a>
                                     <div class="col-4 col-sm-2">
-                                        <input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from<?php echo $i;?>" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
+                                        <input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="06:00" data-maximum="22:00" id="from<?php echo $i;?>" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
                                     </div>
                                     <div class="col-4 col-sm-2">
-                                        <input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until<?php echo $i;?>" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
+                                        <input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="06:00" data-maximum="22:00" id="until<?php echo $i;?>" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
 									</div>
 									<div class="col-4 col-sm-3">
 									<input type="color" class="form-control" name="color[]" value="<?php if(isset($data['color'][$i])){ echo $data['color'][$i];}else{  echo "#ffffff";}?>" list="presetColors">
@@ -637,12 +637,12 @@ if(!empty($conflictDates)){// print_r($conflictDates);
 											
 											<div class="col-6 col-sm-3">
 												<label class="col-2 m-0 pl-3" for="from2">Alates</label>
-												<input type="text" class="clock pl-2 form-control" data-minimum="08:00" data-maximum="22:00" name="timesStart[]" id="from2" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo "08:00"; };?>">
+												<input type="text" class="clock pl-2 form-control" data-minimum="06:00" data-maximum="22:00" name="timesStart[]" id="from2" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo "08:00"; };?>">
 											</div>
 											
 											<div class="col-6 col-sm-3">
 												<label class="col-2 m-0 p-md-0" for="until2">Kuni</label>
-                                            <input type="text" class="clock pl-2 form-control" data-minimum="08:00" data-maximum="22:00" name="timeTo[]" id="until2" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{ echo "22:00"; };?>">
+                                            <input type="text" class="clock pl-2 form-control" data-minimum="06:00" data-maximum="22:00" name="timeTo[]" id="until2" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{ echo "22:00"; };?>">
 										</div>
 										<input type="color" class="d-none form-control" name="color[]" value="#ffffff"  list="presetColors">
 											<datalist id="presetColors">
@@ -688,10 +688,10 @@ if(!empty($conflictDates)){// print_r($conflictDates);
                                       </div>
                                     <a href="#" class="removeclass2 col-sm-1 col-3 pl-1 pr-xl-5"><span class="icon-cancel"></span></a>
                                     <div class="col-6 col-sm-3">
-                                        <input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from<?php echo $i;?>" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
+                                        <input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="06:00" data-maximum="22:00" id="from<?php echo $i;?>" value="<?php if(isset($data['timesStart'][$i])){ echo $data['timesStart'][$i];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>">
                                         </div>
                                     <div class="col-6 col-sm-3">
-                                        <input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until<?php echo $i;?>" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
+                                        <input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="06:00" data-maximum="22:00" id="until<?php echo $i;?>" value="<?php if(isset($data['timeTo'][$i])){ echo $data['timeTo'][$i];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>">
 									</div>
 									<input type="color" class="d-none form-control" name="color[]" value="#ffffff" list="presetColors">
 											<datalist id="presetColors">
@@ -870,7 +870,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
             if (x <= MaxInputs) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#InputsWrapper').append('<div class="row d-flex align-items-center mb-3 justify-content-between"><div class="col-sm-4 col-9 m-0 p-md-0"><input class="datePicker col-11 form-control" id="datefield_' + FieldCount + '" data-toggle="datepicker" name="workoutDate[]"></div><a class="removeclass mt-3 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a><div class="col-4 col-sm-2"><input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="timestartfield_' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-4 col-sm-2"><input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="timeendfield_' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div>	<div class="col-4 col-sm-3"><input type="color" class="form-control" name="color[]" value="#ffffff" list="presetColors"><datalist id="presetColors"><option>#ffffff</option><option>#ffffff</option><option>#ddffee</option><option>#cceeff</option><option>#ffccee</option><option>#ffffcc</option><option>#aaffaa</option><option>#eeffff</option><option>#f6e5ff</option>	</datalist></div></div>');
+                $('#InputsWrapper').append('<div class="row d-flex align-items-center mb-3 justify-content-between"><div class="col-sm-4 col-9 m-0 p-md-0"><input class="datePicker col-11 form-control" id="datefield_' + FieldCount + '" data-toggle="datepicker" name="workoutDate[]"></div><a class="removeclass mt-3 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a><div class="col-4 col-sm-2"><input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="06:00" data-maximum="22:00" id="timestartfield_' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-4 col-sm-2"><input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="06:00" data-maximum="22:00" id="timeendfield_' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div>	<div class="col-4 col-sm-3"><input type="color" class="form-control" name="color[]" value="#ffffff" list="presetColors"><datalist id="presetColors"><option>#ffffff</option><option>#ffffff</option><option>#ddffee</option><option>#cceeff</option><option>#ffccee</option><option>#ffffcc</option><option>#aaffaa</option><option>#eeffff</option><option>#f6e5ff</option>	</datalist></div></div>');
 
                 $(".datePicker").datepicker({
                     language: "et-EE", 
@@ -936,7 +936,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
             if (y <= maxPeriod) {
                 FieldCount++; //text box added ncrement
                 //add input box
-                $('#dateContainer').append('<div class="row d-flex align-items-center mb-3 justify-content-between"><div class="col-sm-4 col-9 m-0 p-md-0"><input class="form-control col-11 arrow" id="periodicWeekDay' + FieldCount + '" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist></div><a href="#" class="removeclass1 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a><div class="col-4 col-sm-2"><input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="08:00" data-maximum="22:00" id="from' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-4 col-sm-2"><input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div>	<div class="col-4 col-sm-3"><input type="color" class="form-control" name="color[]" value="#ffffff"  list="presetColors"><datalist id="presetColors"><option>#ddffee</option><option>#cceeff</option><option>#ffccee</option><option>#ffffcc</option><option>#aaffaa</option><option>#eeffff</option><option>#f6e5ff</option>	</div></div>');
+                $('#dateContainer').append('<div class="row d-flex align-items-center mb-3 justify-content-between"><div class="col-sm-4 col-9 m-0 p-md-0"><input class="form-control col-11 arrow" id="periodicWeekDay' + FieldCount + '" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist></div><a href="#" class="removeclass1 col-3 col-sm-1 pl-md-1 pr-xl-5 pr-md-0"><span class="icon-cancel"></span></a><div class="col-4 col-sm-2"><input type="text" class="clock pl-2 form-control" name="timesStart[]" data-minimum="06:00" data-maximum="22:00" id="from' + FieldCount + '" value="<?php if(isset($data['timesStart'][0])){ echo $data['timesStart'][0];}else{ echo $this->input->get('start') ? $this->input->get('start') : date('H:i'); };?>"></div><div class="col-4 col-sm-2"><input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="06:00" data-maximum="22:00" id="until' + FieldCount + '" value="<?php if(isset($data['timeTo'][0])){ echo $data['timeTo'][0];}else{  echo $this->input->get('end') ? $this->input->get('end') :  date("H:i", strtotime('+90 minutes')); }?>"></div>	<div class="col-4 col-sm-3"><input type="color" class="form-control" name="color[]" value="#ffffff"  list="presetColors"><datalist id="presetColors"><option>#ddffee</option><option>#cceeff</option><option>#ffccee</option><option>#ffffcc</option><option>#aaffaa</option><option>#eeffff</option><option>#f6e5ff</option>	</div></div>');
 
                 $('.clock').clockTimePicker({
                     duration: true,
@@ -989,7 +989,7 @@ if(!empty($conflictDates)){// print_r($conflictDates);
             if (z <= maxClosed) {
                 FieldCount++; //text box added ncrement
                 //add input box
-				$('#closeContainer').append('<div class="row d-flex align-items-center mb-3 justify-content-between"><div class="col-sm-5 col-9 m-0 p-md-0"><input class="form-control col-11 arrow" id="closedWeekDay" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist></div><a href="#" class="removeclass2 col-sm-1 col-3 pl-1 pr-xl-5"><span class="icon-cancel"></span></a><div class="col-6 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timesStart[]" id="from' + FieldCount + '" value="08:00"></div><div class="col-6 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="08:00" data-maximum="22:00" id="until' + FieldCount + '" value="22:00"></div></div>');
+				$('#closeContainer').append('<div class="row d-flex align-items-center mb-3 justify-content-between"><div class="col-sm-5 col-9 m-0 p-md-0"><input class="form-control col-11 arrow" id="closedWeekDay" list="weekdays" name="weekday[]"><datalist id="weekdays"><option data-value="1" value="Esmaspäev"></option><option data-value="2" value="Teisipäev"></option><option data-value="3" value="Kolmapäev"></option><option data-value="4" value="Neljapäev"></option><option data-value="5" value="Reede"></option><option data-value="6" value="Laupäev"></option><option data-value="7" value="Pühapäev"></option></datalist></div><a href="#" class="removeclass2 col-sm-1 col-3 pl-1 pr-xl-5"><span class="icon-cancel"></span></a><div class="col-6 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timesStart[]" id="from' + FieldCount + '" value="08:00"></div><div class="col-6 col-sm-3"><input type="text" class="clock pl-2 form-control" name="timeTo[]" data-minimum="06:00" data-maximum="22:00" id="until' + FieldCount + '" value="22:00"></div></div>');
            
                 $('.clock').clockTimePicker({
                     duration: true,
