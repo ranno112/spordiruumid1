@@ -853,7 +853,7 @@
 				
 				var checkingConflicts=isOverlapping2(eventToCheck[i], events);
 			
-				if	(checkingConflicts){
+				if	(checkingConflicts.title){
 					$(".red" + i).css("color", "red");
 						if ($("table").find(".red" + i + ":first td").length < 6) {
 							checkingConflicts.title.length > 10 ? checkingConflicts.title = checkingConflicts.title.substring(0, 10) + "...": checkingConflicts.title = checkingConflicts.title;
