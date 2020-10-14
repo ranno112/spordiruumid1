@@ -821,18 +821,17 @@ $( document ).ready(function() {
 			$( "#showOrHide" ).hide();
 		}
 
-	$('#allowUserBooking').click(function() {
-		
-		if($('#allowUserBooking').is(":checked")){
+	$(':checkbox').click(function() {
    		value = +$(this).is( ':checked' );
 		   $(this).val(value);
 		
+		if($('#allowUserBooking').is(":checked")){
+			console.log(value);
 			$( "#showOrHide" ).show();
 		}else{
 			$( "#showOrHide" ).hide();
 		}
 	});
-
 
 	var counter=1;
    $('#lisaSaal').on('click', function() {
