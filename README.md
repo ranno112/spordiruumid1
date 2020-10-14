@@ -209,7 +209,7 @@ CREATE TABLE `bookingTimes` (
   `bookingTimeColor` char(50) DEFAULT '#ffffff',
   `timecomment` varchar(255) NOT NULL DEFAULT '',
   `showcomment` tinyint(1) NOT NULL DEFAULT 0,
-  `hasChanged` tinyint(1) NOT NULL DEFAULT 0
+  `hasChanged` tinyint(1) NOT NULL DEFAULT 0,
    PRIMARY KEY (timeID)
 );
 
