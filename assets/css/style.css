@@ -81,6 +81,13 @@
     margin-left: 15%;
   }
 
+  .lower_title {
+    margin-right: 1000%;
+      position:relative;
+      background-color: black;
+
+  }
+
   .mt-50 {
     padding-top: 50%;
   }
