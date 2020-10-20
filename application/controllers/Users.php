@@ -123,6 +123,8 @@
 				   
 			   } else if($this->input->post('buildingID')=='0' && $this->input->post('role')!='1'){
 				   $this->session->set_flashdata('errors', 'Asutus valimata!');
+				   $inputEmail= $this->input->post('email');
+				   $this->session->set_flashdata('email', $inputEmail);
 				   redirect('users/addRightsToUser');
 			   }
 			   else		
@@ -403,6 +405,7 @@
 				if( $buildingID=='0' && ($this->input->post('roleID')==='2' || $this->input->post('roleID')==='3') ){
 					$this->session->set_flashdata('role',$this->input->post('roleID'));
 					$this->session->set_flashdata('errors', 'Asutus valimata');
+
 					redirect('users/edit/'.$userID);
 				}
 

@@ -16,7 +16,7 @@
 					<div class="row d-flex p-0 mt-4 px-5 mx-5">
 						<div class="form-label-group col-12 col-md-6 py-0 pl-0 pr-md-5">
 							<label>E-mail* <?php if($this->session->flashdata('emailIsNotCorrect')){  echo $this->session->flashdata('emailIsNotCorrect');} ?></label>
-							<input type="email" class="form-control" name="email" placeholder="E-mail" required value="<?php if($this->session->flashdata('email')){  echo $this->session->flashdata('email');} ?>">
+							<input id="valid" type="email" class="form-control" name="email" placeholder="E-mail" required value="<?php if($this->session->flashdata('email')){  echo $this->session->flashdata('email');} ?>">
 						</div>
 					
 						<div class="form-label-group col-12 col-md-6 py-0 pl-0 pr-md-5">
